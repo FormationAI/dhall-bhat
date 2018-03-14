@@ -1,0 +1,21 @@
+    let State = ./Type
+
+in  let Functor = ../Functor/Type
+
+in  let StateFunctor
+        : ∀(s : Type) → Functor (State  s)
+        =   λ(s : Type)
+          → { map =
+                  λ(a : Type)
+                → λ(b : Type)
+                → λ(g : a → b)
+                → λ(fa : State  s a)
+                → { runState =
+                        λ(new : s)
+                      →     let res = fa.runState new
+
+                        in  { state = res.state, val = g res.val }
+                  }
+            }
+
+in  StateFunctor

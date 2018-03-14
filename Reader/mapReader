@@ -1,0 +1,17 @@
+    let Reader = ./Type
+
+in  let mapReader
+        :   ∀(r : Type)
+          → ∀(a : Type)
+          → ∀(b : Type)
+          → (a → b)
+          → Reader  r a
+          → Reader  r b
+        =   λ(r : Type)
+          → λ(a : Type)
+          → λ(b : Type)
+          → λ(f : a → b)
+          → λ(reader : Reader  r a)
+          → { runReader = λ(newR : r) → f (reader.runReader newR) }
+
+in  mapReader

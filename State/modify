@@ -1,0 +1,9 @@
+    let State = ./Type
+
+in  let modify
+        : ∀(s : Type) → (s → s) → State s {}
+        =   λ(s : Type)
+          → λ(f : s → s)
+          → { runState = λ(new : s) → { state = f new, val = {=} } }
+
+in  modify

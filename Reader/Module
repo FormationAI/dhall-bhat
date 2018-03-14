@@ -1,0 +1,90 @@
+    let Reader = ./Type
+
+in  let Module
+        :   ∀(r : Type)
+          → ∀(a : Type)
+          → { mapReader         :
+                ∀(b : Type) → ∀(f : a → b) → Reader  r a → Reader  r b
+            , Applicative :
+                { applicative :
+                    { ap   :
+                          ∀(a : Type)
+                        → ∀(b : Type)
+                        → ∀(g : Reader  r (a → b))
+                        → ∀(fa : Reader  r a)
+                        → Reader  r b
+                    , pure : ∀(a : Type) → a → Reader  r a
+                    }
+                , functor     :
+                    { map :
+                          ∀(a : Type)
+                        → ∀(b : Type)
+                        → ∀(g : a → b)
+                        → ∀(fa : Reader  r a)
+                        → Reader  r b
+                    }
+                }
+            , Functor     :
+                { map :
+                      ∀(a : Type)
+                    → ∀(b : Type)
+                    → ∀(g : a → b)
+                    → ∀(fa : Reader  r a)
+                    → Reader  r b
+                }
+            , Monad       :
+                { applicative :
+                    { applicative :
+                        { ap   :
+                              ∀(a : Type)
+                            → ∀(b : Type)
+                            → ∀(g : Reader  r (a → b))
+                            → ∀(fa : Reader  r a)
+                            → Reader  r b
+                        , pure : ∀(a : Type) → a → Reader  r a
+                        }
+                    , functor     :
+                        { map :
+                              ∀(a : Type)
+                            → ∀(b : Type)
+                            → ∀(g : a → b)
+                            → ∀(fa : Reader  r a)
+                            → Reader  r b
+                        }
+                    }
+                , monad       :
+                    { bind :
+                          ∀(a : Type)
+                        → ∀(b : Type)
+                        → ∀(fa : Reader  r a)
+                        → ∀(k : a → Reader  r b)
+                        → Reader  r b
+                    }
+                }
+            , runReader         : Reader  r a → r → a
+            , withReader        :
+                  ∀(rPrime : Type)
+                → ∀(f : rPrime → r)
+                → Reader  r a
+                → Reader  rPrime a
+            }
+        =   λ(r : Type)
+          → λ(a : Type)
+          → { mapReader     =
+                  λ(b : Type)
+                → λ(f : a → b)
+                → λ(reader : Reader  r a)
+                → ./mapReader  r a b f reader
+            , Functor = ./Functor  r
+            , Applicative = ./Applicative r
+            , Monad = ./Monad r
+            , runReader     =
+                λ(reader : Reader  r a) → λ(env : r) → reader.runReader env
+            , withReader    =
+                  λ(rPrime : Type)
+                → λ(f : rPrime → r)
+                → λ(reader : Reader  r a)
+                → ./withReader  r a rPrime f reader
+            }
+
+in  Module

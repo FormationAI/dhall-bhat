@@ -1,0 +1,17 @@
+    let Reader = ./Type
+
+in  let withReader
+        :   ∀(r : Type)
+          → ∀(rPrime : Type)
+          → ∀(a : Type)
+          → (rPrime → r)
+          → Reader  r a
+          → Reader  rPrime a
+        =   λ(r : Type)
+          → λ(a : Type)
+          → λ(rPrime : Type)
+          → λ(f : rPrime → r)
+          → λ(reader : Reader  r a)
+          → { runReader = λ(newR : rPrime) → reader.runReader (f newR) }
+
+in  withReader

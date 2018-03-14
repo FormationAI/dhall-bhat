@@ -1,0 +1,10 @@
+    let State = ./Type
+
+in  let embedState
+        : ∀(s : Type) → ∀(a : Type) → (s → { state : s, val : a }) → State s a
+        =   λ(s : Type)
+          → λ(a : Type)
+          → λ(f : s → { state : s, val : a })
+          → { runState = f }
+
+in  embedState

@@ -1,0 +1,28 @@
+    let State = ./Type 
+
+in  let Monad = ../Monad/Type 
+
+in  let StateMonad
+        : ∀(s : Type) → Monad (State s)
+        =   λ(s : Type)
+          → { applicative = ./Applicative  s
+            , monad       =
+                { bind =
+                      λ(a : Type)
+                    → λ(b : Type)
+                    → λ(fa : State s a)
+                    → λ(k : a → State s b)
+                    → { runState =
+                            λ(new : s)
+                          →     let res = fa.runState new
+                            
+                            in  let fb = k res.val
+                            
+                            in  let newRes = fb.runState res.state
+                            
+                            in  { state = newRes.state, val = newRes.val }
+                      }
+                }
+            }
+
+in  StateMonad

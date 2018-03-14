@@ -1,0 +1,15 @@
+    let Functor = ./Type
+
+in  let void
+        :   ∀(f : Type → Type)
+          → ∀(functor : Functor  f)
+          → ∀(a : Type)
+          → ∀(fa : f a)
+          → f {}
+        =   λ(f : Type → Type)
+          → λ(functor : Functor  f)
+          → λ(a : Type)
+          → λ(fa : f a)
+          → ./rightConst  f functor a {} fa {=}
+
+in  void

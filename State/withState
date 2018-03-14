@@ -1,0 +1,11 @@
+    let State = ./Type
+
+in  let withState
+        : ∀(s : Type) → ∀(a : Type) → (s → s) → State s a → State s a
+        =   λ(s : Type)
+          → λ(a : Type)
+          → λ(f : s → s)
+          → λ(state : State s a)
+          → { runState = λ(new : s) → state.runState (f new) }
+
+in  withState
