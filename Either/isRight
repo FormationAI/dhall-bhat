@@ -1,0 +1,12 @@
+
+    let not =
+          https://ipfs.io/ipfs/QmQ8w5PLcsNz56dMvRtq54vbuPe9cNnCCUXAQp6xLc6Ccx/Prelude/Bool/not 
+
+in  let isRight
+        : ∀(a : Type) → ∀(b : Type) → ./Either  a b → Bool
+        =   λ(a : Type)
+          → λ(b : Type)
+          → λ(e : ./Either  a b)
+          → not (./isLeft  a b e)
+
+in  isRight

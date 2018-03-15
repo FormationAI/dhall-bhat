@@ -1,0 +1,9 @@
+
+    let rights
+        : ∀(a : Type) → ∀(b : Type) → List (./Either  a b) → List b
+        =   λ(a : Type)
+          → λ(b : Type)
+          → λ(eithers : List (./Either  a b))
+          → (./partition  a b eithers).rights
+
+in  rights

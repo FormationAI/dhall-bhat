@@ -1,0 +1,12 @@
+
+    let isLeft
+        : ∀(a : Type) → ∀(b : Type) → ./Either  a b → Bool
+        =   λ(a : Type)
+          → λ(b : Type)
+          → λ(e : ./Either  a b)
+          →     let handlers =
+                      { Left = λ(x : a) → True, Right = λ(y : b) → False }
+
+            in  merge handlers e : Bool
+
+in  isLeft

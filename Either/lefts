@@ -1,0 +1,9 @@
+
+    let lefts
+        : ∀(a : Type) → ∀(b : Type) → List (./Either  a b) → List a
+        =   λ(a : Type)
+          → λ(b : Type)
+          → λ(eithers : List (./Either  a b))
+          → (./partition  a b eithers).lefts
+
+in  lefts
