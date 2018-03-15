@@ -1,18 +1,9 @@
+    let Either = ./Type
 
-    let fold
-        :   ∀(a : Type)
-          → ∀(b : Type)
-          → ∀(c : Type)
-          → (a → c)
-          → (b → c)
-          → ./Either  a b
-          → c
-        =   λ(a : Type)
-          → λ(b : Type)
-          → λ(c : Type)
-          → λ(f : a → c)
-          → λ(g : b → c)
-          → λ(e : ./Either  a b)
-          → let handlers = { Left = f, Right = g } in merge handlers e : c
-
-in  fold
+in    λ(a : Type)
+    → λ(b : Type)
+    → λ(c : Type)
+    → λ(f : a → c)
+    → λ(g : b → c)
+    → λ(e : Either a b)
+    → merge { Left = f, Right = g } e

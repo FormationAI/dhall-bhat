@@ -1,6 +1,1 @@
-
-    let Either
-        : Type → Type → Type
-        = λ(a : Type) → λ(b : Type) → < Left : a | Right : b >
-
-in  Either
+λ(a : Type) → λ(b : Type) → < Left : a | Right : b >
