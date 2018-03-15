@@ -1,12 +1,7 @@
+    let Either = ./Type
 
-    let fromRight
-        : ∀(a : Type) → ∀(b : Type) → b → ./Either  a b → b
-        =   λ(a : Type)
-          → λ(b : Type)
-          → λ(def : b)
-          → λ(e : ./Either  a b)
-          →     let handlers = { Left = λ(x : a) → def, Right = λ(y : b) → y }
-
-            in  merge handlers e : b
-
-in  fromRight
+in    λ(a : Type)
+    → λ(b : Type)
+    → λ(def : b)
+    → λ(e : Either a b)
+    → merge { Left = λ(x : a) → def, Right = λ(y : b) → y } e
