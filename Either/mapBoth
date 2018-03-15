@@ -1,0 +1,26 @@
+
+    let mapBoth
+        :   ∀(a : Type)
+          → ∀(b : Type)
+          → ∀(c : Type)
+          → ∀(d : Type)
+          → (a → c)
+          → (b → d)
+          → ./Either  a b
+          → ./Either  c d
+        =   λ(a : Type)
+          → λ(b : Type)
+          → λ(c : Type)
+          → λ(d : Type)
+          → λ(f : a → c)
+          → λ(g : b → d)
+          → λ(e : ./Either  a b)
+          →     let handlers =
+                      { Left  = λ(x : a) → < Left = f x | Right : d >
+                      , Right = λ(y : b) → < Right = g y | Left : c >
+                      }
+            
+            in  merge handlers e : ./Either  c d
+
+in  mapBoth
+

@@ -1,9 +1,13 @@
     let State = ./Type
 
+in  let Monad = ./Monad
+
 in  let modify
         : ∀(s : Type) → (s → s) → State s {}
         =   λ(s : Type)
           → λ(f : s → s)
-          → { runState = λ(new : s) → { state = f new, val = {=} } }
+          →     let bind = (Monad s).monad.bind
+
+            in  bind s {} (./get  s) (λ(state : s) → ./put  s (f state))
 
 in  modify

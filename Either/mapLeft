@@ -1,0 +1,17 @@
+
+    let mapLeft
+        :   ∀(a : Type)
+          → ∀(b : Type)
+          → ∀(c : Type)
+          → (a → c)
+          → ./Either  a b
+          → ./Either  c b
+        =   λ(a : Type)
+          → λ(b : Type)
+          → λ(c : Type)
+          → λ(f : a → c)
+          → λ(e : ./Either  a b)
+          → ./mapBoth  a b c b f (λ(x : b) → x) e
+
+in  mapLeft
+
