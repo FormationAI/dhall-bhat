@@ -2,12 +2,8 @@
 
 in  let Monad = ./Monad
 
-in  let modify
-        : ∀(s : Type) → (s → s) → State s {}
-        =   λ(s : Type)
-          → λ(f : s → s)
-          →     let bind = (Monad s).monad.bind
+in    λ(s : Type)
+    → λ(f : s → s)
+    →     let bind = (Monad s).monad.bind
 
-            in  bind s {} (./get  s) (λ(state : s) → ./put  s (f state))
-
-in  modify
+      in  bind s {} (./get  s) (λ(state : s) → ./put  s (f state))
