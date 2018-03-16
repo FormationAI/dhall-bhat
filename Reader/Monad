@@ -2,18 +2,16 @@
 
 in  let Monad = ../Monad/Type
 
-in  let ReaderMonad
-        : ∀(r : Type) → Monad (Reader  r)
-        =   λ(r : Type)
-          → { applicative = ./Applicative  r
-            , monad       =
-                { bind =
-                      λ(a : Type)
-                    → λ(b : Type)
-                    → λ(fa : Reader  r a)
-                    → λ(k : a → Reader  r b)
-                    → { runReader = λ(env : r) → (k (fa.runReader env)).runReader env }
-                }
-            }
-
-in  ReaderMonad
+in    λ(r : Type)
+    → { applicative =
+          ./Applicative  r
+      , monad =
+          { bind =
+                λ(a : Type)
+              → λ(b : Type)
+              → λ(fa : Reader r a)
+              → λ(k : a → Reader r b)
+              → λ(env : r)
+              → k (fa env) env
+          }
+      }

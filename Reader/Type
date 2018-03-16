@@ -1,5 +1,1 @@
-    let Reader
-        : Type → Type → Type
-        = λ(r : Type) → λ(a : Type) → { runReader : r → a }
-
-in  Reader
+λ(r : Type) → λ(a : Type) → r → a
