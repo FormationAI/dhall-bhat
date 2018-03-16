@@ -2,15 +2,11 @@
 
 in  let Functor = ../Functor/Type
 
-in  let ReaderFunctor
-        : ∀(r : Type) → Functor (Reader  r)
-        =   λ(r : Type)
-          → { map =
-                  λ(a : Type)
-                → λ(b : Type)
-                → λ(g : a → b)
-                → λ(fa : Reader  r a)
-                → ./mapReader  r a b g fa
-            }
-
-in  ReaderFunctor
+in    λ(r : Type)
+    → { map =
+            λ(a : Type)
+          → λ(b : Type)
+          → λ(g : a → b)
+          → λ(fa : Reader r a)
+          → ./mapReader  r a b g fa
+      }

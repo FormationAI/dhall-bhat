@@ -1,7 +1,1 @@
-    let State = ./Type
-
-in  let get
-        : ∀(s : Type) → State s s
-        = λ(s : Type) → { runState = λ(new : s) → { state = new, val = new } }
-
-in  get
+let State = ./Type  in λ(s : Type) → λ(new : s) → { state = new, val = new }

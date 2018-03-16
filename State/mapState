@@ -1,17 +1,9 @@
     let State = ./Type
 
-in  let mapState
-        :   ∀(s : Type)
-          → ∀(a : Type)
-          → ∀(b : Type)
-          → ({ state : s, val : a } → { state : s, val : b })
-          → State s a
-          → State s b
-        =   λ(s : Type)
-          → λ(a : Type)
-          → λ(b : Type)
-          → λ(f : { state : s, val : a } → { state : s, val : b })
-          → λ(state : State s a)
-          → { runState = λ(new : s) → f (state.runState new) }
-
-in  mapState
+in    λ(s : Type)
+    → λ(a : Type)
+    → λ(b : Type)
+    → λ(f : { state : s, val : a } → { state : s, val : b })
+    → λ(state : State s a)
+    → λ(new : s)
+    → f (state new)
