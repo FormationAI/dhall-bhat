@@ -1,6 +1,2 @@
 
-    let State
-        : Type → Type → Type
-        = λ(s : Type) → λ(a : Type) → { runState : s → { state : s, val : a } }
-
-in  State
+λ(s : Type) → λ(a : Type) → s → { state : s, val : a }

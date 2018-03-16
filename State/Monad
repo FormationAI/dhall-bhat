@@ -2,27 +2,22 @@
 
 in  let Monad = ../Monad/Type
 
-in  let StateMonad
-        : ∀(s : Type) → Monad (State s)
-        =   λ(s : Type)
-          → { applicative = ./Applicative  s
-            , monad       =
-                { bind =
-                      λ(a : Type)
-                    → λ(b : Type)
-                    → λ(fa : State s a)
-                    → λ(k : a → State s b)
-                    → { runState =
-                            λ(new : s)
-                          →     let res = fa.runState new
+in    λ(s : Type)
+    → { applicative =
+          ./Applicative  s
+      , monad =
+          { bind =
+                λ(a : Type)
+              → λ(b : Type)
+              → λ(fa : State s a)
+              → λ(k : a → State s b)
+              → λ(new : s)
+              →     let res = fa new
 
-                            in  let fb = k res.val
+                in  let fb = k res.val
 
-                            in  let newRes = fb.runState res.state
+                in  let newRes = fb res.state
 
-                            in  { state = newRes.state, val = newRes.val }
-                      }
-                }
-            }
-
-in  StateMonad
+                in  { state = newRes.state, val = newRes.val }
+          }
+      }

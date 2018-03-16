@@ -1,11 +1,7 @@
     let State = ./Type
 
-in  let evalState
-        : ∀(s : Type) → ∀(a : Type) → State s a → s → a
-        =   λ(s : Type)
-          → λ(a : Type)
-          → λ(state : State s a)
-          → λ(new : s)
-          → (state.runState new).val
-
-in  evalState
+in    λ(s : Type)
+    → λ(a : Type)
+    → λ(state : State s a)
+    → λ(new : s)
+    → (state new).val

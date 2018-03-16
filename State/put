@@ -1,9 +1,3 @@
     let State = ./Type
 
-in  let put
-        : ∀(s : Type) → s → State s {}
-        =   λ(s : Type)
-          → λ(state : s)
-          → { runState = λ(new : s) → { state = state, val = {=} } }
-
-in  put
+in  λ(s : Type) → λ(state : s) → λ(new : s) → { state = state, val = {=} }

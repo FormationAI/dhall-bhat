@@ -3,29 +3,35 @@
 in  let Module
         :   ∀(s : Type)
           → ∀(a : Type)
-          → { embedState       : (s → { state : s, val : a }) → State s a
-            , evalState        : State s a → s → a
-            , execState        : State s a → s → s
-            , get              : State s s
-            , mapState         :
+          → { evalState :
+                State s a → s → a
+            , execState :
+                State s a → s → s
+            , get :
+                State s s
+            , mapState :
                   ∀(b : Type)
                 → ({ state : s, val : a } → { state : s, val : b })
                 → State s a
                 → State s b
-            , modify           : (s → s) → State s {}
-            , put              : s → State s {}
-            , runState         : State s a → s → { state : s, val : a }
+            , modify :
+                (s → s) → State s {}
+            , put :
+                s → State s {}
+            , runState :
+                State s a → s → { state : s, val : a }
             , Applicative :
                 { applicative :
-                    { ap   :
+                    { ap :
                           ∀(a : Type)
                         → ∀(b : Type)
                         → ∀(g : State s (a → b))
                         → ∀(fa : State s a)
                         → State s b
-                    , pure : ∀(a : Type) → a → State s a
+                    , pure :
+                        ∀(a : Type) → a → State s a
                     }
-                , functor     :
+                , functor :
                     { map :
                           ∀(a : Type)
                         → ∀(b : Type)
@@ -34,7 +40,7 @@ in  let Module
                         → State s b
                     }
                 }
-            , Functor     :
+            , Functor :
                 { map :
                       ∀(a : Type)
                     → ∀(b : Type)
@@ -42,18 +48,19 @@ in  let Module
                     → ∀(fa : State s a)
                     → State s b
                 }
-            , Monad       :
+            , Monad :
                 { applicative :
                     { applicative :
-                        { ap   :
+                        { ap :
                               ∀(a : Type)
                             → ∀(b : Type)
                             → ∀(g : State s (a → b))
                             → ∀(fa : State s a)
                             → State s b
-                        , pure : ∀(a : Type) → a → State s a
+                        , pure :
+                            ∀(a : Type) → a → State s a
                         }
-                    , functor     :
+                    , functor :
                         { map :
                               ∀(a : Type)
                             → ∀(b : Type)
@@ -62,7 +69,7 @@ in  let Module
                             → State s b
                         }
                     }
-                , monad       :
+                , monad :
                     { bind :
                           ∀(a : Type)
                         → ∀(b : Type)
@@ -71,23 +78,33 @@ in  let Module
                         → State s b
                     }
                 }
-            , withState        : (s → s) → State s a → State s a
+            , withState :
+                (s → s) → State s a → State s a
             }
         =   λ(s : Type)
           → λ(a : Type)
-          → { embedState       = ./embedState  s a
-            , evalState        = ./evalState  s a
-            , execState        = ./execState  s a
-            , get              = ./get  s
-            , mapState         = ./mapState  s a
-            , modify           = ./modify  s
-            , put              = ./put  s
-            , runState         =
-                λ(state : State s a) → λ(new : s) → state.runState new
-            , Applicative = ./Applicative  s
-            , Functor     = ./Functor  s
-            , Monad       = ./Monad  s
-            , withState        = ./withState  s a
+          → { evalState =
+                ./evalState  s a
+            , execState =
+                ./execState  s a
+            , get =
+                ./get  s
+            , mapState =
+                ./mapState  s a
+            , modify =
+                ./modify  s
+            , put =
+                ./put  s
+            , runState =
+                λ(state : State s a) → λ(new : s) → state new
+            , Applicative =
+                ./Applicative  s
+            , Functor =
+                ./Functor  s
+            , Monad =
+                ./Monad  s
+            , withState =
+                ./withState  s a
             }
 
 in  Module

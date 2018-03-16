@@ -2,29 +2,22 @@
 
 in  let Applicative = ../Applicative/Type
 
-in  let StateApplicative
-        : ∀(s : Type) → Applicative (State s)
-        =   λ(s : Type)
-          → { applicative =
-                { ap   =
-                      λ(a : Type)
-                    → λ(b : Type)
-                    → λ(g : State s (a → b))
-                    → λ(fa : State s a)
-                    → { runState =
-                            λ(new : s)
-                          →     let gRes = g.runState new
+in    λ(s : Type)
+    → { applicative =
+          { ap =
+                λ(a : Type)
+              → λ(b : Type)
+              → λ(g : State s (a → b))
+              → λ(fa : State s a)
+              → λ(new : s)
+              →     let gRes = g new
 
-                            in  let res = fa.runState gRes.state
+                in  let res = fa gRes.state
 
-                            in  { state = res.state, val = gRes.val res.val }
-                      }
-                , pure =
-                      λ(a : Type)
-                    → λ(x : a)
-                    → { runState = λ(new : s) → { state = new, val = x } }
-                }
-            , functor     = ./Functor  s
-            }
-
-in  StateApplicative
+                in  { state = res.state, val = gRes.val res.val }
+          , pure =
+              λ(a : Type) → λ(x : a) → λ(new : s) → { state = new, val = x }
+          }
+      , functor =
+          ./Functor  s
+      }
