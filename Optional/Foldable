@@ -1,0 +1,16 @@
+
+    let Foldable = ../Foldable/Type
+
+in  let fold =
+          https://ipfs.io/ipfs/QmQ8w5PLcsNz56dMvRtq54vbuPe9cNnCCUXAQp6xLc6Ccx/Prelude/Optional/fold
+
+in  (   { fold =
+              λ(a : Type)
+            → λ(ts : Optional a)
+            → λ(b : Type)
+            → λ(f : a → b → b)
+            → λ(z : b)
+            → fold a ts b (λ(x : a) → f x z) z
+        }
+      : Foldable Optional
+    )

@@ -1,4 +1,4 @@
-    let Functor = ./Type
+    let Functor = ../Functor/Type
 
 in  let fold =
           https://ipfs.io/ipfs/QmQ8w5PLcsNz56dMvRtq54vbuPe9cNnCCUXAQp6xLc6Ccx/Prelude/List/fold

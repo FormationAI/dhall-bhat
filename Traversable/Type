@@ -1,0 +1,22 @@
+    let Functor = ../Functor/Type
+
+in  let Foldable = ../Foldable/Type
+
+in  let Applicative = ../Applicative/Type
+
+in    λ(t : Type → Type)
+    → { fold :
+          Foldable t
+      , functor :
+          Functor t
+      , traversable :
+          { traverse :
+                ∀(f : Type → Type)
+              → ∀(applicative : Applicative f)
+              → ∀(a : Type)
+              → ∀(b : Type)
+              → ∀(g : a → f b)
+              → ∀(ts : t a)
+              → f (t b)
+          }
+      }

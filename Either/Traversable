@@ -1,0 +1,36 @@
+    let Traversable = ../Traversable/Type
+
+in  let Applicative = ../Applicative/Type
+
+in  let Either = ./Type
+
+in    λ(a : Type)
+    → { foldable =
+          ./Foldable
+      , functor =
+          ./Functor
+      , traversable =
+          { traverse =
+                λ(f : Type → Type)
+              → λ(applicative : Applicative f)
+              → λ(b : Type)
+              → λ(c : Type)
+              → λ(g : b → f c)
+              → λ(ts : Either a b)
+              → merge
+                { Left =
+                      λ(l : a)
+                    → applicative.applicative.pure
+                      (Either a c)
+                      < Left = l | Right : c >
+                , Right =
+                      λ(r : b)
+                    → applicative.functor.map
+                      c
+                      (Either a c)
+                      (λ(x : c) → < Right = x | Left : a >)
+                      (g r)
+                }
+                ts
+          }
+      }
