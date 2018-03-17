@@ -1,0 +1,10 @@
+    let Monad = ../Monad/Type
+
+in    λ(t : (Type → Type) → Type → Type)
+    → { lift :
+            ∀(m : Type → Type)
+          → ∀(monad : Monad m)
+          → ∀(a : Type)
+          → ∀(ma : m a)
+          → t m a
+      }
