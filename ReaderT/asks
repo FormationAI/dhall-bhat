@@ -1,5 +1,5 @@
     let Applicative = ../Applicative/Type
-d
+
 in    λ(r : Type)
     → λ(m : Type → Type)
     → λ(applicative : Applicative m)
