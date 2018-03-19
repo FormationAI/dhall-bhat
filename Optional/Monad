@@ -2,7 +2,8 @@
 
 in  let map = ./Functor .map
 
-in  let concat = ../Prelude/Optional/concat
+in  let concat =
+          https://ipfs.io/ipfs/QmQ8w5PLcsNz56dMvRtq54vbuPe9cNnCCUXAQp6xLc6Ccx/Prelude/Optional/concat
 
 in  (   { applicative =
             ./Applicative

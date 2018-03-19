@@ -1,6 +1,7 @@
     let Monad = ../Monad/Type
 
-in  let concatMap = ../Prelude/List/concatMap
+in  let concatMap =
+          https://ipfs.io/ipfs/QmQ8w5PLcsNz56dMvRtq54vbuPe9cNnCCUXAQp6xLc6Ccx/Prelude/List/concatMap
 
 in  (   { applicative =
             ./Applicative
