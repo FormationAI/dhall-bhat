@@ -1,6 +1,5 @@
     let Foldable = ../Foldable/Type
 
-in  let fold =
-          https://ipfs.io/ipfs/QmQ8w5PLcsNz56dMvRtq54vbuPe9cNnCCUXAQp6xLc6Ccx/Prelude/List/fold
+in  let fold = ../Prelude/List/fold
 
 in  ({ fold = fold } : Foldable List)

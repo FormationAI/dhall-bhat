@@ -1,6 +1,5 @@
     let Either = ./Type
 
-in  let not =
-          https://ipfs.io/ipfs/QmQ8w5PLcsNz56dMvRtq54vbuPe9cNnCCUXAQp6xLc6Ccx/Prelude/Bool/not
+in  let not = ../Prelude/Bool/not
 
 in  λ(a : Type) → λ(b : Type) → λ(e : Either a b) → not (./isLeft  a b e)

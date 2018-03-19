@@ -1,7 +1,6 @@
     let Functor = ../Functor/Type
 
-in  let fold =
-          https://ipfs.io/ipfs/QmQ8w5PLcsNz56dMvRtq54vbuPe9cNnCCUXAQp6xLc6Ccx/Prelude/List/fold
+in  let fold = ../Prelude/List/fold
 
 in  (   { map =
               λ(a : Type)
@@ -15,5 +14,5 @@ in  (   { map =
               (λ(x : a) → λ(xs : List b) → [ g x ] # xs)
               ([] : List b)
         }
-      : Functor  List
+      : Functor List
     )

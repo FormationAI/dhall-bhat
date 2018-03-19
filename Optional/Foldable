@@ -1,8 +1,7 @@
 
     let Foldable = ../Foldable/Type
 
-in  let fold =
-          https://ipfs.io/ipfs/QmQ8w5PLcsNz56dMvRtq54vbuPe9cNnCCUXAQp6xLc6Ccx/Prelude/Optional/fold
+in  let fold = ../Prelude/Optional/fold
 
 in  (   { fold =
               λ(a : Type)
