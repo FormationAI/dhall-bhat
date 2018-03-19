@@ -2,9 +2,6 @@
 
 in  let Applicative = ../Applicative/Type
 
-in  let fold =
-          https://ipfs.io/ipfs/QmQ8w5PLcsNz56dMvRtq54vbuPe9cNnCCUXAQp6xLc6Ccx/Prelude/Optional/fold
-
 in  { foldable =
         ./Foldable
     , functor =
@@ -17,7 +14,7 @@ in  { foldable =
             → λ(b : Type)
             → λ(g : a → f b)
             → λ(ts : Optional a)
-            → fold
+            → Optional/fold
               a
               ts
               (f (Optional b))
