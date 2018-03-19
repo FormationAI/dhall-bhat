@@ -12,5 +12,5 @@ in  (   { map =
               (λ(x : a) → λ(xs : List b) → [ g x ] # xs)
               ([] : List b)
         }
-      : Functor  List
+      : Functor List
     )
