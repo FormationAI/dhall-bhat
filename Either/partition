@@ -1,8 +1,5 @@
     let Either = ./Type
 
-in  let foldr =
-          https://ipfs.io/ipfs/QmQ8w5PLcsNz56dMvRtq54vbuPe9cNnCCUXAQp6xLc6Ccx/Prelude/List/fold
-
 in  let partition
         :   ∀(a : Type)
           → ∀(b : Type)
@@ -21,7 +18,7 @@ in  let partition
                       → λ(y : b)
                       → { lefts = acc.lefts, rights = [ y ] # acc.rights }
 
-            in  foldr
+            in  List/fold
                 (Either a b)
                 eithers
                 { lefts : List a, rights : List b }

@@ -1,0 +1,4 @@
+    let Monoid = ../Monoid/Type
+
+in    λ(a : Type)
+    → ({ unit = [] : List a, semigroup = ./Semigroup a } : Monoid (List a))

@@ -1,0 +1,3 @@
+    let Semigroup = ../Semigroup/Type
+
+in  λ(m : Type) → { semigroup : Semigroup m, unit : m }

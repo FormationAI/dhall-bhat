@@ -1,0 +1,3 @@
+    let Foldable = ../Foldable/Type
+
+in  ({ fold = List/fold } : Foldable List)
