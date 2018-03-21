@@ -1,0 +1,40 @@
+    let Applicative = ../Applicative/Type
+
+in  let EitherT = ./Type
+
+in  let Either = ../Either/Type
+
+in  let EitherA = ../Either/Applicative
+
+in  let liftA2 = ../Applicative/liftA2
+
+in    λ(a : Type)
+    → λ(m : Type → Type)
+    → λ(applicative : Applicative m)
+    → (   { applicative =
+              { ap =
+                    λ(b : Type)
+                  → λ(c : Type)
+                  → λ(g : EitherT a m (b → c))
+                  → λ(fa : EitherT a m b)
+                  → liftA2
+                    m
+                    applicative
+                    (Either a (b → c))
+                    (Either a b)
+                    (Either a c)
+                    ((EitherA a).applicative.ap b c)
+                    g
+                    fa
+              , pure =
+                    λ(b : Type)
+                  → λ(x : b)
+                  → applicative.applicative.pure
+                    (Either a b)
+                    < Right = x | Left : a >
+              }
+          , functor =
+              ./Functor  a m applicative.functor
+          }
+        : Applicative (EitherT a m)
+      )

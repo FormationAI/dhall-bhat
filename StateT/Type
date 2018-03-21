@@ -1,0 +1,1 @@
+λ(s : Type) → λ(m : Type → Type) → λ(a : Type) → s → m { val : a, state : s }
