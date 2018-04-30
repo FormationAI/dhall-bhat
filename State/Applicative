@@ -1,2 +1,1 @@
-
 λ(s : Type) → ../StateT/Applicative  s ../Id/Type  ../Id/Monad 

@@ -1,4 +1,3 @@
-
   λ(s : Type)
 → λ(m : Type → Type)
 → λ(functor : ../Functor/Type  m)

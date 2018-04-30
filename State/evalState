@@ -1,2 +1,1 @@
-
 λ(s : Type) → ../StateT/evalState  s ../Id/Type  ../Id/Monad 
