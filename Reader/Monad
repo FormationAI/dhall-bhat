@@ -1,17 +1,2 @@
-    let Reader = ./Type
 
-in  let Monad = ../Monad/Type
-
-in    λ(r : Type)
-    → { applicative =
-          ./Applicative  r
-      , monad =
-          { bind =
-                λ(a : Type)
-              → λ(b : Type)
-              → λ(fa : Reader r a)
-              → λ(k : a → Reader r b)
-              → λ(env : r)
-              → k (fa env) env
-          }
-      }
+λ(r : Type) → ../ReaderT/Monad  r ../Id/Type  ../Id/Monad 

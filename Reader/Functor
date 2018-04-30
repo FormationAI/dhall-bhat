@@ -1,12 +1,2 @@
-    let Reader = ./Type
 
-in  let Functor = ../Functor/Type
-
-in    λ(r : Type)
-    → { map =
-            λ(a : Type)
-          → λ(b : Type)
-          → λ(g : a → b)
-          → λ(fa : Reader r a)
-          → ./mapReader  r a b g fa
-      }
+λ(r : Type) → ../ReaderT/Functor  r ../Id/Type  ../Id/Functor 

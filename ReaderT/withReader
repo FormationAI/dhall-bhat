@@ -1,0 +1,10 @@
+    let ReaderT = ./Type 
+
+in    λ(r : Type)
+    → λ(m : Type → Type)
+    → λ(a : Type)
+    → λ(rPrime : Type)
+    → λ(f : rPrime → r)
+    → λ(reader : ReaderT r m a)
+    → λ(newR : rPrime)
+    → reader (f newR)

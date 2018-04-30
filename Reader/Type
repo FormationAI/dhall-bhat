@@ -1,1 +1,1 @@
-λ(r : Type) → λ(a : Type) → r → a
+λ(r : Type) → λ(a : Type) → ../ReaderT/Type  r ../Id/Type  a

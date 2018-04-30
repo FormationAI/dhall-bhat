@@ -1,0 +1,17 @@
+    let Monad = ../Monad/Type 
+
+in  let Id = ./Type 
+
+in  (   { applicative =
+            ./Applicative 
+        , monad =
+            { bind =
+                  λ(a : Type)
+                → λ(b : Type)
+                → λ(fa : Id a)
+                → λ(k : a → Id b)
+                → k fa
+            }
+        }
+      : Monad Id
+    )

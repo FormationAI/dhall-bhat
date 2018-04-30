@@ -1,0 +1,2 @@
+
+λ(r : Type) → ../ReaderT/ask  r ../Id/Type  ../Id/Applicative 
