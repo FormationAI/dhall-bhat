@@ -1,9 +1,2 @@
-    let State = ./Type
 
-in    λ(s : Type)
-    → λ(a : Type)
-    → λ(b : Type)
-    → λ(f : { state : s, val : a } → { state : s, val : b })
-    → λ(state : State s a)
-    → λ(new : s)
-    → f (state new)
+λ(s : Type) → ../StateT/mapState  s ../Id/Type  ../Id/Functor 

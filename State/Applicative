@@ -1,23 +1,2 @@
-    let State = ./Type
 
-in  let Applicative = ../Applicative/Type
-
-in    λ(s : Type)
-    → { applicative =
-          { ap =
-                λ(a : Type)
-              → λ(b : Type)
-              → λ(g : State s (a → b))
-              → λ(fa : State s a)
-              → λ(new : s)
-              →     let gRes = g new
-
-                in  let res = fa gRes.state
-
-                in  { state = res.state, val = gRes.val res.val }
-          , pure =
-              λ(a : Type) → λ(x : a) → λ(new : s) → { state = new, val = x }
-          }
-      , functor =
-          ./Functor  s
-      }
+λ(s : Type) → ../StateT/Applicative  s ../Id/Type  ../Id/Monad 

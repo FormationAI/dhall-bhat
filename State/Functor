@@ -1,13 +1,2 @@
-    let State = ./Type
 
-in  let Functor = ../Functor/Type
-
-in    λ(s : Type)
-    → { map =
-            λ(a : Type)
-          → λ(b : Type)
-          → λ(g : a → b)
-          → λ(fa : State s a)
-          → λ(new : s)
-          → let res = fa new in { state = res.state, val = g res.val }
-      }
+λ(s : Type) → ../StateT/Functor  s ../Id/Type  ../Id/Functor 
