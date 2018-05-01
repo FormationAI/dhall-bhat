@@ -1,8 +1,1 @@
-    let State = ./Type
-
-in    λ(s : Type)
-    → λ(a : Type)
-    → λ(f : s → s)
-    → λ(state : State s a)
-    → λ(new : s)
-    → state (f new)
+λ(s : Type) → ../StateT/withState  s ../Id/Type 

@@ -1,0 +1,13 @@
+    let ReaderT = ./Type 
+
+in  let Functor = ../Functor/Type
+
+in    λ(r : Type)
+    → λ(m : Type → Type)
+    → λ(functor : Functor m)
+    → λ(a : Type)
+    → λ(b : Type)
+    → λ(f : a → b)
+    → λ(reader : ReaderT r m a)
+    → λ(newR : r)
+    → (./Functor  r m functor).map a b f reader newR

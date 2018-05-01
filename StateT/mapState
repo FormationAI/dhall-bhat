@@ -1,0 +1,4 @@
+  λ(s : Type)
+→ λ(m : Type → Type)
+→ λ(functor : ../Functor/Type  m)
+→ (../StateT/Functor  s m functor).map

@@ -1,9 +1,1 @@
-    let State = ./Type
-
-in  let Monad = ./Monad
-
-in    λ(s : Type)
-    → λ(f : s → s)
-    →     let bind = (Monad s).monad.bind
-
-      in  bind s {} (./get  s) (λ(state : s) → ./put  s (f state))
+λ(s : Type) → ../StateT/modify  s ../Id/Type  ../Id/Monad 

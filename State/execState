@@ -1,7 +1,1 @@
-    let State = ./Type
-
-in    λ(s : Type)
-    → λ(a : Type)
-    → λ(state : State s a)
-    → λ(new : s)
-    → (state new).state
+λ(s : Type) → ../StateT/execState  s ../Id/Type  ../Id/Monad 

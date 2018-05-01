@@ -1,2 +1,1 @@
-
-λ(s : Type) → λ(a : Type) → s → { state : s, val : a }
+λ(s : Type) → ../StateT/Type  s ../Id/Type 
