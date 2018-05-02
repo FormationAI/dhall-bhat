@@ -1,0 +1,1 @@
+λ(f : Type → Type) → λ(g : ../Monad/Type  f) → ({ map = g.map } : ./Type  f)

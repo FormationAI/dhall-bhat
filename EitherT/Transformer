@@ -1,10 +1,10 @@
-    let Transformer = ../Transformer/Type
+    let Transformer = ../Transformer/Type 
 
-in  let EitherT = ./Type
+in  let EitherT = ./Type 
 
-in  let Either = ../Either/Type
+in  let Either = ../Either/Type 
 
-in  let Monad = ../Monad/Type
+in  let Monad = ../Monad/Type 
 
 in    λ(a : Type)
     → (   { lift =
@@ -12,7 +12,7 @@ in    λ(a : Type)
               → λ(monad : Monad m)
               → λ(b : Type)
               → λ(ma : m b)
-              → monad.applicative.functor.map
+              → monad.map
                 b
                 (Either a b)
                 (λ(r : b) → < Right = r | Left : a >)

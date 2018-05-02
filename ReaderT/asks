@@ -1,4 +1,4 @@
-    let Applicative = ../Applicative/Type
+    let Applicative = ../Applicative/Type 
 
 in    λ(r : Type)
     → λ(m : Type → Type)
@@ -6,4 +6,4 @@ in    λ(r : Type)
     → λ(a : Type)
     → λ(f : r → a)
     → λ(env : r)
-    → applicative.applicative.pure a (f env)
+    → applicative.pure a (f env)
