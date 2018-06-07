@@ -5,7 +5,7 @@ in  let Foldable = ../Foldable/Type
 in  let Applicative = ../Applicative/Type
 
 in    λ(t : Type → Type)
-    → { fold :
+    → { foldable :
           Foldable t
       , functor :
           Functor t
