@@ -8,7 +8,7 @@
       → ∀(ts : t a)
       → f (t b)
     )
-→ (   { fold =
+→ (   { foldable =
           { fold =
                 λ(a : Type)
               → λ(ts : t a)
