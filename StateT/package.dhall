@@ -17,12 +17,12 @@ in    λ(s : Type)
           λ(monad : Monad m) → ./Monad  s m monad
       , Transformer =
           ./Transformer  s
-      , runStateT =
+      , runState =
           λ(state : StateT s m a) → λ(new : s) → state new
-      , evalStateT =
-          λ(monad : Monad m) → ./evalStateT  s m monad a
-      , execStateT =
-          λ(monad : Monad m) → ./execStateT  s m monad a
+      , evalState =
+          λ(monad : Monad m) → ./evalState  s m monad a
+      , execState =
+          λ(monad : Monad m) → ./execState  s m monad a
       , get =
           λ(monad : Monad m) → ./get  s m monad
       , gets =
