@@ -19,13 +19,13 @@ in  let liftA2
           → λ(fa : f a)
           → λ(fb : f b)
           →     let h =
-                      app.functor.map
+                      app.map
                       a
                       (b → c)
                       (λ(aVal : a) → λ(bVal : b) → g aVal bVal)
                       fa
 
-            in  app.applicative.ap b c h fb
+            in  app.ap b c h fb
 
 in  liftA2
 
