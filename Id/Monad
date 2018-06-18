@@ -1,17 +1,15 @@
-    let Monad = ../Monad/Type 
+    let Id = ./Type 
 
-in  let Id = ./Type 
+in  let Monad = ../Monad/Type 
 
-in  (   { applicative =
-            ./Applicative 
-        , monad =
-            { bind =
-                  λ(a : Type)
-                → λ(b : Type)
-                → λ(fa : Id a)
-                → λ(k : a → Id b)
-                → k fa
-            }
+in  (   { map =
+            ./Functor .map
+        , pure =
+            ./Applicative .pure
+        , ap =
+            ./Applicative .ap
+        , bind =
+            λ(a : Type) → λ(b : Type) → λ(fa : Id a) → λ(k : a → Id b) → k fa
         }
       : Monad Id
     )
