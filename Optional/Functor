@@ -1,6 +1,13 @@
-    let Functor = ../Functor/Type
-
-in  let map =
-          https://ipfs.io/ipfs/QmQ8w5PLcsNz56dMvRtq54vbuPe9cNnCCUXAQp6xLc6Ccx/Prelude/Optional/map
-
-in  ({ map = map } : Functor Optional)
+  { map =
+        λ(a : Type)
+      → λ(b : Type)
+      → λ(f : a → b)
+      → λ(o : Optional a)
+      → Optional/fold
+        a
+        o
+        (Optional b)
+        (λ(x : a) → [ f x ] : Optional b)
+        ([] : Optional b)
+  }
+: ./../Functor/Type Optional

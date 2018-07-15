@@ -1,26 +1,19 @@
-    let Applicative = ../Applicative/Type
+    let Applicative = ./../Applicative/Type
 
 in  let ReaderT = ./Type
 
 in    λ(r : Type)
     → λ(m : Type → Type)
     → λ(applicative : Applicative m)
-    → (   { functor =
-              ./Functor r m applicative.functor
-          , applicative =
-              { pure =
-                    λ(a : Type)
-                  → λ(x : a)
-                  → λ(env : r)
-                  → applicative.applicative.pure a x
-              , ap =
-                    λ(a : Type)
-                  → λ(b : Type)
-                  → λ(g : ReaderT r m (a → b))
-                  → λ(fa : ReaderT r m a)
-                  → λ(env : r)
-                  → applicative.applicative.ap a b (g env) (fa env)
-              }
+    →     ./Functor r m applicative.{ map }
+        ∧ { pure =
+              λ(a : Type) → λ(x : a) → λ(env : r) → applicative.pure a x
+          , ap =
+                λ(a : Type)
+              → λ(b : Type)
+              → λ(g : ReaderT r m (a → b))
+              → λ(fa : ReaderT r m a)
+              → λ(env : r)
+              → applicative.ap a b (g env) (fa env)
           }
-        : Applicative (ReaderT r m)
-      )
+      : Applicative (ReaderT r m)

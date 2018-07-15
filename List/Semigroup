@@ -1,5 +1,3 @@
-
-    let Semigroup = ../Semigroup/Type
-
-in    λ(a : Type)
-    → ({ op = λ(xs : List a) → λ(ys : List a) → xs # ys } : Semigroup (List a))
+  λ(a : Type)
+→   { op = λ(xs : List a) → λ(ys : List a) → xs # ys }
+  : ./../Semigroup/Type (List a)

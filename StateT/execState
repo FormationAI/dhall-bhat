@@ -1,4 +1,4 @@
-    let Monad = ../Monad/Type
+    let Monad = ./../Monad/Type
 
 in  let StateT = ./Type
 
@@ -8,10 +8,8 @@ in    λ(s : Type)
     → λ(a : Type)
     → λ(state : StateT s m a)
     → λ(env : s)
-    → monad.monad.bind
+    → monad.bind
       { val : a, state : s }
       s
       (state env)
-      (   λ(res : { val : a, state : s })
-        → monad.applicative.applicative.pure s res.state
-      )
+      (λ(res : { val : a, state : s }) → monad.pure s res.state)

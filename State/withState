@@ -1,1 +1,1 @@
-λ(s : Type) → ../StateT/withState  s ../Id/Type 
+λ(s : Type) → ./../StateT/withState s ./../Id/Type

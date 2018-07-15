@@ -1,1 +1,1 @@
-λ(r : Type) → ../ReaderT/local  r ../Id/Type 
+λ(r : Type) → ./../ReaderT/local r ./../Id/Type

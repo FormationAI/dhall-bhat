@@ -1,27 +1,21 @@
     let State = ./Type
 
 in    λ(s : Type)
-    → λ(a : Type)
-    → { evalState =
-          ./evalState  s a
-      , execState =
-          ./execState  s a
-      , get =
-          ./get  s
-      , mapState =
-          ./mapState  s a
-      , modify =
-          ./modify  s
-      , put =
-          ./put  s
-      , runState =
-          λ(state : State s a) → λ(new : s) → state new
-      , Applicative =
-          ./Applicative  s
-      , Functor =
-          ./Functor  s
-      , Monad =
-          ./Monad  s
-      , withState =
-          ./withState  s a
-      }
+    →   { evalState =
+            λ(a : Type) → ./evalState s a
+        , execState =
+            λ(a : Type) → ./execState s a
+        , get =
+            λ(a : Type) → ./get s
+        , mapState =
+            λ(a : Type) → ./mapState s a
+        , modify =
+            ./modify s
+        , put =
+            ./put s
+        , runState =
+            λ(a : Type) → λ(state : State s a) → λ(new : s) → state new
+        , withState =
+            λ(a : Type) → ./withState s a
+        }
+      ∧ ./Monad s

@@ -1,4 +1,4 @@
-    let Applicative = ./../Applicative/Type 
+    let Applicative = ./../Applicative/Type
 
 in  let Monad
         : (Type → Type) → Type
