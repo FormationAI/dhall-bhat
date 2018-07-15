@@ -1,0 +1,28 @@
+    let Applicative = ./../Applicative/Type
+
+in    λ(f : Type → Type)
+    → λ(g : Type → Type)
+    → λ(fApplicative : Applicative f)
+    → λ(gApplicative : Applicative g)
+    →     ./Functor f g fApplicative.{ map } gApplicative.{ map }
+        ∧ { pure =
+                λ(a : Type)
+              → λ(x : a)
+              → fApplicative.pure (g a) (gApplicative.pure a x)
+          , ap =
+                λ(a : Type)
+              → λ(b : Type)
+              → λ(k : ./Type f g (a → b))
+              → λ(fga : ./Type f g a)
+              → fApplicative.ap
+                (g a)
+                (g b)
+                ( fApplicative.map
+                  (g (a → b))
+                  (g a → g b)
+                  (λ(tob : g (a → b)) → gApplicative.ap a b tob)
+                  k
+                )
+                fga
+          }
+      : Applicative (./Type f g)

@@ -1,0 +1,20 @@
+    let Foldable = ./../Foldable/Type
+
+in    λ(f : Type → Type)
+    → λ(g : Type → Type)
+    → λ(fFoldable : Foldable f)
+    → λ(gFoldable : Foldable g)
+    →   { fold =
+              λ(a : Type)
+            → λ(compose : ./Type f g a)
+            → λ(b : Type)
+            → λ(k : a → b → b)
+            → λ(z : b)
+            → fFoldable.fold
+              (g a)
+              compose
+              b
+              (λ(ga : g a) → λ(zz : b) → gFoldable.fold a ga b k zz)
+              z
+        }
+      : Foldable (./Type f g)

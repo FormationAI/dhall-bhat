@@ -1,0 +1,18 @@
+    let Functor = ./../Functor/Type
+
+in    λ(f : Type → Type)
+    → λ(g : Type → Type)
+    → λ(fFunctor : Functor f)
+    → λ(gFunctor : Functor g)
+    →   { map =
+              λ(a : Type)
+            → λ(b : Type)
+            → λ(k : a → b)
+            → λ(compose : ./Type f g a)
+            → fFunctor.map
+              (g a)
+              (g b)
+              (λ(ga : g a) → gFunctor.map a b k ga)
+              compose
+        }
+      : Functor (./Type f g)
