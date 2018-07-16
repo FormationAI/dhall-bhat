@@ -14,13 +14,11 @@ in    λ(f : Type → Type)
               → λ(a : Type)
               → λ(b : Type)
               → λ(k : a → fA b)
-              → λ(compose : ./Type f g a)
               → fTraversable.traverse
                 fA
                 applicative
                 (g a)
                 (g b)
-                (λ(ga : g a) → gTraversable.traverse fA applicative a b k ga)
-                compose
+                (gTraversable.traverse fA applicative a b k)
           }
       : Traversable (./Type f g)
