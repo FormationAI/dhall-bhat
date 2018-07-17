@@ -1,20 +1,19 @@
-    let Functor = ../Functor/Type
+    let Functor = ./../Functor/Type
 
 in  let EitherT = ./Type
 
-in  let Either = ../Either/Type
+in  let Either = ./../Either/Type
 
-in  let EitherF = ../Either/Functor
+in  let EitherF = ./../Either/Functor
 
 in    λ(a : Type)
     → λ(m : Type → Type)
     → λ(functor : Functor m)
-    → (   { map =
-                λ(b : Type)
-              → λ(c : Type)
-              → λ(f : b → c)
-              → λ(fa : EitherT a m b)
-              → functor.map (Either a b) (Either a c) ((EitherF a).map b c f) fa
-          }
-        : Functor (EitherT a m)
-      )
+    →   { map =
+              λ(b : Type)
+            → λ(c : Type)
+            → λ(f : b → c)
+            → λ(fa : EitherT a m b)
+            → functor.map (Either a b) (Either a c) ((EitherF a).map b c f) fa
+        }
+      : Functor (EitherT a m)

@@ -5,22 +5,19 @@ in  let fold = (./Foldable).fold
 
 in  let map = (./Functor).map
 
-in    { functor =
-          ./Functor
-      , applicative =
-          { pure =
-              λ(a : Type) → λ(x : a) → [ x ] : Optional a
-          , ap =
-                λ(a : Type)
-              → λ(b : Type)
-              → λ(g : Optional (a → b))
-              → λ(fa : Optional a)
-              → fold
-                (a → b)
-                g
-                (Optional b)
-                (λ(k : a → b) → λ(o : Optional b) → map a b k fa)
-                ([] : Optional b)
-          }
-      }
+in      ./Functor
+      ∧ { pure =
+            λ(a : Type) → λ(x : a) → [ x ] : Optional a
+        , ap =
+              λ(a : Type)
+            → λ(b : Type)
+            → λ(g : Optional (a → b))
+            → λ(fa : Optional a)
+            → fold
+              (a → b)
+              g
+              (Optional b)
+              (λ(k : a → b) → λ(o : Optional b) → map a b k fa)
+              ([] : Optional b)
+        }
     : Applicative Optional

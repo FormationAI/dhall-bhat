@@ -1,4 +1,4 @@
-    let StateT = ./Type 
+    let StateT = ./Type
 
 in    λ(s : Type)
     → λ(m : Type → Type)

@@ -1,11 +1,12 @@
-    let Functor = ../Functor/Type
+    let Functor = ./../Functor/Type 
 
 in  let Applicative
-        : (Type → Type) -> Type
-        =   λ(f : Type -> Type) ->
-            { ap   :
+        : (Type → Type) → Type
+        =   λ(f : Type → Type)
+          → { ap :
                 ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-            , pure : ∀(a : Type) → a → f a
+            , pure :
+                ∀(a : Type) → a → f a
             }
 
-in  λ(f : Type -> Type) -> { applicative : Applicative f, functor : Functor f }
+in  λ(f : Type → Type) → Functor f ⩓ Applicative f

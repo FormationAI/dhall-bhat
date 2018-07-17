@@ -3,17 +3,21 @@
 in  let map = (./Functor).map
 
 in  let concat =
-          https://ipfs.io/ipfs/QmQ8w5PLcsNz56dMvRtq54vbuPe9cNnCCUXAQp6xLc6Ccx/Prelude/Optional/concat
+            λ(a : Type)
+          → λ(x : Optional (Optional a))
+          → Optional/fold
+            (Optional a)
+            x
+            (Optional a)
+            (λ(y : Optional a) → y)
+            ([] : Optional a)
 
-in    { applicative =
-          ./Applicative
-      , monad =
-          { bind =
-                λ(a : Type)
-              → λ(b : Type)
-              → λ(fa : Optional a)
-              → λ(k : a → Optional b)
-              → concat b (map a (Optional b) k fa)
-          }
-      }
+in      ./Applicative
+      ∧ { bind =
+              λ(a : Type)
+            → λ(b : Type)
+            → λ(fa : Optional a)
+            → λ(k : a → Optional b)
+            → concat b (map a (Optional b) k fa)
+        }
     : Monad Optional

@@ -1,6 +1,2 @@
-    let Functor
-        : (Type → Type) → Type
-        =   λ(f : Type → Type)
-          → { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }
-
-in  Functor
+  λ(f : Type → Type)
+→ { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }

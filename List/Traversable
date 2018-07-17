@@ -6,12 +6,9 @@ in  let liftA2 = ./../Applicative/liftA2
 
 in  let fold = (./Foldable).fold
 
-in  { foldable =
-        ./Foldable
-    , functor =
-        ./Functor
-    , traversable =
-        { traverse =
+in      ./Foldable
+      ∧ ./Functor
+      ∧ { traverse =
               λ(f : Type → Type)
             → λ(applicative : Applicative f)
             → λ(a : Type)
@@ -32,6 +29,6 @@ in  { foldable =
                   ts
                   (f (List b))
                   (λ(x : a) → λ(y : f (List b)) → liftCons (g x) y)
-                  (applicative.applicative.pure (List b) ([] : List b))
+                  (applicative.pure (List b) ([] : List b))
         }
-    }
+    : Traversable List

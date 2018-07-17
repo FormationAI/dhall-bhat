@@ -1,2 +1,2 @@
   { map = λ(a : Type) → λ(b : Type) → λ(f : a → b) → f }
-: ../Functor/Type  ./Type 
+: ./../Functor/Type ./Type

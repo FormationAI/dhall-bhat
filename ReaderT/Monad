@@ -1,21 +1,17 @@
-    let Monad = ../Monad/Type
+    let Monad = ./../Monad/Type
 
 in  let ReaderT = ./Type
 
 in    λ(r : Type)
     → λ(m : Type → Type)
     → λ(monad : Monad m)
-    → (   { applicative =
-              ./Applicative  r m monad.applicative
-          , monad =
-              { bind =
-                    λ(a : Type)
-                  → λ(b : Type)
-                  → λ(fa : ReaderT r m a)
-                  → λ(k : a → ReaderT r m b)
-                  → λ(env : r)
-                  → monad.monad.bind a b (fa env) (λ(x : a) → k x env)
-              }
+    →     ./Applicative r m monad.{ ap, map, pure }
+        ∧ { bind =
+                λ(a : Type)
+              → λ(b : Type)
+              → λ(fa : ReaderT r m a)
+              → λ(k : a → ReaderT r m b)
+              → λ(env : r)
+              → monad.bind a b (fa env) (λ(x : a) → k x env)
           }
-        : Monad (ReaderT r m)
-      )
+      : Monad (ReaderT r m)

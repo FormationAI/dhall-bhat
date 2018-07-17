@@ -1,3 +1,1 @@
-    let Semigroup = ../Semigroup/Type
-
-in  λ(m : Type) → { semigroup : Semigroup m, unit : m }
+λ(m : Type) → ./../Semigroup/Type m ⩓ { unit : m }

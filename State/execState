@@ -1,1 +1,1 @@
-λ(s : Type) → ../StateT/execState  s ../Id/Type  ../Id/Monad 
+λ(s : Type) → ./../StateT/execState s ./../Id/Type ./../Id/Monad

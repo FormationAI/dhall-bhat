@@ -1,15 +1,13 @@
-    let Functor = ./../Functor/Type
-
-in  let map =
-            λ(a : Type)
-          → λ(b : Type)
-          → λ(f : a → b)
-          → λ(o : Optional a)
-          → Optional/fold
-            a
-            o
-            (Optional b)
-            (λ(x : a) → [ f x ] : Optional b)
-            ([] : Optional b)
-
-in  { map = map } : Functor Optional
+  { map =
+        λ(a : Type)
+      → λ(b : Type)
+      → λ(f : a → b)
+      → λ(o : Optional a)
+      → Optional/fold
+        a
+        o
+        (Optional b)
+        (λ(x : a) → [ f x ] : Optional b)
+        ([] : Optional b)
+  }
+: ./../Functor/Type Optional

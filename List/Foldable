@@ -1,3 +1,1 @@
-    let Foldable = ../Foldable/Type
-
-in  ({ fold = List/fold } : Foldable List)
+{ fold = List/fold } : ./../Foldable/Type List
