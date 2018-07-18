@@ -6,14 +6,9 @@ in  let Either = ./../Either/Type
 
 in  let EitherF = ./../Either/Functor
 
+in  let ComposeF = ./../Compose/Functor
+
 in    λ(a : Type)
     → λ(m : Type → Type)
     → λ(functor : Functor m)
-    →   { map =
-              λ(b : Type)
-            → λ(c : Type)
-            → λ(f : b → c)
-            → λ(fa : EitherT a m b)
-            → functor.map (Either a b) (Either a c) ((EitherF a).map b c f) fa
-        }
-      : Functor (EitherT a m)
+    → ComposeF m (Either a) functor (EitherF a) : Functor (EitherT a m)
