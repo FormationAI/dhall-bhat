@@ -1,18 +1,14 @@
     let Foldable = ./../Foldable/Type
 
+in  let Traversable = ./../Traversable/Type
+
+in  let Compose = ./Type
+
 in    λ(f : Type → Type)
     → λ(g : Type → Type)
-    → λ(fFoldable : Foldable f)
-    → λ(gFoldable : Foldable g)
-    →   { fold =
-              λ(a : Type)
-            → λ(compose : ./Type f g a)
-            → λ(b : Type)
-            → λ(k : a → b → b)
-            → fFoldable.fold
-              (g a)
-              compose
-              b
-              (λ(ga : g a) → gFoldable.fold a ga b k)
-        }
+    → λ(fTraversable : Traversable f)
+    → λ(gTraversable : Traversable g)
+    →   ./../Traversable/extractFoldable
+        (Compose f g)
+        (./Traversable f g fTraversable gTraversable)
       : Foldable (./Type f g)

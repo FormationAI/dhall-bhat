@@ -1,13 +1,14 @@
     let Functor = ./../Functor/Type
 
+in  let Traversable = ./../Traversable/Type
+
+in  let Compose = ./Type
+
 in    λ(f : Type → Type)
     → λ(g : Type → Type)
-    → λ(fFunctor : Functor f)
-    → λ(gFunctor : Functor g)
-    →   { map =
-              λ(a : Type)
-            → λ(b : Type)
-            → λ(k : a → b)
-            → fFunctor.map (g a) (g b) (gFunctor.map a b k)
-        }
-      : Functor (./Type f g)
+    → λ(fTraversable : Traversable f)
+    → λ(gTraversable : Traversable g)
+    →   ./../Traversable/extractFunctor
+        (Compose f g)
+        (./Traversable f g fTraversable gTraversable)
+      : Functor (Compose f g)
