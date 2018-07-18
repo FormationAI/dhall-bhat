@@ -1,8 +1,8 @@
-    let Applicative = ./../../Applicative/Type
+    let Applicative = ./../Applicative/Type
 
 in  let NonEmpty = ./Type
 
-in  let List/Applicative = ./../Applicative
+in  let List/Applicative = ./../List/Applicative
 
 in      ./Functor
       ∧ { pure =
@@ -15,7 +15,11 @@ in      ./Functor
             → { head =
                   nelF.head nel.head
               , tail =
-                  List/Applicative.ap a b (./toList (a → b) nelF) (./toList a nel)
+                  List/Applicative.ap
+                  a
+                  b
+                  (./toList (a → b) nelF)
+                  (./toList a nel)
               }
         }
     : Applicative NonEmpty
