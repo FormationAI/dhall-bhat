@@ -1,0 +1,14 @@
+    let Functor = ./../../Functor/Type
+
+in  let NonEmpty = ./Type
+
+in  let List/Functor = ./../Functor
+
+in    { map =
+            λ(a : Type)
+          → λ(b : Type)
+          → λ(f : a → b)
+          → λ(nel : NonEmpty a)
+          → { head = f nel.head, tail = List/Functor.map a b f nel.tail }
+      }
+    : Functor NonEmpty

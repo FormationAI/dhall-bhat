@@ -1,0 +1,14 @@
+    let Foldable = ./../../Foldable/Type
+
+in  let NonEmpty = ./Type
+
+in  let List/Foldable = ./../Foldable
+
+in    { fold =
+            λ(a : Type)
+          → λ(nel : NonEmpty a)
+          → λ(b : Type)
+          → λ(f : a → b → b)
+          → List/Foldable.fold a (./toList a nel) b f
+      }
+    : Foldable NonEmpty

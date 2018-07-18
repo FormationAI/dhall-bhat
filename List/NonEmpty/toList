@@ -1,0 +1,1 @@
+λ(a : Type) → λ(nel : ./Type a) → [ nel.head ] # nel.tail
