@@ -1,1 +1,10 @@
-λ(r : Type) → ./../ReaderT/Functor r ./../Id/Type ./../Id/Functor
+  λ(r : Type)
+→   { map =
+          λ(a : Type)
+        → λ(b : Type)
+        → λ(g : a → b)
+        → λ(reader : r → a)
+        → λ(rr : r)
+        → g (reader rr)
+    }
+  : ./../Functor/Type (./Type r)

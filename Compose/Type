@@ -1,0 +1,1 @@
+λ(f : Type → Type) → λ(g : Type → Type) → λ(a : Type) → f (g a)
