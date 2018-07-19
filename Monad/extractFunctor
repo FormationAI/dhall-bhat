@@ -2,10 +2,4 @@
 
 in  let Monad = ./Type
 
-in  let extractFunctor = ./../Applicative/extractFunctor
-
-in  let extractApplicative = ./../Monad/extractApplicative
-
-in    λ(f : Type → Type)
-    → λ(monad : Monad f)
-    → extractFunctor f (extractApplicative f monad) : Functor f
+in  λ(f : Type → Type) → λ(t : Monad f) → t.{ map } : Functor f
