@@ -1,0 +1,11 @@
+    let Functor = ./../Functor/Type
+
+in  let Monad = ./Type
+
+in  let extractFunctor = ./../Applicative/extractFunctor
+
+in  let extractApplicative = ./../Monad/extractApplicative
+
+in    λ(f : Type → Type)
+    → λ(monad : Monad f)
+    → extractFunctor f (extractApplicative f monad) : Functor f
