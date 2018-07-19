@@ -8,7 +8,9 @@ in    λ(a : Type)
     → λ(g : b → d)
     → λ(e : Either a b)
     → merge
-      { Left  = λ(x : a) → < Left = f x | Right : d >
-      , Right = λ(y : b) → < Right = g y | Left : c >
+      { Left =
+          λ(x : a) → < Left = f x | Right : d >
+      , Right =
+          λ(y : b) → < Right = g y | Left : c >
       }
       e

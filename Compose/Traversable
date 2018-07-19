@@ -1,4 +1,4 @@
-let Traversable = ./../Traversable/Type
+    let Traversable = ./../Traversable/Type
 
 in  let Applicative = ./../Applicative/Type
 

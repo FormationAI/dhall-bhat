@@ -3,4 +3,4 @@
 in    λ(a : Type)
     → λ(b : Type)
     → λ(eithers : List (Either a b))
-    → (./partition  a b eithers).lefts
+    → (./partition a b eithers).lefts
