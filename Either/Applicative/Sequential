@@ -1,9 +1,9 @@
-    let Applicative = ./../Applicative/Type
+    let Applicative = ./../../Applicative/Type
 
-in  let Either = ./Type
+in  let Either = ./../Type
 
 in    λ(a : Type)
-    →     ./Functor a
+    →     ./../Functor a
         ∧ { pure =
               λ(b : Type) → λ(x : b) → < Right = x | Left : a >
           , ap =
@@ -15,7 +15,9 @@ in    λ(a : Type)
                 { Left =
                     λ(l : a) → < Left = l | Right : c >
                 , Right =
-                    let map = (./Functor a).map in λ(f : b → c) → map b c f fa
+                        let map = (./../Functor a).map
+                    
+                    in  λ(f : b → c) → map b c f fa
                 }
                 g
           }

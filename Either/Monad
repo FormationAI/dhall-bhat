@@ -3,7 +3,7 @@
 in  let Either = ./Type
 
 in    λ(a : Type)
-    →     ./Applicative a
+    →     ./Applicative/Sequential a
         ∧ { bind =
                 λ(b : Type)
               → λ(c : Type)
