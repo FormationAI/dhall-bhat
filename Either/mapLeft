@@ -5,4 +5,4 @@ in    λ(a : Type)
     → λ(c : Type)
     → λ(f : a → c)
     → λ(e : Either a b)
-    → ./mapBoth  a b c b f (λ(x : b) → x) e
+    → ./mapBoth a b c b f (λ(x : b) → x) e
