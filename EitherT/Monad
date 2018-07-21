@@ -9,7 +9,7 @@ in  let fold = ./../Either/fold
 in    λ(a : Type)
     → λ(m : Type → Type)
     → λ(monad : Monad m)
-    →     ./Applicative
+    →     ./Applicative/Sequential
           a
           m
           { map = monad.map, ap = monad.ap, pure = monad.pure }
