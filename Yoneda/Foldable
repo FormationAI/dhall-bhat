@@ -8,6 +8,6 @@ in    λ(f : Type → Type)
             → λ(b : Type)
             → λ(k : a → b → b)
             → λ(z : b)
-            → foldable.fold a (./lowerYoneda f a yoneda) b k z
+            → foldable.fold a (./lower f a yoneda) b k z
         }
       : Foldable (./Type f)

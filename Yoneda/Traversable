@@ -16,14 +16,7 @@ in    λ(f : Type → Type)
               → applicative.map
                 (f b)
                 (./Type f b)
-                (./liftYoneda f traversable.{ map } b)
-                ( traversable.traverse
-                  g
-                  applicative
-                  a
-                  b
-                  k
-                  (./lowerYoneda f a yoneda)
-                )
+                (./lift f traversable.{ map } b)
+                (traversable.traverse g applicative a b k (./lower f a yoneda))
           }
       : Traversable (./Type f)
