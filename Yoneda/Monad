@@ -1,0 +1,15 @@
+    let Monad = ./../Monad/Type
+
+in    λ(f : Type → Type)
+    → λ(monad : Monad f)
+    →     ./Applicative f (./../Monad/extractApplicative f monad)
+        ∧ { bind =
+                λ(a : Type)
+              → λ(b : Type)
+              → λ(yoneda : ./Type f a)
+              → λ(k : a → ./Type f b)
+              → λ(c : Type)
+              → λ(l : b → c)
+              → monad.bind a c (./lowerYoneda f a yoneda) (λ(x : a) → k x c l)
+          }
+      : Monad (./Type f)

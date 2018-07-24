@@ -1,0 +1,20 @@
+    let compose =
+            λ(a : Type)
+          → λ(b : Type)
+          → λ(c : Type)
+          → λ(f : b → c)
+          → λ(g : a → b)
+          → λ(x : a)
+          → f (g x)
+
+in    λ(f : Type → Type)
+    →   { map =
+              λ(a : Type)
+            → λ(b : Type)
+            → λ(g : a → b)
+            → λ(yoneda : ./Type f a)
+            → λ(c : Type)
+            → λ(k : b → c)
+            → yoneda c (compose a b c k g)
+        }
+      : ./../Functor/Type (./Type f)
