@@ -1,7 +1,16 @@
     let Monad = ./../Monad/Type
 
 in  let concatMap =
-          https://ipfs.io/ipfs/QmQ8w5PLcsNz56dMvRtq54vbuPe9cNnCCUXAQp6xLc6Ccx/Prelude/List/concatMap
+            λ(a : Type)
+          → λ(b : Type)
+          → λ(f : a → List b)
+          → λ(xs : List a)
+          → List/build
+            b
+            (   λ(list : Type)
+              → λ(cons : b → list → list)
+              → List/fold a xs list (λ(x : a) → List/fold b (f x) list cons)
+            )
 
 in      ./Applicative
       ∧ { bind =
