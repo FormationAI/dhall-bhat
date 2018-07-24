@@ -1,0 +1,4 @@
+  λ(f : Type → Type)
+→ λ(a : Type)
+→ λ(yoneda : ./Type f a)
+→ yoneda a (λ(x : a) → x)
