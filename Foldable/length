@@ -1,0 +1,5 @@
+  λ(t : Type → Type)
+→ λ(foldable : ./Type t)
+→ λ(a : Type)
+→ λ(ts : t a)
+→ foldable.fold a ts Natural (λ(_ : a) → λ(i : Natural) → i + 1) 0
