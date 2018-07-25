@@ -1,0 +1,10 @@
+    let Monoid = ./../Monoid/Type
+
+in  let Compose = ./Type
+
+in    λ(f : Type → Type)
+    → λ(g : Type → Type)
+    → λ(a : Type)
+    → λ(monoid : Monoid (f (g a)))
+    →   ./Semigroup f g a monoid.{ op } ∧ { unit = monoid.unit }
+      : Monoid (Compose f g a)

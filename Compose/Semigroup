@@ -1,0 +1,10 @@
+    let Semigroup = ./../Semigroup/Type
+
+in  let Compose = ./Type
+
+in    λ(f : Type → Type)
+    → λ(g : Type → Type)
+    → λ(a : Type)
+    → λ(semi : Semigroup (f (g a)))
+    →   { op = λ(x : Compose f g a) → λ(y : Compose f g a) → semi.op x y }
+      : Semigroup (Compose f g a)
