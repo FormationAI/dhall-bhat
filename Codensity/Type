@@ -1,0 +1,1 @@
+λ(m : Type → Type) → λ(a : Type) → ∀(b : Type) → (a → m b) → m b
