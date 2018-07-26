@@ -1,0 +1,11 @@
+  λ(m : Type → Type)
+→   { map =
+          λ(a : Type)
+        → λ(b : Type)
+        → λ(f : a → b)
+        → λ(codensity : ./Type m a)
+        → λ(c : Type)
+        → λ(k : b → m c)
+        → codensity c (λ(x : a) → k (f x))
+    }
+  : ./../Functor/Type (./Type m)
