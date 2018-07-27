@@ -1,11 +1,10 @@
-  λ(t : Type → Type)
-→   { lift =
-          λ(m : Type → Type)
-        → λ(monad : ./../Monad/Type m)
-        → λ(a : Type)
-        → λ(ma : m a)
-        → λ(b : Type)
-        → λ(k : a → m b)
-        → monad.bind a b ma k
-    }
-  : ./../Transformer/Type ./Type
+  { lift =
+        λ(m : Type → Type)
+      → λ(monad : ./../Monad/Type m)
+      → λ(a : Type)
+      → λ(ma : m a)
+      → λ(b : Type)
+      → λ(k : a → m b)
+      → monad.bind a b ma k
+  }
+: ./../Transformer/Type ./Type
