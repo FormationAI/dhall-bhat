@@ -1,5 +1,1 @@
-  λ(m : Type → Type)
-→ λ(app : ./../Applicative/Type m)
-→ λ(a : Type)
-→ λ(codensity : ./Type m a)
-→ codensity a (app.pure a)
+λ(m : Type → Type) → ./../Ran/lower m m
