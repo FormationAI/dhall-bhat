@@ -1,0 +1,11 @@
+  λ(p : Type → Type → Type)
+→ { bimap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(c : Type)
+      → ∀(d : Type)
+      → ∀(f : a → b)
+      → ∀(g : c → d)
+      → ∀(pac : p a c)
+      → p b d
+  }
