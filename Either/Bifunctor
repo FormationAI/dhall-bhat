@@ -1,0 +1,15 @@
+    let Bifunctor = ./../Bifunctor/Type
+
+in  let Either = ./Type
+
+in    { bimap =
+            λ(a : Type)
+          → λ(b : Type)
+          → λ(c : Type)
+          → λ(d : Type)
+          → λ(f : a → b)
+          → λ(g : c → d)
+          → λ(e : Either a c)
+          → ./mapBoth a c b d f g e
+      }
+    : Bifunctor Either
