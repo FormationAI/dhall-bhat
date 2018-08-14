@@ -4,8 +4,8 @@
       → ∀(b : Type)
       → ∀(c : Type)
       → ∀(d : Type)
-      → ∀(f : a → b)
-      → ∀(g : c → d)
-      → ∀(pac : p a c)
+      → (a → b)
+      → (c → d)
+      → p a c
       → p b d
   }
