@@ -6,5 +6,4 @@ in    λ(p : Type → Type → Type)
     → λ(b : Type)
     → λ(c : Type)
     → λ(f : a → b)
-    → λ(pac : p a c)
-    → bifunctor.bimap a b c c f (λ(x : c) → x) pac
+    → bifunctor.bimap a b c c f (λ(x : c) → x)
