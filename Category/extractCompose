@@ -1,3 +1,0 @@
-  λ(f : Type → Type → Type)
-→ λ(category : ./type f)
-→ { compose = category.compose } : ./../Compose/class f

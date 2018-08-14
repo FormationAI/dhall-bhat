@@ -1,1 +1,2 @@
-λ(f : Type → Type → Type) → { id : ∀(a : Type) → f a a } ⩓ ./../Compose/class f
+  λ(f : Type → Type → Type)
+→ { id : ∀(a : Type) → f a a } ⩓ ./../Semigroupoid/type f

@@ -1,3 +1,0 @@
-  λ(m : Type → Type)
-→ λ(monad : ./../Monad/Type m)
-→ ./../Category/extractCompose (./type m) (./category m monad)

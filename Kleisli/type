@@ -1,4 +1,1 @@
-\(m : Type -> Type)
--> \(a : Type)
--> \(b : Type)
--> a -> m b
+λ(m : Type → Type) → λ(a : Type) → λ(b : Type) → a → m b
