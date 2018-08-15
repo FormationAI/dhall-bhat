@@ -2,5 +2,4 @@
 
 in  let Either = ./Type
 
-in    { bimap = λ(a : Type) → λ(b : Type) → λ(c : Type) → ./mapBoth a c b }
-    : Bifunctor Either
+in  { bimap = ./mapBoth } : Bifunctor Either
