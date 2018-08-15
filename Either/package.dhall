@@ -35,4 +35,4 @@ in    λ(a : Type)
         , rights =
             λ(eithers : List (Either a b)) → ./rights a b eithers
         }
-      ∧ ./Monad a ⫽ ./Traversable a
+      ∧ ./Monad a ⫽ ./Traversable a ⫽ ./Bifunctor
