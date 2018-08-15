@@ -12,6 +12,4 @@ in    λ(f : Type → Type)
           applicative.map
       , pure =
           applicative.pure
-      , rightApConst =
-          ./rightApConst f applicative
       }

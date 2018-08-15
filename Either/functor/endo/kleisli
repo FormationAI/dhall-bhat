@@ -1,0 +1,18 @@
+  λ(m : Type → Type)
+→ λ(applicative : ./../../../Applicative/Type m)
+→ λ(a : Type)
+→   { map =
+          λ(b : Type)
+        → λ(c : Type)
+        → λ(f : b → m c)
+        → ( ./../fromProduct/bifunctor
+            m
+            (./../../../Applicative/extractFunctor m applicative)
+          ).map
+          a
+          a
+          b
+          c
+          { _1 = applicative.pure, _2 = f }
+    }
+  : ./../../../Functor/Endo/Kleisli m (./../../Type a)

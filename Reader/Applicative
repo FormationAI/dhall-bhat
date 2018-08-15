@@ -3,7 +3,7 @@
 in  let Applicative = ./../Applicative/Type
 
 in    λ(r : Type)
-    →     ./Functor r
+    →     ./functor/endo/types r
         ∧ { pure =
               λ(a : Type) → λ(x : a) → λ(env : r) → x
           , ap =

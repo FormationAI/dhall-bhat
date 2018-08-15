@@ -1,4 +1,4 @@
-    let Functor = ./../Functor/Type
+    let Functor = ./../Functor/Endo/Types
 
 in  let Applicative = ./Type
 

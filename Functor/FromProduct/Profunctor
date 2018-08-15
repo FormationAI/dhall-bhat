@@ -1,0 +1,7 @@
+{- A profunctor `C ↛ D` is represented as the bifunctor `(D^op, C) → Set`. This
+   is much more general than Haskell’s `Profunctor`. That would be akin to
+  `./Profunctor ../../FunctionOp/type ../../Function/type`.
+-}
+  λ(dOp : Type → Type → Type)
+→ λ(c : Type → Type → Type)
+→ ./Bifunctor dOp c ./../../Function/type

@@ -2,7 +2,7 @@
 
 in    λ(f : Type → Type)
     → λ(applicative : Applicative f)
-    →     ./Functor f
+    →     ./functor/endo/types f
         ∧ { pure =
                 λ(a : Type)
               → λ(x : a)

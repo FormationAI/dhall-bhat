@@ -4,7 +4,7 @@ in  let NonEmpty = ./Type
 
 in  let List/Applicative = ./../List/Applicative
 
-in      ./Functor
+in      ./functor/endo/types
       ∧ { pure =
             λ(a : Type) → λ(x : a) → { head = x, tail = [] : List a }
         , ap =

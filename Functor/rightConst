@@ -1,9 +1,0 @@
-    let Functor = ./Type
-
-in    λ(f : Type → Type)
-    → λ(functor : Functor f)
-    → λ(a : Type)
-    → λ(b : Type)
-    → λ(fa : f a)
-    → λ(val : b)
-    → functor.map a b (λ(aVal : a) → val) fa

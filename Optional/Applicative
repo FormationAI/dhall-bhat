@@ -3,9 +3,9 @@
 
 in  let fold = (./Foldable).fold
 
-in  let map = (./Functor).map
+in  let map = (./functor/endo/types).map
 
-in      ./Functor
+in      ./functor/endo/types
       ∧ { pure =
             λ(a : Type) → λ(x : a) → [ x ] : Optional a
         , ap =

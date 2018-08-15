@@ -1,0 +1,7 @@
+{- This is much more general than Haskell’s `Bifunctor`.
+  `./Pair ../../Function/type` is closer to that.
+-}
+  λ(c : Type → Type → Type)
+→ λ(d : Type → Type → Type)
+→ λ(e : Type → Type → Type)
+→ ./type (./../../Category/Product c d) e

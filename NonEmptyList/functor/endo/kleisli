@@ -1,0 +1,23 @@
+  λ(m : Type → Type)
+→ λ(applicative : ./../../../Applicative/Type m)
+→     let NonEmpty = ./../../Type
+  
+  in  let List/mFunctor = ./../../../List/functor/endo/kleisli m applicative
+  
+  in    { map =
+              λ(a : Type)
+            → λ(b : Type)
+            → λ(f : a → m b)
+            → λ(fa : NonEmpty a)
+            → applicative.ap
+              (List b)
+              (NonEmpty b)
+              ( applicative.map
+                b
+                (List b → NonEmpty b)
+                (λ(h : b) → λ(t : List b) → { head = h, tail = t })
+                (f fa.head)
+              )
+              (List/mFunctor.map a b f fa.tail)
+        }
+      : ./../../../Functor/Endo/Kleisli m NonEmpty

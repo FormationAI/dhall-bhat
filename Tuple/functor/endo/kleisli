@@ -1,0 +1,13 @@
+    let Tuple = ./../../Type
+
+in    λ(m : Type → Type)
+    → λ(functor : ./../../../Functor/Endo/Types m)
+    → λ(a : Type)
+    →   { map =
+              λ(b : Type)
+            → λ(c : Type)
+            → λ(f : b → m c)
+            → λ(t : Tuple a b)
+            → functor.map c (Tuple a c) (λ(x : c) → t ⫽ { _2 = x }) (f t._2)
+        }
+      : ./../../../Functor/Endo/Kleisli m (Tuple a)

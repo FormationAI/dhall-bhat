@@ -2,14 +2,14 @@
 
 in  let Applicative = ./../Applicative/Type
 
-in  let extractFunctor = ./../Monad/extractFunctor
+in  let extractFunctor = ./../Monad/extractEndofunctor
 
 in  let StateT = ./Type
 
 in    λ(s : Type)
     → λ(m : Type → Type)
     → λ(monad : Monad m)
-    →     ./Functor s m (extractFunctor m monad)
+    →     ./functor/endo/types s m (extractFunctor m monad)
         ∧ { ap =
                 λ(a : Type)
               → λ(b : Type)

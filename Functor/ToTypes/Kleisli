@@ -1,0 +1,4 @@
+{- A functor from a Kleisli category to the category of Dhall types. -}
+  λ(m : Type → Type)
+→ λ(f : Type → Type)
+→ { map : ∀(a : Type) → ∀(b : Type) → (a → m b) → f a → f b }

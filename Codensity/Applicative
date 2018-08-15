@@ -1,5 +1,5 @@
   λ(m : Type → Type)
-→     ./Functor m
+→     ./functor/endo/types m
     ∧ { pure =
           λ(a : Type) → λ(x : a) → λ(b : Type) → λ(k : a → m b) → k x
       , ap =

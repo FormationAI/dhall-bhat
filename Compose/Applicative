@@ -4,7 +4,7 @@ in    λ(f : Type → Type)
     → λ(g : Type → Type)
     → λ(fApplicative : Applicative f)
     → λ(gApplicative : Applicative g)
-    →     ./Functor f g fApplicative.{ map } gApplicative.{ map }
+    →     ./functor/endo/types f g fApplicative.{ map } gApplicative.{ map }
         ∧ { pure =
                 λ(a : Type)
               → λ(x : a)

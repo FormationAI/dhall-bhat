@@ -1,3 +1,0 @@
-    let Traversable = ./Type
-
-in  λ(f : Type → Type) → λ(t : Traversable f) → t.{ map } : ./../Functor/Type f

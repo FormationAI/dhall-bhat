@@ -1,0 +1,12 @@
+    let Endofunctor = ./../../../Functor/Endo/Types
+
+in  let Reader = ./../../../Reader/Type
+
+in  let readerF = ./../../../Reader/Functor/endo/types
+
+in  let composeF = ./../../../Compose/functor/endo/types
+
+in    λ(r : Type)
+    → λ(m : Type → Type)
+    → λ(functor : Endofunctor m)
+    → composeF (Reader r) m (readerF r) functor : Endofunctor (./../../Type r m)

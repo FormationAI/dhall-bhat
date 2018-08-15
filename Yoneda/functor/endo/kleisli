@@ -1,0 +1,19 @@
+    let Yoneda = ./../../Type
+
+in    λ(m : Type → Type)
+    → λ(mFunctor : ./../../../Functor/Endo/Types m)
+    → λ(f : Type → Type)
+    → λ(fFunctor : ./../../../Functor/Endo/Types f)
+    → λ(fFunctorK : ./../../../Functor/Endo/Kleisli m f)
+    →   { map =
+              λ(a : Type)
+            → λ(b : Type)
+            → λ(fn : a → m b)
+            → λ(fa : Yoneda f a)
+            → mFunctor.map
+              (f b)
+              (Yoneda f b)
+              (./../../lift f fFunctor b)
+              (fFunctorK.map a b fn (./../../lower f a fa))
+        }
+      : ./../../../Functor/Endo/Kleisli m (Yoneda f)

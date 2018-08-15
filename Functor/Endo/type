@@ -1,0 +1,1 @@
+λ(c : Type → Type → Type) → ./../type c c

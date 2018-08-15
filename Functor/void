@@ -1,7 +1,0 @@
-    let Functor = ./Type
-
-in    λ(f : Type → Type)
-    → λ(functor : Functor f)
-    → λ(a : Type)
-    → λ(fa : f a)
-    → ./rightConst f functor a {} fa {=}

@@ -1,0 +1,26 @@
+    let liftA2 = ./../../../Applicative/liftA2
+
+in    λ(m : Type → Type)
+    → λ(applicative : ./../../../Applicative/Type m)
+    →   { map =
+              λ(a : Type)
+            → λ(b : Type)
+            → λ(f : a → m b)
+            → λ(fa : List a)
+            →     let liftCons =
+                        liftA2
+                        m
+                        applicative
+                        b
+                        (List b)
+                        (List b)
+                        (λ(x : b) → λ(xs : List b) → [ x ] # xs)
+              
+              in  List/fold
+                  a
+                  fa
+                  (m (List b))
+                  (λ(x : a) → liftCons (f x))
+                  (applicative.pure (List b) ([] : List b))
+        }
+      : ./../../../Functor/Endo/Kleisli m List

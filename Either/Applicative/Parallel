@@ -6,7 +6,7 @@ in  let Either = ./../Type
 
 in    λ(a : Type)
     → λ(semi : Semigroup a)
-    →     ./../Functor a
+    →     ./../functor/endo/types a
         ∧ { pure =
               λ(b : Type) → λ(x : b) → < Right = x | Left : a >
           , ap =
@@ -25,7 +25,7 @@ in    λ(a : Type)
                       }
                       fa
                 , Right =
-                        let map = (./../Functor a).map
+                        let map = (./../functor/endo/types a).map
                     
                     in  λ(f : b → c) → map b c f fa
                 }

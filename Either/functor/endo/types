@@ -1,0 +1,3 @@
+  λ(a : Type)
+→   ./kleisli ./../../../Id/Type ./../../../Id/Applicative a
+  : ./../../../Functor/Endo/Types (./../../Type a)

@@ -10,7 +10,7 @@ in    λ(a : Type)
           → λ(c : Type)
           → λ(fa : Either a b)
           → λ(k : b → Either a c)
-          →     let map = (./Functor a).map
+          →     let map = (./functor/endo/types a).map
             
             in  merge
                 { Left =

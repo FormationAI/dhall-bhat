@@ -1,0 +1,21 @@
+  λ(m : Type → Type)
+→ λ(applicative : ./../../../Applicative/Type m)
+→   { map =
+          λ(a : Type)
+        → λ(b : Type)
+        → λ(f : a → m b)
+        → λ(fa : Optional a)
+        → Optional/fold
+          a
+          fa
+          (m (Optional b))
+          (   λ(x : a)
+            → applicative.map
+              b
+              (Optional b)
+              (λ(y : b) → [ y ] : Optional b)
+              (f x)
+          )
+          (applicative.pure (Optional b) ([] : Optional b))
+    }
+  : ./../../../Functor/Endo/Kleisli m Optional

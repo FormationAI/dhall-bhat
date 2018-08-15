@@ -1,0 +1,1 @@
+λ(f : Type → Type) → λ(t : ./Type f) → t.{ map } : ./../Functor/Endo/Types f

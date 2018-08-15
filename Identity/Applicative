@@ -1,4 +1,4 @@
-    ./Functor
+    ./functor/endo/types
   ∧ { pure =
         λ(a : Type) → λ(x : a) → x
     , ap =

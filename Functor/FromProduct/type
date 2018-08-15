@@ -1,0 +1,11 @@
+  λ(j : Type → Type → Type → Type → Type)
+→ λ(k : Type → Type → Type)
+→ λ(f : Type → Type → Type)
+→ { map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(c : Type)
+      → ∀(d : Type)
+      → j a b c d
+      → k (f a c) (f b d)
+  }

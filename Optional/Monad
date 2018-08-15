@@ -1,6 +1,6 @@
     let Monad = ./../Monad/Type
 
-in  let map = (./Functor).map
+in  let map = (./functor/endo/types).map
 
 in  let concat =
             λ(a : Type)

@@ -2,8 +2,8 @@
 →   { extract :
         ∀(a : Type) → w a → a
     , extend :
-        ∀(a : Type) → ∀(b : Type) → ∀(f : w a → b) → w a → w b
+        ∀(a : Type) → ∀(b : Type) → (w a → b) → w a → w b
     , duplicate :
         ∀(a : Type) → w a → w (w a)
     }
-  ⩓ ./../Functor/Type w
+  ⩓ ./../Functor/Endo/Types w
