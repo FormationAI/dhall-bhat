@@ -1,1 +1,0 @@
-λ(r : Type) → ./../ReaderT/mapReader r ./../Id/Type ./../Id/Functor

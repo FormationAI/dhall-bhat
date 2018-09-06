@@ -1,18 +1,14 @@
-    let StateT = ./Type
-
-in  let Monad = ./../Monad/Type
+    let Monad = ./../Monad/Type
 
 in    λ(s : Type)
     → λ(m : Type → Type)
     → λ(monad : Monad m)
     →   { lift =
             λ(a : Type) → (./Transformer s).lift m monad a
-        , runState =
-            λ(a : Type) → λ(state : StateT s m a) → λ(new : s) → state new
-        , evalState =
-            λ(a : Type) → ./evalState s m monad a
-        , execState =
-            λ(a : Type) → ./execState s m monad a
+        , eval =
+            λ(a : Type) → ./eval s m monad a
+        , exec =
+            λ(a : Type) → ./exec s m monad a
         , get =
             ./get s m monad
         , gets =

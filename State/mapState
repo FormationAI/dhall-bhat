@@ -1,1 +1,0 @@
-λ(s : Type) → ./../StateT/mapState s ./../Id/Type ./../Id/Functor

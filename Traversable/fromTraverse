@@ -24,7 +24,7 @@
             z
           ).state
     , map =
-        traverse ./../Id/Type ./../Id/Applicative
+        traverse ./../Identity/Type ./../Identity/Applicative
     , traverse =
         traverse
     }

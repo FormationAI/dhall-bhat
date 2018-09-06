@@ -7,7 +7,7 @@ do
   # Echo the filename
   echo $f;
   # Compile the Dhall file
-  dhall <<< $f;
-  # Separate the output
-  echo ""; echo "";
+  TMPFILE=$(mktemp --tmpdir dhall-bhat.XXXXXXXXXX)
+  dhall <<< $f >/dev/null 2>$TMPFILE || (cat $TMPFILE && exit 1)
+  rm $TMPFILE
 done

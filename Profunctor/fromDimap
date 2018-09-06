@@ -16,11 +16,11 @@
         → λ(b : Type)
         → λ(c : Type)
         → λ(fn : a → b)
-        → dimap a b c c fn ((./../Function/category).id c)
+        → dimap a b c c fn ((./../Function/category).identity c)
     , rmap =
           λ(a : Type)
         → λ(b : Type)
         → λ(c : Type)
-        → dimap a a b c ((./../Function/category).id a)
+        → dimap a a b c ((./../Function/category).identity a)
     }
   : ./type f

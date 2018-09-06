@@ -1,5 +1,1 @@
-    let Functor = ./../Functor/Type
-
-in  let NonEmpty = ./Type
-
-in  ./../Traversable/extractFunctor NonEmpty ./Traversable : Functor NonEmpty
+./../Traversable/extractFunctor ./Type ./Traversable
