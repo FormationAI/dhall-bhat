@@ -1,0 +1,7 @@
+  { map =
+        λ(a : Type)
+      → λ(b : Type)
+      → λ(f : a → Optional b)
+      → (./../../monad).bind a b f
+  }
+: ./../../../Functor/ToTypes/Compactable Optional
