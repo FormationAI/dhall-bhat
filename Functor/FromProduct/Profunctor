@@ -4,4 +4,4 @@
 -}
   λ(dOp : Type → Type → Type)
 → λ(c : Type → Type → Type)
-→ ./Bifunctor dOp c ./../../Function/type
+→ ./Bifunctor/type dOp c ./../../Function/type

@@ -1,0 +1,3 @@
+  λ(f : Type → Type → Type)
+→ λ(arrow : ./type f)
+→ arrow.{ first, map, second } : ./../Strong/type f

@@ -1,8 +1,0 @@
-    let Bifunctor = ./Type
-
-in    λ(p : Type → Type → Type)
-    → λ(bifunctor : Bifunctor p)
-    → λ(a : Type)
-    → λ(b : Type)
-    → λ(d : Type)
-    → bifunctor.bimap a b a d (λ(x : a) → x)

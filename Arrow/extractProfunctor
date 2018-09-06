@@ -1,0 +1,7 @@
+  λ(f : Type → Type → Type)
+→ λ(arrow : ./type f)
+→   arrow.{ map }
+  : ./../Functor/FromProduct/Profunctor
+    ./../FunctionOp/type
+    ./../Function/type
+    f

@@ -20,4 +20,6 @@ in    λ(m : Type → Type)
               )
               (f._2 t._2)
         }
-      : ./../../../Functor/FromProduct/Pair (./../../../Kleisli/type m) Tuple
+      : ./../../../Functor/FromProduct/Pair/type
+        (./../../../Kleisli/type m)
+        Tuple

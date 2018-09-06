@@ -7,5 +7,5 @@
       → ∀(c : Type)
       → ∀(d : Type)
       → j a b c d
-      → k (f a c) (f b d)
+      → k (f a b) (f c d)
   }

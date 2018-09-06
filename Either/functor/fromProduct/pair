@@ -19,4 +19,6 @@ in    λ(m : Type → Type)
                   }
                   e
         }
-      : ./../../../Functor/FromProduct/Pair (./../../../Kleisli/type m) Either
+      : ./../../../Functor/FromProduct/Pair/type
+        (./../../../Kleisli/type m)
+        Either

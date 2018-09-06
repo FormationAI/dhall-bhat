@@ -1,23 +1,56 @@
-    { arr =
-        λ(a : Type) → λ(b : Type) → (./category).identity (a → b)
-    , split =
-          λ(a : Type)
-        → λ(b : Type)
-        → λ(c : Type)
-        → λ(d : Type)
-        → λ(f : a → b)
-        → λ(g : c → d)
-        → λ(p : { _1 : a, _2 : c })
-        → { _1 = f p._1, _2 = g p._2 }
-    , fanout =
-          λ(a : Type)
-        → λ(b : Type)
-        → λ(c : Type)
-        → λ(f : a → b)
-        → λ(g : a → c)
-        → λ(x : a)
-        → { _1 = f x, _2 = g x }
-    }
-  ∧ ./category
-  ∧ ./strong
-: ./../Arrow/type ./type
+    let identity = λ(a : Type) → λ(x : a) → x
+
+in    { arr =
+          λ(a : Type) → λ(b : Type) → identity (a → b)
+      , split =
+            λ(a : Type)
+          → λ(b : Type)
+          → λ(c : Type)
+          → λ(d : Type)
+          → λ(f : a → b)
+          → λ(g : c → d)
+          → λ(p : { _1 : a, _2 : c })
+          → { _1 = f p._1, _2 = g p._2 }
+      , fanout =
+            λ(a : Type)
+          → λ(b : Type)
+          → λ(c : Type)
+          → λ(f : a → b)
+          → λ(g : a → c)
+          → λ(x : a)
+          → { _1 = f x, _2 = g x }
+      , identity =
+          identity
+      , compose =
+            λ(a : Type)
+          → λ(b : Type)
+          → λ(c : Type)
+          → λ(f : b → c)
+          → λ(g : a → b)
+          → λ(x : a)
+          → f (g x)
+      , first =
+            λ(a : Type)
+          → λ(b : Type)
+          → λ(c : Type)
+          → λ(f : a → b)
+          → λ(p : { _1 : a, _2 : c })
+          → { _1 = f p._1, _2 = p._2 }
+      , second =
+            λ(a : Type)
+          → λ(b : Type)
+          → λ(c : Type)
+          → λ(f : b → c)
+          → λ(p : { _1 : a, _2 : b })
+          → { _1 = p._1, _2 = f p._2 }
+      , map =
+            λ(a : Type)
+          → λ(b : Type)
+          → λ(c : Type)
+          → λ(d : Type)
+          → λ(f : { _1 : c → a, _2 : b → d })
+          → λ(fn : a → b)
+          → λ(x : c)
+          → f._2 (fn (f._1 x))
+      }
+    : ./../Arrow/type ./type

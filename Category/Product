@@ -4,4 +4,4 @@
 → λ(b : Type)
 → λ(c : Type)
 → λ(d : Type)
-→ { _1 : j a b, _2 : k c d }
+→ { _1 : j a c, _2 : k b d }
