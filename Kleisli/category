@@ -11,4 +11,4 @@
         → λ(x : a)
         → monad.bind b c (f x) g
     }
-  : ./../Category/type (./type m)
+  : ./../Category/Type (./Type m)

@@ -12,4 +12,4 @@
         → f b c
         → f { _1 : a, _2 : b } { _1 : a, _2 : c }
     }
-  ⩓ ./../Profunctor/type f
+  ⩓ ./../Profunctor/Type f

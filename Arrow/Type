@@ -17,5 +17,5 @@
         → f a c
         → f a { _1 : b, _2 : c }
     }
-  ⩓ ./../Category/type f
-  ⩓ ./../Strong/type f
+  ⩓ ./../Category/Type f
+  ⩓ ./../Strong/Type f
