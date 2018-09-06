@@ -1,5 +1,5 @@
     { arr =
-        λ(a : Type) → λ(b : Type) → (./category).id (a → b)
+        λ(a : Type) → λ(b : Type) → (./category).identity (a → b)
     , split =
           λ(a : Type)
         → λ(b : Type)

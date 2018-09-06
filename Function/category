@@ -1,4 +1,4 @@
-  { id =
+  { identity =
       λ(a : Type) → λ(x : a) → x
   , compose =
         λ(a : Type)

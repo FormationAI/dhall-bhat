@@ -1,6 +1,6 @@
   λ(m : Type → Type)
 → λ(monad : ./../Monad/Type m)
-→   { id =
+→   { identity =
         monad.pure
     , compose =
           λ(a : Type)

@@ -1,0 +1,3 @@
+  λ(w : Type → Type)
+→ λ(comonad : ./Type w)
+→ comonad.{ map } : ./../Functor/Type w
