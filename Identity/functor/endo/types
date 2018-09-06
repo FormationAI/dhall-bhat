@@ -1,1 +1,1 @@
-./kleisli ./../../../Id/Type : ./../../../Functor/Endo/Types ./../../Type
+./kleisli ./../../Type : ./../../../Functor/Endo/Types ./../../Type

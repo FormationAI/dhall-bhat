@@ -5,14 +5,14 @@
           λ(b : Type)
         → λ(c : Type)
         → λ(f : b → m c)
-        → ( ./../fromProduct/bifunctor
+        → ( ./../fromProduct/pair
             m
             (./../../../Applicative/extractFunctor m applicative)
           ).map
           a
-          a
           b
+          a
           c
-          { _1 = applicative.pure, _2 = f }
+          { _1 = applicative.pure a, _2 = f }
     }
   : ./../../../Functor/Endo/Kleisli m (./../../Type a)

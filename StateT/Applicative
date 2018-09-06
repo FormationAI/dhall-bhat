@@ -21,7 +21,6 @@ in    λ(s : Type)
                 in  monad.bind
                     { val : a → b, state : s }
                     { val : b, state : s }
-                    fk
                     (   λ(k : { val : a → b, state : s })
                       →     let res = fa k.state
                         
@@ -33,6 +32,7 @@ in    λ(s : Type)
                             )
                             res
                     )
+                    fk
           , pure =
                 λ(a : Type)
               → λ(x : a)

@@ -11,9 +11,9 @@ in    λ(r : Type)
         ∧ { bind =
                 λ(a : Type)
               → λ(b : Type)
-              → λ(fa : ReaderT r m a)
               → λ(k : a → ReaderT r m b)
+              → λ(fa : ReaderT r m a)
               → λ(env : r)
-              → monad.bind a b (fa env) (λ(x : a) → k x env)
+              → monad.bind a b (λ(x : a) → k x env) (fa env)
           }
       : Monad (ReaderT r m)

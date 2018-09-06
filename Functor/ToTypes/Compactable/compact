@@ -1,4 +1,7 @@
-\(f : Type -> Type)
--> \(compactable : ./type f)
--> \(a : Type)
--> compactable.map (Optional a) a ((../../../Function/category).identity (Optional a))
+  λ(f : Type → Type)
+→ λ(compactable : ./type f)
+→ λ(a : Type)
+→ compactable.map
+  (Optional a)
+  a
+  ((./../../../Function/category).identity (Optional a))

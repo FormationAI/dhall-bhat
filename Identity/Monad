@@ -1,11 +1,5 @@
     let Monad = ./../Monad/Type
 
 in      ./Applicative
-      ∧ { bind =
-              λ(a : Type)
-            → λ(b : Type)
-            → λ(fa : ./Type a)
-            → λ(k : a → ./Type b)
-            → k fa
-        }
+      ∧ { bind = λ(a : Type) → λ(b : Type) → λ(k : a → ./Type b) → k }
     : Monad ./Type

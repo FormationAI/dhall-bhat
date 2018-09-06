@@ -16,8 +16,8 @@ in      ./Applicative
       ∧ { bind =
               λ(a : Type)
             → λ(b : Type)
-            → λ(fa : Optional a)
             → λ(k : a → Optional b)
+            → λ(fa : Optional a)
             → concat b (map a (Optional b) k fa)
         }
     : Monad Optional

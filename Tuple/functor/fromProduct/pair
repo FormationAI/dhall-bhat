@@ -7,19 +7,17 @@ in    λ(m : Type → Type)
             → λ(b : Type)
             → λ(c : Type)
             → λ(d : Type)
-            → λ(f : { _1 : a → m b, _2 : c → m d })
-            → λ(t : Tuple a c)
+            → λ(f : { _1 : a → m c, _2 : b → m d })
+            → λ(t : Tuple a b)
             → applicative.ap
               d
-              { _1 : b, _2 : d }
+              { _1 : c, _2 : d }
               ( applicative.map
-                b
-                (d → { _1 : b, _2 : d })
-                (λ(x : b) → λ(y : d) → { _1 = x, _2 = y })
+                c
+                (d → { _1 : c, _2 : d })
+                (λ(x : c) → λ(y : d) → { _1 = x, _2 = y })
                 (f._1 t._1)
               )
               (f._2 t._2)
         }
-      : ./../../../Functor/FromProduct/Bifunctor
-        (./../../../Kleisli/type m)
-        Tuple
+      : ./../../../Functor/FromProduct/Pair (./../../../Kleisli/type m) Tuple

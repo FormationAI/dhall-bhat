@@ -5,11 +5,11 @@
       → λ(l : List a)
       → List/fold
         a
-        (List b)
         l
+        (List b)
         (   λ(x : a)
           → λ(acc : List b)
-          → Optional/fold (List b) (f x) (λ(y : b) → [ y ] # acc) acc
+          → Optional/fold b (f x) (List b) (λ(y : b) → [ y ] # acc) acc
         )
         ([] : List b)
   }

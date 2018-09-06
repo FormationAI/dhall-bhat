@@ -1,5 +1,5 @@
   λ(s : Type)
 → ./../../../StateT/functor/endo/types
   s
-  ./../../../Id/Type
-  ./../../../Id/functor/endo/types
+  ./../../../Identity/Type
+  ./../../../Identity/functor/endo/types

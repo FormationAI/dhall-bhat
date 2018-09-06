@@ -3,8 +3,6 @@
 in  let Monad
         : (Type → Type) → Type
         =   λ(f : Type → Type)
-          → { bind :
-                ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(k : a → f b) → f b
-            }
+          → { bind : ∀(a : Type) → ∀(b : Type) → (a → f b) → f a → f b }
 
 in  λ(f : Type → Type) → Applicative f ⩓ Monad f

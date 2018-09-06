@@ -1,0 +1,22 @@
+    let Either = ./../../Type
+
+in    λ(m : Type → Type)
+    → λ(functor : ./../../../Functor/Endo/Types m)
+    →   { map =
+              λ(a : Type)
+            → λ(b : Type)
+            → λ(c : Type)
+            → λ(d : Type)
+            → λ(f : { _1 : a → m c, _2 : b → m d })
+            → λ(e : Either a b)
+            →     let E = constructors (Either c d)
+              
+              in  merge
+                  { Left =
+                      λ(x : a) → functor.map c (Either c d) E.Left (f._1 x)
+                  , Right =
+                      λ(x : b) → functor.map d (Either c d) E.Right (f._2 x)
+                  }
+                  e
+        }
+      : ./../../../Functor/FromProduct/Pair (./../../../Kleisli/type m) Either

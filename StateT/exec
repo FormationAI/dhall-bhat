@@ -11,5 +11,5 @@ in    λ(s : Type)
     → monad.bind
       { val : a, state : s }
       s
-      (state env)
       (λ(res : { val : a, state : s }) → monad.pure s res.state)
+      (state env)

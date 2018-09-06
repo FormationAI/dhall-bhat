@@ -6,10 +6,10 @@ in    λ(f : Type → Type)
         ∧ { bind =
                 λ(a : Type)
               → λ(b : Type)
-              → λ(yoneda : ./Type f a)
               → λ(k : a → ./Type f b)
+              → λ(yoneda : ./Type f a)
               → λ(c : Type)
               → λ(l : b → c)
-              → monad.bind a c (./lower f a yoneda) (λ(x : a) → k x c l)
+              → monad.bind a c (λ(x : a) → k x c l) (./lower f a yoneda)
           }
       : Monad (./Type f)

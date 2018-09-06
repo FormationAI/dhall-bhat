@@ -1,12 +1,11 @@
   λ(f : Type → Type)
 → λ(pure : ∀(a : Type) → a → f a)
-→ λ(bind : ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(k : a → f b) → f b)
+→ λ(bind : ∀(a : Type) → ∀(b : Type) → (a → f b) → f a → f b)
 →   { map =
           λ(a : Type)
         → λ(b : Type)
         → λ(k : a → b)
-        → λ(fa : f a)
-        → bind a b fa (λ(x : a) → pure b (k x))
+        → bind a b (λ(x : a) → pure b (k x))
     , pure =
         pure
     , ap =
@@ -17,8 +16,8 @@
         → bind
           (a → b)
           b
+          (λ(g : a → b) → bind a b (λ(x : a) → pure b (g x)) fa)
           k
-          (λ(g : a → b) → bind a b fa (λ(x : a) → pure b (g x)))
     , bind =
         bind
     }

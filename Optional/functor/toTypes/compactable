@@ -4,4 +4,4 @@
       → λ(f : a → Optional b)
       → (./../../monad).bind a b f
   }
-: ./../../../Functor/ToTypes/Compactable Optional
+: ./../../../Functor/ToTypes/Compactable/type Optional

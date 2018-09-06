@@ -1,2 +1,2 @@
-  ./kleisli ./../../../Id/Type ./../../../Id/Applicative
+  ./kleisli ./../../../Identity/Type ./../../../Identity/Applicative
 : ./../../../Functor/Endo/Types Optional

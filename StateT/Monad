@@ -9,13 +9,13 @@ in    λ(s : Type)
         ∧ { bind =
                 λ(a : Type)
               → λ(b : Type)
-              → λ(fa : StateT s m a)
               → λ(k : a → StateT s m b)
+              → λ(fa : StateT s m a)
               → λ(new : s)
               → monad.bind
                 { val : a, state : s }
                 { val : b, state : s }
-                (fa new)
                 (λ(res : { val : a, state : s }) → k res.val res.state)
+                (fa new)
           }
       : Monad (StateT s m)

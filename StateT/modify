@@ -8,4 +8,4 @@ in    λ(s : Type)
     → λ(f : s → s)
     →     let bind = (StateMonad s m monad).bind
       
-      in  bind s {} (./get s m monad) (λ(state : s) → ./put s m monad (f state))
+      in  bind s {} (λ(state : s) → ./put s m monad (f state)) (./get s m monad)
