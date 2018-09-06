@@ -16,7 +16,7 @@
         → λ(z : b)
         → ( traverse
             (./../State/Type b)
-            (./../State/Applicative b)
+            (./../State/applicative b)
             a
             a
             (λ(x : a) → λ(y : b) → { state = f x y, val = x })
@@ -24,7 +24,7 @@
             z
           ).state
     , map =
-        traverse ./../Identity/Type ./../Identity/Applicative
+        traverse ./../Identity/Type ./../Identity/applicative
     , traverse =
         traverse
     }

@@ -1,1 +1,0 @@
-λ(r : Type) → ./../ReaderT/Monad r ./../Identity/Type ./../Identity/Monad

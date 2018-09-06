@@ -1,6 +1,6 @@
     let Monad = ./../Monad/Type
 
-in  let StateMonad = ./Monad
+in  let StateMonad = ./monad
 
 in    λ(s : Type)
     → λ(m : Type → Type)
