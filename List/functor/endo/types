@@ -1,2 +1,2 @@
-  ./kleisli ./../../../Identity/Type ./../../../Identity/Applicative
+  ./star ./../../../Identity/Type ./../../../Identity/Applicative
 : ./../../../Functor/Endo/Types List

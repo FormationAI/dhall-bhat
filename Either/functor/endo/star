@@ -15,4 +15,4 @@
           c
           { _1 = applicative.pure a, _2 = f }
     }
-  : ./../../../Functor/Endo/Kleisli m (./../../Type a)
+  : ./../../../Functor/Endo/Star m (./../../Type a)

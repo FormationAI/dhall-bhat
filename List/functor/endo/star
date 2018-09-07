@@ -23,4 +23,4 @@ in    λ(m : Type → Type)
                   (λ(x : a) → liftCons (f x))
                   (applicative.pure (List b) ([] : List b))
         }
-      : ./../../../Functor/Endo/Kleisli m List
+      : ./../../../Functor/Endo/Star m List

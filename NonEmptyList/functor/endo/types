@@ -1,1 +1,1 @@
-./kleisli ./../../../Identity/Type ./../../../Identity/Applicative
+./star ./../../../Identity/Type ./../../../Identity/Applicative

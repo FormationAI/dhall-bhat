@@ -1,1 +1,1 @@
-./kleisli ./../../Type : ./../../../Functor/Endo/Types ./../../Type
+./star ./../../Type : ./../../../Functor/Endo/Types ./../../Type

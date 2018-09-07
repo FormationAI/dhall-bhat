@@ -2,4 +2,4 @@
    implemented for an arbitrary `m`, doesn’t necessarily require an
   `Applicative` instance, and also may be _more_ constrained than `Applicative`.
 -}
-λ(m : Type → Type) → ./../Endo/type (./../../Kleisli/type m)
+λ(m : Type → Type) → ./../Endo/type (./../../Star/type m)

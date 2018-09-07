@@ -2,7 +2,7 @@
 → λ(applicative : ./../../../Applicative/Type m)
 →     let NonEmpty = ./../../Type
   
-  in  let List/mFunctor = ./../../../List/functor/endo/kleisli m applicative
+  in  let List/mFunctor = ./../../../List/functor/endo/star m applicative
   
   in    { map =
               λ(a : Type)
@@ -20,4 +20,4 @@
               )
               (List/mFunctor.map a b f fa.tail)
         }
-      : ./../../../Functor/Endo/Kleisli m NonEmpty
+      : ./../../../Functor/Endo/Star m NonEmpty

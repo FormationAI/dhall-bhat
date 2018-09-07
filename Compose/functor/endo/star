@@ -1,14 +1,14 @@
   λ(m : Type → Type)
-→     let MFunctor = ./../../../Functor/Endo/Kleisli m
+→     let MFunctor = ./../../../Functor/Endo/Star m
   
   in    λ(f : Type → Type)
-      → λ(fKleisli : MFunctor f)
+      → λ(fStar : MFunctor f)
       → λ(g : Type → Type)
-      → λ(gKleisli : MFunctor g)
+      → λ(gStar : MFunctor g)
       →   { map =
                 λ(a : Type)
               → λ(b : Type)
               → λ(fn : a → m b)
-              → fKleisli.map (g a) (g b) (gKleisli.map a b fn)
+              → fStar.map (g a) (g b) (gStar.map a b fn)
           }
         : MFunctor (./../../type f g)

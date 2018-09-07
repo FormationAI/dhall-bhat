@@ -18,4 +18,4 @@
           )
           (applicative.pure (Optional b) ([] : Optional b))
     }
-  : ./../../../Functor/Endo/Kleisli m Optional
+  : ./../../../Functor/Endo/Star m Optional
