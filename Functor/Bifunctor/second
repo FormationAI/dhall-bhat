@@ -1,5 +1,5 @@
   λ(j : Type → Type → Type)
-→ λ(category : ./../../../Category/type j)
+→ λ(category : ./../../Category/type j)
 → λ(k : Type → Type → Type)
 → λ(e : Type → Type → Type)
 → λ(f : Type → Type → Type)

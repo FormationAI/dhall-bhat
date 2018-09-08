@@ -1,7 +1,7 @@
-    let Either = ./../../Type
+    let Either = ./../Type
 
 in    λ(m : Type → Type)
-    → λ(functor : ./../../../Functor/Endo/Types m)
+    → λ(functor : ./../../Functor/Endo/Types m)
     →   { map =
               λ(a : Type)
             → λ(b : Type)
@@ -19,4 +19,4 @@ in    λ(m : Type → Type)
                   }
                   e
         }
-      : ./../../../Functor/FromProduct/Pair/type (./../../../Star/type m) Either
+      : ./../../Functor/Pair/type (./../../Star/type m) Either

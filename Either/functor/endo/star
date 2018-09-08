@@ -5,9 +5,7 @@
           λ(b : Type)
         → λ(c : Type)
         → λ(f : b → m c)
-        → ( ./../fromProduct/pair
-            m
-            (./../../../Applicative/extractFunctor m applicative)
+        → ( ./../pair m (./../../../Applicative/extractFunctor m applicative)
           ).map
           a
           b

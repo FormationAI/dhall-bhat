@@ -1,6 +1,6 @@
   λ(j : Type → Type → Type)
 → λ(k : Type → Type → Type)
-→ λ(category : ./../../../Category/type k)
+→ λ(category : ./../../Category/type k)
 → λ(e : Type → Type → Type)
 → λ(f : Type → Type → Type)
 → λ(bifunctor : ./type j k e f)

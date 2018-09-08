@@ -1,7 +1,7 @@
-    let Tuple = ./../../Type
+    let Tuple = ./../Type
 
 in    λ(m : Type → Type)
-    → λ(applicative : ./../../../Applicative/Type m)
+    → λ(applicative : ./../../Applicative/Type m)
     →   { map =
               λ(a : Type)
             → λ(b : Type)
@@ -20,4 +20,4 @@ in    λ(m : Type → Type)
               )
               (f._2 t._2)
         }
-      : ./../../../Functor/FromProduct/Pair/type (./../../../Star/type m) Tuple
+      : ./../../Functor/Pair/type (./../../Star/type m) Tuple

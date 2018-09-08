@@ -12,7 +12,4 @@
         → f b c
         → f { _1 : a, _2 : b } { _1 : a, _2 : c }
     }
-  ⩓ ./../Functor/FromProduct/Profunctor
-    ./../FunctionOp/type
-    ./../Function/type
-    f
+  ⩓ ./../Functor/Profunctor ./../FunctionOp/type ./../Function/type f
