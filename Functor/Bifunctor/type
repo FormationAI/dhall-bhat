@@ -10,6 +10,6 @@
       → ∀(b : Type)
       → ∀(c : Type)
       → ∀(d : Type)
-      → ./../../Category/Product j k a b c d
+      → { _1 : j a c, _2 : k b d }
       → l (f a b) (f c d)
   }

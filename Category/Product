@@ -1,7 +1,0 @@
-  λ(j : Type → Type → Type)
-→ λ(k : Type → Type → Type)
-→ λ(a : Type)
-→ λ(b : Type)
-→ λ(c : Type)
-→ λ(d : Type)
-→ { _1 : j a c, _2 : k b d }
