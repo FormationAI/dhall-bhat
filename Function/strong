@@ -14,4 +14,4 @@
         → { _1 = p._1, _2 = f p._2 }
     }
   ∧ ./profunctor
-: ./../Strong/type ./type
+: ./../Strong/Type ./Type

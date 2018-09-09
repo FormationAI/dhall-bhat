@@ -1,5 +1,5 @@
 ./../Profunctor/fromDimap
-./type
+./Type
 (   λ(a : Type)
   → λ(b : Type)
   → λ(c : Type)

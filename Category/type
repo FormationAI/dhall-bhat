@@ -1,2 +1,0 @@
-  λ(f : Type → Type → Type)
-→ { identity : ∀(a : Type) → f a a } ⩓ ./../Semigroupoid/type f

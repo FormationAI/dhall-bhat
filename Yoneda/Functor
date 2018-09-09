@@ -1,2 +1,0 @@
-  λ(f : Type → Type)
-→ ./../Ran/Functor ./../Identity/Type f : ./../Functor/Type (./Type f)

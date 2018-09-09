@@ -8,7 +8,7 @@ in    λ(r : Type)
     → λ(m : Type → Type)
     → λ(monad : Monad m)
     →   { lift =
-            λ(a : Type) → (./Transformer r).lift m monad a
+            λ(a : Type) → (./transformer r).lift m monad a
         , ask =
             ./ask r m (extractApplicative m monad)
         , asks =
@@ -19,4 +19,4 @@ in    λ(r : Type)
             → λ(reader : ReaderT r m a)
             → ./local r m a f reader
         }
-      ∧ ./Monad r m monad
+      ∧ ./monad r m monad

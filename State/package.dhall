@@ -12,4 +12,4 @@
     , withState =
         λ(a : Type) → ./withState s a
     }
-  ∧ ./Monad s
+  ∧ ./monad s

@@ -9,4 +9,4 @@
       → λ(x : a)
       → f (g x)
   }
-: ./../Category/type ./type
+: ./../Category/Type ./Type

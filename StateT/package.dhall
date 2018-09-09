@@ -4,7 +4,7 @@ in    λ(s : Type)
     → λ(m : Type → Type)
     → λ(monad : Monad m)
     →   { lift =
-            λ(a : Type) → (./Transformer s).lift m monad a
+            λ(a : Type) → (./transformer s).lift m monad a
         , eval =
             λ(a : Type) → ./eval s m monad a
         , exec =
@@ -18,4 +18,4 @@ in    λ(s : Type)
         , modify =
             λ(a : Type) → ./modify s m monad
         }
-      ∧ ./Monad s m monad
+      ∧ ./monad s m monad

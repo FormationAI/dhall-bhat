@@ -1,0 +1,7 @@
+    let Applicative = ./../../Applicative/Type
+
+in  let Either = ./../Type
+
+in    λ(a : Type)
+    →   ./../../Monad/extractApplicative (Either a) (./../monad a)
+      : Applicative (Either a)

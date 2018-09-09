@@ -8,4 +8,4 @@ in    λ(r : Type)
             → λ(reader : Reader r a)
             → ./withReader r a rPrime f reader
         }
-      ∧ ./Monad r
+      ∧ ./monad r
