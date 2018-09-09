@@ -2,7 +2,7 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-for f in `find . -not -path '*/\.*' -type f -not -iname "*.md" -not -iname "*.sh" -not -iname "Makefile"`
+for f in $(./scripts/find-dhall-files.sh -type f)
 do
   # Echo the filename
   echo $f;

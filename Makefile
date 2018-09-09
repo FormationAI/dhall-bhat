@@ -1,6 +1,10 @@
 
 lint:
-	find . -not -path '*/\.*' -type f -not -iname "*.md" -not -iname "*.sh" -not -iname "Makefile" -exec dhall lint --inplace {} \;
+	./scripts/find-dhall-files.sh -type f -exec dhall lint --inplace {} \;
 
 compile:
-	./compile.sh
+	./scripts/compile.sh
+
+doc:
+	mkdir -p docs
+	./scripts/doc.sh >docs/index.html
