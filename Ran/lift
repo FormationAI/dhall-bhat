@@ -1,0 +1,9 @@
+  λ(f : Type → Type)
+→ λ(comonad : ./../Comonad/Type f)
+→ λ(g : Type → Type)
+→ λ(functor : ./../Functor/Type g)
+→ λ(a : Type)
+→ λ(x : g a)
+→ λ(b : Type)
+→ λ(f : a → f b)
+→ functor.map a b (λ(y : a) → comonad.extract b (f y)) x

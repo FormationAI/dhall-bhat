@@ -1,0 +1,3 @@
+  λ(f : Type → Type)
+→ λ(comonad : ./../Comonad/Type f)
+→ ./../Ran/lift f comonad f (./../Comonad/extractFunctor f comonad)

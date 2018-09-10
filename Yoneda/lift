@@ -1,7 +1,1 @@
-  λ(f : Type → Type)
-→ λ(functor : ./../Functor/Type f)
-→ λ(a : Type)
-→ λ(fa : f a)
-→ λ(b : Type)
-→ λ(k : a → b)
-→ functor.map a b k fa
+../Ran/lift ../Identity/Type ../Identity/comonad
