@@ -1,0 +1,1 @@
+λ(f : Type → Type) → ./../Lan/lift f f
