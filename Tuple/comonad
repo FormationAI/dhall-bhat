@@ -1,5 +1,8 @@
   λ(a : Type)
 → ./../Comonad/fromExtractExtend
+  Type
+  ./../Function/Type
+  ./../Function/category
   (./Type a)
   (λ(b : Type) → λ(tup : ./Type a b) → tup._2)
   (   λ(b : Type)

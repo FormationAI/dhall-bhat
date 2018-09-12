@@ -1,0 +1,6 @@
+  { identity =
+      λ(_ : {}) → 0
+  , op =
+      λ(t : { _1 : Natural, _2 : Natural }) → t._1 + t._2
+  }
+: ./../Monoid/Set Natural

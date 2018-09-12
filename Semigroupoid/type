@@ -1,2 +1,10 @@
-  λ(f : Type → Type → Type)
-→ { compose : ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → f b c → f a b → f a c }
+  λ(object : Kind)
+→ λ(morphism : object → object → Type)
+→ { compose :
+        ∀(a : object)
+      → ∀(b : object)
+      → ∀(c : object)
+      → morphism b c
+      → morphism a b
+      → morphism a c
+  }

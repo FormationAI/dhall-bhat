@@ -6,7 +6,7 @@ in    λ(f : Type → Type)
     → λ(gFoldable : Foldable g)
     →   { fold =
               λ(a : Type)
-            → λ(compose : ./Type f g a)
+            → λ(compose : ./Type Type f g a)
             → λ(b : Type)
             → λ(k : a → b → b)
             → fFoldable.fold
@@ -15,4 +15,4 @@ in    λ(f : Type → Type)
               b
               (λ(ga : g a) → gFoldable.fold a ga b k)
         }
-      : Foldable (./Type f g)
+      : Foldable (./Type Type f g)

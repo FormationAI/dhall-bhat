@@ -1,4 +1,9 @@
   λ(f : Type → Type → Type)
 → λ(arrow : ./type f)
 →   arrow.{ map }
-  : ./../Functor/Profunctor ./../FunctionOp/type ./../Function/type f
+  : ./../Functor/Profunctor
+    Type
+    ./../Function/type
+    Type
+    ./../Function/type
+    (λ(x : { _1 : Type, _2 : Type }) → f x._1 x._2)

@@ -1,15 +1,12 @@
-{- This is much more general than Haskell’s `Bifunctor`.
-  `./Pair ../Function/type` is closer to that.
--}
-  λ(j : Type → Type → Type)
-→ λ(k : Type → Type → Type)
-→ λ(l : Type → Type → Type)
-→ λ(f : Type → Type → Type)
-→ { map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(c : Type)
-      → ∀(d : Type)
-      → { _1 : j a c, _2 : k b d }
-      → l (f a b) (f c d)
-  }
+  λ(cObject : Kind)
+→ λ(cArrow : cObject → cObject → Type)
+→ λ(dObject : Kind)
+→ λ(dArrow : dObject → dObject → Type)
+→     let object = { _1 : cObject, _2 : dObject }
+  
+  in  ./../type
+      object
+      (   λ(a : object)
+        → λ(b : object)
+        → { _1 : cArrow a._1 b._1, _2 : dArrow a._2 b._2 }
+      )

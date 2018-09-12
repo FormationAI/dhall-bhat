@@ -1,3 +1,0 @@
-  λ(a : Type)
-→   ./star ./../../../Identity/Type ./../../../Identity/Applicative a
-  : ./../../../Functor/Endo/Types (./../../Type a)

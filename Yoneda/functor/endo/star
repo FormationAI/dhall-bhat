@@ -1,10 +1,12 @@
     let Yoneda = ./../../Type
 
 in    λ(m : Type → Type)
-    → λ(mFunctor : ./../../../Functor/Endo/Types m)
+    → λ(mFunctor : ./../../../Functor/Endo/Set m)
     → λ(f : Type → Type)
-    → λ(fFunctor : ./../../../Functor/Endo/Types f)
-    → λ(fFunctorK : ./../../../Functor/Endo/Star m f)
+    → λ(fFunctor : ./../../../Functor/Endo/Set f)
+    → λ ( fFunctorK
+        : ./../../../Functor/Endo/Star Type ./../../../Function/Type m f
+        )
     →   { map =
               λ(a : Type)
             → λ(b : Type)
@@ -16,4 +18,4 @@ in    λ(m : Type → Type)
               (./../../lift f fFunctor b)
               (fFunctorK.map a b fn (./../../lower f a fa))
         }
-      : ./../../../Functor/Endo/Star m (Yoneda f)
+      : ./../../../Functor/Endo/Star Type ./../../../Function/Type m (Yoneda f)

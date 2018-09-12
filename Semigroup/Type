@@ -1,1 +1,5 @@
-λ(m : Type) → { op : ∀(x : m) → ∀(y : m) → m }
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(product : object → object → object)
+→ λ(m : object)
+→ { op : arrow (product m m) m }

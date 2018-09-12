@@ -1,0 +1,11 @@
+{- FIXME: This is supposed to be Day convolution, but I’m having trouble getting
+          that to compile, so it’s currently composition. The last line should
+          be replaced by something like:
+
+          → ∀(b : object) → ∀(c : object) → { _1 : f b, _2 : g c, _3 : b → c → a }
+-}
+  λ(object : Kind)
+→ λ(f : object → object)
+→ λ(g : object → object)
+→ λ(a : object)
+→ f (g a)

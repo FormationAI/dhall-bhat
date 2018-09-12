@@ -1,0 +1,6 @@
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(coproduct : object → object → object)
+→ λ(i : object)
+→ λ(m : object)
+→ { identity : arrow m i } ⩓ ./../Cosemigroup/Type object arrow coproduct m

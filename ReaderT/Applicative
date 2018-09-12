@@ -1,14 +1,15 @@
-    let Applicative = ./../Applicative/Type
+--     let Applicative = ./../Applicative/Type Type ./../Function/Type
 
-in  let ReaderT = ./Type
+-- in  let ReaderT = ./Type
 
-in  let Reader = ./../Reader/Type
+-- in  let Reader = ./../Reader/Type
 
-in  let ReaderA = ./../Reader/Applicative
+-- in  let ReaderA = ./../Reader/Applicative
 
-in  let ComposeA = ./../Compose/Applicative
+-- in  let ComposeA = ./../Compose/Applicative
 
-in    λ(r : Type)
-    → λ(m : Type → Type)
-    → λ(applicative : Applicative m)
-    → ComposeA (Reader r) m (ReaderA r) applicative : Applicative (ReaderT r m)
+-- in    λ(r : Type)
+--     → λ(m : Type → Type)
+--     → λ(applicative : Applicative m)
+--     → ComposeA (Reader r) m (ReaderA r) applicative : Applicative (ReaderT r m)
+<>

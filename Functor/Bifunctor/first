@@ -1,11 +1,12 @@
-  λ(j : Type → Type → Type)
-→ λ(k : Type → Type → Type)
-→ λ(category : ./../../Category/type k)
-→ λ(e : Type → Type → Type)
-→ λ(f : Type → Type → Type)
-→ λ(bifunctor : ./type j k e f)
-→ λ(a : Type)
-→ λ(b : Type)
-→ λ(c : Type)
-→ λ(arr : j a b)
-→ bifunctor.map a c b c { _1 = arr, _2 = category.identity c }
+--   λ(j : Type → Type → Type)
+-- → λ(k : Type → Type → Type)
+-- → λ(category : ./../../Category/type k)
+-- → λ(e : Type → Type → Type)
+-- → λ(f : Type → Type → Type)
+-- → λ(bifunctor : ./type j k e f)
+-- → λ(a : Type)
+-- → λ(b : Type)
+-- → λ(c : Type)
+-- → λ(arr : j a b)
+-- → bifunctor.map a c b c { _1 = arr, _2 = category.identity c }
+<>

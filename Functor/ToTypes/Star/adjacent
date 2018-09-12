@@ -1,0 +1,27 @@
+{- If there is a natural transformation from `m` to `n`, then a n-Star functor
+   can be made into an m-Star functor.
+
+   NB: This looks a lot like a contravariant functor in the category of
+       endofunctors … right?
+-}
+  λ(m : Type → Type)
+→ λ(n : Type → Type)
+→ λ(natural : ∀(a : Type) → m a → n a)
+→ λ(f : Type → Type)
+→ λ(star : ./type Type ./../../../Function/Type n f)
+→   { map =
+          λ(a : Type)
+        → λ(b : Type)
+        → λ(fn : a → m b)
+        → star.map
+          a
+          b
+          ( (./../../../Category/Set/category).compose
+            a
+            (m b)
+            (n b)
+            (natural b)
+            fn
+          )
+    }
+  : ./type Type ./../../../Function/Type m f

@@ -1,0 +1,3 @@
+{- This is very similar to Haskell’s `Functor`.
+-}
+./type Type ./../../Category/Set/type

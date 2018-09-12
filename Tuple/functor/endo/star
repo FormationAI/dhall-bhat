@@ -1,7 +1,7 @@
     let Tuple = ./../../Type
 
 in    λ(m : Type → Type)
-    → λ(functor : ./../../../Functor/Endo/Types m)
+    → λ(functor : ./../../../Functor/Endo/Set m)
     → λ(a : Type)
     →   { map =
               λ(b : Type)
@@ -10,4 +10,4 @@ in    λ(m : Type → Type)
             → λ(t : Tuple a b)
             → functor.map c (Tuple a c) (λ(x : c) → t ⫽ { _2 = x }) (f t._2)
         }
-      : ./../../../Functor/Endo/Star m (Tuple a)
+      : ./../../../Functor/Endo/Star Type ./../../../Function/Type m (Tuple a)

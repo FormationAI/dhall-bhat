@@ -1,0 +1,13 @@
+{- This, specialized to `Type ../Category/Set/type`, is equivalent to Haskell’s
+  `Profunctor`. Not to be confused with Dhall’s `./Profunctor`, which is more
+   general.
+-}
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ ./Bifunctor/type
+  object
+  (./../Category/Op/type object arrow)
+  object
+  arrow
+  object
+  arrow

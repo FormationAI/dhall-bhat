@@ -1,0 +1,10 @@
+  λ(r : Type)
+→   { map =
+          λ(a : Type)
+        → λ(b : Type)
+        → λ(f : a → b)
+        → λ(fa : r → a)
+        → λ(rr : r)
+        → f (fa rr)
+    }
+  : ./../../../Functor/Endo/Set (./../../Type r)

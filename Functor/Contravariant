@@ -1,0 +1,6 @@
+{- A contravariant functor `C → D` is equivalent to a covariant functor
+  `C^op → D`.
+-}
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ ./type object (./../Category/Op/type object arrow)

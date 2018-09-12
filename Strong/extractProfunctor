@@ -1,4 +1,7 @@
-  λ(f : Type → Type → Type)
-→ λ(strong : ./type f)
-→   strong.{ map }
-  : ./../Functor/Profunctor ./../FunctionOp/type ./../Function/type f
+  λ(cObject : Kind)
+→ λ(cArrow : cObject → cObject → Type)
+→ λ(dObject : Kind)
+→ λ(dArrow : dObject → dObject → Type)
+→ λ(f : { _1 : dObject, _2 : cObject } → Type)
+→ λ(strong : ./type cObject cArrow dObject dArrow f)
+→ strong.{ map } : ./../Functor/Profunctor cObject cArrow dObject dArrow f

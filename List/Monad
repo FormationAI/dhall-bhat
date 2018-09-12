@@ -1,14 +1,13 @@
-    ./Applicative
-  ∧ { bind =
-          λ(a : Type)
-        → λ(b : Type)
-        → λ(k : a → List b)
-        → λ(fa : List a)
-        → List/build
-          b
-          (   λ(list : Type)
-            → λ(cons : b → list → list)
-            → List/fold a fa list (λ(x : a) → List/fold b (k x) list cons)
-          )
-    }
-: ./../Monad/Type List
+  { identity =
+      λ(a : Type) → λ(x : a) → [ x ]
+  , op =
+        λ(a : Type)
+      → λ(mma : List (List a))
+      → List/fold
+        (List a)
+        mma
+        (List a)
+        (λ(x : List a) → λ(y : List a) → x # y)
+        ([] : List a)
+  }
+: ./../Monad/Type Type ./../Function/Type List

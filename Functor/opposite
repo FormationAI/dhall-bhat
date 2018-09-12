@@ -1,0 +1,13 @@
+  λ(cObject : Kind)
+→ λ(cArrow : cObject → cObject → Type)
+→ λ(dObject : Kind)
+→ λ(dArrow : dObject → dObject → Type)
+→ λ(f : cObject → dObject)
+→ λ(functor : ./type cObject cArrow dObject dArrow f)
+→   { map = λ(a : cObject) → λ(b : cObject) → functor.map b a }
+  : ./type
+    cObject
+    (./../Category/Op/type cObject cArrow)
+    dObject
+    (./../Category/Op/type dObject dArrow)
+    f

@@ -1,11 +1,14 @@
-  λ(m : Type → Type)
-→   ./Applicative m
-  ∧ { bind =
-          λ(a : Type)
-        → λ(b : Type)
-        → λ(codensity : ./Type m a)
-        → λ(k : a → ./Type m b)
-        → λ(c : Type)
-        → λ(l : b → m c)
-        → codensity c (λ(x : a) → k x c l)
-    }
+--   λ(m : Type → Type)
+-- →   { identity =
+--         λ(a : Type) → λ(x : a) → λ(b : Type) → λ(k : a → m b) → k x
+--     , op =
+--           λ(a : Type)
+--         → λ(b : Type)
+--         → λ(codensity : ./Type m a)
+--         → λ(k : a → ./Type m b)
+--         → λ(c : Type)
+--         → λ(l : b → m c)
+--         → codensity c (λ(x : a) → k x c l)
+--     }
+--   : ./../Monad/Type Type ./../Function/Type (./Type m)
+<>

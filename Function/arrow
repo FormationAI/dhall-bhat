@@ -29,28 +29,28 @@ in    { arr =
           → λ(g : a → b)
           → λ(x : a)
           → f (g x)
-      , first =
+      , lmap =
             λ(a : Type)
           → λ(b : Type)
           → λ(c : Type)
-          → λ(f : a → b)
-          → λ(p : { _1 : a, _2 : c })
-          → { _1 = f p._1, _2 = p._2 }
-      , second =
+          → λ(f : b → a)
+          → λ(p : a → c)
+          → λ(x : b)
+          → p (f x)
+      , rmap =
             λ(a : Type)
           → λ(b : Type)
           → λ(c : Type)
           → λ(f : b → c)
-          → λ(p : { _1 : a, _2 : b })
-          → { _1 = p._1, _2 = f p._2 }
+          → λ(p : a → b)
+          → λ(x : a)
+          → f (p x)
       , map =
-            λ(a : Type)
-          → λ(b : Type)
-          → λ(c : Type)
-          → λ(d : Type)
-          → λ(f : { _1 : c → a, _2 : b → d })
-          → λ(fn : a → b)
-          → λ(x : c)
+            λ(a : { _1 : Type, _2 : Type })
+          → λ(b : { _1 : Type, _2 : Type })
+          → λ(f : { _1 : b._1 → a._1, _2 : a._2 → b._2 })
+          → λ(fn : a._1 → a._2)
+          → λ(x : b._1)
           → f._2 (fn (f._1 x))
       }
     : ./../Arrow/type ./type

@@ -1,12 +1,7 @@
-    let Functor = ./../Functor/Endo/Types
-
-in  let Applicative
-        : (Type → Type) → Type
-        =   λ(f : Type → Type)
-          → { ap :
-                ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-            , pure :
-                ∀(a : Type) → a → f a
-            }
-
-in  λ(f : Type → Type) → Functor f ⩓ Applicative f
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ ./../Monoid/Type
+  (object → object)
+  (./../Category/Functor/Endo object arrow)
+  (./../Day/Type object)
+  (./../Identity/Type object)

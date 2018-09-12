@@ -1,0 +1,24 @@
+--   λ(object : Kind)
+-- → λ(arrow : object → object → Type)
+-- → λ(semigroupoid : ./../Semigroupoid/Type object arrow)
+-- →     let Applicative = ./../Applicative/Type object arrow
+  
+--   in  let Monad = ./Type object arrow
+  
+--   in    λ(f : object → object)
+--       → λ(monad : Monad f)
+--       →   { identity =
+--               monad.identity
+--           , ap =
+--                 λ(a : object)
+--               → λ(b : object)
+--               → monad.bind
+--                 (   λ(fab : arrow a b)
+--                   → monad.bind
+--                     (semigroupoid.compose a b (f b) monad.identity fab)
+--                     ma
+--                 )
+--                 mfab
+--           }
+--         : Applicative f
+<>

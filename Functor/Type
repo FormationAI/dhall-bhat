@@ -1,4 +1,6 @@
-  λ(c : Type → Type → Type)
-→ λ(d : Type → Type → Type)
-→ λ(f : Type → Type)
-→ { map : ∀(a : Type) → ∀(b : Type) → c a b → d (f a) (f b) }
+  λ(cObject : Kind)
+→ λ(cArrow : cObject → cObject → Type)
+→ λ(dObject : Kind)
+→ λ(dArrow : dObject → dObject → Type)
+→ λ(f : cObject → dObject)
+→ { map : ∀(a : cObject) → ∀(b : cObject) → cArrow a b → dArrow (f a) (f b) }

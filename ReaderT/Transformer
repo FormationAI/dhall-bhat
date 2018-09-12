@@ -1,6 +1,4 @@
-    let Transformer = ./../Transformer/Type
-
-in  let Monad = ./../Monad/Type
+    let Monad = ./../Monad/Type Type ./../Function/Type
 
 in  let ReaderT = ./Type
 
@@ -13,4 +11,4 @@ in    λ(r : Type)
             → λ(env : r)
             → ma
         }
-      : Transformer (ReaderT r)
+      : ./../Transformer/Type (ReaderT r)

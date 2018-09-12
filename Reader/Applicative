@@ -1,17 +1,15 @@
-    let Reader = ./Type
+--     let Reader = ./Type
 
-in  let Applicative = ./../Applicative/Type
-
-in    λ(r : Type)
-    →     ./functor/endo/types r
-        ∧ { pure =
-              λ(a : Type) → λ(x : a) → λ(env : r) → x
-          , ap =
-                λ(a : Type)
-              → λ(b : Type)
-              → λ(g : Reader r (a → b))
-              → λ(fa : Reader r a)
-              → λ(env : r)
-              → g env (fa env)
-          }
-      : Applicative (Reader r)
+-- in    λ(r : Type)
+--     →   { identity =
+--             λ(a : Type) → λ(x : a) → λ(env : r) → x
+--         , op =
+--               λ(a : Type)
+--             → λ(b : Type)
+--             → λ(g : Reader r (a → b))
+--             → λ(fa : Reader r a)
+--             → λ(env : r)
+--             → g env (fa env)
+--         }
+--       : ./../Applicative/Type Type ./../Function/Type (Reader r)
+<>

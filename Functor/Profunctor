@@ -1,7 +1,15 @@
 {- A profunctor `C ↛ D` is represented as the bifunctor `(D^op, C) → Set`. This
-   is much more general than Haskell’s `Profunctor`. That would be akin to
-  `./Profunctor ../../FunctionOp/type ../../Function/type`.
+   is much more general than Haskell’s `Profunctor`. See `Hom` and `InternalHom`
+   for that.
 -}
-  λ(dOp : Type → Type → Type)
-→ λ(c : Type → Type → Type)
-→ ./Bifunctor/type dOp c ./../Function/type
+  λ(cObject : Kind)
+→ λ(cArrow : cObject → cObject → Type)
+→ λ(dObject : Kind)
+→ λ(dArrow : dObject → dObject → Type)
+→ ./Bifunctor/type
+  dObject
+  (./../Category/Op/type dObject dArrow)
+  cObject
+  cArrow
+  Type
+  (λ(a : Type) → λ(b : Type) → a → b)

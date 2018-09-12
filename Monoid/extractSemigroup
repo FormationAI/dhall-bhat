@@ -1,5 +1,7 @@
-    let Semigroup = ./../Semigroup/Type
-
-in  let Monoid = ./Type
-
-in  λ(m : Type) → λ(t : Monoid m) → t.{ op } : Semigroup m
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(product : object → object → object)
+→ λ(i : object)
+→ λ(m : object)
+→ λ(t : ./Type object arrow product i m)
+→ t.{ op } : ./../Semigroup/Type object arrow product m

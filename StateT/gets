@@ -1,10 +1,21 @@
-    let Monad = ./../Monad/Type
+--     let Monad = ./../Monad/Type Type ./../Function/Type
 
-in  let StateMonad = ./Monad
-
-in    λ(s : Type)
-    → λ(m : Type → Type)
-    → λ(monad : Monad m)
-    → λ(a : Type)
-    → λ(f : s → a)
-    → let map = (StateMonad s m monad).map in map s a f (./get s m monad)
+-- in    λ(s : Type)
+--     → λ(m : Type → Type)
+--     → λ(monad : Monad m)
+--     → λ(a : Type)
+--     → λ(f : s → a)
+--     →     let functor =
+--                 ./functor/endo/set
+--                 s
+--                 m
+--                 ( ./../Monad/impliedEndofunctor
+--                   Type
+--                   ./../Function/Type
+--                   ./../Function/semigroupoid
+--                   m
+--                   monad
+--                 )
+      
+--       in  functor.map s a f (./get s m monad)
+<>

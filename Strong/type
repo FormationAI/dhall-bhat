@@ -1,15 +1,32 @@
-  λ(f : Type → Type → Type)
-→   { first :
-          ∀(a : Type)
-        → ∀(b : Type)
-        → ∀(c : Type)
-        → f a b
-        → f { _1 : a, _2 : c } { _1 : b, _2 : c }
-    , second :
-          ∀(a : Type)
-        → ∀(b : Type)
-        → ∀(c : Type)
-        → f b c
-        → f { _1 : a, _2 : b } { _1 : a, _2 : c }
-    }
-  ⩓ ./../Functor/Profunctor ./../FunctionOp/type ./../Function/type f
+  λ(cObject : Kind)
+→ λ(cArrow : cObject → cObject → Type)
+→ λ(dObject : Kind)
+→ λ(dArrow : dObject → dObject → Type)
+→     let object = { _1 : dObject, _2 : cObject }
+  
+  in  let arrow =
+              λ(a : object)
+            → λ(b : object)
+            → { _1 :
+                  ./../Category/Op/Type dObject dArrow a._1 b._1
+              , _2 :
+                  cArrow a._2 b._2
+              }
+  
+  in    λ(f : object → Type)
+      →   { lmap :
+                ∀(a : dObject)
+              → ∀(b : dObject)
+              → ∀(c : cObject)
+              → ./../Category/Op/Type dObject dArrow a b
+              → f { _1 = a, _2 = c }
+              → f { _1 = b, _2 = c }
+          , rmap :
+                ∀(a : dObject)
+              → ∀(b : cObject)
+              → ∀(c : cObject)
+              → cArrow b c
+              → f { _1 = a, _2 = b }
+              → f { _1 = a, _2 = c }
+          }
+        ⩓ ./../Functor/Profunctor cObject cArrow dObject dArrow f

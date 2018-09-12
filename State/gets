@@ -1,1 +1,6 @@
-λ(s : Type) → ./../StateT/gets s ./../Identity/Type ./../Identity/Monad
+--   λ(s : Type)
+-- → ./../StateT/gets
+--   s
+--   (./../Identity/Type Type)
+--   (./../Identity/monad Type ./../Function/Type ./../Function/category)
+<>

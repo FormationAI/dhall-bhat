@@ -1,0 +1,17 @@
+--   λ(object : Kind)
+-- → λ(arrow : object → object → Type)
+-- → λ(semigroupoid : ./../Semigroupoid/Type object arrow)
+-- → λ(f : object → object)
+-- → λ(applicative : ./Type object arrow f)
+-- →   { map =
+--           λ(a : object)
+--         → λ(b : object)
+--         → semigroupoid.compose
+--           (arrow a b)
+--           (f (arrow a b))
+--           (arrow (f a) (f b))
+--           applicative.op
+--           applicative.identity
+--     }
+--   : ./../Functor/Endo/Type object arrow f
+<>

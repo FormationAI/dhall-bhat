@@ -1,1 +1,5 @@
-λ(f : Type → Type) → λ(g : Type → Type) → λ(a : Type) → f (g a)
+  λ(object : Kind)
+→ λ(f : object → object)
+→ λ(g : object → object)
+→ λ(a : object)
+→ f (g a)

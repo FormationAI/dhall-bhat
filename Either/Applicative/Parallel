@@ -1,34 +1,34 @@
-    let Applicative = ./../../Applicative/Type
+--     let Semigroup =
+--           ./../../Semigroup/Type Type ./../../Function/Type ./../../Tuple/Type
 
-in  let Semigroup = ./../../Semigroup/Type
+-- in  let Either = ./../Type
 
-in  let Either = ./../Type
-
-in    λ(a : Type)
-    → λ(semi : Semigroup a)
-    →     ./../functor/endo/types a
-        ∧ { pure =
-              λ(b : Type) → λ(x : b) → < Right = x | Left : a >
-          , ap =
-                λ(b : Type)
-              → λ(c : Type)
-              → λ(g : Either a (b → c))
-              → λ(fa : Either a b)
-              → merge
-                { Left =
-                      λ(l : a)
-                    → merge
-                      { Left =
-                          λ(ll : a) → < Left = semi.op l ll | Right : c >
-                      , Right =
-                          λ(_ : b) → < Left = l | Right : c >
-                      }
-                      fa
-                , Right =
-                        let map = (./../functor/endo/types a).map
+-- in    λ(a : Type)
+--     → λ(semi : Semigroup a)
+--     →     ./../functor/endo/set a
+--         ∧ { pure =
+--               λ(b : Type) → λ(x : b) → < Right = x | Left : a >
+--           , ap =
+--                 λ(b : Type)
+--               → λ(c : Type)
+--               → λ(g : Either a (b → c))
+--               → λ(fa : Either a b)
+--               → merge
+--                 { Left =
+--                       λ(l : a)
+--                     → merge
+--                       { Left =
+--                           λ(ll : a) → < Left = semi.op l ll | Right : c >
+--                       , Right =
+--                           λ(_ : b) → < Left = l | Right : c >
+--                       }
+--                       fa
+--                 , Right =
+--                         let map = (./../functor/endo/set a).map
                     
-                    in  λ(f : b → c) → map b c f fa
-                }
-                g
-          }
-      : Applicative (Either a)
+--                     in  λ(f : b → c) → map b c f fa
+--                 }
+--                 g
+--           }
+--       : ./../../Applicative/Type Type ./../../Function/Type (Either a)
+<>

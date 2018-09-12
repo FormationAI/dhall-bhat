@@ -1,14 +1,28 @@
-  λ(w : Type → Type)
-→ λ(comonad : ./../Comonad/Type w)
-→   { identity =
-        comonad.extract
-    , compose =
-          λ(a : Type)
-        → λ(b : Type)
-        → λ(c : Type)
-        → λ(g : w b → c)
-        → λ(f : w a → b)
-        → λ(x : w a)
-        → g (comonad.extend a b f x)
-    }
-  : ./../Category/type (./type w)
+--   λ(object : Kind)
+-- → λ(arrow : object → object → Type)
+-- → λ(semigroupoid : ./../Semigroupoid/Type object arrow)
+-- → λ(w : object → object)
+-- →     let costarArrow = ./Type object arrow w
+  
+--   in    λ(comonad : ./../Comonad/Type object arrow w)
+--       →     let extend =
+--                   ( ./../Comonad/impliedCostarfunctor
+--                     object
+--                     arrow
+--                     semigroupoid
+--                     w
+--                     comonad
+--                   ).map
+        
+--         in    { identity =
+--                   comonad.identity
+--               , compose =
+--                     λ(a : object)
+--                   → λ(b : object)
+--                   → λ(c : object)
+--                   → λ(g : costarArrow b c)
+--                   → λ(f : costarArrow a b)
+--                   → semigroupoid.compose (w a) (w b) c g (extend a b f)
+--               }
+--             : ./../Category/Type object costarArrow
+<>

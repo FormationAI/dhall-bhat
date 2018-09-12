@@ -1,15 +1,21 @@
-    let Monad = ./../Monad/Type
+--     let Monad = ./../Monad/Type Type ./../Function/Type
 
-in    λ(f : Type → Type)
-    → λ(monad : Monad f)
-    →     ./Applicative f (./../Monad/extractApplicative f monad)
-        ∧ { bind =
-                λ(a : Type)
-              → λ(b : Type)
-              → λ(k : a → ./Type f b)
-              → λ(yoneda : ./Type f a)
-              → λ(c : Type)
-              → λ(l : b → c)
-              → monad.bind a c (λ(x : a) → k x c l) (./lower f a yoneda)
-          }
-      : Monad (./Type f)
+-- in    λ(f : Type → Type)
+--     → λ(monad : Monad f)
+--     →   { identity =
+--               λ(a : Type)
+--             → λ(x : a)
+--             → λ(b : Type)
+--             → λ(f : a → b)
+--             → monad.identity b (f x)
+--         , bind =
+--               λ(a : Type)
+--             → λ(b : Type)
+--             → λ(k : a → ./Type f b)
+--             → λ(yoneda : ./Type f a)
+--             → λ(c : Type)
+--             → λ(l : b → c)
+--             → monad.bind a c (λ(x : a) → k x c l) (./lower f a yoneda)
+--         }
+--       : Monad (./Type f)
+<>

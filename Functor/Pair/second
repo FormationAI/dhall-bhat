@@ -1,3 +1,4 @@
-  λ(c : Type → Type → Type)
-→ λ(category : ./../../Category/type c)
-→ ./../Bifunctor/second c category c c
+--   λ(c : Type → Type → Type)
+-- → λ(category : ./../../Category/type c)
+-- → ./../Bifunctor/second c category c c
+<>

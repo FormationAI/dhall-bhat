@@ -1,1 +1,1 @@
-λ(a : Type) → a
+λ(object : Kind) → λ(a : object) → a

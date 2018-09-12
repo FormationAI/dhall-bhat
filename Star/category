@@ -1,14 +1,28 @@
-  λ(m : Type → Type)
-→ λ(monad : ./../Monad/Type m)
-→   { identity =
-        monad.pure
-    , compose =
-          λ(a : Type)
-        → λ(b : Type)
-        → λ(c : Type)
-        → λ(g : b → m c)
-        → λ(f : a → m b)
-        → λ(x : a)
-        → monad.bind b c g (f x)
-    }
-  : ./../Category/type (./type m)
+--   λ(object : Kind)
+-- → λ(arrow : object → object → Type)
+-- → λ(semigroupoid : ./../Semigroupoid/Type object arrow)
+-- → λ(m : object → object)
+-- →     let starArrow = ./Type object arrow m
+  
+--   in    λ(monad : ./../Monad/Type object arrow m)
+--       →     let bind =
+--                   ( ./../Monad/impliedStarfunctor
+--                     object
+--                     arrow
+--                     semigroupoid
+--                     m
+--                     monad
+--                   ).map
+        
+--         in    { identity =
+--                   monad.identity
+--               , compose =
+--                     λ(a : object)
+--                   → λ(b : object)
+--                   → λ(c : object)
+--                   → λ(g : starArrow b c)
+--                   → λ(f : starArrow a b)
+--                   → semigroupoid.compose a (m b) (m c) (bind b c g) f
+--               }
+--             : ./../Category/type object arrow starArrow
+<>

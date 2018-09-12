@@ -1,0 +1,9 @@
+  λ(cObject : Kind)
+→ λ(cArrow : cObject → cObject → Type)
+→ λ(dObject : Kind)
+→ λ(dArrow : dObject → dObject → Type)
+→     let object = { _1 : cObject, _2 : dObject }
+  
+  in    λ(a : object)
+      → λ(b : object)
+      → { _1 : cArrow a._1 b._1, _2 : dArrow a._2 b._2 }

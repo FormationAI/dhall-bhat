@@ -1,5 +1,5 @@
   λ(f : Type → Type)
-→ λ(functor : ./../Functor/Endo/Types f)
+→ λ(functor : ./../Functor/Endo/Set f)
 → λ(a : Type)
 → λ(fa : f a)
 → λ(b : Type)

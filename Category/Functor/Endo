@@ -1,0 +1,3 @@
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ ./type object object arrow

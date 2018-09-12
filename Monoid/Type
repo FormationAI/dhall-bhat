@@ -1,1 +1,6 @@
-λ(m : Type) → ./../Semigroup/Type m ⩓ { unit : m }
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(product : object → object → object)
+→ λ(i : object)
+→ λ(m : object)
+→ { identity : arrow i m } ⩓ ./../Semigroup/Type object arrow product m

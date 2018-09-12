@@ -1,1 +1,5 @@
-λ(r : Type) → ./../ReaderT/asks r ./../Identity/Type ./../Identity/Applicative
+  λ(r : Type)
+→ ./../ReaderT/asks
+  r
+  (./../Identity/Type Type)
+  (./../Identity/Applicative Type ./../Function/Type ./../Function/category)

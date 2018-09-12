@@ -1,3 +1,4 @@
-  λ(c : Type → Type → Type)
-→ λ(category : ./../../Category/type c)
-→ ./../Bifunctor/first c c category c
+--   λ(c : Type → Type → Type)
+-- → λ(category : ./../../Category/type c)
+-- → ./../Bifunctor/first c c category c
+<>

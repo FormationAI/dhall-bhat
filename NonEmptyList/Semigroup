@@ -1,13 +1,14 @@
     let NonEmpty = ./Type
 
-in  let Semigroup = ./../Semigroup/Type
-
 in    λ(a : Type)
     →     let List/op = (./../List/Semigroup a).op
       
       in    { op =
-                  λ(x : NonEmpty a)
-                → λ(y : NonEmpty a)
-                → { head = x.head, tail = List/op x.tail (./toList a y) }
+                  λ(p : { _1 : NonEmpty a, _2 : NonEmpty a })
+                → { head =
+                      p._1.head
+                  , tail =
+                      List/op { _1 = p._1.tail, _2 = ./toList a p._2 }
+                  }
             }
-          : Semigroup (NonEmpty a)
+          : ./../Semigroup/Set (NonEmpty a)

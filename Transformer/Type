@@ -1,4 +1,4 @@
-    let Monad = ./../Monad/Type
+    let Monad = ./../Monad/Type Type ../Function/Type
 
 in    λ(t : (Type → Type) → Type → Type)
     → { lift :

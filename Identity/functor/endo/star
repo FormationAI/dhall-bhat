@@ -1,3 +1,0 @@
-  λ(m : Type → Type)
-→   { map = λ(a : Type) → λ(b : Type) → λ(fn : a → m b) → fn }
-  : ./../../../Functor/Endo/Star m ./../../Type

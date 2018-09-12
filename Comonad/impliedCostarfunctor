@@ -1,0 +1,22 @@
+--   λ(object : Kind)
+-- → λ(arrow : object → object → Type)
+-- → λ(semigroupoid : ./../Semigroupoid/Type object arrow)
+-- → λ(w : object → object)
+-- → λ(comonad : ./Type object arrow w)
+-- →   { map =
+--           λ(a : object)
+--         → λ(b : object)
+--         → λ(f : arrow (w a) b)
+--         → semigroupoid.compose
+--           (w a)
+--           (w (w a))
+--           (w b)
+--           ( (./impliedEndofunctor object arrow semigroupoid w comonad).map
+--             (w a)
+--             b
+--             f
+--           )
+--           (comonad.op a)
+--     }
+--   : ./../Functor/ToTypes/Costar/Type object arrow w
+<>

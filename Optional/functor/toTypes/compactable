@@ -1,7 +1,8 @@
-  { map =
-        λ(a : Type)
-      → λ(b : Type)
-      → λ(f : a → Optional b)
-      → (./../../monad).bind a b f
-  }
-: ./../../../Functor/ToTypes/Compactable/type Optional
+--   ./../../../Monad/impliedStarfunctor
+--   Type
+--   ./../../../Function/Type
+--   ./../../../Function/semigroupoid
+--   Optional
+--   ./../../monad
+-- : ./../../../Functor/ToTypes/Compactable/type Optional
+<>

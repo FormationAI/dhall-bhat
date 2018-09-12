@@ -1,0 +1,4 @@
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→   { map = λ(a : object) → λ(b : object) → λ(fn : arrow a b) → fn }
+  : ./../../Functor/Endo/Type object arrow (./../Type object)

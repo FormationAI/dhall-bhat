@@ -1,0 +1,14 @@
+    let Ran = ./../../Type
+
+in    λ(f : Type → Type)
+    → λ(g : Type → Type)
+    →   { map =
+              λ(a : Type)
+            → λ(b : Type)
+            → λ(h : a → b)
+            → λ(ran : Ran f g a)
+            → λ(c : Type)
+            → λ(k : b → f c)
+            → ran c (λ(x : a) → k (h x))
+        }
+      : ./../../../Functor/Endo/Set (Ran f g)

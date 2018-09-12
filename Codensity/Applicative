@@ -1,14 +1,22 @@
-  λ(m : Type → Type)
-→     ./functor/endo/types m
-    ∧ { pure =
-          λ(a : Type) → λ(x : a) → λ(b : Type) → λ(k : a → m b) → k x
-      , ap =
-            λ(a : Type)
-          → λ(b : Type)
-          → λ(f : ./Type m (a → b))
-          → λ(g : ./Type m a)
-          → λ(c : Type)
-          → λ(k : b → m c)
-          → f c (λ(h : a → b) → g c (λ(x : a) → k (h x)))
-      }
-  : ./../Applicative/Type (./Type m)
+--   λ(m : Type → Type)
+-- →   { identity =
+--         λ(a : Type) → λ(x : a) → λ(b : Type) → λ(k : a → m b) → k x
+--     , op =
+--           λ(a : Type)
+--         → λ(b : Type)
+--         → λ(c : Type)
+--         → λ(f : a → b → c)
+--         → λ(x : ./Type m a)
+--         → λ(y : ./Type m b)
+--         → λ(d : Type)
+--         → λ(k : c → m d)
+--         → (./functor/endo/set m).map
+--           a
+--           (b → c)
+--           f
+--           x
+--           d
+--           (λ(h : b → c) → y d (λ(x : b) → k (h x)))
+--     }
+--   : ./../Applicative/Type Type ./../Function/Type (./Type m)
+<>

@@ -1,7 +1,6 @@
-    let Applicative = ./../../Applicative/Type
+--     let Either = ./../Type
 
-in  let Either = ./../Type
-
-in    λ(a : Type)
-    →   ./../../Monad/extractApplicative (Either a) (./../Monad a)
-      : Applicative (Either a)
+-- in    λ(a : Type)
+--     →   ./../../Monad/impliedApplicative (Either a) (./../Monad a)
+--       : ./../../Applicative/Type Type ./../../Function/Type (Either a)
+<>

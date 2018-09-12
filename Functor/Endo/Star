@@ -2,4 +2,7 @@
    implemented for an arbitrary `m`, doesn’t necessarily require an
   `Applicative` instance, and also may be _more_ constrained than `Applicative`.
 -}
-λ(m : Type → Type) → ./../Endo/type (./../../Star/type m)
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(m : object → object)
+→ ./Type object (./../../Star/Type object arrow m)

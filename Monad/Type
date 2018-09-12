@@ -1,8 +1,10 @@
-    let Applicative = ./../Applicative/Type
-
-in  let Monad
-        : (Type → Type) → Type
-        =   λ(f : Type → Type)
-          → { bind : ∀(a : Type) → ∀(b : Type) → (a → f b) → f a → f b }
-
-in  λ(f : Type → Type) → Applicative f ⩓ Monad f
+{- A monad on a category C{object, arrow} is a monoid object in the category of
+   endofunctors in C induced by composition.
+-}
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ ./../Monoid/Type
+  (object → object)
+  (./../Category/Functor/Endo object arrow)
+  (./../Compose/Type object)
+  (./../Identity/Type object)

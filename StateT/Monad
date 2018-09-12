@@ -1,21 +1,26 @@
-    let Monad = ./../Monad/Type
+--     let Monad = ./../Monad/Type Type ./../Function/Type
 
-in  let StateT = ./Type
+-- in  let StateT = ./Type
 
-in    λ(s : Type)
-    → λ(m : Type → Type)
-    → λ(monad : Monad m)
-    →     ./Applicative s m monad
-        ∧ { bind =
-                λ(a : Type)
-              → λ(b : Type)
-              → λ(k : a → StateT s m b)
-              → λ(fa : StateT s m a)
-              → λ(new : s)
-              → monad.bind
-                { val : a, state : s }
-                { val : b, state : s }
-                (λ(res : { val : a, state : s }) → k res.val res.state)
-                (fa new)
-          }
-      : Monad (StateT s m)
+-- in    λ(s : Type)
+--     → λ(m : Type → Type)
+--     → λ(monad : Monad m)
+--     →   { identity =
+--               λ(a : Type)
+--             → λ(x : a)
+--             → λ(env : s)
+--             → monad.identity { val : a, state : s } { val = x, state = env }
+--         , bind =
+--               λ(a : Type)
+--             → λ(b : Type)
+--             → λ(k : a → StateT s m b)
+--             → λ(fa : StateT s m a)
+--             → λ(new : s)
+--             → monad.bind
+--               { val : a, state : s }
+--               { val : b, state : s }
+--               (λ(res : { val : a, state : s }) → k res.val res.state)
+--               (fa new)
+--         }
+--       : Monad (StateT s m)
+<>

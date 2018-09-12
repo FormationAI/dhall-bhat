@@ -1,7 +1,5 @@
-    ./functor/endo/types
-  ∧ { pure =
-        λ(a : Type) → λ(x : a) → x
-    , ap =
-        λ(a : Type) → λ(b : Type) → λ(f : a → b) → f
-    }
-: ./../Applicative/Type ./Type
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(category : ./../Category/Type object arrow)
+→   { identity = category.identity, op = category.identity }
+  : ./../Applicative/Type object arrow (./Type object)

@@ -1,5 +1,5 @@
-    let Monad = ./../Monad/Type
-
-in      ./Applicative
-      ∧ { bind = λ(a : Type) → λ(b : Type) → λ(k : a → ./Type b) → k }
-    : Monad ./Type
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(category : ./../Category/Type object arrow)
+→   { identity = category.identity, op = category.identity }
+  : ./../Monad/Type object arrow (./Type object)

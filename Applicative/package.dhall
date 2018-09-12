@@ -1,15 +1,17 @@
-    let Applicative = ./Type
-
-in    λ(f : Type → Type)
-    → λ(applicative : Applicative f)
-    → { ap =
-          applicative.ap
-      , leftApConst =
-          ./leftApConst f applicative
-      , liftA2 =
-          ./liftA2 f applicative
-      , map =
-          applicative.map
-      , pure =
-          applicative.pure
-      }
+--   λ(object : Kind)
+-- → λ(arrow : object → object → Type)
+-- → λ(f : object → object)
+-- → λ(applicative : ./Type object arrow f)
+-- →     let extractFunctor = ./impliedEndofunctor object arrow f applicative
+  
+--   in    { ap =
+--             ./ap object arrow f applicative
+--         , liftA2 =
+--             applicative.op
+--         , pure =
+--             applicative.identity
+--         , extractFunctor =
+--             extractFunctor
+--         }
+--       ∧ ./../Functor/Endo/package.dhall object arrow f extractFunctor
+<>

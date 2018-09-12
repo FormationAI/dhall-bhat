@@ -1,2 +1,3 @@
-  λ(f : Type → Type → Type)
-→ { identity : ∀(a : Type) → f a a } ⩓ ./../Semigroupoid/type f
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ { identity : ∀(a : object) → arrow a a } ⩓ ./../Semigroupoid/type object arrow

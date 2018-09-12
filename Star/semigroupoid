@@ -1,3 +1,10 @@
-  λ(m : Type → Type)
-→ λ(monad : ./../Monad/Type m)
-→ ./../Category/extractSemigroupoid (./type m) (./category m monad)
+--   λ(object : Kind)
+-- → λ(arrow : object → object → Type)
+-- → λ(semigroupoid : ./../Semigroupoid/Type object arrow)
+-- → λ(m : object → object)
+-- → λ(monad : ./../Monad/Type object arrow m)
+-- → ./../Category/extractSemigroupoid
+--   object
+--   (./type object arrow m)
+--   (./category object arrow semigroupoid m monad)
+<>

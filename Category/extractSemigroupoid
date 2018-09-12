@@ -1,3 +1,4 @@
-  λ(f : Type → Type → Type)
-→ λ(category : ./type f)
-→ { compose = category.compose } : ./../Semigroupoid/type f
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(category : ./type object arrow)
+→ category.{ compose } : ./../Semigroupoid/type object arrow

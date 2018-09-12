@@ -1,23 +1,13 @@
-    let Monad = ./../Monad/Type
-
-in  let map = (./functor/endo/types).map
-
-in  let concat =
-            λ(a : Type)
-          → λ(x : Optional (Optional a))
-          → Optional/fold
-            (Optional a)
-            x
-            (Optional a)
-            (λ(y : Optional a) → y)
-            ([] : Optional a)
-
-in      ./Applicative
-      ∧ { bind =
-              λ(a : Type)
-            → λ(b : Type)
-            → λ(k : a → Optional b)
-            → λ(fa : Optional a)
-            → concat b (map a (Optional b) k fa)
-        }
-    : Monad Optional
+  { identity =
+      λ(a : Type) → λ(x : a) → [ x ] : Optional a
+  , op =
+        λ(a : Type)
+      → λ(mma : Optional (Optional a))
+      → Optional/fold
+        (Optional a)
+        mma
+        (Optional a)
+        ((./../Function/category).identity (Optional a))
+        ([] : Optional a)
+  }
+: ./../Monad/Type Type ./../Function/Type Optional
