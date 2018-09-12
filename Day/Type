@@ -2,10 +2,9 @@
           that to compile, so it’s currently composition. The last line should
           be replaced by something like:
 
-          → ∀(b : object) → ∀(c : object) → { _1 : f b, _2 : g c, _3 : b → c → a }
+          
 -}
-  λ(object : Kind)
-→ λ(f : object → object)
-→ λ(g : object → object)
-→ λ(a : object)
-→ f (g a)
+  λ(f : Type → Type)
+→ λ(g : Type → Type)
+→ λ(a : Type)
+→ ∀(b : Type) → ∀(c : Type) → { _1 : f b, _2 : g c, _3 : b → c → a }

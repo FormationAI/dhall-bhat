@@ -1,5 +1,0 @@
-  λ(object : Kind)
-→ λ(arrow : object → object → Type)
-→ λ(coproduct : object → object → object)
-→ λ(m : object)
-→ { split : arrow m (coproduct m m) }

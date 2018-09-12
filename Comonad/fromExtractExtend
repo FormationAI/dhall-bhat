@@ -13,7 +13,7 @@
           )
       →   { identity =
               extract
-          , split =
+          , op =
               λ(a : object) → extend a (w a) (category.identity (w a))
           }
         : ./Type object arrow w

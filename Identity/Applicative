@@ -1,5 +1,10 @@
-  λ(object : Kind)
-→ λ(arrow : object → object → Type)
-→ λ(category : ./../Category/Type object arrow)
-→   { identity = category.identity, op = category.identity }
-  : ./../Applicative/Type object arrow (./Type object)
+    let Identity = ./Type Type
+
+in    { identity =
+          (./../Function/category).identity
+      , op =
+            λ(i : Type)
+          → λ(x : ./../Day/Type Identity Identity i)
+          → let xx = x {} {} in xx._3 xx._1 xx._2
+      }
+    : ./../Applicative/Type Identity

@@ -1,9 +1,7 @@
-    let Applicative = ./../Applicative/Type Type ./../Function/Type
-
-in    λ(r : Type)
-    → λ(m : Type → Type)
-    → λ(applicative : Applicative m)
-    → λ(a : Type)
-    → λ(f : r → a)
-    → λ(env : r)
-    → applicative.identity a (f env)
+  λ(r : Type)
+→ λ(m : Type → Type)
+→ λ(applicative : ./../Applicative/Type m)
+→ λ(a : Type)
+→ λ(f : r → a)
+→ λ(env : r)
+→ applicative.identity a (f env)

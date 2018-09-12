@@ -1,5 +1,2 @@
   λ(f : Type → Type)
-→ ./../Ran/lower
-  (./../Identity/Type Type)
-  f
-  (./../Identity/Applicative Type ./../Function/Type ./../Function/category)
+→ ./../Ran/lower (./../Identity/Type Type) f ./../Identity/Applicative

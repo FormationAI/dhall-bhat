@@ -1,7 +1,3 @@
   λ(object : Kind)
 → λ(arrow : object → object → Type)
-→ ./../Comonoid/Type
-  (object → object)
-  (./../Category/Functor/Endo object arrow)
-  (./../Compose/Type object)
-  (./../Identity/Type object)
+→ ./../Monad/Type object (./../Category/Op/Type object arrow)

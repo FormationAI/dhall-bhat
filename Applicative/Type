@@ -1,7 +1,5 @@
-  λ(object : Kind)
-→ λ(arrow : object → object → Type)
-→ ./../Monoid/Type
-  (object → object)
-  (./../Category/Functor/Endo object arrow)
-  (./../Day/Type object)
-  (./../Identity/Type object)
+./../Monoid/Type
+(Type → Type)
+(./../Category/Functor/Endo Type ./../Function/Type)
+./../Day/Type
+(./../Identity/Type Type)
