@@ -1,17 +1,24 @@
---   λ(object : Kind)
--- → λ(arrow : object → object → Type)
--- → λ(semigroupoid : ./../Semigroupoid/Type object arrow)
--- → λ(f : object → object)
--- → λ(applicative : ./Type object arrow f)
--- →   { map =
---           λ(a : object)
---         → λ(b : object)
---         → semigroupoid.compose
---           (arrow a b)
---           (f (arrow a b))
---           (arrow (f a) (f b))
---           applicative.op
---           applicative.identity
---     }
---   : ./../Functor/Endo/Type object arrow f
-<>
+  λ(f : Type → Type)
+→ λ(applicative : ./Type f)
+→   { map =
+          λ(a : Type)
+        → λ(b : Type)
+        → λ(fn : a → b)
+        → λ(fa : f a)
+        → applicative.op
+          b
+          (   λ(r : Type)
+            → λ(day : ./../Day/convolution f f b r)
+            → day
+              (a → b)
+              a
+              { _1 =
+                  applicative.identity (a → b) fn
+              , _2 =
+                  fa
+              , _3 =
+                  λ(fn2 : a → b) → λ(a2 : a) → fn2 a2
+              }
+          )
+    }
+  : ./../Functor/Endo/Type Type ./../Function/Type f

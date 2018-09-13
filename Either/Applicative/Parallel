@@ -1,34 +1,32 @@
---     let Semigroup =
---           ./../../Semigroup/Type Type ./../../Function/Type ./../../Tuple/Type
+    let Semigroup =
+          ./../../Semigroup/Type Type ./../../Function/Type ./../../Tuple/Type
 
--- in  let Either = ./../Type
+in  let Either = ./../Type
 
--- in    λ(a : Type)
---     → λ(semi : Semigroup a)
---     →     ./../functor/endo/set a
---         ∧ { pure =
---               λ(b : Type) → λ(x : b) → < Right = x | Left : a >
---           , ap =
---                 λ(b : Type)
---               → λ(c : Type)
---               → λ(g : Either a (b → c))
---               → λ(fa : Either a b)
---               → merge
---                 { Left =
---                       λ(l : a)
---                     → merge
---                       { Left =
---                           λ(ll : a) → < Left = semi.op l ll | Right : c >
---                       , Right =
---                           λ(_ : b) → < Left = l | Right : c >
---                       }
---                       fa
---                 , Right =
---                         let map = (./../functor/endo/set a).map
-                    
---                     in  λ(f : b → c) → map b c f fa
---                 }
---                 g
---           }
---       : ./../../Applicative/Type Type ./../../Function/Type (Either a)
-<>
+in    λ(a : Type)
+    → λ(semigroup : Semigroup a)
+    → ./../../Applicative/fromPureAp
+      (Either a)
+      (λ(b : Type) → λ(x : b) → < Right = x | Left : a >)
+      (   λ(b : Type)
+        → λ(c : Type)
+        → λ(g : Either a (b → c))
+        → λ(fa : Either a b)
+        → merge
+          { Left =
+                λ(l : a)
+              → merge
+                { Left =
+                      λ(ll : a)
+                    → < Left = semigroup.op { _1 = l, _2 = ll } | Right : c >
+                , Right =
+                    λ(_ : b) → < Left = l | Right : c >
+                }
+                fa
+          , Right =
+                  let map = (./../functor/endo/set a).map
+              
+              in  λ(f : b → c) → map b c f fa
+          }
+          g
+      )

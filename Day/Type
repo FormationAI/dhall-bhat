@@ -1,10 +1,6 @@
-{- FIXME: This is supposed to be Day convolution, but I’m having trouble getting
-          that to compile, so it’s currently composition. The last line should
-          be replaced by something like:
-
-          
+{- Day convolution.
 -}
   λ(f : Type → Type)
 → λ(g : Type → Type)
 → λ(a : Type)
-→ ∀(b : Type) → ∀(c : Type) → { _1 : f b, _2 : g c, _3 : b → c → a }
+→ ∀(r : Type) → ./convolution f g a r → r

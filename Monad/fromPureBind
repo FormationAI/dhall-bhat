@@ -1,9 +1,12 @@
-  λ(f : Type → Type)
-→ λ(pure : ∀(a : Type) → a → f a)
-→ λ(bind : ∀(a : Type) → ∀(b : Type) → (a → f b) → f a → f b)
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(category : ./../Category/Type object arrow)
+→ λ(f : object → object)
+→ λ(pure : ∀(a : object) → arrow a (f a))
+→ λ(bind : ∀(a : object) → ∀(b : object) → arrow a (f b) → arrow (f a) (f b))
 →   { identity =
         pure
     , op =
-        λ(a : Type) → bind (f a) a ((./../Function/category).identity (f a))
+        λ(a : object) → bind (f a) a (category.identity (f a))
     }
-  : ./Type Type ./../Function/Type f
+  : ./Type object arrow f

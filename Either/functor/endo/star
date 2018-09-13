@@ -1,17 +1,20 @@
---   λ(m : Type → Type)
--- → λ(applicative : ./../../../Applicative/Type m)
--- → λ(a : Type)
--- →   { map =
---           λ(b : Type)
---         → λ(c : Type)
---         → λ(f : b → m c)
---         → ( ./../pair m (./../../../Applicative/extractFunctor m applicative)
---           ).map
---           a
---           b
---           a
---           c
---           { _1 = applicative.pure a, _2 = f }
---     }
---   : ./../../../Functor/Endo/Star m (./../../Type a)
-<>
+  λ(m : Type → Type)
+→ λ(applicative : ./../../../Applicative/Type m)
+→ λ(a : Type)
+→   { map =
+          λ(b : Type)
+        → λ(c : Type)
+        → λ(f : b → m c)
+        → ( ./../pair
+            m
+            (./../../../Applicative/impliedEndofunctor m applicative)
+          ).map
+          { _1 = a, _2 = b }
+          { _1 = a, _2 = c }
+          { _1 = applicative.identity a, _2 = f }
+    }
+  : ./../../../Functor/Endo/Star
+    Type
+    ./../../../Function/Type
+    m
+    (./../../Type a)

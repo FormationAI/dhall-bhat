@@ -1,0 +1,5 @@
+  λ(f : Type → Type)
+→ λ(g : Type → Type)
+→ λ(a : Type)
+→ λ(r : Type)
+→ ∀(b : Type) → ∀(c : Type) → { _1 : f b, _2 : g c, _3 : b → c → a } → r

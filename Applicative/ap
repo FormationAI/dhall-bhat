@@ -1,6 +1,12 @@
---   λ(object : Kind)
--- → λ(arrow : object → object → Type)
--- → λ(f : object → object)
--- → λ(applicative : ./Type object arrow f)
--- → applicative.op applicative.identity : f (a -> b) -> f a -> f b
-<>
+  λ(f : Type → Type)
+→ λ(applicative : ./Type f)
+→ λ(a : Type)
+→ λ(b : Type)
+→ λ(fn : f (a → b))
+→ λ(fa : f a)
+→ applicative.op
+  b
+  (   λ(r : Type)
+    → λ(day : ./../Day/convolution f f b r)
+    → day (a → b) a { _1 = fn, _2 = fa, _3 = λ(q : a → b) → λ(z : a) → q z }
+  )

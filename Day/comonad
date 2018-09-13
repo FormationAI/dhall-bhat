@@ -1,0 +1,43 @@
+    let Comonad = ./../Comonad/Type Type ./../Function/Type
+
+in    λ(f : Type → Type)
+    → λ(fComonad : Comonad f)
+    → λ(g : Type → Type)
+    → λ(gComonad : Comonad g)
+    →   { identity =
+              λ(a : Type)
+            → λ(day : ./Type f g a)
+            → day
+              a
+              (   λ(b : Type)
+                → λ(c : Type)
+                → λ(d : { _1 : f b, _2 : g c, _3 : b → c → a })
+                → d._3 (fComonad.identity b d._1) (gComonad.identity c d._2)
+              )
+        , op =
+              λ(a : Type)
+            → λ(day : ./Type f g a)
+            → day
+              (./Type f g (./Type f g a))
+              (   λ(b : Type)
+                → λ(c : Type)
+                → λ(d : { _1 : f b, _2 : g c, _3 : b → c → a })
+                → λ(r0 : Type)
+                → λ(day0 : ./../Day/convolution f g (./Type f g a) r0)
+                → day0
+                  (f b)
+                  (g c)
+                  { _1 =
+                      fComonad.op b d._1
+                  , _2 =
+                      gComonad.op c d._2
+                  , _3 =
+                        λ(fb : f b)
+                      → λ(gc : g c)
+                      → λ(r1 : Type)
+                      → λ(day1 : ./../Day/convolution f g a r1)
+                      → day1 b c { _1 = fb, _2 = gc, _3 = d._3 }
+                  }
+              )
+        }
+      : Comonad (./Type f g)

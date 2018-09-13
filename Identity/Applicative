@@ -4,7 +4,15 @@ in    { identity =
           (./../Function/category).identity
       , op =
             λ(i : Type)
-          → λ(x : ./../Day/Type Identity Identity i)
-          → let xx = x {} {} in xx._3 xx._1 xx._2
+          → λ ( day
+              : ∀(r : Type) → ./../Day/convolution Identity Identity i r → r
+              )
+          → day
+            i
+            (   λ(b : Type)
+              → λ(c : Type)
+              → λ(d : { _1 : b, _2 : c, _3 : b → c → i })
+              → d._3 d._1 d._2
+            )
       }
     : ./../Applicative/Type Identity

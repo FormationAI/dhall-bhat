@@ -1,0 +1,21 @@
+{- It is often easier to define an `Applicative` instance in the Haskell style,
+   using `ap` instead of the monoidal product (`op`). This function generates a
+   monoidal definiton from a Haskell-style one.
+-}
+  λ(m : Type → Type)
+→ λ(pure : ∀(a : Type) → a → m a)
+→ λ(ap : ∀(a : Type) → ∀(b : Type) → m (a → b) → m a → m b)
+→   { identity =
+        pure
+    , op =
+          λ(i : Type)
+        → λ(day : ∀(r : Type) → ./../Day/convolution m m i r → r)
+        → day
+          (m i)
+          (   λ(b : Type)
+            → λ(c : Type)
+            → λ(d : { _1 : m b, _2 : m c, _3 : b → c → i })
+            → ap c i (ap b (c → i) (pure (b → c → i) d._3) d._1) d._2
+          )
+    }
+  : ./Type m

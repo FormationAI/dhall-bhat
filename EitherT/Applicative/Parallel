@@ -1,20 +1,15 @@
---     let Applicative = ./../../Applicative/Type Type ./../../Function/Type
+    let Applicative = ./../../Applicative/Type
 
--- in  let Either = ./../../Either/Type
+in  let Semigroup =
+          ./../../Semigroup/Type Type ./../../Function/Type ./../../Tuple/Type
 
--- in  let EitherT = ./../Type
-
--- in  let EitherA = ./../../Either/Applicative/Parallel
-
--- in  let ComposeA = ./../../Compose/Applicative
-
--- in  let Semigroup =
---           ./../../Semigroup/Type Type ./../../Function/Type ./../../Tuple/Type
-
--- in    λ(a : Type)
---     → λ(semi : Semigroup a)
---     → λ(m : Type → Type)
---     → λ(applicative : Applicative m)
---     →   ComposeA m (Either a) applicative (EitherA a semi)
---       : Applicative (EitherT a m)
-<>
+in    λ(a : Type)
+    → λ(semi : Semigroup a)
+    → λ(m : Type → Type)
+    → λ(applicative : Applicative m)
+    →   ./../../Compose/Applicative
+        m
+        (./../../Either/Type a)
+        applicative
+        (./../../Either/Applicative/Parallel a semi)
+      : Applicative (./../Type a m)

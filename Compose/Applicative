@@ -1,27 +1,45 @@
---     let Applicative = ./../Applicative/Type
+    let Applicative = ./../Applicative/Type
 
--- in    λ(f : Type → Type)
---     → λ(g : Type → Type)
---     → λ(fApplicative : Applicative Type ../Function/Type f)
---     → λ(gApplicative : Applicative Type ../Function/Type g)
---     →     ./functor/endo/set f g fApplicative.{ map } gApplicative.{ map }
---         ∧ { pure =
---                 λ(a : Type)
---               → λ(x : a)
---               → fApplicative.pure (g a) (gApplicative.pure a x)
---           , ap =
---                 λ(a : Type)
---               → λ(b : Type)
---               → λ(k : ./Type f g (a → b))
---               → fApplicative.ap
---                 (g a)
---                 (g b)
---                 ( fApplicative.map
---                   (g (a → b))
---                   (g a → g b)
---                   (gApplicative.ap a b)
---                   k
---                 )
---           }
---       : Applicative Type ../Function/Type (./Type Type f g)
-<>
+in  let Compose = ./Type Type
+
+in    λ(f : Type → Type)
+    → λ(g : Type → Type)
+    → λ(fApplicative : Applicative f)
+    → λ(gApplicative : Applicative g)
+    →   { identity =
+              λ(a : Type)
+            → λ(x : a)
+            → fApplicative.identity (g a) (gApplicative.identity a x)
+        , op =
+              λ(i : Type)
+            → λ(day : ./../Day/Type (Compose f g) (Compose f g) i)
+            → day
+              (f (g i))
+              (   λ(b : Type)
+                → λ(c : Type)
+                → λ(d : { _1 : f (g b), _2 : f (g c), _3 : b → c → i })
+                → fApplicative.op
+                  (g i)
+                  (   λ(fr : Type)
+                    → λ(fDay : ./../Day/convolution f f (g i) fr)
+                    → fDay
+                      (g b)
+                      (g c)
+                      { _1 =
+                          d._1
+                      , _2 =
+                          d._2
+                      , _3 =
+                            λ(gb : g b)
+                          → λ(gc : g c)
+                          → gApplicative.op
+                            i
+                            (   λ(gr : Type)
+                              → λ(gDay : ./../Day/convolution g g i gr)
+                              → gDay b c { _1 = gb, _2 = gc, _3 = d._3 }
+                            )
+                      }
+                  )
+              )
+        }
+      : Applicative (Compose f g)
