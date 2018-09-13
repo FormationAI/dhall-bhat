@@ -1,9 +1,2 @@
---   ./star
---   (./../../../Identity/Type Type)
---   ( ./../../../Identity/Applicative
---     Type
---     ./../../../Function/Type
---     ./../../../Function/category
---   )
--- : ./../../../Functor/Endo/Set Optional
-<>
+  ./star (./../../../Identity/Type Type) ./../../../Identity/Applicative
+: ./../../../Functor/Endo/Set Optional

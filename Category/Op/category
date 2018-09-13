@@ -1,0 +1,16 @@
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(category : ./../Type object arrow)
+→     let opArrow = ./Type object arrow
+  
+  in    { identity =
+            category.identity
+        , compose =
+              λ(a : object)
+            → λ(b : object)
+            → λ(c : object)
+            → λ(f : opArrow b c)
+            → λ(g : opArrow a b)
+            → category.compose c b a g f
+        }
+      : ./../Type object opArrow

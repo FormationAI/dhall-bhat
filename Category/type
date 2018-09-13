@@ -1,3 +1,3 @@
   λ(object : Kind)
 → λ(arrow : object → object → Type)
-→ { identity : ∀(a : object) → arrow a a } ⩓ ./../Semigroupoid/type object arrow
+→ { identity : ∀(a : object) → arrow a a } ⩓ ./../Semigroupoid/Type object arrow

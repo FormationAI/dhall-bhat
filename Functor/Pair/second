@@ -1,4 +1,4 @@
---   λ(c : Type → Type → Type)
--- → λ(category : ./../../Category/type c)
--- → ./../Bifunctor/second c category c c
-<>
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(category : ./../../Category/Type object arrow)
+→ ./../Bifunctor/second object arrow category object arrow object arrow

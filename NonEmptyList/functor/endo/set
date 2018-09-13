@@ -1,5 +1,2 @@
---   ./star
---   (./../../../Identity/Type Type)
---   (./../../../Identity/Applicative Type ./../../../Function/Type)
--- : ./../../../Functor/Endo/Set
-<>
+  ./star (./../../../Identity/Type Type) ./../../../Identity/Applicative
+: ./../../../Functor/Endo/Set ./../../Type
