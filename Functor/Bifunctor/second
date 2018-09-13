@@ -1,12 +1,26 @@
---   λ(j : Type → Type → Type)
--- → λ(category : ./../../Category/type j)
--- → λ(k : Type → Type → Type)
--- → λ(e : Type → Type → Type)
--- → λ(f : Type → Type → Type)
--- → λ(bifunctor : ./type j k e f)
--- → λ(a : Type)
--- → λ(b : Type)
--- → λ(c : Type)
--- → λ(arr : k b c)
--- → bifunctor.map a b a c { _1 = category.identity a, _2 = arr }
-<>
+  λ(cObject : Kind)
+→ λ(cArrow : cObject → cObject → Type)
+→ λ(cCategory : ./../../Category/Type cObject cArrow)
+→ λ(dObject : Kind)
+→ λ(dArrow : dObject → dObject → Type)
+→ λ(eObject : Kind)
+→ λ(eArrow : eObject → eObject → Type)
+→ λ(f : { _1 : cObject, _2 : dObject } → { _1 : cObject, _2 : eObject })
+→ λ ( bifunctor
+    : ./Type
+      cObject
+      cArrow
+      dObject
+      dArrow
+      { _1 : cObject, _2 : eObject }
+      (./../../Category/Product/Type cObject cArrow eObject eArrow)
+      f
+    )
+→ λ(a : cObject)
+→ λ(b : dObject)
+→ λ(c : dObject)
+→ λ(fn : dArrow b c)
+→ bifunctor.map
+  { _1 = a, _2 = b }
+  { _1 = a, _2 = c }
+  { _1 = cCategory.identity a, _2 = fn }
