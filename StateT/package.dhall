@@ -4,7 +4,7 @@
 --     → λ(m : Type → Type)
 --     → λ(monad : Monad m)
 --     →   { lift =
---             (./Transformer s).lift m monad
+--             (./transformer s).lift m monad
 --         , eval =
 --             ./eval s m monad
 --         , exec =

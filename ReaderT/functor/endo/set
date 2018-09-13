@@ -4,7 +4,14 @@ in  let Reader = ./../../../Reader/Type
 
 in  let readerF = ./../../../Reader/Functor/endo/set
 
-in  let composeF = ./../../../Compose/functor/endo Type ./../../../Function/Type
+in  let composeF =
+          ./../../../Compose/functor
+          Type
+          ./../../../Function/Type
+          Type
+          ./../../../Function/Type
+          Type
+          ./../../../Function/Type
 
 in    λ(r : Type)
     → λ(m : Type → Type)

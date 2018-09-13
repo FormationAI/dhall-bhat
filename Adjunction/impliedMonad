@@ -1,0 +1,17 @@
+--   λ(cObject : Kind)
+-- → λ(cArrow : cObject → cObject → Type)
+-- → λ(dObject : Kind)
+-- → λ(dArrow : dObject → dObject → Type)
+-- → λ(f : dObject → cObject)
+-- → λ(g : cObject → dObject)
+-- → λ(adjunction : ./Type cObject cArrow dObject dArrow f g)
+-- → { identity =
+--       adjunction.unit
+--   , op =
+--       λ(a : dObject) → map (g (f a)) a (adjunction.counit a)
+--   }
+--   ./../Monad/Type
+--   dObject
+--   dArrow
+--   (./../Compose/Type dObject cObject dObject g f)
+<>

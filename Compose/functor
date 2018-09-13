@@ -1,0 +1,19 @@
+  λ(cObject : Kind)
+→ λ(cArrow : cObject → cObject → Type)
+→ λ(dObject : Kind)
+→ λ(dArrow : dObject → dObject → Type)
+→ λ(eObject : Kind)
+→ λ(eArrow : eObject → eObject → Type)
+→     let Functor = ./../Functor/Type cObject cArrow eObject eArrow
+  
+  in    λ(f : dObject → eObject)
+      → λ(g : cObject → dObject)
+      → λ(fFunctor : ./../Functor/Type dObject dArrow eObject eArrow f)
+      → λ(gFunctor : ./../Functor/Type cObject cArrow dObject dArrow g)
+      →   { map =
+                λ(a : cObject)
+              → λ(b : cObject)
+              → λ(k : cArrow a b)
+              → fFunctor.map (g a) (g b) (gFunctor.map a b k)
+          }
+        : Functor (./Type cObject dObject eObject f g)

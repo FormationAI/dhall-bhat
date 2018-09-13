@@ -1,0 +1,15 @@
+  λ(cObject : Kind)
+→ λ(cArrow : cObject → cObject → Type)
+→ λ(dObject : Kind)
+→ λ(dArrow : dObject → dObject → Type)
+→ λ(f : dObject → cObject)
+→ λ(g : cObject → dObject)
+→ { unit :
+      ∀(a : dObject) → dArrow a (g (f a))
+  , counit :
+      ∀(a : cObject) → cArrow (f (g a)) a
+  , leftAdjunct :
+      ∀(a : dObject) → ∀(b : cObject) → cArrow (f a) b → dArrow a (g b)
+  , rightAdjunct :
+      ∀(a : dObject) → ∀(b : cObject) → dArrow a (g b) → cArrow (f a) b
+  }

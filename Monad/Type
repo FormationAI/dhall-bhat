@@ -6,5 +6,5 @@
 → ./../Monoid/Type
   (object → object)
   (./../Category/Functor/Endo object arrow)
-  (./../Compose/Type object)
+  (./../Compose/Type object object object)
   (./../Identity/Type object)

@@ -1,6 +1,6 @@
     let Applicative = ./../Applicative/Type
 
-in  let Compose = ./Type Type
+in  let Compose = ./Type Type Type Type
 
 in    λ(f : Type → Type)
     → λ(g : Type → Type)
