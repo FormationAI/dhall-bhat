@@ -18,4 +18,4 @@ in  let composeF =
 in    λ(a : Type)
     → λ(f : Type → Type)
     → λ(functor : Endofunctor f)
-    → composeF f (Either a) functor (eitherF a) : Endofunctor (EitherT a f)
+    → composeF f functor (Either a) (eitherF a) : Endofunctor (EitherT a f)

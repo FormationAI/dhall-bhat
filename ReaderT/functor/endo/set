@@ -16,4 +16,4 @@ in  let composeF =
 in    λ(r : Type)
     → λ(m : Type → Type)
     → λ(functor : Endofunctor m)
-    → composeF (Reader r) m (readerF r) functor : Endofunctor (./../../Type r m)
+    → composeF (Reader r) (readerF r) m functor : Endofunctor (./../../Type r m)

@@ -7,8 +7,8 @@
 →     let Functor = ./../Functor/Type cObject cArrow eObject eArrow
   
   in    λ(f : dObject → eObject)
-      → λ(g : cObject → dObject)
       → λ(fFunctor : ./../Functor/Type dObject dArrow eObject eArrow f)
+      → λ(g : cObject → dObject)
       → λ(gFunctor : ./../Functor/Type cObject cArrow dObject dArrow g)
       →   { map =
                 λ(a : cObject)
