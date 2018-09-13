@@ -2,10 +2,10 @@
 → λ(cArrow : cObject → cObject → Type)
 → λ(dObject : Kind)
 → λ(dArrow : dObject → dObject → Type)
-→ λ(dCategory : ./../Type dObject dArrow)
+→ λ(dCategory : ./../Category/Type dObject dArrow)
 →     let object = cObject → dObject
   
-  in  let arrow = ./../../NaturalTransformation/Type cObject dObject dArrow
+  in  let arrow = ./Type cObject dObject dArrow
   
   in    { identity =
             λ(a : object) → λ(i : cObject) → dCategory.identity (a i)
@@ -18,4 +18,4 @@
             → λ(i : cObject)
             → dCategory.compose (a i) (b i) (c i) (f i) (g i)
         }
-      : ./../Type object arrow
+      : ./../Category/Type object arrow

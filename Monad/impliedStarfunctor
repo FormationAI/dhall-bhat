@@ -19,17 +19,4 @@
 --           )
 --     }
 --   : ./../Functor/ToTypes/Star/Type object arrow m
-
-
--- id : c -> m c
--- op : m (m d) -> m d
-
--- bind : (a -> m b) -> m a -> m b
--- bind f = op . map f
-
--- ap : m (a -> b) -> m a -> m b
--- ap f a = bind (\x1 -> bind (\x2 -> id (x1 x2)) a) f
-
--- map : (a -> b) -> m a -> m b
--- map = bind (\x1 -> id (f xi))
 <>

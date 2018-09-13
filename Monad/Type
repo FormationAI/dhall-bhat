@@ -5,6 +5,6 @@
 → λ(arrow : object → object → Type)
 → ./../Monoid/Type
   (object → object)
-  (./../Category/Functor/Endo object arrow)
+  (./../NaturalTransformation/Type object object arrow)
   (./../Compose/Type object object object)
   (./../Identity/Type object)

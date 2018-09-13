@@ -1,5 +1,5 @@
 ./../Monoid/Type
 (Type → Type)
-(./../Category/Functor/Endo Type ./../Function/Type)
+(./../NaturalTransformation/Type Type Type ./../Function/Type)
 ./../Day/Type
 (./../Identity/Type Type)

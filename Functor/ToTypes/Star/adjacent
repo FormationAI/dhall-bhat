@@ -16,12 +16,6 @@
         → star.map
           a
           b
-          ( (./../../../Category/Set/category).compose
-            a
-            (m b)
-            (n b)
-            (natural b)
-            fn
-          )
+          ((./../../../Function/category).compose a (m b) (n b) (natural b) fn)
     }
   : ./type Type ./../../../Function/Type m f
