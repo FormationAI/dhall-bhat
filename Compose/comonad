@@ -5,14 +5,17 @@
 → λ(f : dObject → cObject)
 → λ(fFunctor : ./../Functor/Type dObject dArrow cObject cArrow f)
 → λ(g : cObject → dObject)
-→ λ(adjunction : ./Type cObject cArrow dObject dArrow f g)
-→   { identity =
+→ λ(gFunctor : ./../Functor/Type cObject cArrow dObject dArrow g)
+→ λ(adjunction : ./../Adjunction/Type cObject cArrow dObject dArrow f g)
+→   { map =
+          λ(b : cObject)
+        → λ(a : cObject)
+        → λ(fn : cArrow a b)
+        → fFunctor.map (g a) (g b) (gFunctor.map a b fn)
+    , identity =
         adjunction.counit
     , op =
           λ(a : cObject)
         → fFunctor.map (g a) (g (f (g a))) (adjunction.unit (g a))
     }
-  : ./../Comonad/Type
-    cObject
-    cArrow
-    (./../Compose/Type cObject dObject cObject f g)
+  : ./../Comonad/Type cObject cArrow (./Type cObject dObject cObject f g)

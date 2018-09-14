@@ -1,5 +1,6 @@
   λ(object : Kind)
 → λ(arrow : object → object → Type)
 → λ(category : ./../Category/Type object arrow)
-→   { identity = category.identity, op = category.identity }
+→     ./functor/endo object arrow
+    ∧ { identity = category.identity, op = category.identity }
   : ./../Monad/Type object arrow (./Type object)

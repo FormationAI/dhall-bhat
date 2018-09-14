@@ -1,13 +1,14 @@
-  { identity =
-      λ(a : Type) → λ(x : a) → [ x ]
-  , op =
-        λ(a : Type)
-      → λ(mma : List (List a))
-      → List/fold
-        (List a)
-        mma
-        (List a)
-        (λ(x : List a) → λ(y : List a) → x # y)
-        ([] : List a)
-  }
+    ./functor/endo/set
+  ∧ { identity =
+        λ(a : Type) → λ(x : a) → [ x ]
+    , op =
+          λ(a : Type)
+        → λ(mma : List (List a))
+        → List/fold
+          (List a)
+          mma
+          (List a)
+          (λ(x : List a) → λ(y : List a) → x # y)
+          ([] : List a)
+    }
 : ./../Monad/Type Type ./../Function/Type List

@@ -1,0 +1,5 @@
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(m : object → object)
+→ λ(monad : ./Type object arrow m)
+→ monad.{ map } : ./../Functor/Endo/Type object arrow m

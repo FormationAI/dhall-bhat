@@ -1,19 +1,23 @@
---     let Monad = ./Type Type ./../Function/Type
-
--- in    λ(f : Type → Type)
---     → λ(monad : Monad f)
---     →   { identity =
---             monad.identity
---         , op =
---               λ(i : Type)
---             → λ(day : ∀(r : Type) → ./../Day/convolution f f i r → r)
---             → day
---               i
---               (   λ(b : Type)
---                 → λ(c : Type)
---                 → λ(d : { _1 : f b, _2 : f c, _3 : b → c → i })
---                 → d._3 d._1 d._2
---               )
---         }
---       : ./../Applicative/Type f
-<>
+  λ(f : Type → Type)
+→ λ(monad : ./Type Type ./../Function/Type f)
+→   { identity =
+        monad.identity
+    , op =
+          λ(i : Type)
+        → λ(day : ∀(r : Type) → ./../Day/convolution f f i r → r)
+        → day
+          (f i)
+          (   λ(b : Type)
+            → λ(c : Type)
+            → λ(d : { _1 : f b, _2 : f c, _3 : b → c → i })
+            → monad.op
+              i
+              ( monad.map
+                (c → i)
+                (f i)
+                (λ(fn : c → i) → monad.map c i fn d._2)
+                (monad.map b (c → i) d._3 d._1)
+              )
+          )
+    }
+  : ./../Applicative/Type f

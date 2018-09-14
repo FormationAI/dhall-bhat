@@ -1,46 +1,54 @@
---     let Monad = ./../Monad/Type Type ./../Function/Type
+    let Monad = ./../Monad/Type Type ./../Function/Type
 
--- in  let EitherT = ./Type
+in  let EitherT = ./Type
 
--- in  let Either = ./../Either/Type
+in  let Either = ./../Either/Type
 
--- in  let fold = ./../Either/fold
+in  let fold = ./../Either/fold
 
--- in    λ(a : Type)
---     → λ(m : Type → Type)
---     → λ(monad : Monad m)
---     →   { identity =
---             monad.identity
---         , op =
---                 let bind =
---                         λ(b : Type)
---                       → λ(c : Type)
---                       → λ(k : b → EitherT a m c)
---                       → ( ./../Monad/package.dhall
---                           Type
---                           ./../Function/Type
---                           ./../Function/semigroupoid
---                           m
---                           monad
---                         ).bind
---                         (Either a b)
---                         (Either a c)
---                         (   λ(either : Either a b)
---                           → fold
---                             a
---                             b
---                             (EitherT a m c)
---                             (   λ(l : a)
---                               → monad.identity
---                                 (Either a c)
---                                 < Left = l | Right : c >
---                             )
---                             (λ(r : b) → k r)
---                             either
---                         )
-            
---             in    λ(b : Type)
---                 → bind (m b) b ((./../Function/category).identity (m b))
---         }
---       : Monad (EitherT a m)
-<>
+in    λ(a : Type)
+    → λ(m : Type → Type)
+    → λ(monad : Monad m)
+    →     ./functor/endo/set
+          a
+          m
+          (./../Monad/extractEndofunctor Type ./../Function/Type m monad)
+        ∧ { identity =
+                λ(i : Type)
+              → λ(x : i)
+              → monad.identity (Either a i) < Right = x | Left : a >
+          , op =
+                  let bind =
+                          λ(b : Type)
+                        → λ(c : Type)
+                        → λ(k : b → EitherT a m c)
+                        → ( ./../Monad/package.dhall
+                            Type
+                            ./../Function/Type
+                            ./../Function/semigroupoid
+                            m
+                            monad
+                          ).bind
+                          (Either a b)
+                          (Either a c)
+                          (   λ(either : Either a b)
+                            → fold
+                              a
+                              b
+                              (EitherT a m c)
+                              (   λ(l : a)
+                                → monad.identity
+                                  (Either a c)
+                                  < Left = l | Right : c >
+                              )
+                              (λ(r : b) → k r)
+                              either
+                          )
+              
+              in    λ(b : Type)
+                  → bind
+                    (EitherT a m b)
+                    b
+                    ((./../Function/category).identity (EitherT a m b))
+          }
+      : Monad (EitherT a m)

@@ -4,7 +4,12 @@
 → λ(f : object → object)
 → λ(pure : ∀(a : object) → arrow a (f a))
 → λ(bind : ∀(a : object) → ∀(b : object) → arrow a (f b) → arrow (f a) (f b))
-→   { identity =
+→   { map =
+          λ(a : object)
+        → λ(b : object)
+        → λ(fn : arrow a b)
+        → bind a b (category.compose a b (f b) (pure b) fn)
+    , identity =
         pure
     , op =
         λ(a : object) → bind (f a) a (category.identity (f a))

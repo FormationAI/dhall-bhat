@@ -1,6 +1,5 @@
---     let Either = ./../Type
+    let Either = ./../Type
 
--- in    λ(a : Type)
---     →   ./../../Monad/impliedApplicative (Either a) (./../monad a)
---       : ./../../Applicative/Type Type ./../../Function/Type (Either a)
-<>
+in    λ(a : Type)
+    →   ./../../Monad/impliedApplicative (Either a) (./../monad a)
+      : ./../../Applicative/Type (Either a)

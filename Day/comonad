@@ -4,7 +4,9 @@ in    λ(f : Type → Type)
     → λ(fComonad : Comonad f)
     → λ(g : Type → Type)
     → λ(gComonad : Comonad g)
-    →   { identity =
+    →   { map =
+            λ(b : Type) → λ(a : Type) → (./functor/endo/set f g).map a b
+        , identity =
               λ(a : Type)
             → λ(day : ./Type f g a)
             → day

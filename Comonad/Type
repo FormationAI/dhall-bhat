@@ -1,3 +1,4 @@
+{- This definition messes up the type parameter order for `map`. -}
   λ(object : Kind)
 → λ(arrow : object → object → Type)
 → ./../Monad/Type object (./../Category/Op/Type object arrow)

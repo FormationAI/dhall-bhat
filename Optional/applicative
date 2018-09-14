@@ -1,7 +1,1 @@
--- ./../Monad/impliedApplicative
--- Type
--- ./../Function/Type
--- ./../Function/Semigroupoid
--- Optional
--- ./monad
-<>
+./../Monad/impliedApplicative Optional ./monad

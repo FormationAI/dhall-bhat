@@ -1,4 +1,5 @@
-{- A functor from a Kleisli category to the category of Dhall types. -}
+{- A functor from a Kleisli category to the category of Dhall types.
+-}
   λ(object : Kind)
 → λ(arrow : object → object → Type)
 → λ(m : object → object)

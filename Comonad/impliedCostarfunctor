@@ -11,12 +11,8 @@
 --           (w a)
 --           (w (w a))
 --           (w b)
---           ( (./impliedEndofunctor object arrow semigroupoid w comonad).map
---             (w a)
---             b
---             f
---           )
+--           (comonad.map (w a) b f)
 --           (comonad.op a)
 --     }
---   : ./../Functor/ToTypes/Costar/Type object arrow w
+--   : ./../Functor/ToTypes/Costar/Type object arrow w w
 <>

@@ -11,7 +11,12 @@
             → ∀(f : costarArrow a b)
             → arrow (w a) (w b)
           )
-      →   { identity =
+      →   { map =
+                λ(b : object)
+              → λ(a : object)
+              → λ(fn : arrow a b)
+              → extend a b (category.compose (w a) a b fn (extract a))
+          , identity =
               extract
           , op =
               λ(a : object) → extend a (w a) (category.identity (w a))

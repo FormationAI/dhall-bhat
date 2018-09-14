@@ -1,13 +1,14 @@
-  { identity =
-      λ(a : Type) → λ(x : a) → [ x ] : Optional a
-  , op =
-        λ(a : Type)
-      → λ(mma : Optional (Optional a))
-      → Optional/fold
-        (Optional a)
-        mma
-        (Optional a)
-        ((./../Function/category).identity (Optional a))
-        ([] : Optional a)
-  }
+    ./functor/endo/set
+  ∧ { identity =
+        λ(a : Type) → λ(x : a) → [ x ] : Optional a
+    , op =
+          λ(a : Type)
+        → λ(mma : Optional (Optional a))
+        → Optional/fold
+          (Optional a)
+          mma
+          (Optional a)
+          ((./../Function/category).identity (Optional a))
+          ([] : Optional a)
+    }
 : ./../Monad/Type Type ./../Function/Type Optional

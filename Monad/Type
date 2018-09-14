@@ -3,8 +3,11 @@
 -}
   λ(object : Kind)
 → λ(arrow : object → object → Type)
-→ ./../Monoid/Type
-  (object → object)
-  (./../NaturalTransformation/Type object object arrow)
-  (./../Compose/Type object object object)
-  (./../Identity/Type object)
+→ λ(f : object → object)
+→   ./../Functor/Endo/Type object arrow f
+  ⩓ ./../Monoid/Type
+    (object → object)
+    (./../NaturalTransformation/Type object object arrow)
+    (./../Compose/Type object object object)
+    (./../Identity/Type object)
+    f
