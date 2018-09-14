@@ -24,9 +24,7 @@ in    λ(a : Type)
                 }
                 fa
           , Right =
-                  let map = (./../functor/endo/set a).map
-              
-              in  λ(f : b → c) → map b c f fa
+              λ(f : b → c) → (./../functor/endo/set a).map b c f fa
           }
           g
       )

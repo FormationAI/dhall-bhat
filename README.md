@@ -13,3 +13,7 @@ dhall-bhat                 | Haskell     | Scala (Cats)
 ./Monoid/Set               |Monoid       |Monoid
 ./Semigroup/Set            |Semigroup    |Semigroup
 ```
+
+## Documentation
+
+Types as documentation: https://formationai.github.io/dhall-bhat/

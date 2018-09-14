@@ -1,0 +1,18 @@
+--     let NonEmpty = ./Type
+
+-- in  let List/ap = ./../Applicative/ap List ./../List/Applicative
+
+-- in  ./../Applicative/fromPureAp
+--     NonEmpty
+--     (λ(a : Type) → λ(x : a) → { head = x, tail = [] : List a })
+--     (   λ(a : Type)
+--       → λ(b : Type)
+--       → λ(nelF : NonEmpty (a → b))
+--       → λ(nel : NonEmpty a)
+--       → { head =
+--             nelF.head nel.head
+--         , tail =
+--             List/ap a b (./toList (a → b) nelF) (./toList a nel)
+--         }
+--     )
+<>

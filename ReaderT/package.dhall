@@ -14,7 +14,7 @@
 --                 monad
       
 --       in    { lift =
---                 λ(a : Type) → (./Transformer r).lift m monad a
+--                 λ(a : Type) → (./transformer r).lift m monad a
 --             , ask =
 --                 ./ask r m (extractApplicative m monad)
 --             , asks =

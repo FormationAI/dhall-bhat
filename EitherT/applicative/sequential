@@ -4,9 +4,9 @@
 
 -- in  let EitherT = ./../Type
 
--- in  let EitherA = ./../../Either/Applicative/Sequential
+-- in  let EitherA = ./../../Either/applicative/sequential
 
--- in  let ComposeA = ./../../Compose/Applicative
+-- in  let ComposeA = ./../../Compose/applicative
 
 -- in    λ(a : Type)
 --     → λ(m : Type → Type)

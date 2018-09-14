@@ -4,12 +4,12 @@ in  let Semigroup =
           ./../../Semigroup/Type Type ./../../Function/Type ./../../Tuple/Type
 
 in    λ(a : Type)
-    → λ(semi : Semigroup a)
+    → λ(semigroup : Semigroup a)
     → λ(m : Type → Type)
     → λ(applicative : Applicative m)
-    →   ./../../Compose/Applicative
+    →   ./../../Compose/applicative
         m
-        (./../../Either/Type a)
         applicative
-        (./../../Either/Applicative/Parallel a semi)
+        (./../../Either/Type a)
+        (./../../Either/applicative/parallel a semigroup)
       : Applicative (./../Type a m)

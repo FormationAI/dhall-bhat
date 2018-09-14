@@ -4,9 +4,9 @@
 
 -- in  let Reader = ./../Reader/Type
 
--- in  let ReaderA = ./../Reader/Applicative
+-- in  let ReaderA = ./../Reader/applicative
 
--- in  let ComposeA = ./../Compose/Applicative
+-- in  let ComposeA = ./../Compose/applicative
 
 -- in    λ(r : Type)
 --     → λ(m : Type → Type)

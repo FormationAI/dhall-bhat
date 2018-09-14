@@ -23,6 +23,8 @@ in    λ(a : Type)
                 λ(eithers : List (Either a b)) → ./partition a b eithers
             , rights =
                 λ(eithers : List (Either a b)) → ./rights a b eithers
+            , traverse =
+                ./functor/pair
             }
           ∧ ./functor/pair
             (./../Identity/Type Type)

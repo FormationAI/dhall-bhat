@@ -1,7 +1,7 @@
     let NonEmpty = ./Type
 
 in    λ(a : Type)
-    →     let List/op = (./../List/Semigroup a).op
+    →     let List/op = (./../List/semigroup a).op
       
       in    { op =
                   λ(p : { _1 : NonEmpty a, _2 : NonEmpty a })
