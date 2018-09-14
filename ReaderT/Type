@@ -1,1 +1,6 @@
-λ(r : Type) → λ(m : Type → Type) → λ(a : Type) → r → m a
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(r : object)
+→ λ(m : object → object)
+→ λ(a : object)
+→ arrow r (m a)

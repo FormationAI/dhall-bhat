@@ -12,4 +12,4 @@
   cObject
   cArrow
   Type
-  (λ(a : Type) → λ(b : Type) → a → b)
+  ./../Function/Type

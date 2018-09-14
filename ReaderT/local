@@ -1,9 +1,7 @@
-    let ReaderT = ./Type
-
-in    λ(r : Type)
-    → λ(m : Type → Type)
-    → λ(a : Type)
-    → λ(f : r → r)
-    → λ(reader : ReaderT r m a)
-    → λ(env : r)
-    → reader (f env)
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(semigroupoid : ./../Semigroupoid/Type object arrow)
+→ λ(r : object)
+→ λ(m : object → object)
+→ λ(a : object)
+→ ./withReader object arrow semigroupoid r m a r

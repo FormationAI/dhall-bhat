@@ -1,1 +1,10 @@
-λ(r : Type) → ./../ReaderT/withReader r (./../Identity/Type Type)
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(semigroupoid : ./../Semigroupoid/Type object arrow)
+→ λ(r : object)
+→ ./../ReaderT/withReader
+  object
+  arrow
+  semigroupoid
+  r
+  (./../Identity/Type object)

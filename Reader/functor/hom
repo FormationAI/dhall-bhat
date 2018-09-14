@@ -1,0 +1,19 @@
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(semigroupoid : ./../../Semigroupoid/Type object arrow)
+→   { map =
+          λ(a : { _1 : object, _2 : object })
+        → λ(b : { _1 : object, _2 : object })
+        → λ(f : { _1 : arrow b._1 a._1, _2 : arrow a._2 b._2 })
+        → λ(fa : arrow a._1 a._2)
+        → semigroupoid.compose
+          b._1
+          a._2
+          b._2
+          f._2
+          (semigroupoid.compose b._1 a._1 a._2 fa f._1)
+    }
+  : ./../../Functor/Hom
+    object
+    arrow
+    (λ(p : { _1 : object, _2 : object }) → ./../Type object arrow p._1 p._2)

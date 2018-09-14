@@ -1,10 +1,10 @@
-    let ReaderT = ./Type
-
-in    λ(r : Type)
-    → λ(m : Type → Type)
-    → λ(a : Type)
-    → λ(rPrime : Type)
-    → λ(f : rPrime → r)
-    → λ(reader : ReaderT r m a)
-    → λ(newR : rPrime)
-    → reader (f newR)
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(semigroupoid : ./../Semigroupoid/Type object arrow)
+→ λ(r : object)
+→ λ(m : object → object)
+→ λ(a : object)
+→ λ(rPrime : object)
+→ λ(f : arrow rPrime r)
+→ λ(reader : ./Type object arrow r m a)
+→ semigroupoid.compose rPrime r (m a) reader f

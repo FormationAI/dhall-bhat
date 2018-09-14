@@ -1,6 +1,6 @@
     let Monad = ./../Monad/Type Type ./../Function/Type
 
-in  let ReaderT = ./Type
+in  let ReaderT = ./Type Type ./../Function/Type
 
 in    λ(r : Type)
     →   { lift =
