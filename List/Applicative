@@ -1,20 +1,2 @@
---     let fold = (./Foldable).fold
-
--- in  let map = (./functor/endo/set).map
-
--- in    { identity =
---           λ(a : Type) → λ(x : a) → [ x ]
---       , ap =
---             λ(a : Type)
---           → λ(b : Type)
---           → λ(g : List (a → b))
---           → λ(fa : List a)
---           → fold
---             (a → b)
---             g
---             (List b)
---             (λ(k : a → b) → λ(xs : List b) → map a b k fa # xs)
---             ([] : List b)
---       }
---     : ./../Applicative/Type Type ./../Function/Type List
+-- ./../Monad/impliedApplicative List ./monad
 <>
