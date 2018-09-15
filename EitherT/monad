@@ -22,7 +22,7 @@ in    λ(a : Type)
                           λ(b : Type)
                         → λ(c : Type)
                         → λ(k : b → EitherT a m c)
-                        → ( ./../Monad/package.dhall
+                        → ( ./../Monad/terms.dhall
                             Type
                             ./../Function/Type
                             ./../Function/semigroupoid

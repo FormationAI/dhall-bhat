@@ -11,4 +11,4 @@
         , extractFunctor =
             extractFunctor
         }
-      ∧ ./../Functor/Endo/package.dhall Type ./../Function/Type f extractFunctor
+      ∧ ./../Functor/Endo/terms.dhall Type ./../Function/Type f extractFunctor

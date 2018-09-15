@@ -4,7 +4,7 @@ in    λ(r : Type)
     →   { withReader =
             ./withReader Type ./../Function/Type ./../Function/semigroupoid r
         }
-      ∧ ./../Monad/package.dhall
+      ∧ ./../Monad/terms.dhall
         Type
         ./../Function/Type
         ./../Function/semigroupoid
