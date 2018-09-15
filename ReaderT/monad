@@ -1,19 +1,18 @@
---     let Monad = ./../Monad/Type Type ./../Function/Type
+    let ReaderT = ./Type Type ./../Function/Type
 
--- in  let ReaderT = ./Type
-
--- in    λ(r : Type)
---     → λ(m : Type → Type)
---     → λ(monad : Monad m)
---     →   { identity =
---             λ(a : Type) → λ(x : a) → monad.identity (r → a) (λ(_ : r) → x)
---         , bind =
---               λ(a : Type)
---             → λ(b : Type)
---             → λ(k : a → ReaderT r m b)
---             → λ(fa : ReaderT r m a)
---             → λ(env : r)
---             → monad.bind a b (λ(x : a) → k x env) (fa env)
---         }
---       : Monad (ReaderT r m)
-<>
+in    λ(r : Type)
+    → λ(m : Type → Type)
+    → λ(monad : ./../Monad/Type Type ./../Function/Type m)
+    → ./../Monad/fromPureBind
+      Type
+      ./../Function/Type
+      ./../Function/category
+      (ReaderT r m)
+      (λ(a : Type) → λ(x : a) → λ(_ : r) → monad.identity a x)
+      (   λ(a : Type)
+        → λ(b : Type)
+        → λ(k : a → ReaderT r m b)
+        → λ(fa : ReaderT r m a)
+        → λ(env : r)
+        → monad.op b (monad.map a (m b) (λ(x : a) → k x env) (fa env))
+      )

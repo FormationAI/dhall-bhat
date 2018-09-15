@@ -1,4 +1,4 @@
---	      ∧ ./monad a
+--	      
     let Either = ./Type
 
 in    λ(a : Type)
@@ -25,7 +25,9 @@ in    λ(a : Type)
                 λ(eithers : List (Either a b)) → ./rights a b eithers
             , traverse =
                 ./functor/pair
+            , pair =
+                ./functor/pair
+                (./../Identity/Type Type)
+                (./../Identity/functor/endo Type ./../Function/Type)
             }
-          ∧ ./functor/pair
-            (./../Identity/Type Type)
-            (./../Identity/functor/endo Type ./../Function/Type)
+          ∧ ./monad a
