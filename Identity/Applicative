@@ -1,3 +1,21 @@
+{-
+The Applicative Functor of Identity. Since Dhall normalises expressions, 'ap' can be
+seen as functional application (see ./Identity/Functor) and 'pure' can be seen as
+the identity function, where the identity function returns the value it is given.
+
+⊢ (./Identity/Applicative).pure Natural 2
+
+2
+
+⊢ (./Identity/Applicative).pure Text "bowl full of lentils"
+
+"bowl full of lentils"
+
+⊢ (./Identity/Applicative).ap Natural Text (λ(i : Natural) → Natural/show i) 8
+
+"8"
+
+-}
     ./Functor
   ∧ { pure =
         λ(a : Type) → λ(x : a) → x

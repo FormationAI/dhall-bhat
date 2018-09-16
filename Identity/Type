@@ -1,1 +1,22 @@
+{-
+The Identity type that is just a single value of
+some given type 'a'.
+
+⊢ ./Identity/Type Natural
+
+Natural
+
+⊢ 8 : ./Identity/Type Natural
+
+8
+
+⊢ ./Identity/Type Text
+
+Text
+
+⊢ "bowl full of lentils" : ./Identity/Type Text
+
+"bowl full of lentils"
+
+-}
 λ(a : Type) → a

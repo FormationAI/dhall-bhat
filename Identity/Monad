@@ -1,3 +1,13 @@
+{-
+The Monad of Identity. 'bind' is function application reversed. Since the first argument
+normalises to the value of type 'a', and the second argument normalises to 'a → b'
+(see ./Identity/Functor and ./Identity/Applicative).
+
+⊢ (./Identity/Monad).bind Natural Text 8 (λ(i : Natural) → Natural/show i)
+
+"8"
+
+-}
     let Monad = ./../Monad/Type
 
 in      ./Applicative

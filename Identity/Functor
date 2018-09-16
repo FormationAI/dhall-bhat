@@ -1,2 +1,26 @@
+{-
+The Functor of the Identity type. Since Dhall normalises expressions, this can be seen as
+function application. The function 'a → b' is applied to the Identity of 'a'
+to get the Identity of 'b', which is just the 'b' itself.
+
+⊢ let map = (./Identity/Functor).map in map Natural Natural (λ(i : Natural) → i + 2) (2 : ./Identity/Type Natural)
+
+4
+
+We don't have to annotate the 2 because Identity normalises to a regural value.
+
+⊢ let map = (./Identity/Functor).map in map Natural Natural (λ(i : Natural) → i + 2) 2
+
+4
+
+⊢ let map = (./Identity/Functor).map in map Text Text (λ(t : Text) → t ++ " lentils") "bowl full of"
+
+"bowl full of lentils"
+
+⊢ let map = (./Identity/Functor).map in map Natural Text (λ(i : Natural) → Natural/show i) 2
+
+"2"
+
+-}
   { map = λ(a : Type) → λ(b : Type) → λ(f : a → b) → f }
 : ./../Functor/Type ./Type
