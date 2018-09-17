@@ -1,1 +1,1 @@
-λ(cObject : Kind) → λ(dObject : Kind) → λ(_ : cObject) → λ(a : dObject) → a
+λ(cObject : Kind) → λ(dObject : Kind) → λ(a : cObject) → λ(_ : dObject) → a
