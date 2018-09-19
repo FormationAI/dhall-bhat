@@ -6,10 +6,10 @@
 → λ(cArrow : cObject → cObject → Type)
 → λ(dObject : Kind)
 → λ(dArrow : dObject → dObject → Type)
-→ ./Bifunctor/type
+→ ./../Bifunctor/Type
   dObject
-  (./../Category/Op/type dObject dArrow)
+  (./../../Category/Op/Type dObject dArrow)
   cObject
   cArrow
   Type
-  ./../Function/Type
+  ./../../Function/Type

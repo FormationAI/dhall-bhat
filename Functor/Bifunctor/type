@@ -4,7 +4,7 @@
 → λ(dArrow : dObject → dObject → Type)
 →     let object = { _1 : cObject, _2 : dObject }
   
-  in  ./../type
+  in  ./../Type
       object
       (   λ(a : object)
         → λ(b : object)

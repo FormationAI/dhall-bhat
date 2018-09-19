@@ -29,4 +29,4 @@
               → f { _1 = a, _2 = b }
               → f { _1 = a, _2 = c }
           }
-        ⩓ ./../Functor/Profunctor cObject cArrow dObject dArrow f
+        ⩓ ./../Functor/Profunctor/Type cObject cArrow dObject dArrow f
