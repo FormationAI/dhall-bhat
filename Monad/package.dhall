@@ -22,4 +22,8 @@ in    λ(f : Type → Type)
           → monad.map a b g fa
       , pure =
           λ(a : Type) → monad.pure a
+      , join =
+            λ(a : Type)
+          → λ(ffa : f (f a))
+          → monad.bind (f a) a ffa (λ(fa : f a) → fa)
       }

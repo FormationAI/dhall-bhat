@@ -1,3 +1,8 @@
   λ(f : Type → Type)
-→ λ(comonad : ./../Comonad/Type f)
-→ ./../Ran/lift f comonad f (./../Comonad/extractFunctor f comonad)
+→ λ(monad : ./../Monad/Type f)
+→ ./../Ran/lift
+  f
+  (./../Monad/extractFunctor f monad)
+  f
+  f
+  (./../Monad/package.dhall f monad).join
