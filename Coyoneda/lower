@@ -1,1 +1,3 @@
-./../Lan/lower ./../Identity/Type ./../Identity/applicative
+  λ(f : Type → Type)
+→ λ(functor : ./../Functor/Type f)
+→ ./../Lan/lower f functor ./../Identity/Type f (λ(a : Type) → λ(x : f a) → x)
