@@ -1,0 +1,8 @@
+  λ(f : Type → Type)
+→ λ(monad : ./../Monad/Type f)
+→ ./../Ran/lift
+  f
+  (./../Monad/extractFunctor f monad)
+  f
+  f
+  (./../Monad/package.dhall f monad).join
