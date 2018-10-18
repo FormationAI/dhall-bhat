@@ -1,0 +1,1 @@
+λ(a : Type) → λ(xs : ./Type a) → xs ([] : List a)
