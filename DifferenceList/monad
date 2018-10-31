@@ -1,0 +1,26 @@
+    let fromPureBind = ./../Monad/fromPureBind
+
+in  let DifferenceList = ./Type
+
+in  let append = ./append
+
+in  let empty = ./empty
+
+in  let foldable = ./foldable
+
+in  let singleton = ./singleton
+
+in  fromPureBind
+    DifferenceList
+    (λ(a : Type) → singleton a)
+    (   λ(a : Type)
+      → λ(b : Type)
+      → λ(f : DifferenceList a)
+      → λ(k : a → DifferenceList b)
+      → foldable.fold
+        a
+        f
+        (DifferenceList b)
+        (λ(x : a) → λ(l : DifferenceList b) → append b (k x) l)
+        (empty b)
+    )

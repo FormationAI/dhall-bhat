@@ -10,7 +10,7 @@ in  let concat =
             x
             (Optional a)
             (λ(y : Optional a) → y)
-            ([] : Optional a)
+            (None a)
 
 in      ./applicative
       ∧ { bind =

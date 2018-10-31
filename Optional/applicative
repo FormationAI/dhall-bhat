@@ -7,7 +7,7 @@ in  let map = (./functor).map
 
 in      ./functor
       ∧ { pure =
-            λ(a : Type) → λ(x : a) → [ x ] : Optional a
+            λ(a : Type) → λ(x : a) → Some x
         , ap =
               λ(a : Type)
             → λ(b : Type)
@@ -18,6 +18,6 @@ in      ./functor
               g
               (Optional b)
               (λ(k : a → b) → λ(o : Optional b) → map a b k fa)
-              ([] : Optional b)
+              (None b)
         }
     : Applicative Optional
