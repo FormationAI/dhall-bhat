@@ -8,11 +8,9 @@ in  let empty = ./empty
 
 in  let foldable = ./foldable
 
-in  let singleton = ./singleton
-
 in  fromPureBind
     DifferenceList
-    (λ(a : Type) → singleton a)
+    (λ(a : Type) → λ(x : a) → λ(l : List a) → [ x ] # l)
     (   λ(a : Type)
       → λ(b : Type)
       → λ(f : DifferenceList a)
