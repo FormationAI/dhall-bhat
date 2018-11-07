@@ -6,177 +6,484 @@
 <body>
 <h1>dhall-bhat</h1>
 <h2 style="background-color: #bbb; width: 100%">.</h2>
-<h2 style="background-color: #bbb; width: 100%">./Applicative</h2>
-<h3>extractFunctor (term)</h3>
+<h2 style="background-color: #bbb; width: 100%">./State</h2>
+<h3>monad (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀ ( t
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-      , pure :
-          ∀(a : Type) → a → f a
-      }
-    )
-→ { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }
-</pre></dd>
-</dl>
-<h3>leftApConst (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀ ( app
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-      , pure :
-          ∀(a : Type) → a → f a
-      }
-    )
-→ ∀(a : Type)
-→ ∀(b : Type)
-→ ∀(fa : f a)
-→ ∀(fb : f b)
-→ f a
-</pre></dd>
-</dl>
-<h3>liftA2 (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀ ( app
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-      , pure :
-          ∀(a : Type) → a → f a
-      }
-    )
-→ ∀(a : Type)
-→ ∀(b : Type)
-→ ∀(c : Type)
-→ ∀(g : a → b → c)
-→ ∀(fa : f a)
-→ ∀(fb : f b)
-→ f c
-</pre></dd>
-</dl>
-<h3>package.dhall (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀ ( applicative
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-      , pure :
-          ∀(a : Type) → a → f a
-      }
-    )
+  ∀(s : Type)
 → { ap :
-      ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-  , leftApConst :
-      ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(fb : f b) → f a
-  , liftA2 :
         ∀(a : Type)
       → ∀(b : Type)
-      → ∀(c : Type)
-      → ∀(g : a → b → c)
-      → ∀(fa : f a)
-      → ∀(fb : f b)
-      → f c
+      → ∀(g : s → { state : s, val : a → b })
+      → ∀(fa : s → { state : s, val : a })
+      → ∀(new : s)
+      → { state : s, val : b }
+  , bind :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(fa : s → { state : s, val : a })
+      → ∀(k : a → s → { state : s, val : b })
+      → ∀(new : s)
+      → { state : s, val : b }
   , map :
-      ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(f : a → b)
+      → ∀(fa : s → { state : s, val : a })
+      → ∀(new : s)
+      → { state : s, val : b }
   , pure :
-      ∀(a : Type) → a → f a
-  , rightApConst :
-      ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(fb : f b) → f b
+      ∀(a : Type) → ∀(x : a) → ∀(env : s) → { state : s, val : a }
   }
 </pre></dd>
 </dl>
-<h3>rightApConst (term)</h3>
+<h3>modify (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀ ( app
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-      , pure :
-          ∀(a : Type) → a → f a
-      }
-    )
+∀(s : Type) → ∀(f : s → s) → ∀(new : s) → { state : s, val : {} }
+</pre></dd>
+</dl>
+<h3>applicative (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(s : Type)
+→ { ap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(g : s → { state : s, val : a → b })
+      → ∀(fa : s → { state : s, val : a })
+      → ∀(new : s)
+      → { state : s, val : b }
+  , map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(f : a → b)
+      → ∀(fa : s → { state : s, val : a })
+      → ∀(new : s)
+      → { state : s, val : b }
+  , pure :
+      ∀(a : Type) → ∀(x : a) → ∀(env : s) → { state : s, val : a }
+  }
+</pre></dd>
+</dl>
+<h3>eval (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(s : Type)
 → ∀(a : Type)
-→ ∀(b : Type)
-→ ∀(fa : f a)
-→ ∀(fb : f b)
-→ f b
+→ ∀(state : s → { state : s, val : a })
+→ ∀(env : s)
+→ a
+</pre></dd>
+</dl>
+<h3>exec (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(s : Type)
+→ ∀(a : Type)
+→ ∀(state : s → { state : s, val : a })
+→ ∀(env : s)
+→ s
 </pre></dd>
 </dl>
 <h3>Type (type)</h3>
 <dl>
 <dt>kind</dt><dd><pre>
-∀(f : Type → Type) → Type
+∀(s : Type) → ∀(a : Type) → Type
 </pre></dd>
 <dt>type</dt><dd><pre>
-  λ(f : Type → Type)
-→ { map :
-      ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-  , ap :
-      ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+λ(s : Type) → λ(a : Type) → s → { state : s, val : a }
+</pre></dd>
+</dl>
+<h3>get (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+∀(s : Type) → ∀(env : s) → { state : s, val : s }
+</pre></dd>
+</dl>
+<h3>put (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+∀(s : Type) → ∀(new : s) → ∀(env : s) → { state : s, val : {} }
+</pre></dd>
+</dl>
+<h3>withState (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(s : Type)
+→ ∀(a : Type)
+→ ∀(f : s → s)
+→ ∀(state : s → { state : s, val : a })
+→ ∀(new : s)
+→ { state : s, val : a }
+</pre></dd>
+</dl>
+<h3>gets (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+∀(s : Type) → ∀(a : Type) → ∀(f : s → a) → ∀(new : s) → { state : s, val : a }
+</pre></dd>
+</dl>
+<h3>package.dhall (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(s : Type)
+→ { ap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(g : s → { state : s, val : a → b })
+      → ∀(fa : s → { state : s, val : a })
+      → ∀(new : s)
+      → { state : s, val : b }
+  , bind :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(fa : s → { state : s, val : a })
+      → ∀(k : a → s → { state : s, val : b })
+      → ∀(new : s)
+      → { state : s, val : b }
+  , eval :
+      ∀(a : Type) → ∀(state : s → { state : s, val : a }) → ∀(env : s) → a
+  , exec :
+      ∀(a : Type) → ∀(state : s → { state : s, val : a }) → ∀(env : s) → s
+  , get :
+      ∀(a : Type) → ∀(env : s) → { state : s, val : s }
+  , map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(f : a → b)
+      → ∀(fa : s → { state : s, val : a })
+      → ∀(new : s)
+      → { state : s, val : b }
+  , modify :
+      ∀(f : s → s) → ∀(new : s) → { state : s, val : {} }
   , pure :
-      ∀(a : Type) → a → f a
+      ∀(a : Type) → ∀(x : a) → ∀(env : s) → { state : s, val : a }
+  , put :
+      ∀(new : s) → ∀(env : s) → { state : s, val : {} }
+  , withState :
+        ∀(a : Type)
+      → ∀(f : s → s)
+      → ∀(state : s → { state : s, val : a })
+      → ∀(new : s)
+      → { state : s, val : a }
   }
 </pre></dd>
 </dl>
-<h2 style="background-color: #bbb; width: 100%">./Arrow</h2>
-<h3>type (type)</h3>
+<h3>functor (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(s : Type)
+→ { map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(f : a → b)
+      → ∀(fa : s → { state : s, val : a })
+      → ∀(new : s)
+      → { state : s, val : b }
+  }
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./Compose</h2>
+<h3>applicative (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀(g : Type → Type)
+→ ∀ ( fApplicative
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+      , pure :
+          ∀(a : Type) → a → f a
+      }
+    )
+→ ∀ ( gApplicative
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : g (a → b)) → ∀(fa : g@1 a) → g@1 b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : g@1 a) → g@1 b
+      , pure :
+          ∀(a : Type) → a → g a
+      }
+    )
+→ { ap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(k : f (g (a → b)))
+      → ∀(fa : f (g a))
+      → f (g b)
+  , map :
+      ∀(a : Type) → ∀(b : Type) → ∀(k : a → b) → ∀(fa : f (g a)) → f (g b)
+  , pure :
+      ∀(a : Type) → ∀(x : a) → f (g a)
+  }
+</pre></dd>
+</dl>
+<h3>traversable (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀(g : Type → Type)
+→ ∀ ( fTraversable
+    : { fold :
+            ∀(a : Type)
+          → ∀(ts : f a)
+          → ∀(b : Type)
+          → ∀(f : a → b → b)
+          → ∀(z : b)
+          → b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+      , traverse :
+            ∀(f : Type → Type)
+          → ∀ ( applicative
+              : { ap :
+                      ∀(a : Type)
+                    → ∀(b : Type)
+                    → ∀(g : f (a → b))
+                    → ∀(fa : f a)
+                    → f b
+                , map :
+                    ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+                , pure :
+                    ∀(a : Type) → a → f a
+                }
+              )
+          → ∀(a : Type)
+          → ∀(b : Type)
+          → (a → f b)
+          → f@1 a
+          → f (f@1 b)
+      }
+    )
+→ ∀ ( gTraversable
+    : { fold :
+            ∀(a : Type)
+          → ∀(ts : g a)
+          → ∀(b : Type)
+          → ∀(f : a → b → b)
+          → ∀(z : b)
+          → b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : g@1 a) → g@1 b
+      , traverse :
+            ∀(f : Type → Type)
+          → ∀ ( applicative
+              : { ap :
+                      ∀(a : Type)
+                    → ∀(b : Type)
+                    → ∀(g : f (a → b))
+                    → ∀(fa : f a)
+                    → f b
+                , map :
+                    ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+                , pure :
+                    ∀(a : Type) → a → f a
+                }
+              )
+          → ∀(a : Type)
+          → ∀(b : Type)
+          → (a → f b)
+          → g a
+          → f (g b)
+      }
+    )
+→ { fold :
+        ∀(a : Type)
+      → ∀(compose : f (g a))
+      → ∀(b : Type)
+      → ∀(k : a → b → b)
+      → ∀(z : b)
+      → b
+  , map :
+      ∀(a : Type) → ∀(b : Type) → ∀(k : a → b) → ∀(fa : f (g a)) → f (g b)
+  , traverse :
+        ∀(fA : Type → Type)
+      → ∀ ( applicative
+          : { ap :
+                  ∀(a : Type)
+                → ∀(b : Type)
+                → ∀(g : fA (a → b))
+                → ∀(fa : fA a)
+                → fA b
+            , map :
+                ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : fA a) → fA b
+            , pure :
+                ∀(a : Type) → a → fA a
+            }
+          )
+      → ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(k : a → fA b)
+      → f (g a)
+      → fA (f (g b))
+  }
+</pre></dd>
+</dl>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(f : Type → Type) → ∀(g : Type → Type) → ∀(a : Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+λ(f : Type → Type) → λ(g : Type → Type) → λ(a : Type) → f (g a)
+</pre></dd>
+</dl>
+<h3>functor (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀(g : Type → Type)
+→ ∀ ( fFunctor
+    : { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }
+    )
+→ ∀ ( gFunctor
+    : { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : g@1 a) → g@1 b }
+    )
+→ { map : ∀(a : Type) → ∀(b : Type) → ∀(k : a → b) → ∀(fa : f (g a)) → f (g b) }
+</pre></dd>
+</dl>
+<h3>foldable (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀(g : Type → Type)
+→ ∀ ( fFoldable
+    : { fold :
+            ∀(a : Type)
+          → ∀(ts : f a)
+          → ∀(b : Type)
+          → ∀(f : a → b → b)
+          → ∀(z : b)
+          → b
+      }
+    )
+→ ∀ ( gFoldable
+    : { fold :
+            ∀(a : Type)
+          → ∀(ts : g a)
+          → ∀(b : Type)
+          → ∀(f : a → b → b)
+          → ∀(z : b)
+          → b
+      }
+    )
+→ { fold :
+        ∀(a : Type)
+      → ∀(compose : f (g a))
+      → ∀(b : Type)
+      → ∀(k : a → b → b)
+      → ∀(z : b)
+      → b
+  }
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./Ran</h2>
+<h3>lift (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(h : Type → Type)
+→ ∀ ( functor
+    : { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : h a) → h b }
+    )
+→ ∀(f : Type → Type)
+→ ∀(g : Type → Type)
+→ ∀(join : ∀(b : Type) → h (f b) → g b)
+→ ∀(a : Type)
+→ ∀(x : h a)
+→ ∀(b : Type)
+→ ∀(k : a → f b)
+→ g b
+</pre></dd>
+</dl>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(f : Type → Type) → ∀(g : Type → Type) → ∀(a : Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+  λ(f : Type → Type)
+→ λ(g : Type → Type)
+→ λ(a : Type)
+→ ∀(b : Type) → (a → f b) → g b
+</pre></dd>
+</dl>
+<h3>lower (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀(g : Type → Type)
+→ ∀ ( applicative
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+      , pure :
+          ∀(a : Type) → a → f a
+      }
+    )
+→ ∀(a : Type)
+→ ∀(ran : ∀(b : Type) → (a → f b) → g b)
+→ g a
+</pre></dd>
+</dl>
+<h3>functor (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀(g : Type → Type)
+→ { map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(h : a → b)
+      → ∀(ran : ∀(b : Type) → (a → f b) → g b)
+      → ∀(c : Type)
+      → ∀(k : b → f c)
+      → g c
+  }
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./Profunctor</h2>
+<h3>fromDimap (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type → Type)
+→ ∀ ( dimap
+    :   ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(c : Type)
+      → ∀(d : Type)
+      → (a → b)
+      → (c → d)
+      → f b c
+      → f a d
+    )
+→ { dimap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(c : Type)
+      → ∀(d : Type)
+      → (a → b)
+      → (c → d)
+      → f b c
+      → f a d
+  , lmap :
+      ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → ∀(fn : a → b) → f b c → f a c
+  , rmap :
+      ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → (b → c) → f a b → f a c
+  }
+</pre></dd>
+</dl>
+<h3>Type (type)</h3>
 <dl>
 <dt>kind</dt><dd><pre>
 ∀(f : Type → Type → Type) → Type
 </pre></dd>
 <dt>type</dt><dd><pre>
   λ(f : Type → Type → Type)
-→ { arr :
-      ∀(a : Type) → ∀(b : Type) → (a → b) → f a b
-  , split :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(c : Type)
-      → ∀(d : Type)
-      → f a b
-      → f c d
-      → f { _1 : a, _2 : c } { _1 : b, _2 : d }
-  , fanout :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(c : Type)
-      → f a b
-      → f a c
-      → f a { _1 : b, _2 : c }
-  , identity :
-      ∀(a : Type) → f a a
-  , compose :
-      ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → f b c → f a b → f a c
-  , first :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(c : Type)
-      → f a b
-      → f { _1 : a, _2 : c } { _1 : b, _2 : c }
-  , second :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(c : Type)
-      → f b c
-      → f { _1 : a, _2 : b } { _1 : a, _2 : c }
-  , dimap :
+→ { dimap :
         ∀(a : Type)
       → ∀(b : Type)
       → ∀(c : Type)
@@ -190,6 +497,16 @@
   , rmap :
       ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → (b → c) → f a b → f a c
   }
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./Semigroup</h2>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(m : Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+λ(m : Type) → { op : ∀(x : m) → ∀(y : m) → m }
 </pre></dd>
 </dl>
 <h2 style="background-color: #bbb; width: 100%">./Bifunctor</h2>
@@ -215,38 +532,6 @@
 → ∀(f : a → c)
 → p a b
 → p c b
-</pre></dd>
-</dl>
-<h3>package.dhall (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(p : Type → Type → Type)
-→ ∀ ( bifunctor
-    : { bimap :
-            ∀(a : Type)
-          → ∀(b : Type)
-          → ∀(c : Type)
-          → ∀(d : Type)
-          → (a → c)
-          → (b → d)
-          → p a b
-          → p c d
-      }
-    )
-→ { bimap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(c : Type)
-      → ∀(d : Type)
-      → (a → c)
-      → (b → d)
-      → p a b
-      → p c d
-  , first :
-      ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → ∀(f : a → c) → p a b → p c b
-  , second :
-      ∀(a : Type) → ∀(b : Type) → ∀(d : Type) → (b → d) → p a b → p a d
-  }
 </pre></dd>
 </dl>
 <h3>second (term)</h3>
@@ -292,412 +577,586 @@
   }
 </pre></dd>
 </dl>
-<h2 style="background-color: #bbb; width: 100%">./Category</h2>
-<h3>extractSemigroupoid (term)</h3>
+<h3>package.dhall (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-  ∀(f : Type → Type → Type)
-→ ∀ ( category
-    : { identity :
-          ∀(a : Type) → f a a
-      , compose :
-          ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → f b c → f a b → f a c
+  ∀(p : Type → Type → Type)
+→ ∀ ( bifunctor
+    : { bimap :
+            ∀(a : Type)
+          → ∀(b : Type)
+          → ∀(c : Type)
+          → ∀(d : Type)
+          → (a → c)
+          → (b → d)
+          → p a b
+          → p c d
       }
     )
-→ { compose : ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → f b c → f a b → f a c }
+→ { bimap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(c : Type)
+      → ∀(d : Type)
+      → (a → c)
+      → (b → d)
+      → p a b
+      → p c d
+  , first :
+      ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → ∀(f : a → c) → p a b → p c b
+  , second :
+      ∀(a : Type) → ∀(b : Type) → ∀(d : Type) → (b → d) → p a b → p a d
+  }
 </pre></dd>
 </dl>
-<h3>type (type)</h3>
+<h2 style="background-color: #bbb; width: 100%">./Transformer</h2>
+<h3>Type (type)</h3>
 <dl>
 <dt>kind</dt><dd><pre>
-∀(f : Type → Type → Type) → Type
+∀(t : (Type → Type) → Type → Type) → Type
 </pre></dd>
 <dt>type</dt><dd><pre>
-  λ(f : Type → Type → Type)
-→ { identity :
-      ∀(a : Type) → f a a
-  , compose :
-      ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → f b c → f a b → f a c
+  λ(t : (Type → Type) → Type → Type)
+→ { lift :
+        ∀(m : Type → Type)
+      → ∀ ( monad
+          : { ap :
+                ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+            , bind :
+                ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
+            , map :
+                ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
+            , pure :
+                ∀(a : Type) → a → m a
+            }
+          )
+      → ∀(a : Type)
+      → m a
+      → t m a
   }
 </pre></dd>
 </dl>
-<h2 style="background-color: #bbb; width: 100%">./Codensity</h2>
-<h3>Applicative (term)</h3>
+<h2 style="background-color: #bbb; width: 100%">./Identity</h2>
+<h3>monad (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-  ∀(m : Type → Type)
-→ { map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(h : a → b)
-      → ∀(ran : ∀(b : Type) → (a → m b) → m b)
-      → ∀(c : Type)
-      → ∀(k : b → m c)
-      → m c
-  , pure :
-      ∀(a : Type) → ∀(x : a) → ∀(b : Type) → ∀(k : a → m b) → m b
-  , ap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(f : ∀(b : Type) → ((a → b@1) → m b) → m b)
-      → ∀(g : ∀(b : Type) → (a → m b) → m b)
-      → ∀(c : Type)
-      → ∀(k : b → m c)
-      → m c
-  }
+{ ap :
+    ∀(a : Type) → ∀(b : Type) → ∀(f : a → b) → a → b
+, bind :
+    ∀(a : Type) → ∀(b : Type) → ∀(fa : a) → ∀(k : a → b) → b
+, map :
+    ∀(a : Type) → ∀(b : Type) → ∀(f : a → b) → a → b
+, pure :
+    ∀(a : Type) → ∀(x : a) → a
+}
 </pre></dd>
 </dl>
-<h3>Functor (term)</h3>
+<h3>applicative (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-  ∀(m : Type → Type)
-→ { map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(h : a → b)
-      → ∀(ran : ∀(b : Type) → (a → m b) → m b)
-      → ∀(c : Type)
-      → ∀(k : b → m c)
-      → m c
-  }
+{ ap :
+    ∀(a : Type) → ∀(b : Type) → ∀(f : a → b) → a → b
+, map :
+    ∀(a : Type) → ∀(b : Type) → ∀(f : a → b) → a → b
+, pure :
+    ∀(a : Type) → ∀(x : a) → a
+}
 </pre></dd>
 </dl>
-<h3>lower (term)</h3>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(a : Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+λ(a : Type) → a
+</pre></dd>
+</dl>
+<h3>comonad (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-  ∀(m : Type → Type)
-→ ∀ ( applicative
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-      , ap :
+{ duplicate :
+    ∀(a : Type) → ∀(x : a) → a
+, extend :
+    ∀(a : Type) → ∀(b : Type) → ∀(f : a → b) → ∀(x : a) → b
+, extract :
+    ∀(a : Type) → ∀(x : a) → a
+, map :
+    ∀(a : Type) → ∀(b : Type) → ∀(f : a → b) → ∀(x : a) → b
+}
+</pre></dd>
+</dl>
+<h3>functor (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+{ map : ∀(a : Type) → ∀(b : Type) → ∀(f : a → b) → a → b }
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./StateT</h2>
+<h3>monad (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(s : Type)
+→ ∀(m : Type → Type)
+→ ∀ ( monad
+    : { ap :
           ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+      , bind :
+          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
+      , pure :
+          ∀(a : Type) → a → m a
+      }
+    )
+→ { ap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(g : s → m { state : s, val : a → b })
+      → ∀(fa : s → m { state : s, val : a })
+      → ∀(new : s)
+      → m { state : s, val : b }
+  , bind :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(fa : s → m { state : s, val : a })
+      → ∀(k : a → s → m { state : s, val : b })
+      → ∀(new : s)
+      → m { state : s, val : b }
+  , map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(f : a → b)
+      → ∀(fa : s → m { state : s, val : a })
+      → ∀(new : s)
+      → m { state : s, val : b }
+  , pure :
+      ∀(a : Type) → ∀(x : a) → ∀(env : s) → m { state : s, val : a }
+  }
+</pre></dd>
+</dl>
+<h3>modify (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(s : Type)
+→ ∀(m : Type → Type)
+→ ∀ ( monad
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+      , bind :
+          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
+      , pure :
+          ∀(a : Type) → a → m a
+      }
+    )
+→ ∀(f : s → s)
+→ ∀(new : s)
+→ m { state : s, val : {} }
+</pre></dd>
+</dl>
+<h3>applicative (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(s : Type)
+→ ∀(m : Type → Type)
+→ ∀ ( monad
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+      , bind :
+          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
+      , pure :
+          ∀(a : Type) → a → m a
+      }
+    )
+→ { ap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(g : s → m { state : s, val : a → b })
+      → ∀(fa : s → m { state : s, val : a })
+      → ∀(new : s)
+      → m { state : s, val : b }
+  , map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(f : a → b)
+      → ∀(fa : s → m { state : s, val : a })
+      → ∀(new : s)
+      → m { state : s, val : b }
+  , pure :
+      ∀(a : Type) → ∀(x : a) → ∀(env : s) → m { state : s, val : a }
+  }
+</pre></dd>
+</dl>
+<h3>eval (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(s : Type)
+→ ∀(m : Type → Type)
+→ ∀ ( monad
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+      , bind :
+          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
       , pure :
           ∀(a : Type) → a → m a
       }
     )
 → ∀(a : Type)
-→ ∀(ran : ∀(b : Type) → (a → m b) → m b)
+→ ∀(state : s → m { state : s, val : a })
+→ ∀(env : s)
 → m a
 </pre></dd>
 </dl>
-<h3>Monad (term)</h3>
+<h3>exec (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-  ∀(m : Type → Type)
-→ { map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(h : a → b)
-      → ∀(ran : ∀(b : Type) → (a → m b) → m b)
-      → ∀(c : Type)
-      → ∀(k : b → m c)
-      → m c
-  , pure :
-      ∀(a : Type) → ∀(x : a) → ∀(b : Type) → ∀(k : a → m b) → m b
-  , ap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(f : ∀(b : Type) → ((a → b@1) → m b) → m b)
-      → ∀(g : ∀(b : Type) → (a → m b) → m b)
-      → ∀(c : Type)
-      → ∀(k : b → m c)
-      → m c
-  , bind :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(codensity : ∀(b : Type) → (a → m b) → m b)
-      → ∀(k : a → ∀(b : Type) → (b@1 → m b) → m b)
-      → ∀(c : Type)
-      → ∀(l : b → m c)
-      → m c
-  }
+  ∀(s : Type)
+→ ∀(m : Type → Type)
+→ ∀ ( monad
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+      , bind :
+          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
+      , pure :
+          ∀(a : Type) → a → m a
+      }
+    )
+→ ∀(a : Type)
+→ ∀(state : s → m { state : s, val : a })
+→ ∀(env : s)
+→ m s
 </pre></dd>
 </dl>
 <h3>Type (type)</h3>
 <dl>
 <dt>kind</dt><dd><pre>
-∀(m : Type → Type) → ∀(a : Type) → Type
+∀(s : Type) → ∀(m : Type → Type) → ∀(a : Type) → Type
 </pre></dd>
 <dt>type</dt><dd><pre>
-λ(m : Type → Type) → λ(a : Type) → ∀(b : Type) → (a → m b) → m b
+λ(s : Type) → λ(m : Type → Type) → λ(a : Type) → s → m { state : s, val : a }
 </pre></dd>
 </dl>
-<h2 style="background-color: #bbb; width: 100%">./Comonad</h2>
+<h3>get (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(s : Type)
+→ ∀(m : Type → Type)
+→ ∀ ( monad
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+      , bind :
+          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
+      , pure :
+          ∀(a : Type) → a → m a
+      }
+    )
+→ ∀(env : s)
+→ m { state : s, val : s }
+</pre></dd>
+</dl>
+<h3>put (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(s : Type)
+→ ∀(m : Type → Type)
+→ ∀ ( monad
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+      , bind :
+          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
+      , pure :
+          ∀(a : Type) → a → m a
+      }
+    )
+→ ∀(new : s)
+→ ∀(env : s)
+→ m { state : s, val : {} }
+</pre></dd>
+</dl>
+<h3>withState (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(s : Type)
+→ ∀(m : Type → Type)
+→ ∀(a : Type)
+→ ∀(f : s → s)
+→ ∀(state : s → m { state : s, val : a })
+→ ∀(new : s)
+→ m { state : s, val : a }
+</pre></dd>
+</dl>
+<h3>gets (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(s : Type)
+→ ∀(m : Type → Type)
+→ ∀ ( monad
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+      , bind :
+          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
+      , pure :
+          ∀(a : Type) → a → m a
+      }
+    )
+→ ∀(a : Type)
+→ ∀(f : s → a)
+→ ∀(new : s)
+→ m { state : s, val : a }
+</pre></dd>
+</dl>
+<h3>package.dhall (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(s : Type)
+→ ∀(m : Type → Type)
+→ ∀ ( monad
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+      , bind :
+          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
+      , pure :
+          ∀(a : Type) → a → m a
+      }
+    )
+→ { ap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(g : s → m { state : s, val : a → b })
+      → ∀(fa : s → m { state : s, val : a })
+      → ∀(new : s)
+      → m { state : s, val : b }
+  , bind :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(fa : s → m { state : s, val : a })
+      → ∀(k : a → s → m { state : s, val : b })
+      → ∀(new : s)
+      → m { state : s, val : b }
+  , eval :
+      ∀(a : Type) → ∀(state : s → m { state : s, val : a }) → ∀(env : s) → m a
+  , exec :
+      ∀(a : Type) → ∀(state : s → m { state : s, val : a }) → ∀(env : s) → m s
+  , get :
+      ∀(env : s) → m { state : s, val : s }
+  , gets :
+      ∀(a : Type) → ∀(f : s → a) → ∀(new : s) → m { state : s, val : a }
+  , lift :
+      ∀(a : Type) → ∀(ma : m a) → ∀(env : s) → m { state : s, val : a }
+  , map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(f : a → b)
+      → ∀(fa : s → m { state : s, val : a })
+      → ∀(new : s)
+      → m { state : s, val : b }
+  , modify :
+      ∀(a : Type) → ∀(f : s → s) → ∀(new : s) → m { state : s, val : {} }
+  , pure :
+      ∀(a : Type) → ∀(x : a) → ∀(env : s) → m { state : s, val : a }
+  , put :
+      ∀(a : Type) → ∀(new : s) → ∀(env : s) → m { state : s, val : {} }
+  }
+</pre></dd>
+</dl>
+<h3>functor (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(s : Type)
+→ ∀(m : Type → Type)
+→ ∀ ( functor
+    : { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b }
+    )
+→ { map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(f : a → b)
+      → ∀(fa : s → m { state : s, val : a })
+      → ∀(new : s)
+      → m { state : s, val : b }
+  }
+</pre></dd>
+</dl>
+<h3>transformer (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(s : Type)
+→ { lift :
+        ∀(m : Type → Type)
+      → ∀ ( monad
+          : { ap :
+                ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+            , bind :
+                ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
+            , map :
+                ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
+            , pure :
+                ∀(a : Type) → a → m a
+            }
+          )
+      → ∀(a : Type)
+      → ∀(ma : m a)
+      → ∀(env : s)
+      → m { state : s, val : a }
+  }
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./Applicative</h2>
 <h3>extractFunctor (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-  ∀(w : Type → Type)
-→ ∀ ( comonad
-    : { extract :
-          ∀(a : Type) → w a → a
-      , extend :
-          ∀(a : Type) → ∀(b : Type) → ∀(f : w a → b) → w a → w b
-      , duplicate :
-          ∀(a : Type) → w a → w (w a)
-      , map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : w a) → w b
-      }
-    )
-→ { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : w a) → w b }
-</pre></dd>
-</dl>
-<h3>fromExtractExtend (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(w : Type → Type)
-→ ∀(extract : ∀(a : Type) → w a → a)
-→ ∀(extend : ∀(a : Type) → ∀(b : Type) → ∀(f : w a → b) → w a → w b)
-→ { extract :
-      ∀(a : Type) → w a → a
-  , extend :
-      ∀(a : Type) → ∀(b : Type) → ∀(f : w a → b) → w a → w b
-  , duplicate :
-      ∀(a : Type) → w a → w (w a)
-  , map :
-      ∀(a : Type) → ∀(b : Type) → ∀(f : a → b) → w a → w b
-  }
-</pre></dd>
-</dl>
-<h3>type (type)</h3>
-<dl>
-<dt>kind</dt><dd><pre>
-∀(w : Type → Type) → Type
-</pre></dd>
-<dt>type</dt><dd><pre>
-  λ(w : Type → Type)
-→ { extract :
-      ∀(a : Type) → w a → a
-  , extend :
-      ∀(a : Type) → ∀(b : Type) → ∀(f : w a → b) → w a → w b
-  , duplicate :
-      ∀(a : Type) → w a → w (w a)
-  , map :
-      ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : w a) → w b
-  }
-</pre></dd>
-</dl>
-<h2 style="background-color: #bbb; width: 100%">./Compose</h2>
-<h3>Applicative (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
   ∀(f : Type → Type)
-→ ∀(g : Type → Type)
-→ ∀ ( fApplicative
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-      , ap :
+→ ∀ ( t
+    : { ap :
           ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
       , pure :
           ∀(a : Type) → a → f a
       }
     )
-→ ∀ ( gApplicative
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : g@1 a) → g@1 b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : g (a → b)) → ∀(fa : g@1 a) → g@1 b
-      , pure :
-          ∀(a : Type) → a → g a
-      }
-    )
-→ { map :
-      ∀(a : Type) → ∀(b : Type) → ∀(k : a → b) → ∀(fa : f (g a)) → f (g b)
-  , pure :
-      ∀(a : Type) → ∀(x : a) → f (g a)
-  , ap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(k : f (g (a → b)))
-      → ∀(fa : f (g a))
-      → f (g b)
-  }
+→ { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }
 </pre></dd>
 </dl>
-<h3>Foldable (term)</h3>
+<h3>liftA2 (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
   ∀(f : Type → Type)
-→ ∀(g : Type → Type)
-→ ∀ ( fFoldable
-    : { fold :
-            ∀(a : Type)
-          → ∀(ts : f a)
-          → ∀(b : Type)
-          → ∀(f : a → b → b)
-          → ∀(z : b)
-          → b
-      }
-    )
-→ ∀ ( gFoldable
-    : { fold :
-            ∀(a : Type)
-          → ∀(ts : g a)
-          → ∀(b : Type)
-          → ∀(f : a → b → b)
-          → ∀(z : b)
-          → b
-      }
-    )
-→ { fold :
-        ∀(a : Type)
-      → ∀(compose : f (g a))
-      → ∀(b : Type)
-      → ∀(k : a → b → b)
-      → ∀(z : b)
-      → b
-  }
-</pre></dd>
-</dl>
-<h3>Functor (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀(g : Type → Type)
-→ ∀ ( fFunctor
-    : { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }
-    )
-→ ∀ ( gFunctor
-    : { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : g@1 a) → g@1 b }
-    )
-→ { map : ∀(a : Type) → ∀(b : Type) → ∀(k : a → b) → ∀(fa : f (g a)) → f (g b) }
-</pre></dd>
-</dl>
-<h3>Traversable (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀(g : Type → Type)
-→ ∀ ( fTraversable
-    : { fold :
-            ∀(a : Type)
-          → ∀(ts : f a)
-          → ∀(b : Type)
-          → ∀(f : a → b → b)
-          → ∀(z : b)
-          → b
+→ ∀ ( app
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
       , map :
           ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-      , traverse :
-            ∀(f : Type → Type)
-          → ∀ ( applicative
-              : { map :
-                    ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-                , ap :
-                      ∀(a : Type)
-                    → ∀(b : Type)
-                    → ∀(g : f (a → b))
-                    → ∀(fa : f a)
-                    → f b
-                , pure :
-                    ∀(a : Type) → a → f a
-                }
-              )
-          → ∀(a : Type)
-          → ∀(b : Type)
-          → (a → f b)
-          → f@1 a
-          → f (f@1 b)
+      , pure :
+          ∀(a : Type) → a → f a
       }
     )
-→ ∀ ( gTraversable
-    : { fold :
-            ∀(a : Type)
-          → ∀(ts : g a)
-          → ∀(b : Type)
-          → ∀(f : a → b → b)
-          → ∀(z : b)
-          → b
+→ ∀(a : Type)
+→ ∀(b : Type)
+→ ∀(c : Type)
+→ ∀(g : a → b → c)
+→ ∀(fa : f a)
+→ ∀(fb : f b)
+→ f c
+</pre></dd>
+</dl>
+<h3>rightApConst (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀ ( app
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
       , map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : g@1 a) → g@1 b
-      , traverse :
-            ∀(f : Type → Type)
-          → ∀ ( applicative
-              : { map :
-                    ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-                , ap :
-                      ∀(a : Type)
-                    → ∀(b : Type)
-                    → ∀(g : f (a → b))
-                    → ∀(fa : f a)
-                    → f b
-                , pure :
-                    ∀(a : Type) → a → f a
-                }
-              )
-          → ∀(a : Type)
-          → ∀(b : Type)
-          → (a → f b)
-          → g a
-          → f (g b)
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+      , pure :
+          ∀(a : Type) → a → f a
       }
     )
-→ { map :
-      ∀(a : Type) → ∀(b : Type) → ∀(k : a → b) → ∀(fa : f (g a)) → f (g b)
-  , fold :
-        ∀(a : Type)
-      → ∀(compose : f (g a))
-      → ∀(b : Type)
-      → ∀(k : a → b → b)
-      → ∀(z : b)
-      → b
-  , traverse :
-        ∀(fA : Type → Type)
-      → ∀ ( applicative
-          : { map :
-                ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : fA a) → fA b
-            , ap :
-                  ∀(a : Type)
-                → ∀(b : Type)
-                → ∀(g : fA (a → b))
-                → ∀(fa : fA a)
-                → fA b
-            , pure :
-                ∀(a : Type) → a → fA a
-            }
-          )
-      → ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(k : a → fA b)
-      → f (g a)
-      → fA (f (g b))
-  }
+→ ∀(a : Type)
+→ ∀(b : Type)
+→ ∀(fa : f a)
+→ ∀(fb : f b)
+→ f b
 </pre></dd>
 </dl>
 <h3>Type (type)</h3>
 <dl>
 <dt>kind</dt><dd><pre>
-∀(f : Type → Type) → ∀(g : Type → Type) → ∀(a : Type) → Type
+∀(f : Type → Type) → Type
 </pre></dd>
 <dt>type</dt><dd><pre>
-λ(f : Type → Type) → λ(g : Type → Type) → λ(a : Type) → f (g a)
-</pre></dd>
-</dl>
-<h2 style="background-color: #bbb; width: 100%">./docs</h2>
-<h2 style="background-color: #bbb; width: 100%">./Either</h2>
-<h2 style="background-color: #bbb; width: 100%">./Either/Applicative</h2>
-<h3>Parallel (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(a : Type)
-→ ∀(semi : { op : ∀(x : a) → ∀(y : a) → a })
-→ { map :
-        ∀(b : Type)
-      → ∀(c : Type)
-      → ∀(f : b → c)
-      → ∀(either : < Left : a | Right : b >)
-      → < Right : c | Left : a >
+  λ(f : Type → Type)
+→ { ap :
+      ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+  , map :
+      ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
   , pure :
-      ∀(b : Type) → ∀(x : b) → < Left : a | Right : b >
-  , ap :
-        ∀(b : Type)
-      → ∀(c : Type)
-      → ∀(g : < Left : a | Right : b → c >)
-      → ∀(fa : < Left : a | Right : b >)
-      → < Right : c | Left : a >
+      ∀(a : Type) → a → f a
   }
 </pre></dd>
 </dl>
-<h3>Sequential (term)</h3>
+<h3>leftApConst (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀ ( app
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+      , pure :
+          ∀(a : Type) → a → f a
+      }
+    )
+→ ∀(a : Type)
+→ ∀(b : Type)
+→ ∀(fa : f a)
+→ ∀(fb : f b)
+→ f a
+</pre></dd>
+</dl>
+<h3>package.dhall (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀ ( applicative
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+      , pure :
+          ∀(a : Type) → a → f a
+      }
+    )
+→ { ap :
+      ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+  , leftApConst :
+      ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(fb : f b) → f a
+  , liftA2 :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(c : Type)
+      → ∀(g : a → b → c)
+      → ∀(fa : f a)
+      → ∀(fb : f b)
+      → f c
+  , map :
+      ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+  , pure :
+      ∀(a : Type) → a → f a
+  , rightApConst :
+      ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(fb : f b) → f b
+  }
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./Either</h2>
+<h3>partition (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(a : Type)
+→ ∀(b : Type)
+→ ∀(eithers : List < Left : a | Right : b >)
+→ { lefts : List a, rights : List b }
+</pre></dd>
+</dl>
+<h3>monad (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
   ∀(a : Type)
@@ -706,19 +1165,44 @@
       → ∀(b : Type)
       → ∀(k : < Left : a@1 | Right : a → b >)
       → ∀(fa : < Left : a@1 | Right : a >)
-      → < Right : b | Left : a@1 >
+      → < Left : a@1 | Right : b >
+  , bind :
+        ∀(b : Type)
+      → ∀(c : Type)
+      → ∀(fa : < Left : a | Right : b >)
+      → ∀(k : b → < Left : a | Right : c >)
+      → < Left : a | Right : c >
   , map :
         ∀(a : Type)
       → ∀(b : Type)
       → ∀(k : a → b)
       → ∀(fa : < Left : a@1 | Right : a >)
-      → < Right : b | Left : a@1 >
+      → < Left : a@1 | Right : b >
   , pure :
       ∀(b : Type) → ∀(x : b) → < Left : a | Right : b >
   }
 </pre></dd>
 </dl>
-<h3>Bifunctor (term)</h3>
+<h3>isLeft (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+∀(a : Type) → ∀(b : Type) → ∀(e : < Left : a | Right : b >) → Bool
+</pre></dd>
+</dl>
+<h3>mapBoth (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(a : Type)
+→ ∀(b : Type)
+→ ∀(c : Type)
+→ ∀(d : Type)
+→ ∀(f : a → c)
+→ ∀(g : b → d)
+→ ∀(e : < Left : a | Right : b >)
+→ < Left : c | Right : d >
+</pre></dd>
+</dl>
+<h3>bifunctor (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
 { bimap :
@@ -729,8 +1213,266 @@
     → ∀(f : a → c)
     → ∀(g : b → d)
     → ∀(e : < Left : a | Right : b >)
-    → < Right : d | Left : c >
+    → < Left : c | Right : d >
 }
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./Either/applicative</h2>
+<h3>parallel (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(a : Type)
+→ ∀(semi : { op : ∀(x : a) → ∀(y : a) → a })
+→ { ap :
+        ∀(b : Type)
+      → ∀(c : Type)
+      → ∀(g : < Left : a | Right : b → c >)
+      → ∀(fa : < Left : a | Right : b >)
+      → < Left : a | Right : c >
+  , map :
+        ∀(b : Type)
+      → ∀(c : Type)
+      → ∀(f : b → c)
+      → ∀(either : < Left : a | Right : b >)
+      → < Left : a | Right : c >
+  , pure :
+      ∀(b : Type) → ∀(x : b) → < Left : a | Right : b >
+  }
+</pre></dd>
+</dl>
+<h3>sequential (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(a : Type)
+→ { ap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(k : < Left : a@1 | Right : a → b >)
+      → ∀(fa : < Left : a@1 | Right : a >)
+      → < Left : a@1 | Right : b >
+  , map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(k : a → b)
+      → ∀(fa : < Left : a@1 | Right : a >)
+      → < Left : a@1 | Right : b >
+  , pure :
+      ∀(b : Type) → ∀(x : b) → < Left : a | Right : b >
+  }
+</pre></dd>
+</dl>
+<h3>lefts (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+∀(a : Type) → ∀(b : Type) → ∀(eithers : List < Left : a | Right : b >) → List a
+</pre></dd>
+</dl>
+<h3>fromLeft (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+∀(a : Type) → ∀(b : Type) → ∀(def : a) → ∀(e : < Left : a | Right : b >) → a
+</pre></dd>
+</dl>
+<h3>traversable (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(a : Type)
+→ { fold :
+        ∀(b : Type)
+      → ∀(either : < Left : a | Right : b >)
+      → ∀(c : Type)
+      → ∀(f : b → c → c)
+      → ∀(z : c)
+      → c
+  , map :
+        ∀(b : Type)
+      → ∀(c : Type)
+      → ∀(f : b → c)
+      → ∀(either : < Left : a | Right : b >)
+      → < Left : a | Right : c >
+  , traverse :
+        ∀(f : Type → Type)
+      → ∀ ( applicative
+          : { ap :
+                ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+            , map :
+                ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+            , pure :
+                ∀(a : Type) → a → f a
+            }
+          )
+      → ∀(b : Type)
+      → ∀(c : Type)
+      → ∀(g : b → f c)
+      → ∀(ts : < Left : a | Right : b >)
+      → f < Left : a | Right : c >
+  }
+</pre></dd>
+</dl>
+<h3>mapLeft (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(a : Type)
+→ ∀(b : Type)
+→ ∀(c : Type)
+→ ∀(f : a → c)
+→ ∀(e : < Left : a | Right : b >)
+→ < Left : c | Right : b >
+</pre></dd>
+</dl>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(a : Type) → ∀(b : Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+λ(a : Type) → λ(b : Type) → < Left : a | Right : b >
+</pre></dd>
+</dl>
+<h3>mapRight (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(a : Type)
+→ ∀(b : Type)
+→ ∀(d : Type)
+→ ∀(f : b → d)
+→ ∀(e : < Left : a | Right : b >)
+→ < Left : a | Right : d >
+</pre></dd>
+</dl>
+<h3>isRight (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+∀(a : Type) → ∀(b : Type) → ∀(e : < Left : a | Right : b >) → Bool
+</pre></dd>
+</dl>
+<h3>rights (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+∀(a : Type) → ∀(b : Type) → ∀(eithers : List < Left : a | Right : b >) → List b
+</pre></dd>
+</dl>
+<h3>package.dhall (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(a : Type)
+→ ∀(b : Type)
+→ { Left :
+      ∀(Left : a) → < Left : a | Right : b >
+  , Right :
+      ∀(Right : b) → < Left : a | Right : b >
+  , ap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(k : < Left : a@1 | Right : a → b >)
+      → ∀(fa : < Left : a@1 | Right : a >)
+      → < Left : a@1 | Right : b >
+  , bimap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(c : Type)
+      → ∀(d : Type)
+      → ∀(f : a → c)
+      → ∀(g : b → d)
+      → ∀(e : < Left : a | Right : b >)
+      → < Left : c | Right : d >
+  , bind :
+        ∀(b : Type)
+      → ∀(c : Type)
+      → ∀(fa : < Left : a | Right : b >)
+      → ∀(k : b → < Left : a | Right : c >)
+      → < Left : a | Right : c >
+  , fold :
+        ∀(b : Type)
+      → ∀(either : < Left : a | Right : b >)
+      → ∀(c : Type)
+      → ∀(f : b → c → c)
+      → ∀(z : c)
+      → c
+  , fromLeft :
+      ∀(def : a) → ∀(e : < Left : a | Right : b >) → a
+  , fromRight :
+      ∀(def : b) → ∀(e : < Left : a | Right : b >) → b
+  , isLeft :
+      ∀(e : < Left : a | Right : b >) → Bool
+  , isRight :
+      ∀(e : < Left : a | Right : b >) → Bool
+  , lefts :
+      ∀(eithers : List < Left : a | Right : b >) → List a
+  , map :
+        ∀(b : Type)
+      → ∀(c : Type)
+      → ∀(f : b → c)
+      → ∀(either : < Left : a | Right : b >)
+      → < Left : a | Right : c >
+  , mapBoth :
+        ∀(c : Type)
+      → ∀(d : Type)
+      → ∀(f : a → c)
+      → ∀(g : b → d)
+      → ∀(e : < Left : a | Right : b >)
+      → < Left : c | Right : d >
+  , mapLeft :
+        ∀(c : Type)
+      → ∀(f : a → c)
+      → ∀(e : < Left : a | Right : b >)
+      → < Left : c | Right : b >
+  , mapRight :
+        ∀(d : Type)
+      → ∀(f : b → d)
+      → ∀(e : < Left : a | Right : b >)
+      → < Left : a | Right : d >
+  , partition :
+        ∀(eithers : List < Left : a | Right : b >)
+      → { lefts : List a, rights : List b }
+  , pure :
+      ∀(b : Type) → ∀(x : b) → < Left : a | Right : b >
+  , rights :
+      ∀(eithers : List < Left : a | Right : b >) → List b
+  , traverse :
+        ∀(f : Type → Type)
+      → ∀ ( applicative
+          : { ap :
+                ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+            , map :
+                ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+            , pure :
+                ∀(a : Type) → a → f a
+            }
+          )
+      → ∀(b : Type)
+      → ∀(c : Type)
+      → ∀(g : b → f c)
+      → ∀(ts : < Left : a | Right : b >)
+      → f < Left : a | Right : c >
+  }
+</pre></dd>
+</dl>
+<h3>functor (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(a : Type)
+→ { map :
+        ∀(b : Type)
+      → ∀(c : Type)
+      → ∀(f : b → c)
+      → ∀(either : < Left : a | Right : b >)
+      → < Left : a | Right : c >
+  }
+</pre></dd>
+</dl>
+<h3>foldable (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(a : Type)
+→ { fold :
+        ∀(b : Type)
+      → ∀(either : < Left : a | Right : b >)
+      → ∀(c : Type)
+      → ∀(f : b → c → c)
+      → ∀(z : c)
+      → c
+  }
 </pre></dd>
 </dl>
 <h3>fold (term)</h3>
@@ -745,350 +1487,1815 @@
 → c
 </pre></dd>
 </dl>
-<h3>Foldable (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(a : Type)
-→ { fold :
-        ∀(b : Type)
-      → ∀(either : < Left : a | Right : b >)
-      → ∀(c : Type)
-      → ∀(f : b → c → c)
-      → ∀(z : c)
-      → c
-  }
-</pre></dd>
-</dl>
-<h3>fromLeft (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-∀(a : Type) → ∀(b : Type) → ∀(def : a) → ∀(e : < Left : a | Right : b >) → a
-</pre></dd>
-</dl>
 <h3>fromRight (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
 ∀(a : Type) → ∀(b : Type) → ∀(def : b) → ∀(e : < Left : a | Right : b >) → b
 </pre></dd>
 </dl>
-<h3>Functor (term)</h3>
+<h2 style="background-color: #bbb; width: 100%">./Yoneda</h2>
+<h3>monad (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-  ∀(a : Type)
-→ { map :
-        ∀(b : Type)
+  ∀(f : Type → Type)
+→ ∀ ( monad
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+      , bind :
+          ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(k : a → f b) → f b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+      , pure :
+          ∀(a : Type) → a → f a
+      }
+    )
+→ { ap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(m : ∀(b : Type) → ((a → b@1) → b) → f b)
+      → ∀(n : ∀(b : Type) → (a → b) → f b)
       → ∀(c : Type)
-      → ∀(f : b → c)
-      → ∀(either : < Left : a | Right : b >)
-      → < Right : c | Left : a >
+      → ∀(k : b → c)
+      → f c
+  , bind :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(yoneda : ∀(b : Type) → (a → b) → f b)
+      → ∀(k : a → ∀(b : Type) → (b@1 → b) → f b)
+      → ∀(c : Type)
+      → ∀(l : b → c)
+      → f c
+  , map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(h : a → b)
+      → ∀(ran : ∀(b : Type) → (a → b) → f b)
+      → ∀(c : Type)
+      → ∀(k : b → c)
+      → f c
+  , pure :
+      ∀(a : Type) → ∀(x : a) → ∀(b : Type) → ∀(f : a → b) → f@1 b
   }
 </pre></dd>
 </dl>
-<h3>isLeft (term)</h3>
+<h3>applicative (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-∀(a : Type) → ∀(b : Type) → ∀(e : < Left : a | Right : b >) → Bool
+  ∀(f : Type → Type)
+→ ∀ ( applicative
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+      , pure :
+          ∀(a : Type) → a → f a
+      }
+    )
+→ { ap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(m : ∀(b : Type) → ((a → b@1) → b) → f b)
+      → ∀(n : ∀(b : Type) → (a → b) → f b)
+      → ∀(c : Type)
+      → ∀(k : b → c)
+      → f c
+  , map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(h : a → b)
+      → ∀(ran : ∀(b : Type) → (a → b) → f b)
+      → ∀(c : Type)
+      → ∀(k : b → c)
+      → f c
+  , pure :
+      ∀(a : Type) → ∀(x : a) → ∀(b : Type) → ∀(f : a → b) → f@1 b
+  }
 </pre></dd>
 </dl>
-<h3>isRight (term)</h3>
+<h3>traversable (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-∀(a : Type) → ∀(b : Type) → ∀(e : < Left : a | Right : b >) → Bool
+  ∀(f : Type → Type)
+→ ∀ ( traversable
+    : { fold :
+            ∀(a : Type)
+          → ∀(ts : f a)
+          → ∀(b : Type)
+          → ∀(f : a → b → b)
+          → ∀(z : b)
+          → b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+      , traverse :
+            ∀(f : Type → Type)
+          → ∀ ( applicative
+              : { ap :
+                      ∀(a : Type)
+                    → ∀(b : Type)
+                    → ∀(g : f (a → b))
+                    → ∀(fa : f a)
+                    → f b
+                , map :
+                    ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+                , pure :
+                    ∀(a : Type) → a → f a
+                }
+              )
+          → ∀(a : Type)
+          → ∀(b : Type)
+          → (a → f b)
+          → f@1 a
+          → f (f@1 b)
+      }
+    )
+→ { fold :
+        ∀(a : Type)
+      → ∀(yoneda : ∀(b : Type) → (a → b) → f b)
+      → ∀(b : Type)
+      → ∀(k : a → b → b)
+      → ∀(z : b)
+      → b
+  , map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(h : a → b)
+      → ∀(ran : ∀(b : Type) → (a → b) → f b)
+      → ∀(c : Type)
+      → ∀(k : b → c)
+      → f c
+  , traverse :
+        ∀(g : Type → Type)
+      → ∀ ( applicative
+          : { ap :
+                  ∀(a : Type)
+                → ∀(b : Type)
+                → ∀(g : g (a → b))
+                → ∀(fa : g@1 a)
+                → g@1 b
+            , map :
+                ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : g@1 a) → g@1 b
+            , pure :
+                ∀(a : Type) → a → g a
+            }
+          )
+      → ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(k : a → g b)
+      → ∀(yoneda : ∀(b : Type) → (a → b) → f b)
+      → g (∀(b : Type) → (b@1 → b) → f b)
+  }
 </pre></dd>
 </dl>
-<h3>lefts (term)</h3>
+<h3>lift (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-∀(a : Type) → ∀(b : Type) → ∀(eithers : List < Left : a | Right : b >) → List a
-</pre></dd>
-</dl>
-<h3>mapBoth (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(a : Type)
+  ∀(f : Type → Type)
+→ ∀ ( functor
+    : { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }
+    )
+→ ∀(a : Type)
+→ ∀(x : f a)
 → ∀(b : Type)
-→ ∀(c : Type)
-→ ∀(d : Type)
-→ ∀(f : a → c)
-→ ∀(g : b → d)
-→ ∀(e : < Left : a | Right : b >)
-→ < Right : d | Left : c >
+→ ∀(k : a → b)
+→ f b
 </pre></dd>
 </dl>
-<h3>mapLeft (term)</h3>
+<h3>Type (type)</h3>
 <dl>
+<dt>kind</dt><dd><pre>
+∀(g : Type → Type) → ∀(a : Type) → Type
+</pre></dd>
 <dt>type</dt><dd><pre>
-  ∀(a : Type)
-→ ∀(b : Type)
-→ ∀(c : Type)
-→ ∀(f : a → c)
-→ ∀(e : < Left : a | Right : b >)
-→ < Right : b | Left : c >
+λ(g : Type → Type) → λ(a : Type) → ∀(b : Type) → (a → b) → g b
 </pre></dd>
 </dl>
-<h3>mapRight (term)</h3>
+<h3>lower (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-  ∀(a : Type)
-→ ∀(b : Type)
-→ ∀(d : Type)
-→ ∀(f : b → d)
-→ ∀(e : < Left : a | Right : b >)
-→ < Right : d | Left : a >
+∀(f : Type → Type) → ∀(a : Type) → ∀(ran : ∀(b : Type) → (a → b) → f b) → f a
 </pre></dd>
 </dl>
-<h3>Monad (term)</h3>
+<h3>functor (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-  ∀(a : Type)
+  ∀(f : Type → Type)
 → { map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(h : a → b)
+      → ∀(ran : ∀(b : Type) → (a → b) → f b)
+      → ∀(c : Type)
+      → ∀(k : b → c)
+      → f c
+  }
+</pre></dd>
+</dl>
+<h3>foldable (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀ ( foldable
+    : { fold :
+            ∀(a : Type)
+          → ∀(ts : f a)
+          → ∀(b : Type)
+          → ∀(f : a → b → b)
+          → ∀(z : b)
+          → b
+      }
+    )
+→ { fold :
+        ∀(a : Type)
+      → ∀(yoneda : ∀(b : Type) → (a → b) → f b)
+      → ∀(b : Type)
+      → ∀(k : a → b → b)
+      → ∀(z : b)
+      → b
+  }
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./List</h2>
+<h3>monad (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+{ ap :
+    ∀(a : Type) → ∀(b : Type) → ∀(g : List (a → b)) → ∀(fa : List a) → List b
+, bind :
+    ∀(a : Type) → ∀(b : Type) → ∀(fa : List a) → ∀(k : a → List b) → List b
+, map :
+    ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(list : List a) → List b
+, pure :
+    ∀(a : Type) → ∀(x : a) → List a
+}
+</pre></dd>
+</dl>
+<h3>applicative (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+{ ap :
+    ∀(a : Type) → ∀(b : Type) → ∀(g : List (a → b)) → ∀(fa : List a) → List b
+, map :
+    ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(list : List a) → List b
+, pure :
+    ∀(a : Type) → ∀(x : a) → List a
+}
+</pre></dd>
+</dl>
+<h3>semigroup (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+∀(a : Type) → { op : ∀(xs : List a) → ∀(ys : List a) → List a }
+</pre></dd>
+</dl>
+<h3>traversable (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+{ fold :
+      ∀(a : Type)
+    → List a
+    → ∀(list : Type)
+    → ∀(cons : a → list → list)
+    → ∀(nil : list)
+    → list
+, map :
+    ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(list : List a) → List b
+, traverse :
+      ∀(f : Type → Type)
+    → ∀ ( applicative
+        : { ap :
+              ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+          , map :
+              ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+          , pure :
+              ∀(a : Type) → a → f a
+          }
+        )
+    → ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(g : a → f b)
+    → ∀(ts : List a)
+    → f (List b)
+}
+</pre></dd>
+</dl>
+<h3>monoid (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+∀(a : Type) → { op : ∀(xs : List a) → ∀(ys : List a) → List a, unit : List a }
+</pre></dd>
+</dl>
+<h3>functor (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+{ map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(list : List a) → List b }
+</pre></dd>
+</dl>
+<h3>foldable (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+{ fold :
+      ∀(a : Type)
+    → List a
+    → ∀(list : Type)
+    → ∀(cons : a → list → list)
+    → ∀(nil : list)
+    → list
+}
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./NonEmptyList</h2>
+<h3>applicative (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+{ ap :
+      ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(nelF : { head : a → b, tail : List (a → b) })
+    → ∀(nel : { head : a, tail : List a })
+    → { head : b, tail : List b }
+, map :
+      ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(k : a → b)
+    → ∀(nel : { head : a, tail : List a })
+    → { head : b, tail : List b }
+, pure :
+    ∀(a : Type) → ∀(x : a) → { head : a, tail : List a }
+}
+</pre></dd>
+</dl>
+<h3>semigroup (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(a : Type)
+→ { op :
+        ∀(x : { head : a, tail : List a })
+      → ∀(y : { head : a, tail : List a })
+      → { head : a, tail : List a }
+  }
+</pre></dd>
+</dl>
+<h3>traversable (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+{ fold :
+      ∀(a : Type)
+    → ∀(ts : { head : a, tail : List a })
+    → ∀(b : Type)
+    → ∀(f : a → b → b)
+    → ∀(z : b)
+    → b
+, map :
+      ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(k : a → b)
+    → ∀(nel : { head : a, tail : List a })
+    → { head : b, tail : List b }
+, traverse :
+      ∀(f : Type → Type)
+    → ∀ ( applicative
+        : { ap :
+              ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+          , map :
+              ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+          , pure :
+              ∀(a : Type) → a → f a
+          }
+        )
+    → ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(k : a → f b)
+    → ∀(nel : { head : a, tail : List a })
+    → f { head : b, tail : List b }
+}
+</pre></dd>
+</dl>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(a : Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+λ(a : Type) → { head : a, tail : List a }
+</pre></dd>
+</dl>
+<h3>comonad (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+{ duplicate :
+      ∀(a : Type)
+    → ∀(nel : { head : a, tail : List a })
+    → { head :
+          { head : a, tail : List a }
+      , tail :
+          List { head : a, tail : List a }
+      }
+, extend :
+      ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(f : { head : a, tail : List a } → b)
+    → ∀(nel : { head : a, tail : List a })
+    → { head : b, tail : List b }
+, extract :
+    ∀(a : Type) → ∀(nel : { head : a, tail : List a }) → a
+, map :
+      ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(f : a → b)
+    → ∀(nel : { head : a, tail : List a })
+    → { head : b, tail : List b }
+}
+</pre></dd>
+</dl>
+<h3>functor (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+{ map :
+      ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(k : a → b)
+    → ∀(nel : { head : a, tail : List a })
+    → { head : b, tail : List b }
+}
+</pre></dd>
+</dl>
+<h3>foldable (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+{ fold :
+      ∀(a : Type)
+    → ∀(ts : { head : a, tail : List a })
+    → ∀(b : Type)
+    → ∀(f : a → b → b)
+    → ∀(z : b)
+    → b
+}
+</pre></dd>
+</dl>
+<h3>toList (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+∀(a : Type) → ∀(nel : { head : a, tail : List a }) → List a
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./scripts</h2>
+<h2 style="background-color: #bbb; width: 100%">./Lan</h2>
+<h3>lift (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀ ( comonad
+    : { duplicate :
+          ∀(a : Type) → f a → f (f a)
+      , extend :
+          ∀(a : Type) → ∀(b : Type) → ∀(f : f a → b) → f@1 a → f@1 b
+      , extract :
+          ∀(a : Type) → f a → a
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+      }
+    )
+→ ∀(g : Type → Type)
+→ ∀(a : Type)
+→ ∀(x : g a)
+→ ∀(r : Type)
+→ ∀(k : ∀(b : Type) → (f b → a) → g b → r)
+→ r
+</pre></dd>
+</dl>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(f : Type → Type) → ∀(g : Type → Type) → ∀(a : Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+  λ(f : Type → Type)
+→ λ(g : Type → Type)
+→ λ(a : Type)
+→ ∀(r : Type) → (∀(b : Type) → (f b → a) → g b → r) → r
+</pre></dd>
+</dl>
+<h3>lower (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(h : Type → Type)
+→ ∀ ( functor
+    : { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : h a) → h b }
+    )
+→ ∀(f : Type → Type)
+→ ∀(g : Type → Type)
+→ ∀(duplicate : ∀(b : Type) → g b → h (f b))
+→ ∀(a : Type)
+→ ∀(lan : ∀(r : Type) → (∀(b : Type) → (f b → a) → g b → r) → r)
+→ h a
+</pre></dd>
+</dl>
+<h3>functor (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀(g : Type → Type)
+→ { map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(h : a → b)
+      → ∀(lan : ∀(r : Type) → (∀(b : Type) → (f b → a) → g b → r) → r)
+      → ∀(r : Type)
+      → ∀(k : ∀(c : Type) → (f c → b) → g c → r)
+      → r
+  }
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./Reader</h2>
+<h3>monad (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(r : Type)
+→ { ap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(k : r → a → b)
+      → ∀(fa : r → a)
+      → ∀(env : r)
+      → b
+  , bind :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(fa : r → a)
+      → ∀(k : a → r → b)
+      → ∀(env : r)
+      → b
+  , map :
         ∀(a : Type)
       → ∀(b : Type)
       → ∀(k : a → b)
-      → ∀(fa : < Left : a@1 | Right : a >)
-      → < Right : b | Left : a@1 >
+      → ∀(reader : r → a)
+      → ∀(rr : r)
+      → b
   , pure :
-      ∀(b : Type) → ∀(x : b) → < Left : a | Right : b >
-  , ap :
+      ∀(a : Type) → ∀(x : a) → ∀(env : r) → a
+  }
+</pre></dd>
+</dl>
+<h3>withReader (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(r : Type)
+→ ∀(a : Type)
+→ ∀(rPrime : Type)
+→ ∀(f : rPrime → r)
+→ ∀(reader : r → a)
+→ ∀(newR : rPrime)
+→ a
+</pre></dd>
+</dl>
+<h3>applicative (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(r : Type)
+→ { ap :
         ∀(a : Type)
       → ∀(b : Type)
-      → ∀(k : < Left : a@1 | Right : a → b >)
-      → ∀(fa : < Left : a@1 | Right : a >)
-      → < Right : b | Left : a@1 >
-  , bind :
-        ∀(b : Type)
-      → ∀(c : Type)
-      → ∀(fa : < Left : a | Right : b >)
-      → ∀(k : b → < Left : a | Right : c >)
-      → < Right : c | Left : a >
+      → ∀(g : r → a → b)
+      → ∀(fa : r → a)
+      → ∀(env : r)
+      → b
+  , map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(g : a → b)
+      → ∀(reader : r → a)
+      → ∀(rr : r)
+      → b
+  , pure :
+      ∀(a : Type) → ∀(x : a) → ∀(env : r) → a
   }
+</pre></dd>
+</dl>
+<h3>local (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+∀(r : Type) → ∀(a : Type) → ∀(f : r → r) → ∀(reader : r → a) → ∀(env : r) → a
+</pre></dd>
+</dl>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(r : Type) → ∀(a : Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+λ(r : Type) → λ(a : Type) → r → a
+</pre></dd>
+</dl>
+<h3>asks (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+∀(r : Type) → ∀(a : Type) → ∀(f : r → a) → ∀(env : r) → a
 </pre></dd>
 </dl>
 <h3>package.dhall (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-  ∀(a : Type)
-→ ∀(b : Type)
-→ { Left :
-      ∀(Left : a) → < Right : b | Left : a >
-  , Right :
-      ∀(Right : b) → < Left : a | Right : b >
-  , fromLeft :
-      ∀(def : a) → ∀(e : < Left : a | Right : b >) → a
-  , fromRight :
-      ∀(def : b) → ∀(e : < Left : a | Right : b >) → b
-  , isLeft :
-      ∀(e : < Left : a | Right : b >) → Bool
-  , isRight :
-      ∀(e : < Left : a | Right : b >) → Bool
-  , lefts :
-      ∀(eithers : List < Left : a | Right : b >) → List a
-  , mapBoth :
-        ∀(c : Type)
-      → ∀(d : Type)
-      → ∀(f : a → c)
-      → ∀(g : b → d)
-      → ∀(e : < Left : a | Right : b >)
-      → < Right : d | Left : c >
-  , mapLeft :
-        ∀(c : Type)
-      → ∀(f : a → c)
-      → ∀(e : < Left : a | Right : b >)
-      → < Right : b | Left : c >
-  , mapRight :
-        ∀(d : Type)
-      → ∀(f : b → d)
-      → ∀(e : < Left : a | Right : b >)
-      → < Right : d | Left : a >
-  , partition :
-        ∀(eithers : List < Left : a | Right : b >)
-      → { lefts : List a, rights : List b }
-  , rights :
-      ∀(eithers : List < Left : a | Right : b >) → List b
-  , bimap :
+  ∀(r : Type)
+→ { ap :
         ∀(a : Type)
       → ∀(b : Type)
-      → ∀(c : Type)
-      → ∀(d : Type)
-      → ∀(f : a → c)
-      → ∀(g : b → d)
-      → ∀(e : < Left : a | Right : b >)
-      → < Right : d | Left : c >
-  , fold :
-        ∀(b : Type)
-      → ∀(either : < Left : a | Right : b >)
-      → ∀(c : Type)
-      → ∀(f : b → c → c)
-      → ∀(z : c)
-      → c
-  , map :
-        ∀(b : Type)
-      → ∀(c : Type)
-      → ∀(f : b → c)
-      → ∀(either : < Left : a | Right : b >)
-      → < Right : c | Left : a >
-  , traverse :
-        ∀(f : Type → Type)
-      → ∀ ( applicative
-          : { map :
-                ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-            , ap :
-                ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-            , pure :
-                ∀(a : Type) → a → f a
-            }
-          )
-      → ∀(b : Type)
-      → ∀(c : Type)
-      → ∀(g : b → f c)
-      → ∀(ts : < Left : a | Right : b >)
-      → f < Left : a | Right : c >
-  , pure :
-      ∀(b : Type) → ∀(x : b) → < Left : a | Right : b >
-  , ap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(k : < Left : a@1 | Right : a → b >)
-      → ∀(fa : < Left : a@1 | Right : a >)
-      → < Right : b | Left : a@1 >
+      → ∀(k : r → a → b)
+      → ∀(fa : r → a)
+      → ∀(env : r)
+      → b
   , bind :
-        ∀(b : Type)
-      → ∀(c : Type)
-      → ∀(fa : < Left : a | Right : b >)
-      → ∀(k : b → < Left : a | Right : c >)
-      → < Right : c | Left : a >
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(fa : r → a)
+      → ∀(k : a → r → b)
+      → ∀(env : r)
+      → b
+  , map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(k : a → b)
+      → ∀(reader : r → a)
+      → ∀(rr : r)
+      → b
+  , pure :
+      ∀(a : Type) → ∀(x : a) → ∀(env : r) → a
+  , withReader :
+        ∀(a : Type)
+      → ∀(rPrime : Type)
+      → ∀(f : rPrime → r)
+      → ∀(reader : r → a)
+      → ∀(newR : rPrime)
+      → a
   }
 </pre></dd>
 </dl>
-<h3>partition (term)</h3>
+<h3>ask (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-  ∀(a : Type)
-→ ∀(b : Type)
-→ ∀(eithers : List < Left : a | Right : b >)
-→ { lefts : List a, rights : List b }
+∀(r : Type) → ∀(env : r) → r
 </pre></dd>
 </dl>
-<h3>rights (term)</h3>
+<h3>functor (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-∀(a : Type) → ∀(b : Type) → ∀(eithers : List < Left : a | Right : b >) → List b
+  ∀(r : Type)
+→ { map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(g : a → b)
+      → ∀(reader : r → a)
+      → ∀(rr : r)
+      → b
+  }
 </pre></dd>
 </dl>
-<h3>Traversable (term)</h3>
+<h2 style="background-color: #bbb; width: 100%">./Comonad</h2>
+<h3>extractFunctor (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-  ∀(a : Type)
-→ { fold :
-        ∀(b : Type)
-      → ∀(either : < Left : a | Right : b >)
-      → ∀(c : Type)
-      → ∀(f : b → c → c)
-      → ∀(z : c)
-      → c
+  ∀(w : Type → Type)
+→ ∀ ( comonad
+    : { duplicate :
+          ∀(a : Type) → w a → w (w a)
+      , extend :
+          ∀(a : Type) → ∀(b : Type) → ∀(f : w a → b) → w a → w b
+      , extract :
+          ∀(a : Type) → w a → a
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : w a) → w b
+      }
+    )
+→ { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : w a) → w b }
+</pre></dd>
+</dl>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(w : Type → Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+  λ(w : Type → Type)
+→ { duplicate :
+      ∀(a : Type) → w a → w (w a)
+  , extend :
+      ∀(a : Type) → ∀(b : Type) → ∀(f : w a → b) → w a → w b
+  , extract :
+      ∀(a : Type) → w a → a
   , map :
-        ∀(b : Type)
-      → ∀(c : Type)
-      → ∀(f : b → c)
-      → ∀(either : < Left : a | Right : b >)
-      → < Right : c | Left : a >
-  , traverse :
-        ∀(f : Type → Type)
+      ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : w a) → w b
+  }
+</pre></dd>
+</dl>
+<h3>fromExtractExtend (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(w : Type → Type)
+→ ∀(extract : ∀(a : Type) → w a → a)
+→ ∀(extend : ∀(a : Type) → ∀(b : Type) → ∀(f : w a → b) → w a → w b)
+→ { duplicate :
+      ∀(a : Type) → w a → w (w a)
+  , extend :
+      ∀(a : Type) → ∀(b : Type) → ∀(f : w a → b) → w a → w b
+  , extract :
+      ∀(a : Type) → w a → a
+  , map :
+      ∀(a : Type) → ∀(b : Type) → ∀(f : a → b) → w a → w b
+  }
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./Traversable</h2>
+<h3>extractFunctor (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀ ( t
+    : { fold :
+            ∀(a : Type)
+          → ∀(ts : f a)
+          → ∀(b : Type)
+          → ∀(f : a → b → b)
+          → ∀(z : b)
+          → b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+      , traverse :
+            ∀(f : Type → Type)
+          → ∀ ( applicative
+              : { ap :
+                      ∀(a : Type)
+                    → ∀(b : Type)
+                    → ∀(g : f (a → b))
+                    → ∀(fa : f a)
+                    → f b
+                , map :
+                    ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+                , pure :
+                    ∀(a : Type) → a → f a
+                }
+              )
+          → ∀(a : Type)
+          → ∀(b : Type)
+          → (a → f b)
+          → f@1 a
+          → f (f@1 b)
+      }
+    )
+→ { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }
+</pre></dd>
+</dl>
+<h3>fromTraverse (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(t : Type → Type)
+→ ∀ ( traverse
+    :   ∀(f : Type → Type)
       → ∀ ( applicative
-          : { map :
-                ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-            , ap :
+          : { ap :
                 ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+            , map :
+                ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
             , pure :
                 ∀(a : Type) → a → f a
             }
           )
+      → ∀(a : Type)
       → ∀(b : Type)
-      → ∀(c : Type)
-      → ∀(g : b → f c)
-      → ∀(ts : < Left : a | Right : b >)
-      → f < Left : a | Right : c >
+      → ∀(g : a → f b)
+      → ∀(ts : t a)
+      → f (t b)
+    )
+→ { fold :
+      ∀(a : Type) → ∀(ts : t a) → ∀(b : Type) → ∀(f : a → b → b) → ∀(z : b) → b
+  , map :
+      ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(ts : t a) → t b
+  , traverse :
+        ∀(f : Type → Type)
+      → ∀ ( applicative
+          : { ap :
+                ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+            , map :
+                ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+            , pure :
+                ∀(a : Type) → a → f a
+            }
+          )
+      → ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(g : a → f b)
+      → ∀(ts : t a)
+      → f (t b)
   }
 </pre></dd>
 </dl>
 <h3>Type (type)</h3>
 <dl>
 <dt>kind</dt><dd><pre>
-∀(a : Type) → ∀(b : Type) → Type
+∀(t : Type → Type) → Type
 </pre></dd>
 <dt>type</dt><dd><pre>
-λ(a : Type) → λ(b : Type) → < Left : a | Right : b >
+  λ(t : Type → Type)
+→ { fold :
+      ∀(a : Type) → ∀(ts : t a) → ∀(b : Type) → ∀(f : a → b → b) → ∀(z : b) → b
+  , map :
+      ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : t a) → t b
+  , traverse :
+        ∀(f : Type → Type)
+      → ∀ ( applicative
+          : { ap :
+                ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+            , map :
+                ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+            , pure :
+                ∀(a : Type) → a → f a
+            }
+          )
+      → ∀(a : Type)
+      → ∀(b : Type)
+      → (a → f b)
+      → t a
+      → f (t b)
+  }
 </pre></dd>
 </dl>
-<h2 style="background-color: #bbb; width: 100%">./EitherT</h2>
-<h2 style="background-color: #bbb; width: 100%">./EitherT/Applicative</h2>
-<h3>Parallel (term)</h3>
+<h3>sequence (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(t : Type → Type)
+→ ∀ ( traversable
+    : { fold :
+            ∀(a : Type)
+          → ∀(ts : t a)
+          → ∀(b : Type)
+          → ∀(f : a → b → b)
+          → ∀(z : b)
+          → b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : t a) → t b
+      , traverse :
+            ∀(f : Type → Type)
+          → ∀ ( applicative
+              : { ap :
+                      ∀(a : Type)
+                    → ∀(b : Type)
+                    → ∀(g : f (a → b))
+                    → ∀(fa : f a)
+                    → f b
+                , map :
+                    ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+                , pure :
+                    ∀(a : Type) → a → f a
+                }
+              )
+          → ∀(a : Type)
+          → ∀(b : Type)
+          → (a → f b)
+          → t a
+          → f (t b)
+      }
+    )
+→ ∀(f : Type → Type)
+→ ∀ ( applicative
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+      , pure :
+          ∀(a : Type) → a → f a
+      }
+    )
+→ ∀(a : Type)
+→ ∀(ts : t (f a))
+→ f (t a)
+</pre></dd>
+</dl>
+<h3>extractFoldable (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀ ( t
+    : { fold :
+            ∀(a : Type)
+          → ∀(ts : f a)
+          → ∀(b : Type)
+          → ∀(f : a → b → b)
+          → ∀(z : b)
+          → b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+      , traverse :
+            ∀(f : Type → Type)
+          → ∀ ( applicative
+              : { ap :
+                      ∀(a : Type)
+                    → ∀(b : Type)
+                    → ∀(g : f (a → b))
+                    → ∀(fa : f a)
+                    → f b
+                , map :
+                    ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+                , pure :
+                    ∀(a : Type) → a → f a
+                }
+              )
+          → ∀(a : Type)
+          → ∀(b : Type)
+          → (a → f b)
+          → f@1 a
+          → f (f@1 b)
+      }
+    )
+→ { fold :
+      ∀(a : Type) → ∀(ts : f a) → ∀(b : Type) → ∀(f : a → b → b) → ∀(z : b) → b
+  }
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./Monoid</h2>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(m : Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+λ(m : Type) → { op : ∀(x : m) → ∀(y : m) → m, unit : m }
+</pre></dd>
+</dl>
+<h3>extractSemigroup (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(m : Type)
+→ ∀(t : { op : ∀(x : m) → ∀(y : m) → m, unit : m })
+→ { op : ∀(x : m) → ∀(y : m) → m }
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./Category</h2>
+<h3>extractSemigroupoid (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type → Type)
+→ ∀ ( category
+    : { compose :
+          ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → f b c → f a b → f a c
+      , identity :
+          ∀(a : Type) → f a a
+      }
+    )
+→ { compose : ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → f b c → f a b → f a c }
+</pre></dd>
+</dl>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(f : Type → Type → Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+  λ(f : Type → Type → Type)
+→ { compose :
+      ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → f b c → f a b → f a c
+  , identity :
+      ∀(a : Type) → f a a
+  }
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./DifferenceList</h2>
+<h3>monad (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+{ ap :
+      ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(k : List (a → b) → List (a → b))
+    → ∀(fa : List a → List a)
+    → List b
+    → List b
+, bind :
+      ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(f : List a → List a)
+    → ∀(k : a → List b → List b)
+    → List b
+    → List b
+, map :
+      ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(k : a → b)
+    → ∀(fa : List a → List a)
+    → List b
+    → List b
+, pure :
+    ∀(a : Type) → ∀(x : a) → ∀(l : List a) → List a
+}
+</pre></dd>
+</dl>
+<h3>applicative (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+{ ap :
+      ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(k : List (a → b) → List (a → b))
+    → ∀(fa : List a → List a)
+    → List b
+    → List b
+, map :
+      ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(k : a → b)
+    → ∀(fa : List a → List a)
+    → List b
+    → List b
+, pure :
+    ∀(a : Type) → ∀(x : a) → ∀(l : List a) → List a
+}
+</pre></dd>
+</dl>
+<h3>semigroup (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
   ∀(a : Type)
-→ ∀(semi : { op : ∀(x : a) → ∀(y : a) → a })
-→ ∀(m : Type → Type)
-→ ∀ ( applicative
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-      , ap :
+→ { op :
+      ∀(f : List a → List a) → ∀(g : List a → List a) → ∀(x : List a) → List a
+  }
+</pre></dd>
+</dl>
+<h3>monoid (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(a : Type)
+→ { op :
+      ∀(f : List a → List a) → ∀(g : List a → List a) → ∀(x : List a) → List a
+  , unit :
+      ∀(x : List a) → List a
+  }
+</pre></dd>
+</dl>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(a : Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+λ(a : Type) → List a → List a
+</pre></dd>
+</dl>
+<h3>append (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(a : Type)
+→ ∀(f : List a → List a)
+→ ∀(g : List a → List a)
+→ ∀(x : List a)
+→ List a
+</pre></dd>
+</dl>
+<h3>snoc (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+∀(a : Type) → ∀(xs : List a → List a) → ∀(y : a) → ∀(x : List a) → List a
+</pre></dd>
+</dl>
+<h3>cons (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+∀(a : Type) → ∀(y : a) → ∀(xs : List a → List a) → ∀(x : List a) → List a
+</pre></dd>
+</dl>
+<h3>empty (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+∀(a : Type) → ∀(x : List a) → List a
+</pre></dd>
+</dl>
+<h3>singleton (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+∀(a : Type) → ∀(x : a) → ∀(l : List a) → List a
+</pre></dd>
+</dl>
+<h3>functor (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+{ map :
+      ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(k : a → b)
+    → ∀(fa : List a → List a)
+    → List b
+    → List b
+}
+</pre></dd>
+</dl>
+<h3>foldable (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+{ fold :
+      ∀(a : Type)
+    → ∀(ts : List a → List a)
+    → ∀(b : Type)
+    → ∀(f : a → b → b)
+    → ∀(z : b)
+    → b
+}
+</pre></dd>
+</dl>
+<h3>toList (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+∀(a : Type) → ∀(xs : List a → List a) → List a
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./Functor</h2>
+<h3>rightConst (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀ ( functor
+    : { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }
+    )
+→ ∀(a : Type)
+→ ∀(b : Type)
+→ ∀(fa : f a)
+→ ∀(val : b)
+→ f b
+</pre></dd>
+</dl>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(f : Type → Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+  λ(f : Type → Type)
+→ { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }
+</pre></dd>
+</dl>
+<h3>leftConst (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀ ( functor
+    : { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }
+    )
+→ ∀(a : Type)
+→ ∀(b : Type)
+→ ∀(val : a)
+→ ∀(fb : f b)
+→ f a
+</pre></dd>
+</dl>
+<h3>fromTraversable (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀ ( t
+    : { fold :
+            ∀(a : Type)
+          → ∀(ts : f a)
+          → ∀(b : Type)
+          → ∀(f : a → b → b)
+          → ∀(z : b)
+          → b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+      , traverse :
+            ∀(f : Type → Type)
+          → ∀ ( applicative
+              : { ap :
+                      ∀(a : Type)
+                    → ∀(b : Type)
+                    → ∀(g : f (a → b))
+                    → ∀(fa : f a)
+                    → f b
+                , map :
+                    ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+                , pure :
+                    ∀(a : Type) → a → f a
+                }
+              )
+          → ∀(a : Type)
+          → ∀(b : Type)
+          → (a → f b)
+          → f@1 a
+          → f (f@1 b)
+      }
+    )
+→ { map : ∀(a : Type) → ∀(b : Type) → (a → b) → f a → f b }
+</pre></dd>
+</dl>
+<h3>package.dhall (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀ ( functor
+    : { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }
+    )
+→ { leftConst :
+      ∀(a : Type) → ∀(b : Type) → ∀(val : a) → ∀(fb : f b) → f a
+  , map :
+      ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+  , rightConst :
+      ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(val : b) → f b
+  , void :
+      ∀(a : Type) → ∀(fa : f a) → f {}
+  }
+</pre></dd>
+</dl>
+<h3>void (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀ ( functor
+    : { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }
+    )
+→ ∀(a : Type)
+→ ∀(fa : f a)
+→ f {}
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./Arrow</h2>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(f : Type → Type → Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+  λ(f : Type → Type → Type)
+→ { arr :
+      ∀(a : Type) → ∀(b : Type) → (a → b) → f a b
+  , compose :
+      ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → f b c → f a b → f a c
+  , dimap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(c : Type)
+      → ∀(d : Type)
+      → (a → b)
+      → (c → d)
+      → f b c
+      → f a d
+  , fanout :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(c : Type)
+      → f a b
+      → f a c
+      → f a { _1 : b, _2 : c }
+  , first :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(c : Type)
+      → f a b
+      → f { _1 : a, _2 : c } { _1 : b, _2 : c }
+  , identity :
+      ∀(a : Type) → f a a
+  , lmap :
+      ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → (a → b) → f b c → f a c
+  , rmap :
+      ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → (b → c) → f a b → f a c
+  , second :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(c : Type)
+      → f b c
+      → f { _1 : a, _2 : b } { _1 : a, _2 : c }
+  , split :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(c : Type)
+      → ∀(d : Type)
+      → f a b
+      → f c d
+      → f { _1 : a, _2 : c } { _1 : b, _2 : d }
+  }
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./Coyoneda</h2>
+<h3>lift (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(g : Type → Type)
+→ ∀(a : Type)
+→ ∀(x : g a)
+→ ∀(r : Type)
+→ ∀(k : ∀(b : Type) → (b → a) → g b → r)
+→ r
+</pre></dd>
+</dl>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(g : Type → Type) → ∀(a : Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+  λ(g : Type → Type)
+→ λ(a : Type)
+→ ∀(r : Type) → (∀(b : Type) → (b → a) → g b → r) → r
+</pre></dd>
+</dl>
+<h3>lower (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀ ( functor
+    : { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }
+    )
+→ ∀(a : Type)
+→ ∀(lan : ∀(r : Type) → (∀(b : Type) → (b → a) → f b → r) → r)
+→ f a
+</pre></dd>
+</dl>
+<h3>functor (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(g : Type → Type)
+→ { map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(h : a → b)
+      → ∀(lan : ∀(r : Type) → (∀(b : Type) → (b → a) → g b → r) → r)
+      → ∀(r : Type)
+      → ∀(k : ∀(c : Type) → (c → b) → g c → r)
+      → r
+  }
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./Density</h2>
+<h3>lift (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀ ( comonad
+    : { duplicate :
+          ∀(a : Type) → f a → f (f a)
+      , extend :
+          ∀(a : Type) → ∀(b : Type) → ∀(f : f a → b) → f@1 a → f@1 b
+      , extract :
+          ∀(a : Type) → f a → a
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+      }
+    )
+→ ∀(a : Type)
+→ ∀(x : f a)
+→ ∀(r : Type)
+→ ∀(k : ∀(b : Type) → (f b → a) → f b → r)
+→ r
+</pre></dd>
+</dl>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(f : Type → Type) → ∀(a : Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+  λ(f : Type → Type)
+→ λ(a : Type)
+→ ∀(r : Type) → (∀(b : Type) → (f b → a) → f b → r) → r
+</pre></dd>
+</dl>
+<h3>lower (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀ ( comonad
+    : { duplicate :
+          ∀(a : Type) → f a → f (f a)
+      , extend :
+          ∀(a : Type) → ∀(b : Type) → ∀(f : f a → b) → f@1 a → f@1 b
+      , extract :
+          ∀(a : Type) → f a → a
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+      }
+    )
+→ ∀(a : Type)
+→ ∀(lan : ∀(r : Type) → (∀(b : Type) → (f b → a) → f b → r) → r)
+→ f a
+</pre></dd>
+</dl>
+<h3>functor (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ { map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(h : a → b)
+      → ∀(lan : ∀(r : Type) → (∀(b : Type) → (f b → a) → f b → r) → r)
+      → ∀(r : Type)
+      → ∀(k : ∀(c : Type) → (f c → b) → f c → r)
+      → r
+  }
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./Strong</h2>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(f : Type → Type → Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+  λ(f : Type → Type → Type)
+→ { dimap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(c : Type)
+      → ∀(d : Type)
+      → (a → b)
+      → (c → d)
+      → f b c
+      → f a d
+  , first :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(c : Type)
+      → f a b
+      → f { _1 : a, _2 : c } { _1 : b, _2 : c }
+  , lmap :
+      ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → (a → b) → f b c → f a c
+  , rmap :
+      ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → (b → c) → f a b → f a c
+  , second :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(c : Type)
+      → f b c
+      → f { _1 : a, _2 : b } { _1 : a, _2 : c }
+  }
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./Monad</h2>
+<h3>extractFunctor (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀ ( t
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+      , bind :
+          ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(k : a → f b) → f b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+      , pure :
+          ∀(a : Type) → a → f a
+      }
+    )
+→ { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }
+</pre></dd>
+</dl>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(f : Type → Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+  λ(f : Type → Type)
+→ { ap :
+      ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+  , bind :
+      ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(k : a → f b) → f b
+  , map :
+      ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+  , pure :
+      ∀(a : Type) → a → f a
+  }
+</pre></dd>
+</dl>
+<h3>extractApplicative (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀ ( t
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+      , bind :
+          ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(k : a → f b) → f b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+      , pure :
+          ∀(a : Type) → a → f a
+      }
+    )
+→ { ap :
+      ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+  , map :
+      ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+  , pure :
+      ∀(a : Type) → a → f a
+  }
+</pre></dd>
+</dl>
+<h3>fromPureBind (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀(pure : ∀(a : Type) → a → f a)
+→ ∀(bind : ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(k : a → f b) → f b)
+→ { ap :
+      ∀(a : Type) → ∀(b : Type) → ∀(k : f (a → b)) → ∀(fa : f a) → f b
+  , bind :
+      ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(k : a → f b) → f b
+  , map :
+      ∀(a : Type) → ∀(b : Type) → ∀(k : a → b) → ∀(fa : f a) → f b
+  , pure :
+      ∀(a : Type) → a → f a
+  }
+</pre></dd>
+</dl>
+<h3>package.dhall (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(f : Type → Type)
+→ ∀ ( monad
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+      , bind :
+          ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(k : a → f b) → f b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+      , pure :
+          ∀(a : Type) → a → f a
+      }
+    )
+→ { ap :
+      ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+  , bind :
+      ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(k : a → f b) → f b
+  , join :
+      ∀(a : Type) → ∀(ffa : f (f a)) → f a
+  , map :
+      ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
+  , pure :
+      ∀(a : Type) → a → f a
+  }
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./Kleisli</h2>
+<h3>semigroupoid (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(m : Type → Type)
+→ ∀ ( monad
+    : { ap :
           ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+      , bind :
+          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
       , pure :
           ∀(a : Type) → a → m a
       }
     )
-→ { map :
+→ { compose :
         ∀(a : Type)
       → ∀(b : Type)
-      → ∀(k : a → b)
-      → ∀(fa : m < Left : a@1 | Right : a >)
-      → m < Left : a@1 | Right : b >
-  , pure :
-      ∀(a : Type) → ∀(x : a) → m < Left : a@1 | Right : a >
-  , ap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(k : m < Left : a@1 | Right : a → b >)
-      → ∀(fa : m < Left : a@1 | Right : a >)
-      → m < Left : a@1 | Right : b >
+      → ∀(c : Type)
+      → ∀(g : b → m c)
+      → ∀(f : a → m b)
+      → ∀(x : a)
+      → m c
   }
 </pre></dd>
 </dl>
-<h3>Sequential (term)</h3>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(m : Type → Type) → ∀(a : Type) → ∀(b : Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+λ(m : Type → Type) → λ(a : Type) → λ(b : Type) → a → m b
+</pre></dd>
+</dl>
+<h3>category (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-  ∀(a : Type)
-→ ∀(m : Type → Type)
-→ ∀ ( applicative
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-      , ap :
+  ∀(m : Type → Type)
+→ ∀ ( monad
+    : { ap :
           ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+      , bind :
+          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
       , pure :
           ∀(a : Type) → a → m a
       }
     )
-→ { map :
+→ { compose :
         ∀(a : Type)
       → ∀(b : Type)
-      → ∀(k : a → b)
-      → ∀(fa : m < Left : a@1 | Right : a >)
-      → m < Left : a@1 | Right : b >
-  , pure :
-      ∀(a : Type) → ∀(x : a) → m < Left : a@1 | Right : a >
-  , ap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(k : m < Left : a@1 | Right : a → b >)
-      → ∀(fa : m < Left : a@1 | Right : a >)
-      → m < Left : a@1 | Right : b >
+      → ∀(c : Type)
+      → ∀(g : b → m c)
+      → ∀(f : a → m b)
+      → ∀(x : a)
+      → m c
+  , identity :
+      ∀(a : Type) → a → m a
   }
 </pre></dd>
 </dl>
-<h3>Functor (term)</h3>
+<h2 style="background-color: #bbb; width: 100%">./ReaderT</h2>
+<h3>monad (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-  ∀(a : Type)
+  ∀(r : Type)
+→ ∀(m : Type → Type)
+→ ∀ ( monad
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+      , bind :
+          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
+      , pure :
+          ∀(a : Type) → a → m a
+      }
+    )
+→ { ap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(k : r → m (a → b))
+      → ∀(fa : r → m a)
+      → ∀(env : r)
+      → m b
+  , bind :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(fa : r → m a)
+      → ∀(k : a → r → m b)
+      → ∀(env : r)
+      → m b
+  , map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(k : a → b)
+      → ∀(reader : r → m a)
+      → ∀(rr : r)
+      → m b
+  , pure :
+      ∀(a : Type) → ∀(x : a) → ∀(env : r) → m a
+  }
+</pre></dd>
+</dl>
+<h3>withReader (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(r : Type)
+→ ∀(m : Type → Type)
+→ ∀(a : Type)
+→ ∀(rPrime : Type)
+→ ∀(f : rPrime → r)
+→ ∀(reader : r → m a)
+→ ∀(newR : rPrime)
+→ m a
+</pre></dd>
+</dl>
+<h3>applicative (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(r : Type)
+→ ∀(m : Type → Type)
+→ ∀ ( applicative
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
+      , pure :
+          ∀(a : Type) → a → m a
+      }
+    )
+→ { ap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(k : r → m (a → b))
+      → ∀(fa : r → m a)
+      → ∀(env : r)
+      → m b
+  , map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(k : a → b)
+      → ∀(reader : r → m a)
+      → ∀(rr : r)
+      → m b
+  , pure :
+      ∀(a : Type) → ∀(x : a) → ∀(env : r) → m a
+  }
+</pre></dd>
+</dl>
+<h3>local (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(r : Type)
+→ ∀(m : Type → Type)
+→ ∀(a : Type)
+→ ∀(f : r → r)
+→ ∀(reader : r → m a)
+→ ∀(env : r)
+→ m a
+</pre></dd>
+</dl>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(r : Type) → ∀(m : Type → Type) → ∀(a : Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+λ(r : Type) → λ(m : Type → Type) → λ(a : Type) → r → m a
+</pre></dd>
+</dl>
+<h3>asks (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(r : Type)
+→ ∀(m : Type → Type)
+→ ∀ ( applicative
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
+      , pure :
+          ∀(a : Type) → a → m a
+      }
+    )
+→ ∀(a : Type)
+→ ∀(f : r → a)
+→ ∀(env : r)
+→ m a
+</pre></dd>
+</dl>
+<h3>package.dhall (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(r : Type)
+→ ∀(m : Type → Type)
+→ ∀ ( monad
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+      , bind :
+          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
+      , pure :
+          ∀(a : Type) → a → m a
+      }
+    )
+→ { ap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(k : r → m (a → b))
+      → ∀(fa : r → m a)
+      → ∀(env : r)
+      → m b
+  , ask :
+      ∀(env : r) → m r
+  , asks :
+      ∀(a : Type) → ∀(f : r → a) → ∀(env : r) → m a
+  , bind :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(fa : r → m a)
+      → ∀(k : a → r → m b)
+      → ∀(env : r)
+      → m b
+  , lift :
+      ∀(a : Type) → ∀(ma : m a) → ∀(env : r) → m a
+  , local :
+      ∀(a : Type) → ∀(f : r → r) → ∀(reader : r → m a) → ∀(env : r) → m a
+  , map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(k : a → b)
+      → ∀(reader : r → m a)
+      → ∀(rr : r)
+      → m b
+  , pure :
+      ∀(a : Type) → ∀(x : a) → ∀(env : r) → m a
+  }
+</pre></dd>
+</dl>
+<h3>ask (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(r : Type)
+→ ∀(m : Type → Type)
+→ ∀ ( applicative
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
+      , pure :
+          ∀(a : Type) → a → m a
+      }
+    )
+→ ∀(env : r)
+→ m r
+</pre></dd>
+</dl>
+<h3>functor (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(r : Type)
 → ∀(m : Type → Type)
 → ∀ ( functor
     : { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b }
@@ -1097,83 +3304,49 @@
         ∀(a : Type)
       → ∀(b : Type)
       → ∀(k : a → b)
-      → ∀(fa : m < Left : a@1 | Right : a >)
-      → m < Left : a@1 | Right : b >
+      → ∀(reader : r → m a)
+      → ∀(rr : r)
+      → m b
   }
 </pre></dd>
 </dl>
-<h3>Monad (term)</h3>
+<h3>transformer (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-  ∀(a : Type)
-→ ∀(m : Type → Type)
-→ ∀ ( monad
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
-      , pure :
-          ∀(a : Type) → a → m a
-      , bind :
-          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
-      }
-    )
-→ { map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(k : a → b)
-      → ∀(fa : m < Left : a@1 | Right : a >)
-      → m < Left : a@1 | Right : b >
-  , pure :
-      ∀(a : Type) → ∀(x : a) → m < Left : a@1 | Right : a >
-  , ap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(k : m < Left : a@1 | Right : a → b >)
-      → ∀(fa : m < Left : a@1 | Right : a >)
-      → m < Left : a@1 | Right : b >
-  , bind :
-        ∀(b : Type)
-      → ∀(c : Type)
-      → ∀(fa : m < Left : a | Right : b >)
-      → ∀(k : b → m < Left : a | Right : c >)
-      → m < Left : a | Right : c >
-  }
-</pre></dd>
-</dl>
-<h3>Transformer (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(a : Type)
+  ∀(r : Type)
 → { lift :
         ∀(m : Type → Type)
       → ∀ ( monad
-          : { map :
-                ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-            , ap :
+          : { ap :
                 ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
-            , pure :
-                ∀(a : Type) → a → m a
             , bind :
                 ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
+            , map :
+                ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
+            , pure :
+                ∀(a : Type) → a → m a
             }
           )
-      → ∀(b : Type)
-      → ∀(ma : m b)
-      → m < Left : a | Right : b >
+      → ∀(a : Type)
+      → ∀(ma : m a)
+      → ∀(env : r)
+      → m a
   }
 </pre></dd>
 </dl>
+<h2 style="background-color: #bbb; width: 100%">./Foldable</h2>
 <h3>Type (type)</h3>
 <dl>
 <dt>kind</dt><dd><pre>
-∀(a : Type) → ∀(m : Type → Type) → ∀(b : Type) → Type
+∀(t : Type → Type) → Type
 </pre></dd>
 <dt>type</dt><dd><pre>
-λ(a : Type) → λ(m : Type → Type) → λ(b : Type) → m < Left : a | Right : b >
+  λ(t : Type → Type)
+→ { fold :
+      ∀(a : Type) → ∀(ts : t a) → ∀(b : Type) → ∀(f : a → b → b) → ∀(z : b) → b
+  }
 </pre></dd>
 </dl>
-<h2 style="background-color: #bbb; width: 100%">./Foldable</h2>
 <h3>foldMap (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
@@ -1196,44 +3369,175 @@
 → m
 </pre></dd>
 </dl>
-<h3>Type (type)</h3>
+<h2 style="background-color: #bbb; width: 100%">./EitherT</h2>
+<h3>monad (term)</h3>
 <dl>
-<dt>kind</dt><dd><pre>
-∀(t : Type → Type) → Type
-</pre></dd>
 <dt>type</dt><dd><pre>
-  λ(t : Type → Type)
-→ { fold :
-      ∀(a : Type) → ∀(ts : t a) → ∀(b : Type) → ∀(f : a → b → b) → ∀(z : b) → b
+  ∀(a : Type)
+→ ∀(m : Type → Type)
+→ ∀ ( monad
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+      , bind :
+          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
+      , pure :
+          ∀(a : Type) → a → m a
+      }
+    )
+→ { ap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(k : m < Left : a@1 | Right : a → b >)
+      → ∀(fa : m < Left : a@1 | Right : a >)
+      → m < Left : a@1 | Right : b >
+  , bind :
+        ∀(b : Type)
+      → ∀(c : Type)
+      → ∀(fa : m < Left : a | Right : b >)
+      → ∀(k : b → m < Left : a | Right : c >)
+      → m < Left : a | Right : c >
+  , map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(k : a → b)
+      → ∀(fa : m < Left : a@1 | Right : a >)
+      → m < Left : a@1 | Right : b >
+  , pure :
+      ∀(a : Type) → ∀(x : a) → m < Left : a@1 | Right : a >
   }
 </pre></dd>
 </dl>
-<h2 style="background-color: #bbb; width: 100%">./Function</h2>
-<h3>arrow (term)</h3>
+<h2 style="background-color: #bbb; width: 100%">./EitherT/applicative</h2>
+<h3>parallel (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-{ arr :
-    ∀(a : Type) → ∀(b : Type) → ∀(x : a → b) → a → b
-, split :
-      ∀(a : Type)
-    → ∀(b : Type)
-    → ∀(c : Type)
-    → ∀(d : Type)
-    → ∀(f : a → b)
-    → ∀(g : c → d)
-    → ∀(p : { _1 : a, _2 : c })
-    → { _1 : b, _2 : d }
-, fanout :
-      ∀(a : Type)
-    → ∀(b : Type)
-    → ∀(c : Type)
-    → ∀(f : a → b)
-    → ∀(g : a → c)
-    → ∀(x : a)
-    → { _1 : b, _2 : c }
-, identity :
-    ∀(a : Type) → ∀(x : a) → a
-, compose :
+  ∀(a : Type)
+→ ∀(semi : { op : ∀(x : a) → ∀(y : a) → a })
+→ ∀(m : Type → Type)
+→ ∀ ( applicative
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
+      , pure :
+          ∀(a : Type) → a → m a
+      }
+    )
+→ { ap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(k : m < Left : a@1 | Right : a → b >)
+      → ∀(fa : m < Left : a@1 | Right : a >)
+      → m < Left : a@1 | Right : b >
+  , map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(k : a → b)
+      → ∀(fa : m < Left : a@1 | Right : a >)
+      → m < Left : a@1 | Right : b >
+  , pure :
+      ∀(a : Type) → ∀(x : a) → m < Left : a@1 | Right : a >
+  }
+</pre></dd>
+</dl>
+<h3>sequential (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(a : Type)
+→ ∀(m : Type → Type)
+→ ∀ ( applicative
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
+      , pure :
+          ∀(a : Type) → a → m a
+      }
+    )
+→ { ap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(k : m < Left : a@1 | Right : a → b >)
+      → ∀(fa : m < Left : a@1 | Right : a >)
+      → m < Left : a@1 | Right : b >
+  , map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(k : a → b)
+      → ∀(fa : m < Left : a@1 | Right : a >)
+      → m < Left : a@1 | Right : b >
+  , pure :
+      ∀(a : Type) → ∀(x : a) → m < Left : a@1 | Right : a >
+  }
+</pre></dd>
+</dl>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(a : Type) → ∀(m : Type → Type) → ∀(b : Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+λ(a : Type) → λ(m : Type → Type) → λ(b : Type) → m < Left : a | Right : b >
+</pre></dd>
+</dl>
+<h3>functor (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(a : Type)
+→ ∀(m : Type → Type)
+→ ∀ ( functor
+    : { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b }
+    )
+→ { map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(k : a → b)
+      → ∀(fa : m < Left : a@1 | Right : a >)
+      → m < Left : a@1 | Right : b >
+  }
+</pre></dd>
+</dl>
+<h3>transformer (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(a : Type)
+→ { lift :
+        ∀(m : Type → Type)
+      → ∀ ( monad
+          : { ap :
+                ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+            , bind :
+                ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
+            , map :
+                ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
+            , pure :
+                ∀(a : Type) → a → m a
+            }
+          )
+      → ∀(b : Type)
+      → ∀(ma : m b)
+      → m < Left : a | Right : b >
+  }
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./Semigroupoid</h2>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(f : Type → Type → Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+  λ(f : Type → Type → Type)
+→ { compose : ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → f b c → f a b → f a c }
+</pre></dd>
+</dl>
+<h2 style="background-color: #bbb; width: 100%">./Function</h2>
+<h3>semigroupoid (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+{ compose :
       ∀(a : Type)
     → ∀(b : Type)
     → ∀(c : Type)
@@ -1241,21 +3545,13 @@
     → ∀(g : a → b)
     → ∀(x : a)
     → c
-, first :
-      ∀(a : Type)
-    → ∀(b : Type)
-    → ∀(c : Type)
-    → ∀(f : a → b)
-    → ∀(p : { _1 : a, _2 : c })
-    → { _1 : b, _2 : c }
-, second :
-      ∀(a : Type)
-    → ∀(b : Type)
-    → ∀(c : Type)
-    → ∀(f : b → c)
-    → ∀(p : { _1 : a, _2 : b })
-    → { _1 : a, _2 : c }
-, dimap :
+}
+</pre></dd>
+</dl>
+<h3>strong (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+{ dimap :
       ∀(a : Type)
     → ∀(b : Type)
     → ∀(c : Type)
@@ -1265,6 +3561,13 @@
     → ∀(fn : b → c)
     → ∀(x : a)
     → d
+, first :
+      ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(c : Type)
+    → ∀(f : a → b)
+    → ∀(p : { _1 : a, _2 : c })
+    → { _1 : b, _2 : c }
 , lmap :
       ∀(a : Type)
     → ∀(b : Type)
@@ -1281,14 +3584,30 @@
     → ∀(fn : a → b)
     → ∀(x : a)
     → c
+, second :
+      ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(c : Type)
+    → ∀(f : b → c)
+    → ∀(p : { _1 : a, _2 : b })
+    → { _1 : a, _2 : c }
 }
 </pre></dd>
 </dl>
-<h3>category (term)</h3>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(a : Type) → ∀(b : Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+λ(a : Type) → λ(b : Type) → a → b
+</pre></dd>
+</dl>
+<h3>arrow (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-{ identity :
-    ∀(a : Type) → ∀(x : a) → a
+{ arr :
+    ∀(a : Type) → ∀(b : Type) → ∀(x : a → b) → a → b
 , compose :
       ∀(a : Type)
     → ∀(b : Type)
@@ -1297,6 +3616,65 @@
     → ∀(g : a → b)
     → ∀(x : a)
     → c
+, dimap :
+      ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(c : Type)
+    → ∀(d : Type)
+    → ∀(f : a → b)
+    → ∀(g : c → d)
+    → ∀(fn : b → c)
+    → ∀(x : a)
+    → d
+, fanout :
+      ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(c : Type)
+    → ∀(f : a → b)
+    → ∀(g : a → c)
+    → ∀(x : a)
+    → { _1 : b, _2 : c }
+, first :
+      ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(c : Type)
+    → ∀(f : a → b)
+    → ∀(p : { _1 : a, _2 : c })
+    → { _1 : b, _2 : c }
+, identity :
+    ∀(a : Type) → ∀(x : a) → a
+, lmap :
+      ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(c : Type)
+    → ∀(fn : a → b)
+    → ∀(fn : b → c)
+    → ∀(x : a)
+    → c
+, rmap :
+      ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(c : Type)
+    → ∀(g : b → c)
+    → ∀(fn : a → b)
+    → ∀(x : a)
+    → c
+, second :
+      ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(c : Type)
+    → ∀(f : b → c)
+    → ∀(p : { _1 : a, _2 : b })
+    → { _1 : a, _2 : c }
+, split :
+      ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(c : Type)
+    → ∀(d : Type)
+    → ∀(f : a → b)
+    → ∀(g : c → d)
+    → ∀(p : { _1 : a, _2 : c })
+    → { _1 : b, _2 : d }
 }
 </pre></dd>
 </dl>
@@ -1332,7 +3710,7 @@
 }
 </pre></dd>
 </dl>
-<h3>semigroupoid (term)</h3>
+<h3>category (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
 { compose :
@@ -1343,671 +3721,16 @@
     → ∀(g : a → b)
     → ∀(x : a)
     → c
-}
-</pre></dd>
-</dl>
-<h3>strong (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-{ first :
-      ∀(a : Type)
-    → ∀(b : Type)
-    → ∀(c : Type)
-    → ∀(f : a → b)
-    → ∀(p : { _1 : a, _2 : c })
-    → { _1 : b, _2 : c }
-, second :
-      ∀(a : Type)
-    → ∀(b : Type)
-    → ∀(c : Type)
-    → ∀(f : b → c)
-    → ∀(p : { _1 : a, _2 : b })
-    → { _1 : a, _2 : c }
-, dimap :
-      ∀(a : Type)
-    → ∀(b : Type)
-    → ∀(c : Type)
-    → ∀(d : Type)
-    → ∀(f : a → b)
-    → ∀(g : c → d)
-    → ∀(fn : b → c)
-    → ∀(x : a)
-    → d
-, lmap :
-      ∀(a : Type)
-    → ∀(b : Type)
-    → ∀(c : Type)
-    → ∀(fn : a → b)
-    → ∀(fn : b → c)
-    → ∀(x : a)
-    → c
-, rmap :
-      ∀(a : Type)
-    → ∀(b : Type)
-    → ∀(c : Type)
-    → ∀(g : b → c)
-    → ∀(fn : a → b)
-    → ∀(x : a)
-    → c
-}
-</pre></dd>
-</dl>
-<h3>type (type)</h3>
-<dl>
-<dt>kind</dt><dd><pre>
-∀(a : Type) → ∀(b : Type) → Type
-</pre></dd>
-<dt>type</dt><dd><pre>
-λ(a : Type) → λ(b : Type) → a → b
-</pre></dd>
-</dl>
-<h2 style="background-color: #bbb; width: 100%">./Functor</h2>
-<h3>fromTraversable (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀ ( t
-    : { fold :
-            ∀(a : Type)
-          → ∀(ts : f a)
-          → ∀(b : Type)
-          → ∀(f : a → b → b)
-          → ∀(z : b)
-          → b
-      , map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-      , traverse :
-            ∀(f : Type → Type)
-          → ∀ ( applicative
-              : { map :
-                    ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-                , ap :
-                      ∀(a : Type)
-                    → ∀(b : Type)
-                    → ∀(g : f (a → b))
-                    → ∀(fa : f a)
-                    → f b
-                , pure :
-                    ∀(a : Type) → a → f a
-                }
-              )
-          → ∀(a : Type)
-          → ∀(b : Type)
-          → (a → f b)
-          → f@1 a
-          → f (f@1 b)
-      }
-    )
-→ { map : ∀(a : Type) → ∀(b : Type) → (a → b) → f a → f b }
-</pre></dd>
-</dl>
-<h3>leftConst (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀ ( functor
-    : { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }
-    )
-→ ∀(a : Type)
-→ ∀(b : Type)
-→ ∀(val : a)
-→ ∀(fb : f b)
-→ f a
-</pre></dd>
-</dl>
-<h3>package.dhall (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀ ( functor
-    : { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }
-    )
-→ { map :
-      ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-  , leftConst :
-      ∀(a : Type) → ∀(b : Type) → ∀(val : a) → ∀(fb : f b) → f a
-  , rightConst :
-      ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(val : b) → f b
-  , void :
-      ∀(a : Type) → ∀(fa : f a) → f {}
-  }
-</pre></dd>
-</dl>
-<h2 style="background-color: #bbb; width: 100%">./Functor/Product</h2>
-<h3>rightConst (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀ ( functor
-    : { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }
-    )
-→ ∀(a : Type)
-→ ∀(b : Type)
-→ ∀(fa : f a)
-→ ∀(val : b)
-→ f b
-</pre></dd>
-</dl>
-<h3>Type (type)</h3>
-<dl>
-<dt>kind</dt><dd><pre>
-∀(f : Type → Type) → Type
-</pre></dd>
-<dt>type</dt><dd><pre>
-  λ(f : Type → Type)
-→ { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }
-</pre></dd>
-</dl>
-<h3>void (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀ ( functor
-    : { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }
-    )
-→ ∀(a : Type)
-→ ∀(fa : f a)
-→ f {}
-</pre></dd>
-</dl>
-<h2 style="background-color: #bbb; width: 100%">./Identity</h2>
-<h3>Applicative (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-{ map :
-    ∀(a : Type) → ∀(b : Type) → ∀(f : a → b) → a → b
-, pure :
+, identity :
     ∀(a : Type) → ∀(x : a) → a
-, ap :
-    ∀(a : Type) → ∀(b : Type) → ∀(f : a → b) → a → b
 }
-</pre></dd>
-</dl>
-<h3>Functor (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-{ map : ∀(a : Type) → ∀(b : Type) → ∀(f : a → b) → a → b }
-</pre></dd>
-</dl>
-<h3>Monad (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-{ map :
-    ∀(a : Type) → ∀(b : Type) → ∀(f : a → b) → a → b
-, pure :
-    ∀(a : Type) → ∀(x : a) → a
-, ap :
-    ∀(a : Type) → ∀(b : Type) → ∀(f : a → b) → a → b
-, bind :
-    ∀(a : Type) → ∀(b : Type) → ∀(fa : a) → ∀(k : a → b) → b
-}
-</pre></dd>
-</dl>
-<h3>Type (type)</h3>
-<dl>
-<dt>kind</dt><dd><pre>
-∀(a : Type) → Type
-</pre></dd>
-<dt>type</dt><dd><pre>
-λ(a : Type) → a
-</pre></dd>
-</dl>
-<h2 style="background-color: #bbb; width: 100%">./Kleisli</h2>
-<h3>category (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(m : Type → Type)
-→ ∀ ( monad
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
-      , pure :
-          ∀(a : Type) → a → m a
-      , bind :
-          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
-      }
-    )
-→ { identity :
-      ∀(a : Type) → a → m a
-  , compose :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(c : Type)
-      → ∀(g : b → m c)
-      → ∀(f : a → m b)
-      → ∀(x : a)
-      → m c
-  }
-</pre></dd>
-</dl>
-<h3>semigroupoid (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(m : Type → Type)
-→ ∀ ( monad
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
-      , pure :
-          ∀(a : Type) → a → m a
-      , bind :
-          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
-      }
-    )
-→ { compose :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(c : Type)
-      → ∀(g : b → m c)
-      → ∀(f : a → m b)
-      → ∀(x : a)
-      → m c
-  }
-</pre></dd>
-</dl>
-<h3>type (type)</h3>
-<dl>
-<dt>kind</dt><dd><pre>
-∀(m : Type → Type) → ∀(a : Type) → ∀(b : Type) → Type
-</pre></dd>
-<dt>type</dt><dd><pre>
-λ(m : Type → Type) → λ(a : Type) → λ(b : Type) → a → m b
-</pre></dd>
-</dl>
-<h2 style="background-color: #bbb; width: 100%">./List</h2>
-<h3>Applicative (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-{ map :
-    ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(list : List a) → List b
-, pure :
-    ∀(a : Type) → ∀(x : a) → List a
-, ap :
-    ∀(a : Type) → ∀(b : Type) → ∀(g : List (a → b)) → ∀(fa : List a) → List b
-}
-</pre></dd>
-</dl>
-<h3>Foldable (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-{ fold :
-      ∀(a : Type)
-    → List a
-    → ∀(list : Type)
-    → ∀(cons : a → list → list)
-    → ∀(nil : list)
-    → list
-}
-</pre></dd>
-</dl>
-<h3>Functor (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-{ map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(list : List a) → List b }
-</pre></dd>
-</dl>
-<h3>Monad (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-{ map :
-    ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(list : List a) → List b
-, pure :
-    ∀(a : Type) → ∀(x : a) → List a
-, ap :
-    ∀(a : Type) → ∀(b : Type) → ∀(g : List (a → b)) → ∀(fa : List a) → List b
-, bind :
-    ∀(a : Type) → ∀(b : Type) → ∀(fa : List a) → ∀(k : a → List b) → List b
-}
-</pre></dd>
-</dl>
-<h3>Monoid (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-∀(a : Type) → { unit : List a, op : ∀(xs : List a) → ∀(ys : List a) → List a }
-</pre></dd>
-</dl>
-<h3>Semigroup (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-∀(a : Type) → { op : ∀(xs : List a) → ∀(ys : List a) → List a }
-</pre></dd>
-</dl>
-<h3>Traversable (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-{ fold :
-      ∀(a : Type)
-    → List a
-    → ∀(list : Type)
-    → ∀(cons : a → list → list)
-    → ∀(nil : list)
-    → list
-, map :
-    ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(list : List a) → List b
-, traverse :
-      ∀(f : Type → Type)
-    → ∀ ( applicative
-        : { map :
-              ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-          , ap :
-              ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-          , pure :
-              ∀(a : Type) → a → f a
-          }
-        )
-    → ∀(a : Type)
-    → ∀(b : Type)
-    → ∀(g : a → f b)
-    → ∀(ts : List a)
-    → f (List b)
-}
-</pre></dd>
-</dl>
-<h2 style="background-color: #bbb; width: 100%">./Monad</h2>
-<h3>extractApplicative (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀ ( t
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-      , pure :
-          ∀(a : Type) → a → f a
-      , bind :
-          ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(k : a → f b) → f b
-      }
-    )
-→ { ap :
-      ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-  , map :
-      ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-  , pure :
-      ∀(a : Type) → a → f a
-  }
-</pre></dd>
-</dl>
-<h3>extractFunctor (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀ ( t
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-      , pure :
-          ∀(a : Type) → a → f a
-      , bind :
-          ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(k : a → f b) → f b
-      }
-    )
-→ { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }
-</pre></dd>
-</dl>
-<h3>fromPureBind (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀(pure : ∀(a : Type) → a → f a)
-→ ∀(bind : ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(k : a → f b) → f b)
-→ { map :
-      ∀(a : Type) → ∀(b : Type) → ∀(k : a → b) → ∀(fa : f a) → f b
-  , pure :
-      ∀(a : Type) → a → f a
-  , ap :
-      ∀(a : Type) → ∀(b : Type) → ∀(k : f (a → b)) → ∀(fa : f a) → f b
-  , bind :
-      ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(k : a → f b) → f b
-  }
-</pre></dd>
-</dl>
-<h3>package.dhall (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀ ( monad
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-      , pure :
-          ∀(a : Type) → a → f a
-      , bind :
-          ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(k : a → f b) → f b
-      }
-    )
-→ { ap :
-      ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-  , bind :
-      ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(k : a → f b) → f b
-  , map :
-      ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-  , pure :
-      ∀(a : Type) → a → f a
-  }
-</pre></dd>
-</dl>
-<h3>Type (type)</h3>
-<dl>
-<dt>kind</dt><dd><pre>
-∀(f : Type → Type) → Type
-</pre></dd>
-<dt>type</dt><dd><pre>
-  λ(f : Type → Type)
-→ { map :
-      ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-  , ap :
-      ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-  , pure :
-      ∀(a : Type) → a → f a
-  , bind :
-      ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(k : a → f b) → f b
-  }
-</pre></dd>
-</dl>
-<h2 style="background-color: #bbb; width: 100%">./Monoid</h2>
-<h3>extractSemigroup (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(m : Type)
-→ ∀(t : { op : ∀(x : m) → ∀(y : m) → m, unit : m })
-→ { op : ∀(x : m) → ∀(y : m) → m }
-</pre></dd>
-</dl>
-<h3>Type (type)</h3>
-<dl>
-<dt>kind</dt><dd><pre>
-∀(m : Type) → Type
-</pre></dd>
-<dt>type</dt><dd><pre>
-λ(m : Type) → { op : ∀(x : m) → ∀(y : m) → m, unit : m }
-</pre></dd>
-</dl>
-<h2 style="background-color: #bbb; width: 100%">./NonEmptyList</h2>
-<h3>Applicative (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-{ map :
-      ∀(a : Type)
-    → ∀(b : Type)
-    → ∀(k : a → b)
-    → ∀(nel : { head : a, tail : List a })
-    → { head : b, tail : List b }
-, pure :
-    ∀(a : Type) → ∀(x : a) → { head : a, tail : List a }
-, ap :
-      ∀(a : Type)
-    → ∀(b : Type)
-    → ∀(nelF : { head : a → b, tail : List (a → b) })
-    → ∀(nel : { head : a, tail : List a })
-    → { head : b, tail : List b }
-}
-</pre></dd>
-</dl>
-<h3>comonad (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-{ extract :
-    ∀(a : Type) → ∀(nel : { head : a, tail : List a }) → a
-, extend :
-      ∀(a : Type)
-    → ∀(b : Type)
-    → ∀(f : { head : a, tail : List a } → b)
-    → ∀(nel : { head : a, tail : List a })
-    → { head : b, tail : List b }
-, duplicate :
-      ∀(a : Type)
-    → ∀(nel : { head : a, tail : List a })
-    → { head :
-          { head : a, tail : List a }
-      , tail :
-          List { head : a, tail : List a }
-      }
-, map :
-      ∀(a : Type)
-    → ∀(b : Type)
-    → ∀(f : a → b)
-    → ∀(nel : { head : a, tail : List a })
-    → { head : b, tail : List b }
-}
-</pre></dd>
-</dl>
-<h3>Foldable (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-{ fold :
-      ∀(a : Type)
-    → ∀(ts : { head : a, tail : List a })
-    → ∀(b : Type)
-    → ∀(f : a → b → b)
-    → ∀(z : b)
-    → b
-}
-</pre></dd>
-</dl>
-<h3>Functor (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-{ map :
-      ∀(a : Type)
-    → ∀(b : Type)
-    → ∀(k : a → b)
-    → ∀(nel : { head : a, tail : List a })
-    → { head : b, tail : List b }
-}
-</pre></dd>
-</dl>
-<h3>Semigroup (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(a : Type)
-→ { op :
-        ∀(x : { head : a, tail : List a })
-      → ∀(y : { head : a, tail : List a })
-      → { head : a, tail : List a }
-  }
-</pre></dd>
-</dl>
-<h3>toList (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-∀(a : Type) → ∀(nel : { head : a, tail : List a }) → List a
-</pre></dd>
-</dl>
-<h3>Traversable (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-{ fold :
-      ∀(a : Type)
-    → ∀(ts : { head : a, tail : List a })
-    → ∀(b : Type)
-    → ∀(f : a → b → b)
-    → ∀(z : b)
-    → b
-, map :
-      ∀(a : Type)
-    → ∀(b : Type)
-    → ∀(k : a → b)
-    → ∀(nel : { head : a, tail : List a })
-    → { head : b, tail : List b }
-, traverse :
-      ∀(f : Type → Type)
-    → ∀ ( applicative
-        : { map :
-              ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-          , ap :
-              ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-          , pure :
-              ∀(a : Type) → a → f a
-          }
-        )
-    → ∀(a : Type)
-    → ∀(b : Type)
-    → ∀(k : a → f b)
-    → ∀(nel : { head : a, tail : List a })
-    → f { head : b, tail : List b }
-}
-</pre></dd>
-</dl>
-<h3>Type (type)</h3>
-<dl>
-<dt>kind</dt><dd><pre>
-∀(a : Type) → Type
-</pre></dd>
-<dt>type</dt><dd><pre>
-λ(a : Type) → { head : a, tail : List a }
 </pre></dd>
 </dl>
 <h2 style="background-color: #bbb; width: 100%">./Optional</h2>
-<h3>Applicative (term)</h3>
+<h3>monad (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-{ map :
-    ∀(a : Type) → ∀(b : Type) → ∀(f : a → b) → ∀(o : Optional a) → Optional b
-, pure :
-    ∀(a : Type) → ∀(x : a) → Optional a
-, ap :
-      ∀(a : Type)
-    → ∀(b : Type)
-    → ∀(g : Optional (a → b))
-    → ∀(fa : Optional a)
-    → Optional b
-}
-</pre></dd>
-</dl>
-<h3>Foldable (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-{ fold :
-      ∀(a : Type)
-    → ∀(ts : Optional a)
-    → ∀(b : Type)
-    → ∀(f : a → b → b)
-    → ∀(z : b)
-    → b
-}
-</pre></dd>
-</dl>
-<h3>Functor (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-{ map :
-    ∀(a : Type) → ∀(b : Type) → ∀(f : a → b) → ∀(o : Optional a) → Optional b
-}
-</pre></dd>
-</dl>
-<h3>Monad (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-{ map :
-    ∀(a : Type) → ∀(b : Type) → ∀(f : a → b) → ∀(o : Optional a) → Optional b
-, pure :
-    ∀(a : Type) → ∀(x : a) → Optional a
-, ap :
+{ ap :
       ∀(a : Type)
     → ∀(b : Type)
     → ∀(g : Optional (a → b))
@@ -2019,10 +3742,30 @@
     → ∀(fa : Optional a)
     → ∀(k : a → Optional b)
     → Optional b
+, map :
+    ∀(a : Type) → ∀(b : Type) → ∀(f : a → b) → ∀(o : Optional a) → Optional b
+, pure :
+    ∀(a : Type) → ∀(x : a) → Optional a
 }
 </pre></dd>
 </dl>
-<h3>Traversable (term)</h3>
+<h3>applicative (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+{ ap :
+      ∀(a : Type)
+    → ∀(b : Type)
+    → ∀(g : Optional (a → b))
+    → ∀(fa : Optional a)
+    → Optional b
+, map :
+    ∀(a : Type) → ∀(b : Type) → ∀(f : a → b) → ∀(o : Optional a) → Optional b
+, pure :
+    ∀(a : Type) → ∀(x : a) → Optional a
+}
+</pre></dd>
+</dl>
+<h3>traversable (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
 { fold :
@@ -2037,10 +3780,10 @@
 , traverse :
       ∀(f : Type → Type)
     → ∀ ( applicative
-        : { map :
-              ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-          , ap :
+        : { ap :
               ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
+          , map :
+              ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
           , pure :
               ∀(a : Type) → a → f a
           }
@@ -2053,1304 +3796,54 @@
 }
 </pre></dd>
 </dl>
-<h2 style="background-color: #bbb; width: 100%">./Profunctor</h2>
-<h3>fromDimap (term)</h3>
+<h3>functor (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-  ∀(f : Type → Type → Type)
-→ ∀ ( dimap
-    :   ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(c : Type)
-      → ∀(d : Type)
-      → (a → b)
-      → (c → d)
-      → f b c
-      → f a d
-    )
-→ { dimap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(c : Type)
-      → ∀(d : Type)
-      → (a → b)
-      → (c → d)
-      → f b c
-      → f a d
-  , lmap :
-      ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → ∀(fn : a → b) → f b c → f a c
-  , rmap :
-      ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → (b → c) → f a b → f a c
-  }
+{ map :
+    ∀(a : Type) → ∀(b : Type) → ∀(f : a → b) → ∀(o : Optional a) → Optional b
+}
 </pre></dd>
 </dl>
-<h3>type (type)</h3>
-<dl>
-<dt>kind</dt><dd><pre>
-∀(f : Type → Type → Type) → Type
-</pre></dd>
-<dt>type</dt><dd><pre>
-  λ(f : Type → Type → Type)
-→ { dimap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(c : Type)
-      → ∀(d : Type)
-      → (a → b)
-      → (c → d)
-      → f b c
-      → f a d
-  , lmap :
-      ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → (a → b) → f b c → f a c
-  , rmap :
-      ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → (b → c) → f a b → f a c
-  }
-</pre></dd>
-</dl>
-<h2 style="background-color: #bbb; width: 100%">./Ran</h2>
-<h3>Functor (term)</h3>
+<h3>foldable (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀(g : Type → Type)
-→ { map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(h : a → b)
-      → ∀(ran : ∀(b : Type) → (a → f b) → g b)
-      → ∀(c : Type)
-      → ∀(k : b → f c)
-      → g c
-  }
+{ fold :
+      ∀(a : Type)
+    → ∀(ts : Optional a)
+    → ∀(b : Type)
+    → ∀(f : a → b → b)
+    → ∀(z : b)
+    → b
+}
 </pre></dd>
 </dl>
-<h3>lower (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀(g : Type → Type)
-→ ∀ ( applicative
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-      , pure :
-          ∀(a : Type) → a → f a
-      }
-    )
-→ ∀(a : Type)
-→ ∀(ran : ∀(b : Type) → (a → f b) → g b)
-→ g a
-</pre></dd>
-</dl>
-<h3>Type (type)</h3>
-<dl>
-<dt>kind</dt><dd><pre>
-∀(f : Type → Type) → ∀(g : Type → Type) → ∀(a : Type) → Type
-</pre></dd>
-<dt>type</dt><dd><pre>
-  λ(f : Type → Type)
-→ λ(g : Type → Type)
-→ λ(a : Type)
-→ ∀(b : Type) → (a → f b) → g b
-</pre></dd>
-</dl>
-<h2 style="background-color: #bbb; width: 100%">./Reader</h2>
-<h3>Applicative (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(r : Type)
-→ { map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(g : a → b)
-      → ∀(reader : r → a)
-      → ∀(rr : r)
-      → b
-  , pure :
-      ∀(a : Type) → ∀(x : a) → ∀(env : r) → a
-  , ap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(g : r → a → b)
-      → ∀(fa : r → a)
-      → ∀(env : r)
-      → b
-  }
-</pre></dd>
-</dl>
-<h3>ask (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-∀(r : Type) → ∀(env : r) → r
-</pre></dd>
-</dl>
-<h3>asks (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-∀(r : Type) → ∀(a : Type) → ∀(f : r → a) → ∀(env : r) → a
-</pre></dd>
-</dl>
-<h3>Functor (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(r : Type)
-→ { map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(g : a → b)
-      → ∀(reader : r → a)
-      → ∀(rr : r)
-      → b
-  }
-</pre></dd>
-</dl>
-<h3>local (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-∀(r : Type) → ∀(a : Type) → ∀(f : r → r) → ∀(reader : r → a) → ∀(env : r) → a
-</pre></dd>
-</dl>
-<h3>Monad (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(r : Type)
-→ { map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(k : a → b)
-      → ∀(reader : r → a)
-      → ∀(rr : r)
-      → b
-  , pure :
-      ∀(a : Type) → ∀(x : a) → ∀(env : r) → a
-  , ap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(k : r → a → b)
-      → ∀(fa : r → a)
-      → ∀(env : r)
-      → b
-  , bind :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(fa : r → a)
-      → ∀(k : a → r → b)
-      → ∀(env : r)
-      → b
-  }
-</pre></dd>
-</dl>
-<h3>package.dhall (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(r : Type)
-→ { withReader :
-        ∀(a : Type)
-      → ∀(rPrime : Type)
-      → ∀(f : rPrime → r)
-      → ∀(reader : r → a)
-      → ∀(newR : rPrime)
-      → a
-  , map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(k : a → b)
-      → ∀(reader : r → a)
-      → ∀(rr : r)
-      → b
-  , pure :
-      ∀(a : Type) → ∀(x : a) → ∀(env : r) → a
-  , ap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(k : r → a → b)
-      → ∀(fa : r → a)
-      → ∀(env : r)
-      → b
-  , bind :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(fa : r → a)
-      → ∀(k : a → r → b)
-      → ∀(env : r)
-      → b
-  }
-</pre></dd>
-</dl>
-<h3>Type (type)</h3>
-<dl>
-<dt>kind</dt><dd><pre>
-∀(r : Type) → ∀(a : Type) → Type
-</pre></dd>
-<dt>type</dt><dd><pre>
-λ(r : Type) → λ(a : Type) → r → a
-</pre></dd>
-</dl>
-<h3>withReader (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(r : Type)
-→ ∀(a : Type)
-→ ∀(rPrime : Type)
-→ ∀(f : rPrime → r)
-→ ∀(reader : r → a)
-→ ∀(newR : rPrime)
-→ a
-</pre></dd>
-</dl>
-<h2 style="background-color: #bbb; width: 100%">./ReaderT</h2>
-<h3>Applicative (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(r : Type)
-→ ∀(m : Type → Type)
-→ ∀ ( applicative
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
-      , pure :
-          ∀(a : Type) → a → m a
-      }
-    )
-→ { map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(k : a → b)
-      → ∀(reader : r → m a)
-      → ∀(rr : r)
-      → m b
-  , pure :
-      ∀(a : Type) → ∀(x : a) → ∀(env : r) → m a
-  , ap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(k : r → m (a → b))
-      → ∀(fa : r → m a)
-      → ∀(env : r)
-      → m b
-  }
-</pre></dd>
-</dl>
-<h3>ask (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(r : Type)
-→ ∀(m : Type → Type)
-→ ∀ ( applicative
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
-      , pure :
-          ∀(a : Type) → a → m a
-      }
-    )
-→ ∀(env : r)
-→ m r
-</pre></dd>
-</dl>
-<h3>asks (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(r : Type)
-→ ∀(m : Type → Type)
-→ ∀ ( applicative
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
-      , pure :
-          ∀(a : Type) → a → m a
-      }
-    )
-→ ∀(a : Type)
-→ ∀(f : r → a)
-→ ∀(env : r)
-→ m a
-</pre></dd>
-</dl>
-<h3>Functor (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(r : Type)
-→ ∀(m : Type → Type)
-→ ∀ ( functor
-    : { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b }
-    )
-→ { map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(k : a → b)
-      → ∀(reader : r → m a)
-      → ∀(rr : r)
-      → m b
-  }
-</pre></dd>
-</dl>
-<h3>local (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(r : Type)
-→ ∀(m : Type → Type)
-→ ∀(a : Type)
-→ ∀(f : r → r)
-→ ∀(reader : r → m a)
-→ ∀(env : r)
-→ m a
-</pre></dd>
-</dl>
-<h3>Monad (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(r : Type)
-→ ∀(m : Type → Type)
-→ ∀ ( monad
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
-      , pure :
-          ∀(a : Type) → a → m a
-      , bind :
-          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
-      }
-    )
-→ { map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(k : a → b)
-      → ∀(reader : r → m a)
-      → ∀(rr : r)
-      → m b
-  , pure :
-      ∀(a : Type) → ∀(x : a) → ∀(env : r) → m a
-  , ap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(k : r → m (a → b))
-      → ∀(fa : r → m a)
-      → ∀(env : r)
-      → m b
-  , bind :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(fa : r → m a)
-      → ∀(k : a → r → m b)
-      → ∀(env : r)
-      → m b
-  }
-</pre></dd>
-</dl>
-<h3>package.dhall (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(r : Type)
-→ ∀(m : Type → Type)
-→ ∀ ( monad
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
-      , pure :
-          ∀(a : Type) → a → m a
-      , bind :
-          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
-      }
-    )
-→ { lift :
-      ∀(a : Type) → ∀(ma : m a) → ∀(env : r) → m a
-  , ask :
-      ∀(env : r) → m r
-  , asks :
-      ∀(a : Type) → ∀(f : r → a) → ∀(env : r) → m a
-  , local :
-      ∀(a : Type) → ∀(f : r → r) → ∀(reader : r → m a) → ∀(env : r) → m a
-  , map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(k : a → b)
-      → ∀(reader : r → m a)
-      → ∀(rr : r)
-      → m b
-  , pure :
-      ∀(a : Type) → ∀(x : a) → ∀(env : r) → m a
-  , ap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(k : r → m (a → b))
-      → ∀(fa : r → m a)
-      → ∀(env : r)
-      → m b
-  , bind :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(fa : r → m a)
-      → ∀(k : a → r → m b)
-      → ∀(env : r)
-      → m b
-  }
-</pre></dd>
-</dl>
-<h3>Transformer (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(r : Type)
-→ { lift :
-        ∀(m : Type → Type)
-      → ∀ ( monad
-          : { map :
-                ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-            , ap :
-                ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
-            , pure :
-                ∀(a : Type) → a → m a
-            , bind :
-                ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
-            }
-          )
-      → ∀(a : Type)
-      → ∀(ma : m a)
-      → ∀(env : r)
-      → m a
-  }
-</pre></dd>
-</dl>
-<h3>Type (type)</h3>
-<dl>
-<dt>kind</dt><dd><pre>
-∀(r : Type) → ∀(m : Type → Type) → ∀(a : Type) → Type
-</pre></dd>
-<dt>type</dt><dd><pre>
-λ(r : Type) → λ(m : Type → Type) → λ(a : Type) → r → m a
-</pre></dd>
-</dl>
-<h3>withReader (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(r : Type)
-→ ∀(m : Type → Type)
-→ ∀(a : Type)
-→ ∀(rPrime : Type)
-→ ∀(f : rPrime → r)
-→ ∀(reader : r → m a)
-→ ∀(newR : rPrime)
-→ m a
-</pre></dd>
-</dl>
-<h2 style="background-color: #bbb; width: 100%">./scripts</h2>
-<h2 style="background-color: #bbb; width: 100%">./Semigroup</h2>
-<h3>Type (type)</h3>
-<dl>
-<dt>kind</dt><dd><pre>
-∀(m : Type) → Type
-</pre></dd>
-<dt>type</dt><dd><pre>
-λ(m : Type) → { op : ∀(x : m) → ∀(y : m) → m }
-</pre></dd>
-</dl>
-<h2 style="background-color: #bbb; width: 100%">./Semigroupoid</h2>
-<h3>type (type)</h3>
-<dl>
-<dt>kind</dt><dd><pre>
-∀(f : Type → Type → Type) → Type
-</pre></dd>
-<dt>type</dt><dd><pre>
-  λ(f : Type → Type → Type)
-→ { compose : ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → f b c → f a b → f a c }
-</pre></dd>
-</dl>
-<h2 style="background-color: #bbb; width: 100%">./State</h2>
-<h3>Applicative (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(s : Type)
-→ { map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(f : a → b)
-      → ∀(fa : s → { val : a, state : s })
-      → ∀(new : s)
-      → { val : b, state : s }
-  , ap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(g : s → { val : a → b, state : s })
-      → ∀(fa : s → { val : a, state : s })
-      → ∀(new : s)
-      → { val : b, state : s }
-  , pure :
-      ∀(a : Type) → ∀(x : a) → ∀(env : s) → { val : a, state : s }
-  }
-</pre></dd>
-</dl>
-<h3>eval (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(s : Type)
-→ ∀(a : Type)
-→ ∀(state : s → { val : a, state : s })
-→ ∀(env : s)
-→ a
-</pre></dd>
-</dl>
-<h3>exec (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(s : Type)
-→ ∀(a : Type)
-→ ∀(state : s → { val : a, state : s })
-→ ∀(env : s)
-→ s
-</pre></dd>
-</dl>
-<h3>Functor (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(s : Type)
-→ { map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(f : a → b)
-      → ∀(fa : s → { val : a, state : s })
-      → ∀(new : s)
-      → { val : b, state : s }
-  }
-</pre></dd>
-</dl>
-<h3>get (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-∀(s : Type) → ∀(env : s) → { val : s, state : s }
-</pre></dd>
-</dl>
-<h3>gets (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-∀(s : Type) → ∀(a : Type) → ∀(f : s → a) → ∀(new : s) → { val : a, state : s }
-</pre></dd>
-</dl>
-<h3>modify (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-∀(s : Type) → ∀(f : s → s) → ∀(new : s) → { val : {}, state : s }
-</pre></dd>
-</dl>
-<h3>Monad (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(s : Type)
-→ { map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(f : a → b)
-      → ∀(fa : s → { val : a, state : s })
-      → ∀(new : s)
-      → { val : b, state : s }
-  , ap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(g : s → { val : a → b, state : s })
-      → ∀(fa : s → { val : a, state : s })
-      → ∀(new : s)
-      → { val : b, state : s }
-  , pure :
-      ∀(a : Type) → ∀(x : a) → ∀(env : s) → { val : a, state : s }
-  , bind :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(fa : s → { val : a, state : s })
-      → ∀(k : a → s → { val : b, state : s })
-      → ∀(new : s)
-      → { val : b, state : s }
-  }
-</pre></dd>
-</dl>
-<h3>package.dhall (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(s : Type)
-→ { eval :
-      ∀(a : Type) → ∀(state : s → { val : a, state : s }) → ∀(env : s) → a
-  , exec :
-      ∀(a : Type) → ∀(state : s → { val : a, state : s }) → ∀(env : s) → s
-  , get :
-      ∀(a : Type) → ∀(env : s) → { val : s, state : s }
-  , modify :
-      ∀(f : s → s) → ∀(new : s) → { val : {}, state : s }
-  , put :
-      ∀(new : s) → ∀(env : s) → { val : {}, state : s }
-  , withState :
-        ∀(a : Type)
-      → ∀(f : s → s)
-      → ∀(state : s → { val : a, state : s })
-      → ∀(new : s)
-      → { val : a, state : s }
-  , map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(f : a → b)
-      → ∀(fa : s → { val : a, state : s })
-      → ∀(new : s)
-      → { val : b, state : s }
-  , ap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(g : s → { val : a → b, state : s })
-      → ∀(fa : s → { val : a, state : s })
-      → ∀(new : s)
-      → { val : b, state : s }
-  , pure :
-      ∀(a : Type) → ∀(x : a) → ∀(env : s) → { val : a, state : s }
-  , bind :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(fa : s → { val : a, state : s })
-      → ∀(k : a → s → { val : b, state : s })
-      → ∀(new : s)
-      → { val : b, state : s }
-  }
-</pre></dd>
-</dl>
-<h3>put (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-∀(s : Type) → ∀(new : s) → ∀(env : s) → { val : {}, state : s }
-</pre></dd>
-</dl>
-<h3>Type (type)</h3>
-<dl>
-<dt>kind</dt><dd><pre>
-∀(s : Type) → ∀(a : Type) → Type
-</pre></dd>
-<dt>type</dt><dd><pre>
-λ(s : Type) → λ(a : Type) → s → { val : a, state : s }
-</pre></dd>
-</dl>
-<h3>withState (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(s : Type)
-→ ∀(a : Type)
-→ ∀(f : s → s)
-→ ∀(state : s → { val : a, state : s })
-→ ∀(new : s)
-→ { val : a, state : s }
-</pre></dd>
-</dl>
-<h2 style="background-color: #bbb; width: 100%">./StateT</h2>
-<h3>Applicative (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(s : Type)
-→ ∀(m : Type → Type)
-→ ∀ ( monad
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
-      , pure :
-          ∀(a : Type) → a → m a
-      , bind :
-          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
-      }
-    )
-→ { map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(f : a → b)
-      → ∀(fa : s → m { val : a, state : s })
-      → ∀(new : s)
-      → m { val : b, state : s }
-  , ap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(g : s → m { val : a → b, state : s })
-      → ∀(fa : s → m { val : a, state : s })
-      → ∀(new : s)
-      → m { val : b, state : s }
-  , pure :
-      ∀(a : Type) → ∀(x : a) → ∀(env : s) → m { val : a, state : s }
-  }
-</pre></dd>
-</dl>
-<h3>eval (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(s : Type)
-→ ∀(m : Type → Type)
-→ ∀ ( monad
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
-      , pure :
-          ∀(a : Type) → a → m a
-      , bind :
-          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
-      }
-    )
-→ ∀(a : Type)
-→ ∀(state : s → m { val : a, state : s })
-→ ∀(env : s)
-→ m a
-</pre></dd>
-</dl>
-<h3>exec (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(s : Type)
-→ ∀(m : Type → Type)
-→ ∀ ( monad
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
-      , pure :
-          ∀(a : Type) → a → m a
-      , bind :
-          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
-      }
-    )
-→ ∀(a : Type)
-→ ∀(state : s → m { val : a, state : s })
-→ ∀(env : s)
-→ m s
-</pre></dd>
-</dl>
-<h3>Functor (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(s : Type)
-→ ∀(m : Type → Type)
-→ ∀ ( functor
-    : { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b }
-    )
-→ { map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(f : a → b)
-      → ∀(fa : s → m { val : a, state : s })
-      → ∀(new : s)
-      → m { val : b, state : s }
-  }
-</pre></dd>
-</dl>
-<h3>get (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(s : Type)
-→ ∀(m : Type → Type)
-→ ∀ ( monad
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
-      , pure :
-          ∀(a : Type) → a → m a
-      , bind :
-          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
-      }
-    )
-→ ∀(env : s)
-→ m { val : s, state : s }
-</pre></dd>
-</dl>
-<h3>gets (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(s : Type)
-→ ∀(m : Type → Type)
-→ ∀ ( monad
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
-      , pure :
-          ∀(a : Type) → a → m a
-      , bind :
-          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
-      }
-    )
-→ ∀(a : Type)
-→ ∀(f : s → a)
-→ ∀(new : s)
-→ m { val : a, state : s }
-</pre></dd>
-</dl>
-<h3>modify (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(s : Type)
-→ ∀(m : Type → Type)
-→ ∀ ( monad
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
-      , pure :
-          ∀(a : Type) → a → m a
-      , bind :
-          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
-      }
-    )
-→ ∀(f : s → s)
-→ ∀(new : s)
-→ m { val : {}, state : s }
-</pre></dd>
-</dl>
-<h3>Monad (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(s : Type)
-→ ∀(m : Type → Type)
-→ ∀ ( monad
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
-      , pure :
-          ∀(a : Type) → a → m a
-      , bind :
-          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
-      }
-    )
-→ { map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(f : a → b)
-      → ∀(fa : s → m { val : a, state : s })
-      → ∀(new : s)
-      → m { val : b, state : s }
-  , ap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(g : s → m { val : a → b, state : s })
-      → ∀(fa : s → m { val : a, state : s })
-      → ∀(new : s)
-      → m { val : b, state : s }
-  , pure :
-      ∀(a : Type) → ∀(x : a) → ∀(env : s) → m { val : a, state : s }
-  , bind :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(fa : s → m { val : a, state : s })
-      → ∀(k : a → s → m { val : b, state : s })
-      → ∀(new : s)
-      → m { val : b, state : s }
-  }
-</pre></dd>
-</dl>
-<h3>package.dhall (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(s : Type)
-→ ∀(m : Type → Type)
-→ ∀ ( monad
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
-      , pure :
-          ∀(a : Type) → a → m a
-      , bind :
-          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
-      }
-    )
-→ { lift :
-      ∀(a : Type) → ∀(ma : m a) → ∀(env : s) → m { val : a, state : s }
-  , eval :
-      ∀(a : Type) → ∀(state : s → m { val : a, state : s }) → ∀(env : s) → m a
-  , exec :
-      ∀(a : Type) → ∀(state : s → m { val : a, state : s }) → ∀(env : s) → m s
-  , get :
-      ∀(env : s) → m { val : s, state : s }
-  , gets :
-      ∀(a : Type) → ∀(f : s → a) → ∀(new : s) → m { val : a, state : s }
-  , put :
-      ∀(a : Type) → ∀(new : s) → ∀(env : s) → m { val : {}, state : s }
-  , modify :
-      ∀(a : Type) → ∀(f : s → s) → ∀(new : s) → m { val : {}, state : s }
-  , map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(f : a → b)
-      → ∀(fa : s → m { val : a, state : s })
-      → ∀(new : s)
-      → m { val : b, state : s }
-  , ap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(g : s → m { val : a → b, state : s })
-      → ∀(fa : s → m { val : a, state : s })
-      → ∀(new : s)
-      → m { val : b, state : s }
-  , pure :
-      ∀(a : Type) → ∀(x : a) → ∀(env : s) → m { val : a, state : s }
-  , bind :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(fa : s → m { val : a, state : s })
-      → ∀(k : a → s → m { val : b, state : s })
-      → ∀(new : s)
-      → m { val : b, state : s }
-  }
-</pre></dd>
-</dl>
-<h3>put (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(s : Type)
-→ ∀(m : Type → Type)
-→ ∀ ( monad
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
-      , pure :
-          ∀(a : Type) → a → m a
-      , bind :
-          ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
-      }
-    )
-→ ∀(new : s)
-→ ∀(env : s)
-→ m { val : {}, state : s }
-</pre></dd>
-</dl>
-<h3>Transformer (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(s : Type)
-→ { lift :
-        ∀(m : Type → Type)
-      → ∀ ( monad
-          : { map :
-                ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-            , ap :
-                ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
-            , pure :
-                ∀(a : Type) → a → m a
-            , bind :
-                ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
-            }
-          )
-      → ∀(a : Type)
-      → ∀(ma : m a)
-      → ∀(env : s)
-      → m { val : a, state : s }
-  }
-</pre></dd>
-</dl>
-<h3>Type (type)</h3>
-<dl>
-<dt>kind</dt><dd><pre>
-∀(s : Type) → ∀(m : Type → Type) → ∀(a : Type) → Type
-</pre></dd>
-<dt>type</dt><dd><pre>
-λ(s : Type) → λ(m : Type → Type) → λ(a : Type) → s → m { val : a, state : s }
-</pre></dd>
-</dl>
-<h3>withState (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(s : Type)
-→ ∀(m : Type → Type)
-→ ∀(a : Type)
-→ ∀(f : s → s)
-→ ∀(state : s → m { val : a, state : s })
-→ ∀(new : s)
-→ m { val : a, state : s }
-</pre></dd>
-</dl>
-<h2 style="background-color: #bbb; width: 100%">./Strong</h2>
-<h3>type (type)</h3>
-<dl>
-<dt>kind</dt><dd><pre>
-∀(f : Type → Type → Type) → Type
-</pre></dd>
-<dt>type</dt><dd><pre>
-  λ(f : Type → Type → Type)
-→ { first :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(c : Type)
-      → f a b
-      → f { _1 : a, _2 : c } { _1 : b, _2 : c }
-  , second :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(c : Type)
-      → f b c
-      → f { _1 : a, _2 : b } { _1 : a, _2 : c }
-  , dimap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(c : Type)
-      → ∀(d : Type)
-      → (a → b)
-      → (c → d)
-      → f b c
-      → f a d
-  , lmap :
-      ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → (a → b) → f b c → f a c
-  , rmap :
-      ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → (b → c) → f a b → f a c
-  }
-</pre></dd>
-</dl>
-<h2 style="background-color: #bbb; width: 100%">./Transformer</h2>
-<h3>Type (type)</h3>
-<dl>
-<dt>kind</dt><dd><pre>
-∀(t : (Type → Type) → Type → Type) → Type
-</pre></dd>
-<dt>type</dt><dd><pre>
-  λ(t : (Type → Type) → Type → Type)
-→ { lift :
-        ∀(m : Type → Type)
-      → ∀ ( monad
-          : { map :
-                ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
-            , ap :
-                ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
-            , pure :
-                ∀(a : Type) → a → m a
-            , bind :
-                ∀(a : Type) → ∀(b : Type) → ∀(fa : m a) → ∀(k : a → m b) → m b
-            }
-          )
-      → ∀(a : Type)
-      → m a
-      → t m a
-  }
-</pre></dd>
-</dl>
-<h2 style="background-color: #bbb; width: 100%">./translation</h2>
-<h2 style="background-color: #bbb; width: 100%">./Traversable</h2>
-<h3>extractFoldable (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀ ( t
-    : { fold :
-            ∀(a : Type)
-          → ∀(ts : f a)
-          → ∀(b : Type)
-          → ∀(f : a → b → b)
-          → ∀(z : b)
-          → b
-      , map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-      , traverse :
-            ∀(f : Type → Type)
-          → ∀ ( applicative
-              : { map :
-                    ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-                , ap :
-                      ∀(a : Type)
-                    → ∀(b : Type)
-                    → ∀(g : f (a → b))
-                    → ∀(fa : f a)
-                    → f b
-                , pure :
-                    ∀(a : Type) → a → f a
-                }
-              )
-          → ∀(a : Type)
-          → ∀(b : Type)
-          → (a → f b)
-          → f@1 a
-          → f (f@1 b)
-      }
-    )
-→ { fold :
-      ∀(a : Type) → ∀(ts : f a) → ∀(b : Type) → ∀(f : a → b → b) → ∀(z : b) → b
-  }
-</pre></dd>
-</dl>
-<h3>extractFunctor (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀ ( t
-    : { fold :
-            ∀(a : Type)
-          → ∀(ts : f a)
-          → ∀(b : Type)
-          → ∀(f : a → b → b)
-          → ∀(z : b)
-          → b
-      , map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-      , traverse :
-            ∀(f : Type → Type)
-          → ∀ ( applicative
-              : { map :
-                    ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-                , ap :
-                      ∀(a : Type)
-                    → ∀(b : Type)
-                    → ∀(g : f (a → b))
-                    → ∀(fa : f a)
-                    → f b
-                , pure :
-                    ∀(a : Type) → a → f a
-                }
-              )
-          → ∀(a : Type)
-          → ∀(b : Type)
-          → (a → f b)
-          → f@1 a
-          → f (f@1 b)
-      }
-    )
-→ { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }
-</pre></dd>
-</dl>
-<h3>fromTraverse (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(t : Type → Type)
-→ ∀ ( traverse
-    :   ∀(f : Type → Type)
-      → ∀ ( applicative
-          : { map :
-                ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-            , ap :
-                ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-            , pure :
-                ∀(a : Type) → a → f a
-            }
-          )
-      → ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(g : a → f b)
-      → ∀(ts : t a)
-      → f (t b)
-    )
-→ { fold :
-      ∀(a : Type) → ∀(ts : t a) → ∀(b : Type) → ∀(f : a → b → b) → ∀(z : b) → b
-  , map :
-      ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(ts : t a) → t b
-  , traverse :
-        ∀(f : Type → Type)
-      → ∀ ( applicative
-          : { map :
-                ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-            , ap :
-                ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-            , pure :
-                ∀(a : Type) → a → f a
-            }
-          )
-      → ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(g : a → f b)
-      → ∀(ts : t a)
-      → f (t b)
-  }
-</pre></dd>
-</dl>
-<h3>sequence (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(t : Type → Type)
-→ ∀ ( traversable
-    : { fold :
-            ∀(a : Type)
-          → ∀(ts : t a)
-          → ∀(b : Type)
-          → ∀(f : a → b → b)
-          → ∀(z : b)
-          → b
-      , map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : t a) → t b
-      , traverse :
-            ∀(f : Type → Type)
-          → ∀ ( applicative
-              : { map :
-                    ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-                , ap :
-                      ∀(a : Type)
-                    → ∀(b : Type)
-                    → ∀(g : f (a → b))
-                    → ∀(fa : f a)
-                    → f b
-                , pure :
-                    ∀(a : Type) → a → f a
-                }
-              )
-          → ∀(a : Type)
-          → ∀(b : Type)
-          → (a → f b)
-          → t a
-          → f (t b)
-      }
-    )
-→ ∀(f : Type → Type)
-→ ∀ ( applicative
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-      , pure :
-          ∀(a : Type) → a → f a
-      }
-    )
-→ ∀(a : Type)
-→ ∀(ts : t (f a))
-→ f (t a)
-</pre></dd>
-</dl>
-<h3>Type (type)</h3>
-<dl>
-<dt>kind</dt><dd><pre>
-∀(t : Type → Type) → Type
-</pre></dd>
-<dt>type</dt><dd><pre>
-  λ(t : Type → Type)
-→ { fold :
-      ∀(a : Type) → ∀(ts : t a) → ∀(b : Type) → ∀(f : a → b → b) → ∀(z : b) → b
-  , map :
-      ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : t a) → t b
-  , traverse :
-        ∀(f : Type → Type)
-      → ∀ ( applicative
-          : { map :
-                ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-            , ap :
-                ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-            , pure :
-                ∀(a : Type) → a → f a
-            }
-          )
-      → ∀(a : Type)
-      → ∀(b : Type)
-      → (a → f b)
-      → t a
-      → f (t b)
-  }
-</pre></dd>
-</dl>
+<h2 style="background-color: #bbb; width: 100%">./docs</h2>
 <h2 style="background-color: #bbb; width: 100%">./Tuple</h2>
+<h3>Type (type)</h3>
+<dl>
+<dt>kind</dt><dd><pre>
+∀(a : Type) → ∀(b : Type) → Type
+</pre></dd>
+<dt>type</dt><dd><pre>
+λ(a : Type) → λ(b : Type) → { _1 : a, _2 : b }
+</pre></dd>
+</dl>
 <h3>comonad (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
   ∀(a : Type)
-→ { extract :
-      ∀(b : Type) → ∀(tup : { _1 : a, _2 : b }) → b
+→ { duplicate :
+        ∀(a : Type)
+      → ∀(tup : { _1 : a@1, _2 : a })
+      → { _1 : a@1, _2 : { _1 : a@1, _2 : a } }
   , extend :
         ∀(b : Type)
       → ∀(c : Type)
       → ∀(f : { _1 : a, _2 : b } → c)
       → ∀(tup : { _1 : a, _2 : b })
       → { _1 : a, _2 : c }
-  , duplicate :
-        ∀(a : Type)
-      → ∀(tup : { _1 : a@1, _2 : a })
-      → { _1 : a@1, _2 : { _1 : a@1, _2 : a } }
+  , extract :
+      ∀(b : Type) → ∀(tup : { _1 : a, _2 : b }) → b
   , map :
         ∀(a : Type)
       → ∀(b : Type)
@@ -3365,18 +3858,18 @@
 <dt>type</dt><dd><pre>
   ∀(a : Type)
 → ∀ ( comonad
-    : { extract :
-          ∀(a : Type) → { _1 : a@1, _2 : a } → a
+    : { duplicate :
+            ∀(a : Type)
+          → { _1 : a@1, _2 : a }
+          → { _1 : a@1, _2 : { _1 : a@1, _2 : a } }
       , extend :
             ∀(a : Type)
           → ∀(b : Type)
           → ∀(f : { _1 : a@1, _2 : a } → b)
           → { _1 : a@1, _2 : a }
           → { _1 : a@1, _2 : b }
-      , duplicate :
-            ∀(a : Type)
-          → { _1 : a@1, _2 : a }
-          → { _1 : a@1, _2 : { _1 : a@1, _2 : a } }
+      , extract :
+          ∀(a : Type) → { _1 : a@1, _2 : a } → a
       , map :
             ∀(a : Type)
           → ∀(b : Type)
@@ -3394,86 +3887,62 @@
   }
 </pre></dd>
 </dl>
-<h3>Type (type)</h3>
-<dl>
-<dt>kind</dt><dd><pre>
-∀(a : Type) → ∀(b : Type) → Type
-</pre></dd>
-<dt>type</dt><dd><pre>
-λ(a : Type) → λ(b : Type) → { _1 : a, _2 : b }
-</pre></dd>
-</dl>
-<h2 style="background-color: #bbb; width: 100%">./Yoneda</h2>
-<h3>Applicative (term)</h3>
+<h2 style="background-color: #bbb; width: 100%">./Codensity</h2>
+<h3>monad (term)</h3>
 <dl>
 <dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀ ( applicative
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-      , ap :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-      , pure :
-          ∀(a : Type) → a → f a
-      }
-    )
-→ { map :
+  ∀(m : Type → Type)
+→ { ap :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(f : ∀(b : Type) → ((a → b@1) → m b) → m b)
+      → ∀(g : ∀(b : Type) → (a → m b) → m b)
+      → ∀(c : Type)
+      → ∀(k : b → m c)
+      → m c
+  , bind :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(codensity : ∀(b : Type) → (a → m b) → m b)
+      → ∀(k : a → ∀(b : Type) → (b@1 → m b) → m b)
+      → ∀(c : Type)
+      → ∀(l : b → m c)
+      → m c
+  , map :
         ∀(a : Type)
       → ∀(b : Type)
       → ∀(h : a → b)
-      → ∀(ran : ∀(b : Type) → (a → b) → f b)
+      → ∀(ran : ∀(b : Type) → (a → m b) → m b)
       → ∀(c : Type)
-      → ∀(k : b → c)
-      → f c
+      → ∀(k : b → m c)
+      → m c
   , pure :
-      ∀(a : Type) → ∀(x : a) → ∀(b : Type) → ∀(f : a → b) → f@1 b
-  , ap :
+      ∀(a : Type) → ∀(x : a) → ∀(b : Type) → ∀(k : a → m b) → m b
+  }
+</pre></dd>
+</dl>
+<h3>applicative (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(m : Type → Type)
+→ { ap :
         ∀(a : Type)
       → ∀(b : Type)
-      → ∀(m : ∀(b : Type) → ((a → b@1) → b) → f b)
-      → ∀(n : ∀(b : Type) → (a → b) → f b)
+      → ∀(f : ∀(b : Type) → ((a → b@1) → m b) → m b)
+      → ∀(g : ∀(b : Type) → (a → m b) → m b)
       → ∀(c : Type)
-      → ∀(k : b → c)
-      → f c
-  }
-</pre></dd>
-</dl>
-<h3>Foldable (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀ ( foldable
-    : { fold :
-            ∀(a : Type)
-          → ∀(ts : f a)
-          → ∀(b : Type)
-          → ∀(f : a → b → b)
-          → ∀(z : b)
-          → b
-      }
-    )
-→ { fold :
-        ∀(a : Type)
-      → ∀(yoneda : ∀(b : Type) → (a → b) → f b)
-      → ∀(b : Type)
-      → ∀(k : a → b → b)
-      → ∀(z : b)
-      → b
-  }
-</pre></dd>
-</dl>
-<h3>Functor (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ { map :
+      → ∀(k : b → m c)
+      → m c
+  , map :
         ∀(a : Type)
       → ∀(b : Type)
       → ∀(h : a → b)
-      → ∀(ran : ∀(b : Type) → (a → b) → f b)
+      → ∀(ran : ∀(b : Type) → (a → m b) → m b)
       → ∀(c : Type)
-      → ∀(k : b → c)
-      → f c
+      → ∀(k : b → m c)
+      → m c
+  , pure :
+      ∀(a : Type) → ∀(x : a) → ∀(b : Type) → ∀(k : a → m b) → m b
   }
 </pre></dd>
 </dl>
@@ -3481,147 +3950,64 @@
 <dl>
 <dt>type</dt><dd><pre>
   ∀(f : Type → Type)
-→ ∀ ( functor
-    : { map : ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b }
-    )
-→ ∀(a : Type)
-→ ∀(fa : f a)
-→ ∀(b : Type)
-→ ∀(k : a → b)
-→ f b
-</pre></dd>
-</dl>
-<h3>lower (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-∀(f : Type → Type) → ∀(a : Type) → ∀(ran : ∀(b : Type) → (a → b) → f b) → f a
-</pre></dd>
-</dl>
-<h3>Monad (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
 → ∀ ( monad
-    : { map :
-          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-      , ap :
+    : { ap :
           ∀(a : Type) → ∀(b : Type) → ∀(g : f (a → b)) → ∀(fa : f a) → f b
-      , pure :
-          ∀(a : Type) → a → f a
       , bind :
           ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(k : a → f b) → f b
-      }
-    )
-→ { map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(h : a → b)
-      → ∀(ran : ∀(b : Type) → (a → b) → f b)
-      → ∀(c : Type)
-      → ∀(k : b → c)
-      → f c
-  , pure :
-      ∀(a : Type) → ∀(x : a) → ∀(b : Type) → ∀(f : a → b) → f@1 b
-  , ap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(m : ∀(b : Type) → ((a → b@1) → b) → f b)
-      → ∀(n : ∀(b : Type) → (a → b) → f b)
-      → ∀(c : Type)
-      → ∀(k : b → c)
-      → f c
-  , bind :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(yoneda : ∀(b : Type) → (a → b) → f b)
-      → ∀(k : a → ∀(b : Type) → (b@1 → b) → f b)
-      → ∀(c : Type)
-      → ∀(l : b → c)
-      → f c
-  }
-</pre></dd>
-</dl>
-<h3>Traversable (term)</h3>
-<dl>
-<dt>type</dt><dd><pre>
-  ∀(f : Type → Type)
-→ ∀ ( traversable
-    : { fold :
-            ∀(a : Type)
-          → ∀(ts : f a)
-          → ∀(b : Type)
-          → ∀(f : a → b → b)
-          → ∀(z : b)
-          → b
       , map :
           ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-      , traverse :
-            ∀(f : Type → Type)
-          → ∀ ( applicative
-              : { map :
-                    ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : f a) → f b
-                , ap :
-                      ∀(a : Type)
-                    → ∀(b : Type)
-                    → ∀(g : f (a → b))
-                    → ∀(fa : f a)
-                    → f b
-                , pure :
-                    ∀(a : Type) → a → f a
-                }
-              )
-          → ∀(a : Type)
-          → ∀(b : Type)
-          → (a → f b)
-          → f@1 a
-          → f (f@1 b)
+      , pure :
+          ∀(a : Type) → a → f a
       }
     )
-→ { fold :
-        ∀(a : Type)
-      → ∀(yoneda : ∀(b : Type) → (a → b) → f b)
-      → ∀(b : Type)
-      → ∀(k : a → b → b)
-      → ∀(z : b)
-      → b
-  , map :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(h : a → b)
-      → ∀(ran : ∀(b : Type) → (a → b) → f b)
-      → ∀(c : Type)
-      → ∀(k : b → c)
-      → f c
-  , traverse :
-        ∀(g : Type → Type)
-      → ∀ ( applicative
-          : { map :
-                ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : g@1 a) → g@1 b
-            , ap :
-                  ∀(a : Type)
-                → ∀(b : Type)
-                → ∀(g : g (a → b))
-                → ∀(fa : g@1 a)
-                → g@1 b
-            , pure :
-                ∀(a : Type) → a → g a
-            }
-          )
-      → ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(k : a → g b)
-      → ∀(yoneda : ∀(b : Type) → (a → b) → f b)
-      → g (∀(b : Type) → (b@1 → b) → f b)
-  }
+→ ∀(a : Type)
+→ ∀(x : f a)
+→ ∀(b : Type)
+→ ∀(k : a → f b)
+→ f b
 </pre></dd>
 </dl>
 <h3>Type (type)</h3>
 <dl>
 <dt>kind</dt><dd><pre>
-∀(g : Type → Type) → ∀(a : Type) → Type
+∀(m : Type → Type) → ∀(a : Type) → Type
 </pre></dd>
 <dt>type</dt><dd><pre>
-λ(g : Type → Type) → λ(a : Type) → ∀(b : Type) → (a → b) → g b
+λ(m : Type → Type) → λ(a : Type) → ∀(b : Type) → (a → m b) → m b
+</pre></dd>
+</dl>
+<h3>lower (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(m : Type → Type)
+→ ∀ ( applicative
+    : { ap :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : m (a → b)) → ∀(fa : m a) → m b
+      , map :
+          ∀(a : Type) → ∀(b : Type) → ∀(g : a → b) → ∀(fa : m a) → m b
+      , pure :
+          ∀(a : Type) → a → m a
+      }
+    )
+→ ∀(a : Type)
+→ ∀(ran : ∀(b : Type) → (a → m b) → m b)
+→ m a
+</pre></dd>
+</dl>
+<h3>functor (term)</h3>
+<dl>
+<dt>type</dt><dd><pre>
+  ∀(m : Type → Type)
+→ { map :
+        ∀(a : Type)
+      → ∀(b : Type)
+      → ∀(h : a → b)
+      → ∀(ran : ∀(b : Type) → (a → m b) → m b)
+      → ∀(c : Type)
+      → ∀(k : b → m c)
+      → m c
+  }
 </pre></dd>
 </dl>
 </body></html>
