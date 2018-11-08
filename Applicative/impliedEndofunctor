@@ -8,17 +8,16 @@
         → applicative.op
           b
           (   λ(r : Type)
-            → λ(day : ./../Day/convolution f f b r)
+            → λ ( day
+                :   ∀(c : { _1 : Type, _2 : Type })
+                  → ({ _1 : c._1, _2 : c._2 } → b)
+                  → { _1 : f c._1, _2 : f c._2 }
+                  → r
+                )
             → day
-              (a → b)
-              a
-              { _1 =
-                  applicative.identity (a → b) fn
-              , _2 =
-                  fa
-              , _3 =
-                  λ(fn2 : a → b) → λ(a2 : a) → fn2 a2
-              }
+              { _1 = a → b, _2 = a }
+              (λ(p : { _1 : a → b, _2 : a }) → p._1 p._2)
+              { _1 = applicative.identity (a → b) fn, _2 = fa }
           )
     }
   : ./../Functor/Endo/Type Type ./../Function/Type f

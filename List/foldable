@@ -1,1 +1,9 @@
-{ fold = List/fold } : ./../Foldable/Type List
+  { fold =
+        λ(a : Type)
+      → λ(b : Type)
+      → λ(f : b → a → b)
+      → λ(z : b)
+      → λ(fa : List a)
+      → List/fold a fa b (λ(x : a) → λ(y : b) → f y x) z
+  }
+: ./../Foldable/Type List

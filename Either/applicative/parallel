@@ -1,15 +1,18 @@
-    let Semigroup =
-          ./../../Semigroup/Type Type ./../../Function/Type ./../../Tuple/Type
+    let object = Type
+
+in  let cat = ./../../Category/Monoidal/Set/cartesian
+
+in  let Semigroup = ./../../Semigroup/Type object cat.arrow cat.product
 
 in  let Either = ./../Type
 
-in    λ(a : Type)
+in    λ(a : object)
     → λ(semigroup : Semigroup a)
     → ./../../Applicative/fromPureAp
       (Either a)
-      (λ(b : Type) → λ(x : b) → < Right = x | Left : a >)
-      (   λ(b : Type)
-        → λ(c : Type)
+      (λ(b : object) → λ(x : b) → < Right = x | Left : a >)
+      (   λ(b : object)
+        → λ(c : object)
         → λ(g : Either a (b → c))
         → λ(fa : Either a b)
         → merge

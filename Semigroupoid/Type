@@ -1,10 +1,15 @@
   λ(object : Kind)
-→ λ(morphism : object → object → Type)
-→ { compose :
-        ∀(a : object)
-      → ∀(b : object)
-      → ∀(c : object)
-      → morphism b c
-      → morphism a b
-      → morphism a c
-  }
+→     let profunctor = object → object → Type
+  
+  in  ./../Semigroup/Type
+      profunctor
+      (   λ(p : profunctor)
+        → λ(q : profunctor)
+        → ∀(a : object) → ∀(b : object) → p a b → q a b
+      )
+      (   λ(p : profunctor)
+        → λ(q : profunctor)
+        → λ(a : object)
+        → λ(b : object)
+        → ∀(r : Type) → (∀(z : object) → p z b → q a z → r) → r
+      )

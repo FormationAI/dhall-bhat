@@ -1,9 +1,0 @@
-    let Either = ./Type
-
-in    λ(a : Type)
-    → λ(b : Type)
-    → λ(c : Type)
-    → λ(f : a → c)
-    → λ(g : b → c)
-    → λ(e : Either a b)
-    → merge { Left = f, Right = g } e

@@ -1,6 +1,5 @@
   λ(object : Kind)
-→ λ(arrow : object → object → Type)
-→ λ(product : object → object → object)
-→ λ(i : object)
+→ λ(cat : ./../Category/Monoidal/Type object)
 → λ(m : object)
-→ { identity : arrow i m } ⩓ ./../Semigroup/Type object arrow product m
+→   { identity : cat.arrow cat.identity m }
+  ⩓ ./../Semigroup/Type object cat.arrow cat.product m

@@ -1,0 +1,6 @@
+  { identity =
+      λ(_ : {}) → True
+  , op =
+      λ(p : { _1 : Bool, _2 : Bool }) → p._1 && p._2
+  }
+: ./../../Monoid/Set Bool

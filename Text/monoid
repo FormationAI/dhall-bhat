@@ -1,0 +1,6 @@
+  { identity =
+      λ(_ : {}) → ""
+  , op =
+      λ(a : { _1 : Text, _2 : Text }) → a._1 ++ a._2
+  }
+: ./../Monoid/Set Text

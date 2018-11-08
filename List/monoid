@@ -1,3 +1,7 @@
   λ(a : Type)
-→   { identity = λ(_ : {}) → [] : List a } ∧ ./semigroup a
+→   { identity =
+        λ(_ : {}) → [] : List a
+    , op =
+        λ(x : { _1 : List a, _2 : List a }) → x._1 # x._2
+    }
   : ./../Monoid/Set (List a)

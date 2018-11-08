@@ -1,34 +1,41 @@
-  λ(m : Type → Type)
-→ λ(applicative : ./../../../Applicative/Type m)
-→   { map =
-          λ(a : Type)
-        → λ(b : Type)
-        → λ(f : a → m b)
-        → λ(fa : List a)
-        →     let liftCons =
-                      λ(mb : m b)
-                    → λ(mlb : m (List b))
-                    → applicative.op
-                      (List b)
-                      (   λ(r : Type)
-                        → λ(day : ./../../../Day/convolution m m (List b) r)
-                        → day
-                          b
+    let object = Type
+
+in  let cat = ./../../../Category/Monoidal/Set/cartesian
+
+in    λ(m : object → object)
+    → λ(applicative : ./../../../Applicative/Type m)
+    →   { map =
+              λ(a : object)
+            → λ(b : object)
+            → λ(f : cat.arrow a (m b))
+            → λ(fa : List a)
+            →     let liftCons =
+                          λ(mb : m b)
+                        → λ(mlb : m (List b))
+                        → applicative.op
                           (List b)
-                          { _1 =
-                              mb
-                          , _2 =
-                              mlb
-                          , _3 =
-                              λ(x : b) → λ(xs : List b) → [ x ] # xs
-                          }
-                      )
-          
-          in  List/fold
-              a
-              fa
-              (m (List b))
-              (λ(x : a) → liftCons (f x))
-              (applicative.identity (List b) ([] : List b))
-    }
-  : ./../../../Functor/Endo/Star Type ./../../../Function/Type m List
+                          (   λ(r : Type)
+                            → λ ( day
+                                : ./../../../Day/convolution
+                                  object
+                                  cat
+                                  cat
+                                  m
+                                  m
+                                  (List b)
+                                  r
+                                )
+                            → day
+                              { _1 = b, _2 = List b }
+                              (λ(p : { _1 : b, _2 : List b }) → [ p._1 ] # p._2)
+                              { _1 = mb, _2 = mlb }
+                          )
+              
+              in  List/fold
+                  a
+                  fa
+                  (m (List b))
+                  (λ(x : a) → liftCons (f x))
+                  (applicative.identity (List b) ([] : List b))
+        }
+      : ./../../../Functor/Endo/Star/Type object cat.arrow m List

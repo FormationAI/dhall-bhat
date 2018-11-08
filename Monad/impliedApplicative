@@ -1,23 +1,34 @@
-  λ(f : Type → Type)
-→ λ(monad : ./Type Type ./../Function/Type f)
-→   { identity =
-        monad.identity
-    , op =
-          λ(i : Type)
-        → λ(day : ∀(r : Type) → ./../Day/convolution f f i r → r)
-        → day
-          (f i)
-          (   λ(b : Type)
-            → λ(c : Type)
-            → λ(d : { _1 : f b, _2 : f c, _3 : b → c → i })
-            → monad.op
-              i
-              ( monad.map
-                (c → i)
-                (f i)
-                (λ(fn : c → i) → monad.map c i fn d._2)
-                (monad.map b (c → i) d._3 d._1)
+    let object = Type
+
+in  let cat = ./../Category/Monoidal/Set/cartesian
+
+in    λ(f : object → object)
+    → λ(monad : ./Type object cat.arrow f)
+    →   { identity =
+            monad.identity
+        , op =
+              λ(i : object)
+            → λ ( day
+                : ∀(r : Type) → ./../Day/convolution object cat cat f f i r → r
+                )
+            → day
+              (f i)
+              (   λ(b : { _1 : object, _2 : object })
+                → λ(fn : { _1 : b._1, _2 : b._2 } → i)
+                → λ(d : { _1 : f b._1, _2 : f b._2 })
+                → monad.op
+                  i
+                  ( monad.map
+                    (b._2 → i)
+                    (f i)
+                    (λ(fn : b._2 → i) → monad.map b._2 i fn d._2)
+                    ( monad.map
+                      b._1
+                      (b._2 → i)
+                      (λ(x : b._1) → λ(y : b._2) → fn { _1 = x, _2 = y })
+                      d._1
+                    )
+                  )
               )
-          )
-    }
-  : ./../Applicative/Type f
+        }
+      : ./../Applicative/Type f

@@ -24,13 +24,7 @@ in  let partition
                 { lefts : List a, rights : List b }
                 (   λ(e : Either a b)
                   → λ(acc : { lefts : List a, rights : List b })
-                  → ./fold
-                    a
-                    b
-                    { lefts : List a, rights : List b }
-                    (left acc)
-                    (right acc)
-                    e
+                  → merge { Left = left acc, Right = right acc } e
                 )
                 { lefts = [] : List a, rights = [] : List b }
 

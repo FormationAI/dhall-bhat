@@ -22,4 +22,4 @@ in    λ(m : Type → Type)
       : ./../../Functor/Pair/type
         Type
         (./../../Star/type Type ./../../Function/Type m)
-        (λ(t : { _1 : Type, _2 : Type }) → Either t._1 t._2)
+        Either

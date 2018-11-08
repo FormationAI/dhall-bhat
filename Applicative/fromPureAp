@@ -9,13 +9,33 @@
         pure
     , op =
           λ(i : Type)
-        → λ(day : ∀(r : Type) → ./../Day/convolution m m i r → r)
+        → λ ( day
+            :   ∀(r : Type)
+              → (   ∀(d : { _1 : Type, _2 : Type })
+                  → ({ _1 : d._1, _2 : d._2 } → i)
+                  → { _1 : m d._1, _2 : m d._2 }
+                  → r
+                )
+              → r
+            )
         → day
           (m i)
-          (   λ(b : Type)
-            → λ(c : Type)
-            → λ(d : { _1 : m b, _2 : m c, _3 : b → c → i })
-            → ap c i (ap b (c → i) (pure (b → c → i) d._3) d._1) d._2
+          (   λ(p : { _1 : Type, _2 : Type })
+            → λ(fn : { _1 : p._1, _2 : p._2 } → i)
+            → λ(args : { _1 : m p._1, _2 : m p._2 })
+            → ap
+              p._2
+              i
+              ( ap
+                p._1
+                (p._2 → i)
+                ( pure
+                  (p._1 → p._2 → i)
+                  (λ(x : p._1) → λ(y : p._2) → fn { _1 = x, _2 = y })
+                )
+                args._1
+              )
+              args._2
           )
     }
   : ./Type m

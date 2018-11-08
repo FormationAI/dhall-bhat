@@ -7,11 +7,12 @@
           λ(a : object)
         → λ(b : object)
         → λ(f : arrow a (m b))
-        → semigroupoid.compose
+        → semigroupoid.op
           (m a)
-          (m (m b))
           (m b)
-          (monad.op b)
-          (monad.map a (m b) f)
+          (   λ(r : Type)
+            → λ(arrowsOut : ∀(z : object) → arrow z (m b) → arrow (m a) z → r)
+            → arrowsOut (m (m b)) (monad.op b) (monad.map a (m b) f)
+          )
     }
   : ./../Functor/ToTypes/Star/Type object arrow m m

@@ -1,6 +1,14 @@
-{- Day convolution.
--}
-  λ(f : Type → Type)
-→ λ(g : Type → Type)
-→ λ(a : Type)
-→ ∀(r : Type) → ./convolution f g a r → r
+  λ(cObject : Kind)
+→ λ(c : ./../Category/Monoidal/Type cObject)
+→     let vObject = Type
+  
+  in    λ(v : ./../Category/Monoidal/Type vObject)
+      → λ(f : cObject → vObject)
+      → λ(g : cObject → vObject)
+      → ./../Lan/Type
+        { _1 : cObject, _2 : cObject }
+        cObject
+        c.arrow
+        v.arrow
+        (λ(p : { _1 : cObject, _2 : cObject }) → c.product p._1 p._2)
+        (λ(p : { _1 : cObject, _2 : cObject }) → v.product (f p._1) (g p._2))

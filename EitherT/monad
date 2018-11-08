@@ -4,8 +4,6 @@ in  let EitherT = ./Type
 
 in  let Either = ./../Either/Type
 
-in  let fold = ./../Either/fold
-
 in    λ(a : Type)
     → λ(m : Type → Type)
     → λ(monad : Monad m)
@@ -32,16 +30,15 @@ in    λ(a : Type)
                           (Either a b)
                           (Either a c)
                           (   λ(either : Either a b)
-                            → fold
-                              a
-                              b
-                              (EitherT a m c)
-                              (   λ(l : a)
-                                → monad.identity
-                                  (Either a c)
-                                  < Left = l | Right : c >
-                              )
-                              (λ(r : b) → k r)
+                            → merge
+                              { Left =
+                                    λ(l : a)
+                                  → monad.identity
+                                    (Either a c)
+                                    < Left = l | Right : c >
+                              , Right =
+                                  k
+                              }
                               either
                           )
               

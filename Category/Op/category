@@ -5,12 +5,26 @@
   
   in    { identity =
             category.identity
-        , compose =
+        , op =
               λ(a : object)
             → λ(b : object)
-            → λ(c : object)
-            → λ(f : opArrow b c)
-            → λ(g : opArrow a b)
-            → category.compose c b a g f
+            → λ ( p
+                :   ∀(r : Type)
+                  → (∀(z : object) → opArrow z b → opArrow a z → r)
+                  → r
+                )
+            → category.op
+              b
+              a
+              (   λ(r : Type)
+                → λ(arrowsIn : ∀(z : object) → arrow z a → arrow b z → r)
+                → p
+                  r
+                  (   λ(z : object)
+                    → λ(f : opArrow z b)
+                    → λ(g : opArrow a z)
+                    → arrowsIn z g f
+                  )
+              )
         }
       : ./../Type object opArrow

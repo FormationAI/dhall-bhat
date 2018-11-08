@@ -1,9 +1,4 @@
   λ(f : Type → Type → Type)
 → λ(arrow : ./type f)
 →   arrow.{ lmap, map, rmap }
-  : ./../Strong/type
-    Type
-    ./../Function/Type
-    Type
-    ./../Function/Type
-    (λ(x : { _1 : Type, _2 : Type }) → f x._1 x._2)
+  : ./../Strong/type Type ./../Function/Type Type ./../Function/Type f

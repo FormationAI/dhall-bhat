@@ -18,4 +18,4 @@
           )
           (applicative.identity (Optional b) ([] : Optional b))
     }
-  : ./../../../Functor/Endo/Star Type ./../../../Function/Type m Optional
+  : ./../../../Functor/Endo/Star/Type Type ./../../../Function/Type m Optional

@@ -21,14 +21,13 @@ in    { arr =
           → { _1 = f x, _2 = g x }
       , identity =
           identity
-      , compose =
+      , op =
             λ(a : Type)
           → λ(b : Type)
-          → λ(c : Type)
-          → λ(f : b → c)
-          → λ(g : a → b)
-          → λ(x : a)
-          → f (g x)
+          → λ(p : ∀(r : Type) → (∀(z : Type) → (z → b) → (a → z) → r) → r)
+          → p
+            (a → b)
+            (λ(z : Type) → λ(f : z → b) → λ(g : a → z) → λ(x : a) → f (g x))
       , lmap =
             λ(a : Type)
           → λ(b : Type)

@@ -9,13 +9,27 @@
   
   in    { identity =
             λ(a : object) → λ(i : cObject) → dCategory.identity (a i)
-        , compose =
+        , op =
               λ(a : object)
             → λ(b : object)
-            → λ(c : object)
-            → λ(f : arrow b c)
-            → λ(g : arrow a b)
+            → λ ( p
+                : ∀(r : Type) → (∀(z : object) → arrow z b → arrow a z → r) → r
+                )
             → λ(i : cObject)
-            → dCategory.compose (a i) (b i) (c i) (f i) (g i)
+            → dCategory.op
+              (a i)
+              (b i)
+              (   λ(r : Type)
+                → λ ( arrowsOut
+                    : ∀(z : dObject) → dArrow z (b i) → dArrow (a i) z → r
+                    )
+                → p
+                  r
+                  (   λ(z : object)
+                    → λ(f : arrow z b)
+                    → λ(g : arrow a z)
+                    → arrowsOut (z i) (f i) (g i)
+                  )
+              )
         }
       : ./../Category/Type object arrow

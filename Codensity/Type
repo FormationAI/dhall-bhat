@@ -1,1 +1,5 @@
-λ(m : Type → Type) → ./../Ran/Type m m
+    let object = Type
+
+in    λ(arrow : object → object → Type)
+    → λ(m : object → object)
+    → ./../Ran/Type object object arrow m m

@@ -13,20 +13,20 @@
                   cArrow a._2 b._2
               }
   
-  in    λ(f : object → Type)
+  in    λ(f : dObject → cObject → Type)
       →   { lmap :
                 ∀(a : dObject)
               → ∀(b : dObject)
               → ∀(c : cObject)
               → ./../Category/Op/Type dObject dArrow a b
-              → f { _1 = a, _2 = c }
-              → f { _1 = b, _2 = c }
+              → f a c
+              → f b c
           , rmap :
                 ∀(a : dObject)
               → ∀(b : cObject)
               → ∀(c : cObject)
               → cArrow b c
-              → f { _1 = a, _2 = b }
-              → f { _1 = a, _2 = c }
+              → f a b
+              → f a c
           }
         ⩓ ./../Functor/Profunctor/Type cObject cArrow dObject dArrow f

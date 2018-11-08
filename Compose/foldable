@@ -8,13 +8,9 @@ in    λ(f : Type → Type)
     → λ(gFoldable : Foldable g)
     →   { fold =
               λ(a : Type)
-            → λ(compose : Compose f g a)
             → λ(b : Type)
-            → λ(k : a → b → b)
-            → fFoldable.fold
-              (g a)
-              compose
-              b
-              (λ(ga : g a) → gFoldable.fold a ga b k)
+            → λ(k : b → a → b)
+            → λ(z : b)
+            → fFoldable.fold (g a) b (gFoldable.fold a b k) z
         }
       : Foldable (Compose f g)

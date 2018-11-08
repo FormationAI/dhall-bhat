@@ -3,10 +3,10 @@
 
 in    { fold =
             λ(a : Type)
-          → λ(ts : Optional a)
           → λ(b : Type)
-          → λ(f : a → b → b)
+          → λ(f : b → a → b)
           → λ(z : b)
-          → Optional/fold a ts b (λ(x : a) → f x z) z
+          → λ(ts : Optional a)
+          → Optional/fold a ts b (f z) z
       }
     : Foldable Optional

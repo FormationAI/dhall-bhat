@@ -1,44 +1,53 @@
-    let Applicative = ./../Applicative/Type
+{- NB: Since this is currently forced to be in *Set*, it’s quite possible that
+       some of the uses of _C_ and _D_ are wrong, since the type system can’t
+       distinguish them. So take them with a grain of salt if you’re editing
+       this file.
+-}
+    let cObject = Type
 
-in  let Compose = ./Type Type Type Type
+in  let c = ./../Category/Monoidal/Set/cartesian
 
-in    λ(f : Type → Type)
+in  let dObject = Type
+
+in  let Applicative = ./../Applicative/Type
+
+in  let Compose = ./Type cObject dObject cObject
+
+in  let Day = ./../Day/Type cObject c c
+
+in  let Day/convolution = ./../Day/convolution cObject c c
+
+in    λ(f : dObject → cObject)
     → λ(fApplicative : Applicative f)
-    → λ(g : Type → Type)
+    → λ(g : cObject → dObject)
     → λ(gApplicative : Applicative g)
     →   { identity =
-              λ(a : Type)
+              λ(a : cObject)
             → λ(x : a)
             → fApplicative.identity (g a) (gApplicative.identity a x)
         , op =
-              λ(i : Type)
-            → λ(day : ./../Day/Type (Compose f g) (Compose f g) i)
+              λ(i : cObject)
+            → λ(day : Day (Compose f g) (Compose f g) i)
             → day
               (f (g i))
-              (   λ(b : Type)
-                → λ(c : Type)
-                → λ(d : { _1 : f (g b), _2 : f (g c), _3 : b → c → i })
+              (   λ(b : { _1 : cObject, _2 : cObject })
+                → λ(fn : { _1 : b._1, _2 : b._2 } → i)
+                → λ(d : { _1 : f (g b._1), _2 : f (g b._2) })
                 → fApplicative.op
                   (g i)
-                  (   λ(fr : Type)
-                    → λ(fDay : ./../Day/convolution f f (g i) fr)
+                  (   λ(fr : cObject)
+                    → λ(fDay : Day/convolution f f (g i) fr)
                     → fDay
-                      (g b)
-                      (g c)
-                      { _1 =
-                          d._1
-                      , _2 =
-                          d._2
-                      , _3 =
-                            λ(gb : g b)
-                          → λ(gc : g c)
-                          → gApplicative.op
-                            i
-                            (   λ(gr : Type)
-                              → λ(gDay : ./../Day/convolution g g i gr)
-                              → gDay b c { _1 = gb, _2 = gc, _3 = d._3 }
-                            )
-                      }
+                      { _1 = g b._1, _2 = g b._2 }
+                      (   λ(p : { _1 : g b._1, _2 : g b._2 })
+                        → gApplicative.op
+                          i
+                          (   λ(gr : cObject)
+                            → λ(gDay : Day/convolution g g i gr)
+                            → gDay b fn p
+                          )
+                      )
+                      d
                   )
               )
         }

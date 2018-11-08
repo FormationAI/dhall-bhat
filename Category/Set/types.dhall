@@ -2,24 +2,24 @@
    familiar names in some cases, but they are potentially confusing with the
    more categorical names elsewhere.
 -}
-    let Set = ./../../Function/Type
+    let Set = ./../Monoidal/Set/cartesian
 
-in  let Star = ./../../Star/Type Type Set
+in  let Star = ./../../Star/Type Type Set.arrow
 
 in  { Adjunction =
-        ./../../Adjunction/Type Type Set
+        ./../../Adjunction/Type Type Set.arrow
     , Applicative =
         ./../../Applicative/Type
     , Arrow =
         ./../../Arrow/Type
     , Bifunctor =
-        ./../../Functor/Pair/Type Type Set
+        ./../../Functor/Pair/Type Type Set.arrow
     , Category =
         ./../../Category/Type Type
     , Codensity =
         ./../../Codensity/Type
     , Comonad =
-        ./../../Comonad/Type Type Set
+        ./../../Comonad/Type Type Set.arrow
     , Compactable =
         ./../../Functor/ToTypes/Compactable/Type
     , Compose =
@@ -27,7 +27,7 @@ in  { Adjunction =
     , Const =
         ./../../Const/Type Type Type
     , Costar =
-        ./../../Costar/Type Type Set
+        ./../../Costar/Type Type Set.arrow
     , Day =
         ./../../Day/Type
     , Either =
@@ -39,37 +39,37 @@ in  { Adjunction =
     , Function =
         ./../../Function/Type
     , Functor =
-        ./../../Functor/Endo/Type Type Set
+        ./../../Functor/Endo/Type Type Set.arrow
     , Identity =
         ./../../Identity/Type Type
     , Monad =
-        ./../../Monad/Type Type Set
+        ./../../Monad/Type Type Set.arrow
     , Monoid =
-        ./../../Monoid/Type Type Set ./../../Tuple/Type {}
+        ./../../Monoid/Type Type Set
     , NaturalTransformation =
-        ./../../NaturalTransformation/Type Type Type Set
+        ./../../NaturalTransformation/Type Type Type Set.arrow
     , NonEmptyList =
         ./../../NonEmptyList/Type
     , Profunctor =
-        ./../../Functor/Hom Type Set
+        ./../../Functor/Hom Type Set.arrow
     , Ran =
         ./../../Ran/Type
     , Reader =
-        ./../../Reader/Type Type Set
+        ./../../Reader/Type Type Set.arrow
     , ReaderT =
-        λ(m : Type → Type) → ./../../ReaderT/Type Type Set
+        λ(m : Type → Type) → ./../../ReaderT/Type Type Set.arrow
     , Semigroup =
-        ./../../Semigroup/Type Type Set ./../../Tuple/Type
+        ./../../Semigroup/Type Type Set.arrow Set.product
     , Semigroupoid =
-        ./../../Semigroupoid/Type Type Set
+        ./../../Semigroupoid/Type Type Set.arrow
     , Star =
-        ./../../Star/Type Type Set
+        ./../../Star/Type Type Set.arrow
     , State =
         ./../../State/Type
     , StateT =
         ./../../StateT/Type
     , Strong =
-        ./../../Strong/Type Type Set Type Set
+        ./../../Strong/Type Type Set.arrow Type Set.arrow
     , Transformer =
         ./../../Transformer/Type
     , Traversable =

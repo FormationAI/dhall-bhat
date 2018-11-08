@@ -7,7 +7,11 @@
 →   ./../Functor/Endo/Type object arrow f
   ⩓ ./../Monoid/Type
     (object → object)
-    (./../NaturalTransformation/Type object object arrow)
-    (./../Compose/Type object object object)
-    (./../Identity/Type object)
+    { arrow =
+        ./../NaturalTransformation/Type object object arrow
+    , product =
+        ./../Compose/Type object object object
+    , identity =
+        ./../Identity/Type object
+    }
     f

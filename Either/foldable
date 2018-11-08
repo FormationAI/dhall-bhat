@@ -1,14 +1,12 @@
-    let Foldable = ./../Foldable/Type
-
-in  let Either = ./Type
+    let Either = ./Type
 
 in    λ(a : Type)
     →   { fold =
               λ(b : Type)
-            → λ(either : Either a b)
             → λ(c : Type)
-            → λ(f : b → c → c)
+            → λ(f : c → b → c)
             → λ(z : c)
-            → ./fold a b c (λ(l : a) → z) (λ(r : b) → f r z) either
+            → λ(either : Either a b)
+            → merge { Left = λ(_ : a) → z, Right = f z } either
         }
-      : Foldable (Either a)
+      : ./../Foldable/Type (Either a)

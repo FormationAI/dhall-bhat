@@ -1,5 +1,12 @@
-  λ(f : Type → Type)
-→ λ(g : Type → Type)
-→ λ(a : Type)
-→ λ(r : Type)
-→ ∀(b : Type) → ∀(c : Type) → { _1 : f b, _2 : g c, _3 : b → c → a } → r
+  λ(cObject : Kind)
+→ λ(c : ./../Category/Monoidal/Type cObject)
+→     let vObject = Type
+  
+  in    λ(v : ./../Category/Monoidal/Type vObject)
+      → λ(f : cObject → vObject)
+      → λ(g : cObject → vObject)
+      → λ(a : cObject)
+      → λ(r : vObject)
+      →   ∀(b : { _1 : cObject, _2 : cObject })
+        → c.arrow (c.product b._1 b._2) a
+        → v.arrow (v.product (f b._1) (g b._2)) r

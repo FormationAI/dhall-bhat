@@ -1,0 +1,8 @@
+  { arrow =
+      ./../../../Function/Type
+  , product =
+      ./../../../Tuple/Type
+  , identity =
+      {}
+  }
+: ./../Type Type

@@ -8,10 +8,8 @@ in    λ(m : Type)
     → λ(foldable : Foldable t)
     → λ(a : Type)
     → λ(f : a → m)
-    → λ(ts : t a)
     → foldable.fold
       a
-      ts
       m
-      (λ(x : a) → λ(y : m) → monoid.op { _1 = f x, _2 = y })
+      (λ(y : m) → λ(x : a) → monoid.op { _1 = f x, _2 = y })
       (monoid.identity {=})

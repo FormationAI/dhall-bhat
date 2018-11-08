@@ -22,4 +22,8 @@
               )
               (List/mFunctor.map a b f fa.tail)
         }
-      : ./../../../Functor/Endo/Star Type ./../../../Function/Type m NonEmpty
+      : ./../../../Functor/Endo/Star/Type
+        Type
+        ./../../../Function/Type
+        m
+        NonEmpty

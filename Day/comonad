@@ -1,45 +1,59 @@
-    let Comonad = ./../Comonad/Type Type ./../Function/Type
+    let object = Type
 
-in    λ(f : Type → Type)
-    → λ(fComonad : Comonad f)
-    → λ(g : Type → Type)
-    → λ(gComonad : Comonad g)
-    →   { map =
-            λ(b : Type) → λ(a : Type) → (./functor/endo/set f g).map a b
-        , identity =
-              λ(a : Type)
-            → λ(day : ./Type f g a)
-            → day
-              a
-              (   λ(b : Type)
-                → λ(c : Type)
-                → λ(d : { _1 : f b, _2 : g c, _3 : b → c → a })
-                → d._3 (fComonad.identity b d._1) (gComonad.identity c d._2)
-              )
-        , op =
-              λ(a : Type)
-            → λ(day : ./Type f g a)
-            → day
-              (./Type f g (./Type f g a))
-              (   λ(b : Type)
-                → λ(c : Type)
-                → λ(d : { _1 : f b, _2 : g c, _3 : b → c → a })
-                → λ(r0 : Type)
-                → λ(day0 : ./../Day/convolution f g (./Type f g a) r0)
-                → day0
-                  (f b)
-                  (g c)
-                  { _1 =
-                      fComonad.op b d._1
-                  , _2 =
-                      gComonad.op c d._2
-                  , _3 =
-                        λ(fb : f b)
-                      → λ(gc : g c)
-                      → λ(r1 : Type)
-                      → λ(day1 : ./../Day/convolution f g a r1)
-                      → day1 b c { _1 = fb, _2 = gc, _3 = d._3 }
-                  }
-              )
-        }
-      : Comonad (./Type f g)
+in  let cat = ./../Category/Monoidal/Set/cartesian
+
+in    λ(semigroupoid : ./../Semigroupoid/Type object cat.arrow)
+    →     let Comonad = ./../Comonad/Type object cat.arrow
+      
+      in  let Day = ./Type object cat cat
+      
+      in  let Day/convolution = ./../Day/convolution object cat cat
+      
+      in    λ(f : object → object)
+          → λ(fComonad : Comonad f)
+          → λ(g : object → object)
+          → λ(gComonad : Comonad g)
+          →   { map =
+                    λ(b : object)
+                  → λ(a : object)
+                  → (./functor object cat semigroupoid f g).map a b
+              , identity =
+                    λ(a : object)
+                  → λ(day : Day f g a)
+                  → day
+                    a
+                    (   λ(b : { _1 : object, _2 : object })
+                      → λ(fn : { _1 : b._1, _2 : b._2 } → a)
+                      → λ(d : { _1 : f b._1, _2 : g b._2 })
+                      → fn
+                        { _1 =
+                            fComonad.identity b._1 d._1
+                        , _2 =
+                            gComonad.identity b._2 d._2
+                        }
+                    )
+              , op =
+                    λ(a : object)
+                  → λ(day : Day f g a)
+                  → day
+                    (Day f g (Day f g a))
+                    (   λ(b : { _1 : object, _2 : object })
+                      → λ(fn : { _1 : b._1, _2 : b._2 } → a)
+                      → λ(d : { _1 : f b._1, _2 : g b._2 })
+                      → λ(r0 : object)
+                      → λ(day0 : Day/convolution f g (Day f g a) r0)
+                      → day0
+                        { _1 = f b._1, _2 = g b._2 }
+                        (   λ(p : { _1 : f b._1, _2 : g b._2 })
+                          → λ(r1 : object)
+                          → λ(day1 : Day/convolution f g a r1)
+                          → day1 b fn p
+                        )
+                        { _1 =
+                            fComonad.op b._1 d._1
+                        , _2 =
+                            gComonad.op b._2 d._2
+                        }
+                    )
+              }
+            : Comonad (Day f g)

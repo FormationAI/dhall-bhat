@@ -1,1 +1,3 @@
-./../Ran/Type (./../Identity/Type Type)
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ ./../Ran/Type object object arrow (./../Identity/Type object)

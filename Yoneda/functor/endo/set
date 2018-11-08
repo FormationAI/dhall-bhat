@@ -1,3 +1,0 @@
-  λ(f : Type → Type)
-→   ./../../../Ran/functor/endo/set (./../../../Identity/Type Type) f
-  : ./../../../Functor/Endo/Set (./../../Type f)

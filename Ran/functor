@@ -1,0 +1,33 @@
+  λ(cObject : Kind)
+→ λ(cpObject : Kind)
+→ λ(cpArrow : cpObject → cpObject → Type)
+→ λ(cpSemigroupoid : ./../Semigroupoid/Type cpObject cpArrow)
+→     let dObject = Type
+  
+  in  let dArrow = ./../Function/Type
+  
+  in  let Ran = ./Type cObject cpObject cpArrow
+  
+  in    λ(p : cObject → cpObject)
+      → λ(f : cObject → dObject)
+      →   { map =
+                λ(a : cpObject)
+              → λ(b : cpObject)
+              → λ(fn : cpArrow a b)
+              → λ(ran : Ran p f a)
+              → λ(c : cObject)
+              → λ(k : cpArrow b (p c))
+              → ran
+                c
+                ( cpSemigroupoid.op
+                  a
+                  (p c)
+                  (   λ(r : Type)
+                    → λ ( arrowsOut
+                        : ∀(z : cpObject) → cpArrow z (p c) → cpArrow a z → r
+                        )
+                    → arrowsOut b k fn
+                  )
+                )
+          }
+        : ./../Functor/Type cpObject cpArrow dObject dArrow (Ran p f)

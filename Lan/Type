@@ -1,0 +1,10 @@
+  λ(cObject : Kind)
+→ λ(cpObject : Kind)
+→ λ(cpArrow : cpObject → cpObject → Type)
+→     let dObject = Type
+  
+  in    λ(dArrow : dObject → dObject → Type)
+      → λ(p : cObject → cpObject)
+      → λ(f : cObject → dObject)
+      → λ(a : cpObject)
+      → ∀(r : Type) → (∀(b : cObject) → cpArrow (p b) a → f b → r) → r

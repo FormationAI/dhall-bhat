@@ -21,10 +21,5 @@
         → f a c
         → f a { _1 : b, _2 : c }
     }
-  ⩓ ./../Category/type Type f
-  ⩓ ./../Strong/type
-    Type
-    ./../Function/Type
-    Type
-    ./../Function/Type
-    (λ(x : { _1 : Type, _2 : Type }) → f x._1 x._2)
+  ⩓ ./../Category/Type Type f
+  ⩓ ./../Strong/Type Type ./../Function/Type Type ./../Function/Type f

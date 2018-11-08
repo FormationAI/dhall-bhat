@@ -1,0 +1,8 @@
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(category : ./../../../Category/Type object arrow)
+→ λ(f : object → object)
+→ λ(g : object → object)
+→ λ(functor : ./Type object arrow f g)
+→ λ(a : object)
+→ functor.map (f a) a (category.identity (f a))

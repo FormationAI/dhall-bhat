@@ -1,3 +1,6 @@
   λ(a : Type)
-→   { op = λ(x : { _1 : List a, _2 : List a }) → x._1 # x._2 }
-  : ./../Semigroup/Set (List a)
+→ ./../Monoid/extractSemigroup
+  Type
+  ./../Category/Monoidal/Set/cartesian
+  (List a)
+  (./monoid a)

@@ -1,17 +1,33 @@
   λ(object : Kind)
 → λ(arrow : object → object → Type)
 → λ(category : ./../Category/Type object arrow)
-→ λ(f : object → object)
-→ λ(pure : ∀(a : object) → arrow a (f a))
-→ λ(bind : ∀(a : object) → ∀(b : object) → arrow a (f b) → arrow (f a) (f b))
-→   { map =
-          λ(a : object)
-        → λ(b : object)
-        → λ(fn : arrow a b)
-        → bind a b (category.compose a b (f b) (pure b) fn)
-    , identity =
-        pure
-    , op =
-        λ(a : object) → bind (f a) a (category.identity (f a))
-    }
-  : ./Type object arrow f
+→     let Leibniz/category = ./../Leibniz/category object object arrow category
+  
+  in    λ(f : object → object)
+      → λ(pure : ∀(a : object) → arrow a (f a))
+      → λ ( bind
+          : ∀(a : object) → ∀(b : object) → arrow a (f b) → arrow (f a) (f b)
+          )
+      →   { map =
+                λ(a : object)
+              → λ(b : object)
+              → λ(fn : arrow a b)
+              → bind
+                a
+                b
+                ( category.op
+                  a
+                  (f b)
+                  (   λ(r : Type)
+                    → λ ( arrowsOut
+                        : ∀(z : object) → arrow z (f b) → arrow a z → r
+                        )
+                    → arrowsOut b (pure b) fn
+                  )
+                )
+          , identity =
+              pure
+          , op =
+              λ(a : object) → bind (f a) a (category.identity (f a))
+          }
+        : ./Type object arrow f

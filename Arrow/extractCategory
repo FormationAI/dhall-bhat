@@ -1,3 +1,3 @@
   λ(f : Type → Type → Type)
-→ λ(arrow : ./type f)
-→ arrow.{ compose, identity } : ./../Category/Type Type f
+→ λ(arrow : ./Type f)
+→ arrow.{ identity, op } : ./../Category/Type Type f

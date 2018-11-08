@@ -4,18 +4,28 @@
    NB: This looks a lot like a contravariant functor in the category of
        endofunctors … right?
 -}
-  λ(m : Type → Type)
-→ λ(n : Type → Type)
-→ λ(natural : ∀(a : Type) → m a → n a)
-→ λ(f : Type → Type)
-→ λ(star : ./type Type ./../../../Function/Type n f)
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(category : ./../../../Category/Type object arrow)
+→ λ(m : object → object)
+→ λ(n : object → object)
+→ λ(natural : ∀(a : object) → arrow (m a) (n a))
+→ λ(f : object → object)
+→ λ(star : ./Type object arrow n f)
 →   { map =
-          λ(a : Type)
-        → λ(b : Type)
-        → λ(fn : a → m b)
+          λ(a : object)
+        → λ(b : object)
+        → λ(fn : arrow a (m b))
         → star.map
           a
           b
-          ((./../../../Function/category).compose a (m b) (n b) (natural b) fn)
+          ( category.op
+            a
+            (n b)
+            (   λ(r : Type)
+              → λ(arrowsOut : ∀(z : object) → arrow z (n b) → arrow a z → r)
+              → arrowsOut (m b) (natural b) fn
+            )
+          )
     }
-  : ./type Type ./../../../Function/Type m f
+  : ./Type object arrow m f

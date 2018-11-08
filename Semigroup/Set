@@ -1,1 +1,3 @@
-./Type Type ./../Function/Type ./../Tuple/Type
+    let Set = ./../Category/Monoidal/Set/cartesian
+
+in  ./Type Type Set.arrow Set.product

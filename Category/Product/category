@@ -11,16 +11,44 @@
   in    { identity =
               λ(a : object)
             → { _1 = cCategory.identity a._1, _2 = dCategory.identity a._2 }
-        , compose =
+        , op =
               λ(a : object)
             → λ(b : object)
-            → λ(c : object)
-            → λ(f : arrow b c)
-            → λ(g : arrow a b)
+            → λ ( p
+                : ∀(r : Type) → (∀(z : object) → arrow z b → arrow a z → r) → r
+                )
             → { _1 =
-                  cCategory.compose a._1 b._1 c._1 f._1 g._1
+                  cCategory.op
+                  a._1
+                  b._1
+                  (   λ(r : Type)
+                    → λ ( arrowsOut
+                        : ∀(z : cObject) → cArrow z b._1 → cArrow a._1 z → r
+                        )
+                    → p
+                      r
+                      (   λ(z : object)
+                        → λ(f : arrow z b)
+                        → λ(g : arrow a z)
+                        → arrowsOut z._1 f._1 g._1
+                      )
+                  )
               , _2 =
-                  dCategory.compose a._2 b._2 c._2 f._2 g._2
+                  dCategory.op
+                  a._2
+                  b._2
+                  (   λ(r : Type)
+                    → λ ( arrowsOut
+                        : ∀(z : dObject) → dArrow z b._2 → dArrow a._2 z → r
+                        )
+                    → p
+                      r
+                      (   λ(z : object)
+                        → λ(f : arrow z b)
+                        → λ(g : arrow a z)
+                        → arrowsOut z._2 f._2 g._2
+                      )
+                  )
               }
         }
       : ./../type object arrow

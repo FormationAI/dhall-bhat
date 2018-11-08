@@ -1,4 +1,9 @@
-  λ(f : Type → Type)
-→ λ(g : Type → Type)
-→ λ(a : Type)
-→ ∀(b : Type) → (a → f b) → g b
+  λ(cObject : Kind)
+→ λ(cpObject : Kind)
+→ λ(cpArrow : cpObject → cpObject → Type)
+→     let dObject = Type
+  
+  in    λ(p : cObject → cpObject)
+      → λ(f : cObject → dObject)
+      → λ(a : cpObject)
+      → ∀(b : cObject) → cpArrow a (p b) → f b

@@ -1,0 +1,8 @@
+  λ(object : Kind)
+→ { arrow :
+      object → object → Type
+  , product :
+      object → object → object
+  , identity :
+      object
+  }

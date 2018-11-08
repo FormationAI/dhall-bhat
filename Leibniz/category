@@ -1,0 +1,37 @@
+  λ(cObject : Kind)
+→ λ(dObject : Kind)
+→ λ(dArrow : dObject → dObject → Type)
+→ λ(dCategory : ./../Category/Type dObject dArrow)
+→     let Leibniz = ./Type cObject dObject dArrow
+  
+  in    { identity =
+              λ(a : cObject)
+            → { subst = λ(f : cObject → dObject) → dCategory.identity (f a) }
+        , op =
+              λ(a : cObject)
+            → λ(b : cObject)
+            → λ ( p
+                :   ∀(r : Type)
+                  → (∀(z : cObject) → Leibniz z b → Leibniz a z → r)
+                  → r
+                )
+            → { subst =
+                    λ(f : cObject → dObject)
+                  → dCategory.op
+                    (f a)
+                    (f b)
+                    (   λ(r : Type)
+                      → λ ( arrowsOut
+                          : ∀(z : dObject) → dArrow z (f b) → dArrow (f a) z → r
+                          )
+                      → p
+                        r
+                        (   λ(z : cObject)
+                          → λ(g : Leibniz z b)
+                          → λ(h : Leibniz a z)
+                          → arrowsOut (f z) (g.subst f) (h.subst f)
+                        )
+                    )
+              }
+        }
+      : ./../Category/Type cObject Leibniz

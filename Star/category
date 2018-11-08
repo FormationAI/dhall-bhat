@@ -1,28 +1,43 @@
---   λ(object : Kind)
--- → λ(arrow : object → object → Type)
--- → λ(semigroupoid : ./../Semigroupoid/Type object arrow)
--- → λ(m : object → object)
--- →     let starArrow = ./Type object arrow m
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(semigroupoid : ./../Semigroupoid/Type object arrow)
+→ λ(m : object → object)
+→     let starArrow = ./Type object arrow m
   
---   in    λ(monad : ./../Monad/Type object arrow m)
---       →     let bind =
---                   ( ./../Monad/impliedStarfunctor
---                     object
---                     arrow
---                     semigroupoid
---                     m
---                     monad
---                   ).map
+  in    λ(monad : ./../Monad/Type object arrow m)
+      →     let bind =
+                  ( ./../Monad/impliedStarfunctor
+                    object
+                    arrow
+                    semigroupoid
+                    m
+                    monad
+                  ).map
         
---         in    { identity =
---                   monad.identity
---               , compose =
---                     λ(a : object)
---                   → λ(b : object)
---                   → λ(c : object)
---                   → λ(g : starArrow b c)
---                   → λ(f : starArrow a b)
---                   → semigroupoid.compose a (m b) (m c) (bind b c g) f
---               }
---             : ./../Category/type object arrow starArrow
-<>
+        in    { identity =
+                  monad.identity
+              , op =
+                    λ(a : object)
+                  → λ(b : object)
+                  → λ ( p
+                      :   ∀(r : Type)
+                        → (∀(z : object) → starArrow z b → starArrow a z → r)
+                        → r
+                      )
+                  → semigroupoid.op
+                    a
+                    (m b)
+                    (   λ(r : Type)
+                      → λ ( arrowsOut
+                          : ∀(z : object) → arrow z (m b) → arrow a z → r
+                          )
+                      → p
+                        r
+                        (   λ(z : object)
+                          → λ(f : starArrow z b)
+                          → λ(g : starArrow a z)
+                          → arrowsOut (m z) (bind z b f) g
+                        )
+                    )
+              }
+            : ./../Category/Type object starArrow

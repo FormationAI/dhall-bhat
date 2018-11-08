@@ -1,0 +1,21 @@
+  λ(cObject : Kind)
+→ λ(cArrow : cObject → cObject → Type)
+→ λ(cSemigroupoid : ./../Semigroupoid/Type cObject cArrow)
+→     let dObject = Type
+  
+  in  let dArrow = ./../Function/Type
+  
+  in    λ(f : cObject → dObject)
+      →   ./../Ran/functor
+          cObject
+          cObject
+          cArrow
+          cSemigroupoid
+          (./../Identity/Type cObject)
+          f
+        : ./../Functor/Type
+          cObject
+          cArrow
+          dObject
+          dArrow
+          (./Type cObject cArrow f)

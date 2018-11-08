@@ -6,14 +6,24 @@
         → λ(b : { _1 : object, _2 : object })
         → λ(f : { _1 : arrow b._1 a._1, _2 : arrow a._2 b._2 })
         → λ(fa : arrow a._1 a._2)
-        → semigroupoid.compose
+        → semigroupoid.op
           b._1
-          a._2
           b._2
-          f._2
-          (semigroupoid.compose b._1 a._1 a._2 fa f._1)
+          (   λ(r : Type)
+            → λ(arrowsOut : ∀(z : object) → arrow z b._2 → arrow b._1 z → r)
+            → arrowsOut
+              a._2
+              f._2
+              ( semigroupoid.op
+                b._1
+                a._2
+                (   λ(r : Type)
+                  → λ ( arrowsOut
+                      : ∀(z : object) → arrow z a._2 → arrow b._1 z → r
+                      )
+                  → arrowsOut a._1 fa f._1
+                )
+              )
+          )
     }
-  : ./../../Functor/Hom
-    object
-    arrow
-    (λ(p : { _1 : object, _2 : object }) → ./../Type object arrow p._1 p._2)
+  : ./../../Functor/Hom object arrow (./../Type object arrow)

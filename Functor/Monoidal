@@ -1,0 +1,17 @@
+{- Unsurprisingly (as this is a monoidal functor), `identity` and `op` look very
+   much like a `../Monoid/Type` … but I don’t yet know how to define them that
+   way.
+-}
+  λ(cObject : Kind)
+→ λ(c : ./../Category/Monoidal/Type cObject)
+→ λ(dObject : Kind)
+→ λ(d : ./../Category/Monoidal/Type dObject)
+→ λ(f : cObject → dObject)
+→   { identity :
+        d.arrow d.identity (f c.identity)
+    , op :
+          ∀(a : cObject)
+        → ∀(b : cObject)
+        → d.arrow (d.product (f a) (f b)) (f (c.product a b))
+    }
+  ⩓ ./Type cObject c.arrow dObject d.arrow f

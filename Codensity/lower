@@ -1,1 +1,5 @@
-λ(m : Type → Type) → ./../Ran/lower m m
+    let object = Type
+
+in    λ(m : object → object)
+    → λ(applicative : ./../Applicative/Type m)
+    → ./../Ran/lower m applicative m

@@ -1,0 +1,18 @@
+  λ(object : Kind)
+→     let profunctor = object → object → Type
+  
+  in    λ(morphism : profunctor)
+      →   { arrow =
+                λ(p : profunctor)
+              → λ(q : profunctor)
+              → ∀(a : object) → ∀(b : object) → p a b → q a b
+          , product =
+                λ(p : profunctor)
+              → λ(q : profunctor)
+              → λ(a : object)
+              → λ(b : object)
+              → ∀(r : Type) → (∀(z : object) → p z b → q a z → r) → r
+          , identity =
+              morphism
+          }
+        : ./Type profunctor

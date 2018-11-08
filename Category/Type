@@ -1,3 +1,14 @@
+{- FIXME: This should use `./../Monoid/Type … (./../Category/Monoidal/Profunctor
+          object morphism)`, but the identity in that monoidal category
+          definition isn’t correct (or, if it is, I can’t figure out how to use
+          it. So instead, we just build the `Semigroup`, and then write a custom
+          identity. But this means we’re not structurally a `Monoid`.
+-}
   λ(object : Kind)
-→ λ(arrow : object → object → Type)
-→ { identity : ∀(a : object) → arrow a a } ⩓ ./../Semigroupoid/Type object arrow
+→     let profunctor = object → object → Type
+  
+  in    λ(morphism : profunctor)
+      →     let cat = ./../Category/Monoidal/Profunctor object morphism
+        
+        in    { identity : ∀(a : object) → morphism a a }
+            ⩓ ./../Semigroup/Type profunctor cat.arrow cat.product morphism

@@ -6,4 +6,4 @@
     ./../Function/Type
     Type
     ./../Function/Type
-    (λ(x : { _1 : Type, _2 : Type }) → f x._1 x._2)
+    f

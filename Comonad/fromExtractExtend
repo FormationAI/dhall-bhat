@@ -15,7 +15,19 @@
                 λ(b : object)
               → λ(a : object)
               → λ(fn : arrow a b)
-              → extend a b (category.compose (w a) a b fn (extract a))
+              → extend
+                a
+                b
+                ( category.op
+                  (w a)
+                  b
+                  (   λ(r : Type)
+                    → λ ( arrowsOut
+                        : ∀(z : object) → arrow z b → arrow (w a) z → r
+                        )
+                    → arrowsOut a fn (extract a)
+                  )
+                )
           , identity =
               extract
           , op =

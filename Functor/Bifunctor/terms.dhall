@@ -6,7 +6,7 @@
 → λ(dCategory : ./../../Category/Type dObject dArrow)
 → λ(eObject : Kind)
 → λ(eArrow : eObject → eObject → Type)
-→ λ(f : { _1 : cObject, _2 : dObject } → eObject)
+→ λ(f : cObject → dObject → eObject)
 → λ(functor : ./Type cObject cArrow dObject dArrow eObject eArrow f)
 →     let extractFirstFunctor =
             ./impliedFirstFunctor
