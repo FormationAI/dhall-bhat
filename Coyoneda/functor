@@ -1,0 +1,4 @@
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(semigroupoid : ./../Semigroupoid/Type object arrow)
+→ ./../Lan/functor object object arrow semigroupoid (./../Identity/Type object)

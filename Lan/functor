@@ -1,0 +1,41 @@
+  λ(cObject : Kind)
+→ λ(cpObject : Kind)
+→ λ(cpArrow : cpObject → cpObject → Type)
+→ λ(cpSemigroupoid : ./../Semigroupoid/Type cpObject cpArrow)
+→     let dObject = Type
+  
+  in  let dArrow = ./../Function/Type
+  
+  in  let Lan = ./Type cObject cpObject cpArrow dArrow
+  
+  in    λ(f : cObject → cpObject)
+      → λ(g : cObject → dObject)
+      →   { map =
+                λ(a : cpObject)
+              → λ(b : cpObject)
+              → λ(h : cpArrow a b)
+              → λ(lan : Lan f g a)
+              → λ(r : Type)
+              → λ(k : ∀(c : cObject) → cpArrow (f c) b → dArrow (g c) r)
+              → lan
+                r
+                (   λ(c : cObject)
+                  → λ(x : cpArrow (f c) a)
+                  → k
+                    c
+                    ( cpSemigroupoid.op
+                      (f c)
+                      b
+                      (   λ(r : Type)
+                        → λ ( arrowsOut
+                            :   ∀(z : cpObject)
+                              → cpArrow z b
+                              → cpArrow (f c) z
+                              → r
+                            )
+                        → arrowsOut a h x
+                      )
+                    )
+                )
+          }
+        : ./../Functor/Type cpObject cpArrow dObject dArrow (Lan f g)

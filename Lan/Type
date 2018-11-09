@@ -7,4 +7,4 @@
       → λ(p : cObject → cpObject)
       → λ(f : cObject → dObject)
       → λ(a : cpObject)
-      → ∀(r : Type) → (∀(b : cObject) → cpArrow (p b) a → f b → r) → r
+      → ∀(r : Type) → (∀(b : cObject) → cpArrow (p b) a → dArrow (f b) r) → r

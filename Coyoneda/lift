@@ -1,0 +1,9 @@
+    let object = Type
+
+in    λ(arrow : object → object → Type)
+    → λ(category : ./../Category/Type object arrow)
+    → ./../Lan/lift
+      arrow
+      (./../Category/extractSemigroupoid object arrow category)
+      (./../Identity/Type object)
+      (./../Identity/comonad object arrow category)

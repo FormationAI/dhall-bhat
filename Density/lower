@@ -1,0 +1,17 @@
+    let object = Type
+
+in    λ(arrow : object → object → Type)
+    → λ(semigroupoid : ./../Semigroupoid/Type object arrow)
+    → λ(f : object → object)
+    → λ(comonad : ./../Comonad/Type object arrow f)
+    → ./../Lan/lower
+      object
+      object
+      arrow
+      arrow
+      semigroupoid
+      f
+      (./../Comonad/extractEndofunctor object arrow f comonad)
+      f
+      f
+      comonad.op

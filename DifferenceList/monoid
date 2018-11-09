@@ -1,0 +1,27 @@
+    let DifferenceList = ./Type
+
+in  let object = Type
+
+in  let cat = ./../Category/Monoidal/Set/cartesian
+
+in  let category = ./../Function/category
+
+in    λ(a : object)
+    →   { op =
+              λ(p : { _1 : DifferenceList a, _2 : DifferenceList a })
+            → category.op
+              (List a)
+              (List a)
+              (   λ(r : Type)
+                → λ ( arrowsOut
+                    :   ∀(z : Type)
+                      → cat.arrow z (List a)
+                      → cat.arrow (List a) z
+                      → r
+                    )
+                → arrowsOut (List a) p._1 p._2
+              )
+        , identity =
+            λ(_ : {}) → category.identity (List a)
+        }
+      : ./../Monoid/Type object cat (DifferenceList a)

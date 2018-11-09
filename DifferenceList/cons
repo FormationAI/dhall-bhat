@@ -1,0 +1,10 @@
+  λ(a : Type)
+→ λ(y : a)
+→ λ(xs : ./Type a)
+→ (./../Function/category).op
+  (List a)
+  (List a)
+  (   λ(r : Type)
+    → λ(arrowsOut : ∀(z : Type) → (z → List a) → (List a → z) → r)
+    → arrowsOut (List a) (λ(ys : List a) → [ y ] # ys) xs
+  )

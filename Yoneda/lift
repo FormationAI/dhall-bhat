@@ -1,7 +1,19 @@
-  λ(f : Type → Type)
-→ λ(functor : ./../Functor/Endo/Set f)
-→ λ(a : Type)
-→ λ(fa : f a)
-→ λ(b : Type)
-→ λ(k : a → b)
-→ functor.map a b k fa
+  λ(cObject : Kind)
+→ λ(cArrow : cObject → cObject → Type)
+→ λ(dObject : Kind)
+→ λ(dArrow : dObject → dObject → Type)
+→ λ(dCategory : ./../Category/Type dObject dArrow)
+→ λ(f : cObject → dObject)
+→ λ(functor : ./../Functor/Type cObject cArrow dObject dArrow f)
+→ ./../Ran/lift
+  cObject
+  cObject
+  cArrow
+  dObject
+  dArrow
+  (./../Category/extractSemigroupoid dObject dArrow dCategory)
+  f
+  functor
+  (./../Identity/Type cObject)
+  f
+  (λ(a : cObject) → dCategory.identity (f a))

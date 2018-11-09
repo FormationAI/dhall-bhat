@@ -1,0 +1,11 @@
+    let DifferenceList = ./Type
+
+in    { fold =
+            λ(a : Type)
+          → λ(b : Type)
+          → λ(f : b → a → b)
+          → λ(z : b)
+          → λ(ts : DifferenceList a)
+          → (./../List/foldable).fold a b f z (./toList a ts)
+      }
+    : ./../Foldable/Type DifferenceList

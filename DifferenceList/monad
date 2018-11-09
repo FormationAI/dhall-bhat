@@ -1,0 +1,26 @@
+    let DifferenceList = ./Type
+
+in  let foldable = ./foldable
+
+in  ./../Monad/fromPureBind
+    Type
+    ./../Function/Type
+    ./../Function/category
+    DifferenceList
+    (λ(a : Type) → λ(x : a) → λ(l : List a) → [ x ] # l)
+    (   λ(a : Type)
+      → λ(b : Type)
+      → λ(k : a → DifferenceList b)
+      → λ(f : DifferenceList a)
+      →     let monoid = ./monoid b
+        
+        in  foldable.fold
+            a
+            (DifferenceList b)
+            (   λ(l : DifferenceList b)
+              → λ(x : a)
+              → monoid.op { _1 = k x, _2 = l }
+            )
+            (monoid.identity {=})
+            f
+    )

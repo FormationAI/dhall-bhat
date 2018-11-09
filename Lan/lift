@@ -1,0 +1,12 @@
+    let object = Type
+
+in    λ(arrow : object → object → Type)
+    → λ(semigroupoid : ./../Semigroupoid/Type object arrow)
+    → λ(f : object → object)
+    → λ(comonad : ./../Comonad/Type object arrow f)
+    → λ(g : object → object)
+    → λ(a : object)
+    → λ(x : g a)
+    → λ(r : Type)
+    → λ(k : ∀(b : object) → arrow (f b) a → g b → r)
+    → k a (comonad.identity a) x
