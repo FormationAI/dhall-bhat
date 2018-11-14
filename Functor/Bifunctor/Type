@@ -9,10 +9,7 @@
   
   in  ./../Type
       object
-      (   λ(a : object)
-        → λ(b : object)
-        → { _1 : cArrow a._1 b._1, _2 : dArrow a._2 b._2 }
-      )
+      (./../../Category/Product/Type cObject cArrow dObject dArrow)
       eObject
       eArrow
       (λ(p : object) → f p._1 p._2)

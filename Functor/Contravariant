@@ -3,4 +3,4 @@
 -}
   λ(object : Kind)
 → λ(arrow : object → object → Type)
-→ ./type object (./../Category/Op/type object arrow)
+→ ./Type object (./../Category/Op/Type object arrow)

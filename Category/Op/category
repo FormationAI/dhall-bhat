@@ -17,13 +17,13 @@
               b
               a
               (   λ(r : Type)
-                → λ(arrowsIn : ∀(z : object) → arrow z a → arrow b z → r)
+                → λ(arrowsOut : ∀(z : object) → arrow z a → arrow b z → r)
                 → p
                   r
                   (   λ(z : object)
                     → λ(f : opArrow z b)
                     → λ(g : opArrow a z)
-                    → arrowsIn z g f
+                    → arrowsOut z g f
                   )
               )
         }

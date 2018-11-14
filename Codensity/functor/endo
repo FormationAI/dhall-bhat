@@ -1,8 +1,0 @@
-    let object = Type
-
-in  let arrow = ./../../Function/Type
-
-in  let semigroupoid = ./../../Function/semigroupoid
-
-in    λ(m : object → object)
-    → ./../../Ran/functor object object arrow semigroupoid m m

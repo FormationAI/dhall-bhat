@@ -1,0 +1,9 @@
+{- A true †-category has a contravariant endofunctor on C that reverses the
+   morphisms. I’m not sure how to implement that, so this structure simply uses
+   pairs of morphisms as the morphism.
+-}
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(a : object)
+→ λ(b : object)
+→ { _1 : arrow a b, _2 : arrow b a }

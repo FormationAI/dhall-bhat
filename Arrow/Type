@@ -1,7 +1,3 @@
-{-
-   TODO: Unify `Category` and `Strong` better here – probably formulating
-  `Category` in terms of `Monoid` will clear this up.
--}
   λ(f : Type → Type → Type)
 →   { arr :
         ∀(a : Type) → ∀(b : Type) → (a → b) → f a b

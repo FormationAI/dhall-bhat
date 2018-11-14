@@ -1,0 +1,6 @@
+    let object = Type
+
+in    λ(arrow : object → object → Type)
+    → λ(semigroupoid : ./../Semigroupoid/Type object arrow)
+    → λ(m : object → object)
+    → ./../Ran/functor object object arrow semigroupoid m m

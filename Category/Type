@@ -1,8 +1,8 @@
 {- FIXME: This should use `./../Monoid/Type … (./../Category/Monoidal/Profunctor
           object morphism)`, but the identity in that monoidal category
           definition isn’t correct (or, if it is, I can’t figure out how to use
-          it. So instead, we just build the `Semigroup`, and then write a custom
-          identity. But this means we’re not structurally a `Monoid`.
+          it). So instead, we just build the `Semigroup`, and then write a
+          custom identity. But this means we’re not structurally a `Monoid`.
 -}
   λ(object : Kind)
 →     let profunctor = object → object → Type

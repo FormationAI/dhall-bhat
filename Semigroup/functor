@@ -1,0 +1,49 @@
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(semigroupoid : ./../Semigroupoid/Type object arrow)
+→ λ(product : object → object → object)
+→ λ(bifunctor : ./../Functor/Pair/Type object arrow)
+→     let Semigroup = ./Type object arrow product
+  
+  in  let Dagger = ./../Category/Dagger/Type object arrow
+  
+  in    { map =
+              λ(a : object)
+            → λ(b : object)
+            → λ(fn : Dagger a b)
+            → λ(fa : Semigroup a)
+            → { op =
+                  semigroupoid.op
+                  (product b b)
+                  b
+                  (   λ(r : Type)
+                    → λ ( arrowsOut
+                        : ∀(z : object) → arrow z b → arrow (product b b) z → r
+                        )
+                    → arrowsOut
+                      a
+                      fn._1
+                      ( semigroupoid.op
+                        (product b b)
+                        a
+                        (   λ(r : Type)
+                          → λ ( arrowsOut
+                              :   ∀(z : object)
+                                → arrow z a
+                                → arrow (product b b) z
+                                → r
+                              )
+                          → arrowsOut
+                            (product a a)
+                            fa.op
+                            ( bifunctor.map
+                              { _1 = b, _2 = b }
+                              { _1 = a, _2 = a }
+                              { _1 = fn._2, _2 = fn._2 }
+                            )
+                        )
+                      )
+                  )
+              }
+        }
+      : ./../Functor/Type object Dagger Type ./../Function/Type Semigroup
