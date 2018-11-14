@@ -2,7 +2,7 @@
 → λ(arrow : object → object → Type)
 → λ(semigroupoid : ./../Semigroupoid/Type object arrow)
 → λ(product : object → object → object)
-→ λ(bifunctor : ./../Functor/Pair/Type object arrow)
+→ λ(bifunctor : ./../Functor/Pair/Type object arrow product)
 →     let Semigroup = ./Type object arrow product
   
   in  let Dagger = ./../Category/Dagger/Type object arrow

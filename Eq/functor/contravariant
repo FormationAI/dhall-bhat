@@ -1,0 +1,12 @@
+    let Set = ./../../Function/Type
+
+in  let Eq = ./../Type
+
+in    { map =
+            λ(a : Type)
+          → λ(b : Type)
+          → λ(fn : b → a)
+          → λ(fa : Eq a)
+          → { eq = λ(x : b) → λ(y : b) → fa.eq (fn x) (fn y) }
+      }
+    : ./../../Functor/Contravariant Type Set Type Set Eq

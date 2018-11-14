@@ -1,0 +1,4 @@
+  λ(object : Kind)
+→ λ(cat : ./../Category/Monoidal/Type object)
+→ λ(m : object)
+→ { inverse : cat.arrow m m } ⩓ ./../Monoid/Type object cat m

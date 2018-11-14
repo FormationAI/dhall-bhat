@@ -1,8 +1,13 @@
+{- This is different from what is often called a “semiring” as it lacks
+   multiplicative identity, but here we follow the convention described in
+   https://ncatlab.org/nlab/show/rig, using the name “rig” for what would
+   traditionally be a semiring.
+-}
   λ(object : Kind)
 → λ(cat : ./../Category/Monoidal/Type object)
 → λ(m : object)
 → { additive :
       ./../Monoid/Type object cat m
   , multiplicative :
-      ./../Monoid/Type object cat m
+      ./../Semigroup/Type object cat.arrow cat.product m
   }

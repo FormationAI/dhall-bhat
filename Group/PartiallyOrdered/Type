@@ -1,0 +1,10 @@
+{- This is the weakest form of order provided. There is no standalone preorder,
+   partial order, or anything, because there are too many possible
+   instances. For the general case, just define regular functions. A
+   `Group/PartiallyOrdered` constrains the instances enough for a generic “less
+   than” to be meaningful.
+-}
+  λ(m : Type)
+→   { maybeLE : m → m → Optional Bool }
+  ⩓ ./../../Eq/Type m
+  ⩓ ./../Type Type ./../../Category/Monoidal/Set/cartesian m
