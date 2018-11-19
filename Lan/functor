@@ -38,4 +38,4 @@
                     )
                 )
           }
-        : ./../Functor/Type cpObject cpArrow dObject dArrow (Lan f g)
+        : ./../Functor/Type cpObject dObject cpArrow dArrow (Lan f g)

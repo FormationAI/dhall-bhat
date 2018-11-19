@@ -7,9 +7,9 @@ in    λ(cObject : Kind)
     → λ(eObject : Kind)
     → λ(eArrow : eObject → eObject → Type)
     → λ(f : dObject → eObject)
-    → λ(fFunctor : Functor dObject dArrow eObject eArrow f)
+    → λ(fFunctor : Functor dObject eObject dArrow eArrow f)
     → λ(g : cObject → dObject)
-    → λ(gFunctor : Functor cObject cArrow dObject dArrow g)
+    → λ(gFunctor : Functor cObject dObject cArrow dArrow g)
     →   { map =
               λ(a : cObject)
             → λ(b : cObject)
@@ -18,7 +18,7 @@ in    λ(cObject : Kind)
         }
       : Functor
         cObject
-        cArrow
         eObject
+        cArrow
         eArrow
         (./Type cObject dObject eObject f g)

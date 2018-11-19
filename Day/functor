@@ -39,4 +39,4 @@
                     e
                 )
           }
-        : ./../Functor/Type cObject c.arrow vObject v.arrow (Day f g)
+        : ./../Functor/Type cObject vObject c.arrow v.arrow (Day f g)

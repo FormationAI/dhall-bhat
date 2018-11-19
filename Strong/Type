@@ -1,6 +1,6 @@
   λ(cObject : Kind)
-→ λ(cArrow : cObject → cObject → Type)
 → λ(dObject : Kind)
+→ λ(cArrow : cObject → cObject → Type)
 → λ(dArrow : dObject → dObject → Type)
 →     let object = { _1 : dObject, _2 : cObject }
   
@@ -29,4 +29,4 @@
               → f a b
               → f a c
           }
-        ⩓ ./../Functor/Profunctor/Type cObject cArrow dObject dArrow f
+        ⩓ ./../Functor/Profunctor/Type cObject dObject cArrow dArrow f

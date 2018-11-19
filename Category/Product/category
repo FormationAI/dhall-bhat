@@ -6,7 +6,7 @@
 → λ(dCategory : ./../type dObject dArrow)
 →     let object = { _1 : cObject, _2 : dObject }
   
-  in  let arrow = ./type cObject cArrow dObject dArrow
+  in  let arrow = ./type cObject dObject cArrow dArrow
   
   in    { identity =
               λ(a : object)

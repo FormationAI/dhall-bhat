@@ -10,4 +10,4 @@
         → λ(_ : dArrow b c)
         → cCategory.identity a
     }
-  : ./../Functor/Type dObject dArrow cObject cArrow (./Type cObject dObject a)
+  : ./../Functor/Type dObject cObject dArrow cArrow (./Type cObject dObject a)

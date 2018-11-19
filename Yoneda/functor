@@ -15,7 +15,7 @@
           f
         : ./../Functor/Type
           cObject
-          cArrow
           dObject
+          cArrow
           dArrow
           (./Type cObject cArrow f)

@@ -3,7 +3,7 @@
 →   arrow.{ map }
   : ./../Functor/Profunctor/Type
     Type
-    ./../Function/Type
     Type
+    ./../Function/Type
     ./../Function/Type
     f

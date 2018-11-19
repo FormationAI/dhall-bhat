@@ -6,7 +6,7 @@
 → λ(eObject : Kind)
 → λ(eArrow : eObject → eObject → Type)
 → λ(f : cObject → dObject → eObject)
-→ λ(bifunctor : ./Type cObject cArrow dObject dArrow eObject eArrow f)
+→ λ(bifunctor : ./Type cObject dObject eObject cArrow dArrow eArrow f)
 → λ(a : dObject)
 →   { map =
           λ(b : cObject)
@@ -17,4 +17,4 @@
           { _1 = c, _2 = a }
           { _1 = fn, _2 = dCategory.identity a }
     }
-  : ./../Type cObject cArrow eObject eArrow (λ(d : cObject) → f d a)
+  : ./../Type cObject eObject cArrow eArrow (λ(d : cObject) → f d a)

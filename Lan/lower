@@ -6,7 +6,7 @@
   in    λ(dArrow : dObject → dObject → Type)
       → λ(dSemigroupoid : ./../Semigroupoid/Type dObject dArrow)
       → λ(h : cpObject → dObject)
-      → λ(functor : ./../Functor/Type cpObject cpArrow dObject dArrow h)
+      → λ(functor : ./../Functor/Type cpObject dObject cpArrow dArrow h)
       → λ(f : cObject → cpObject)
       → λ(g : cObject → dObject)
       → λ(duplicate : ∀(b : cObject) → dArrow (g b) (h (f b)))

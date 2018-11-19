@@ -3,8 +3,8 @@
 -}
   λ(object : Kind)
 → λ(arrow : object → object → Type)
-→ λ(f : object → object)
-→   ./../Functor/Endo/Type object arrow f
+→ λ(m : object → object)
+→   ./../Functor/Endo/Type object arrow m
   ⩓ ./../Monoid/Type
     (object → object)
     { arrow =
@@ -14,4 +14,4 @@
     , identity =
         ./../Identity/Type object
     }
-    f
+    m

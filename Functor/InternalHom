@@ -6,8 +6,8 @@
 → λ(arrow : object → object → Type)
 → ./Bifunctor/type
   object
+  object
+  object
   (./../Category/Op/type object arrow)
-  object
   arrow
-  object
   arrow

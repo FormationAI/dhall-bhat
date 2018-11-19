@@ -6,8 +6,8 @@
 → ./../Ran/lift
   object
   object
-  arrow
   object
+  arrow
   arrow
   semigroupoid
   f

@@ -1,6 +1,6 @@
   λ(cObject : Kind)
-→ λ(cArrow : cObject → cObject → Type)
 → λ(dObject : Kind)
+→ λ(cArrow : cObject → cObject → Type)
 → λ(dArrow : dObject → dObject → Type)
 →     let object = { _1 : cObject, _2 : dObject }
   

@@ -46,4 +46,4 @@
                   )
               }
         }
-      : ./../Functor/Type object Dagger Type ./../Function/Type Semigroup
+      : ./../Functor/Type object Type Dagger ./../Function/Type Semigroup

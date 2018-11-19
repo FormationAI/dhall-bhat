@@ -3,8 +3,8 @@
    way.
 -}
   λ(cObject : Kind)
-→ λ(c : ./../Category/Monoidal/Type cObject)
 → λ(dObject : Kind)
+→ λ(c : ./../Category/Monoidal/Type cObject)
 → λ(d : ./../Category/Monoidal/Type dObject)
 → λ(f : cObject → dObject)
 →   { identity :
@@ -14,4 +14,4 @@
         → ∀(b : cObject)
         → d.arrow (d.product (f a) (f b)) (f (c.product a b))
     }
-  ⩓ ./Type cObject c.arrow dObject d.arrow f
+  ⩓ ./Type cObject dObject c.arrow d.arrow f

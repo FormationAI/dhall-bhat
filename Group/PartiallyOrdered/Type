@@ -5,6 +5,6 @@
    than” to be meaningful.
 -}
   λ(m : Type)
-→   { maybeLE : m → m → Optional Bool }
+→   { partialLE : m → m → Optional Bool }
   ⩓ ./../../Eq/Type m
   ⩓ ./../Type Type ./../../Category/Monoidal/Set/cartesian m

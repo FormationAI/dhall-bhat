@@ -5,6 +5,6 @@ in  let c = ./../Category/Monoidal/Set/cartesian
 in    λ(dObject : Kind)
     → λ(dArrow : dObject → dObject → Type)
     → λ(f : cObject → dObject)
-    → λ(functor : ./Type cObject c.arrow dObject dArrow f)
+    → λ(functor : ./Type cObject dObject c.arrow dArrow f)
     → λ(a : cObject)
     → functor.map a c.identity (λ(_ : a) → {=})

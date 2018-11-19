@@ -7,7 +7,7 @@
 in  let Star = ./../../Star/Type Type Set.arrow
 
 in  { Adjunction =
-        ./../../Adjunction/Type Type Set.arrow
+        ./../../Adjunction/Type Type Type Set.arrow Set.arrow
     , Applicative =
         ./../../Applicative/Type
     , Arrow =
@@ -29,7 +29,7 @@ in  { Adjunction =
     , Costar =
         ./../../Costar/Type Type Set.arrow
     , Day =
-        ./../../Day/Type
+        ./../../Day/Type Type Set
     , Either =
         ./../../Either/Type
     , EitherT =
@@ -42,6 +42,8 @@ in  { Adjunction =
         ./../../Functor/Endo/Type Type Set.arrow
     , Identity =
         ./../../Identity/Type Type
+    , Lan =
+        ./../../Lan/Type Type Type Set.arrow
     , Monad =
         ./../../Monad/Type Type Set.arrow
     , Monoid =
@@ -53,7 +55,7 @@ in  { Adjunction =
     , Profunctor =
         ./../../Functor/Hom Type Set.arrow
     , Ran =
-        ./../../Ran/Type
+        ./../../Ran/Type Type Type Set.arrow
     , Reader =
         ./../../Reader/Type Type Set.arrow
     , ReaderT =
@@ -69,7 +71,7 @@ in  { Adjunction =
     , StateT =
         ./../../StateT/Type
     , Strong =
-        ./../../Strong/Type Type Set.arrow Type Set.arrow
+        ./../../Strong/Type Type Type Set.arrow Set.arrow
     , Transformer =
         ./../../Transformer/Type
     , Traversable =
@@ -77,5 +79,5 @@ in  { Adjunction =
     , Tuple =
         ./../../Tuple/Type
     , Yoneda =
-        ./../../Yoneda/Type
+        ./../../Yoneda/Type Type Set.arrow
     }

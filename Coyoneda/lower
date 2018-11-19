@@ -3,7 +3,7 @@
 in    λ(arrow : object → object → Type)
     → λ(category : ./../Category/Type object arrow)
     → λ(f : object → object)
-    → λ(functor : ./../Functor/Type object arrow object arrow f)
+    → λ(functor : ./../Functor/Type object object arrow arrow f)
     → ./../Lan/lower
       object
       object

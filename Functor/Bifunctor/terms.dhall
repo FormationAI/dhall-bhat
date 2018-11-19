@@ -7,7 +7,7 @@
 → λ(eObject : Kind)
 → λ(eArrow : eObject → eObject → Type)
 → λ(f : cObject → dObject → eObject)
-→ λ(functor : ./Type cObject cArrow dObject dArrow eObject eArrow f)
+→ λ(functor : ./Type cObject dObject eObject cArrow dArrow eArrow f)
 →     let extractFirstFunctor =
             ./impliedFirstFunctor
             cObject

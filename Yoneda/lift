@@ -4,12 +4,12 @@
 → λ(dArrow : dObject → dObject → Type)
 → λ(dCategory : ./../Category/Type dObject dArrow)
 → λ(f : cObject → dObject)
-→ λ(functor : ./../Functor/Type cObject cArrow dObject dArrow f)
+→ λ(functor : ./../Functor/Type cObject dObject cArrow dArrow f)
 → ./../Ran/lift
   cObject
   cObject
-  cArrow
   dObject
+  cArrow
   dArrow
   (./../Category/extractSemigroupoid dObject dArrow dCategory)
   f

@@ -30,4 +30,4 @@
                   )
                 )
           }
-        : ./../Functor/Type cpObject cpArrow dObject dArrow (Ran p f)
+        : ./../Functor/Type cpObject dObject cpArrow dArrow (Ran p f)

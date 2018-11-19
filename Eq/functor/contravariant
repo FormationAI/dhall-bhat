@@ -9,4 +9,4 @@ in    { map =
           → λ(fa : Eq a)
           → { eq = λ(x : b) → λ(y : b) → fa.eq (fn x) (fn y) }
       }
-    : ./../../Functor/Contravariant Type Set Type Set Eq
+    : ./../../Functor/Contravariant Type Type Set Set Eq

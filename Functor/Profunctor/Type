@@ -3,13 +3,13 @@
    for that.
 -}
   λ(cObject : Kind)
-→ λ(cArrow : cObject → cObject → Type)
 → λ(dObject : Kind)
+→ λ(cArrow : cObject → cObject → Type)
 → λ(dArrow : dObject → dObject → Type)
 → ./../Bifunctor/Type
   dObject
-  (./../../Category/Op/Type dObject dArrow)
   cObject
-  cArrow
   Type
+  (./../../Category/Op/Type dObject dArrow)
+  cArrow
   ./../../Function/Type

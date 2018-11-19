@@ -1,15 +1,15 @@
   λ(cObject : Kind)
-→ λ(cArrow : cObject → cObject → Type)
 → λ(dObject : Kind)
-→ λ(dArrow : dObject → dObject → Type)
 → λ(eObject : Kind)
+→ λ(cArrow : cObject → cObject → Type)
+→ λ(dArrow : dObject → dObject → Type)
 → λ(eArrow : eObject → eObject → Type)
 → λ(f : cObject → dObject → eObject)
 →     let object = { _1 : cObject, _2 : dObject }
   
   in  ./../Type
       object
-      (./../../Category/Product/Type cObject cArrow dObject dArrow)
       eObject
+      (./../../Category/Product/Type cObject dObject cArrow dArrow)
       eArrow
       (λ(p : object) → f p._1 p._2)

@@ -4,4 +4,4 @@
 -}
   λ(object : Kind)
 → λ(arrow : object → object → Type)
-→ ./Profunctor/Type object arrow object arrow
+→ ./Profunctor/Type object object arrow arrow
