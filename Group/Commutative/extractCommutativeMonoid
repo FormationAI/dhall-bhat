@@ -1,0 +1,5 @@
+    let object = Type
+
+in    λ(m : object)
+    → λ(group : ./Type m)
+    → group.{ identity, op, preLE } : ./../../Monoid/Commutative/Type m

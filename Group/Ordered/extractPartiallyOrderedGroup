@@ -1,0 +1,6 @@
+    let object = Type
+
+in    λ(m : object)
+    → λ(group : ./Type m)
+    →   group.{ eq, identity, inverse, op, partialLE }
+      : ./../PartiallyOrdered/Type m

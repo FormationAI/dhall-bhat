@@ -2,7 +2,7 @@
 
 in    λ(m : Type)
     → { additive :
-          ./../../Group/Ordered/Type m
+          ./../../Group/OrderedCommutative/Type m
       , multiplicative :
           ./../../Monoid/Type Type Set m
       }

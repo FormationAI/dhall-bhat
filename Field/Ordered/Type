@@ -1,8 +1,8 @@
-    let Set = ./../../Category/Monoidal/Set/cartesian
+    let object = Type
 
-in    λ(m : Type)
+in    λ(m : object)
     → { additive :
-          ./../../Group/Ordered/Type m
+          ./../../Group/OrderedCommutative/Type m
       , multiplicative :
-          ./../../Group/Type Type Set m
+          ./../../Group/Commutative/Type m
       }

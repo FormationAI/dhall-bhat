@@ -1,0 +1,10 @@
+    let object = Type
+
+in    λ(m : object)
+    → λ(ring : ./Type m)
+    →   { additive =
+            ./../Group/Commutative/extractCommutativeMonoid m ring.additive
+        , multiplicative =
+            ring.multiplicative
+        }
+      : ./../Rig/Type m

@@ -1,0 +1,5 @@
+  λ(object : Kind)
+→ λ(cat : ./../Category/Monoidal/Type object)
+→ λ(m : object)
+→ λ(group : ./Type object cat m)
+→ group.{ identity, op }

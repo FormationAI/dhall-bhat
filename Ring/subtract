@@ -1,0 +1,5 @@
+    let object = Type
+
+in    λ(m : object)
+    → λ(ring : ./Type m)
+    → ./../Group/Commutative/quotient m ring.additive

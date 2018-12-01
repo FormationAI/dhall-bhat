@@ -3,4 +3,4 @@
 → λ(dArrow : dObject → dObject → Type)
 →     let object = cObject → dObject
   
-  in  λ(a : object) → λ(b : object) → ∀(i : cObject) → dArrow (a i) (b i)
+  in  λ(f : object) → λ(g : object) → ∀(a : cObject) → dArrow (f a) (g a)

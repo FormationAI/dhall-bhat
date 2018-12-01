@@ -1,0 +1,5 @@
+    let object = Type
+
+in    λ(m : object)
+    → λ(field : ./Type m)
+    → ./../Group/Commutative/quotient m field.multiplicative

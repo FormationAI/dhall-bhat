@@ -1,0 +1,14 @@
+  { eq =
+      λ(_ : {}) → λ(_ : {}) → True
+  , identity =
+      λ(_ : {}) → {=}
+  , inverse =
+      λ(_ : {}) → {=}
+  , le =
+      λ(_ : {}) → λ(_ : {}) → True
+  , op =
+      λ(_ : { _1 : {}, _2 : {} }) → {=}
+  , partialLE =
+      λ(_ : {}) → λ(_ : {}) → Some True
+  }
+: ./../Group/Ordered/Type {}

@@ -1,27 +1,10 @@
---     let Tuple = ./../Type
+    let Tuple = ./../Type
 
--- in    λ(m : Type → Type)
---     → λ(applicative : ./../../Applicative/Type m)
---     →     let app = ./../../Applicative/package.dhall m applicative
-      
---       in    { map =
---                   λ(a : { _1 : Type, _2 : Type })
---                 → λ(b : { _1 : Type, _2 : Type })
---                 → λ(f : { _1 : a._1 → m b._1, _2 : a._2 → m b._2 })
---                 → λ(t : a)
---                 → app.ap
---                   b._2
---                   b
---                   ( app.map
---                     b._1
---                     (b._2 → b)
---                     (λ(x : b._1) → λ(y : b._2) → { _1 = x, _2 = y })
---                     (f._1 t._1)
---                   )
---                   (f._2 t._2)
---             }
---           : ./../../Functor/Pair/Type
---             Type
---             (./../../Star/Type Type ./../../Function/Type m)
---             (λ(t : { _1 : Type, _2 : Type }) → Tuple t._1 t._2)
-<>
+in    { map =
+            λ(a : { _1 : Type, _2 : Type })
+          → λ(b : { _1 : Type, _2 : Type })
+          → λ(f : { _1 : a._1 → b._1, _2 : a._2 → b._2 })
+          → λ(t : Tuple a._1 a._2)
+          → { _1 = f._1 t._1, _2 = f._2 t._2 }
+      }
+    : ./../../Functor/Pair/Type Type ./../../Function/Type Tuple

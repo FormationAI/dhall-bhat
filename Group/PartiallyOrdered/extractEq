@@ -1,0 +1,1 @@
+λ(m : Type) → λ(group : ./Type m) → group.{ eq } : ./../../Eq/Type m

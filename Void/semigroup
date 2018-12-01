@@ -1,0 +1,6 @@
+    let object = Type
+
+in  let cat = ./../Category/Monoidal/Set/cartesian
+
+in    { op = λ(p : { _1 : <>, _2 : <> }) → merge {=} p._1 : <> }
+    : ./../Semigroup/Type object cat.arrow cat.product <>

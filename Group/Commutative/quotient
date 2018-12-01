@@ -1,0 +1,17 @@
+    let object = Type
+
+in  let cat = ./../../Category/Monoidal/Set/cartesian
+
+in  let category = ./../../Function/category
+
+in  let bifunctor = ./../../Tuple/functor/pair
+
+in    λ(m : object)
+    → λ(group : ./Type m)
+    → ./../rightQuotient
+      object
+      cat
+      category
+      bifunctor
+      m
+      (./extractGroup m group)

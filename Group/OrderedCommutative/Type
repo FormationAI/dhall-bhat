@@ -1,0 +1,4 @@
+    let object = Type
+
+in    λ(m : object)
+    → { le : m → m → Bool } ⩓ ./../PartiallyOrderedCommutative/Type m

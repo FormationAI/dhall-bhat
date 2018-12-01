@@ -1,0 +1,14 @@
+    let object = Type
+
+in  let cat = ./../Category/Monoidal/Set/cartesian
+
+in    { additive =
+          { op = λ(t : { _1 : Natural, _2 : Natural }) → t._1 + t._2 }
+      , multiplicative =
+          { identity =
+              λ(_ : {}) → 1
+          , op =
+              λ(t : { _1 : Natural, _2 : Natural }) → t._1 * t._2
+          }
+      }
+    : ./../Semiring/Type object cat Natural

@@ -1,0 +1,12 @@
+    let object = Type
+
+in    λ(m : object)
+    → λ(field : ./Type m)
+    →   { additive =
+            ./../../Group/PartiallyOrderedCommutative/extractCommutativeGroup
+            m
+            field.additive
+        , multiplicative =
+            field.multiplicative
+        }
+      : ./../Type m

@@ -1,0 +1,42 @@
+  λ(object : Kind)
+→ λ(cat : ./../Category/Monoidal/Type object)
+→ λ(category : ./../Category/Type object cat.arrow)
+→ λ ( bifunctor
+    : ./../Functor/Bifunctor/Type
+      object
+      object
+      object
+      cat.arrow
+      cat.arrow
+      cat.arrow
+      cat.product
+    )
+→ λ(m : object)
+→ λ(group : ./Type object cat m)
+→ category.op
+  (cat.product m m)
+  m
+  (   λ(r : Type)
+    → λ ( arrowsOut
+        : ∀(z : object) → cat.arrow z m → cat.arrow (cat.product m m) z → r
+        )
+    → arrowsOut
+      (cat.product m m)
+      group.op
+      ( ( ./../Functor/Bifunctor/impliedSecondFunctor
+          object
+          cat.arrow
+          category
+          object
+          cat.arrow
+          object
+          cat.arrow
+          cat.product
+          bifunctor
+          m
+        ).map
+        m
+        m
+        group.inverse
+      )
+  )
