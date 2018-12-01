@@ -6,7 +6,7 @@
   
   in  let dArrow = ./../Function/Type
   
-  in  let Lan = ./Type cObject cpObject cpArrow dArrow
+  in  let Lan = ./Type cObject cpObject cpArrow
   
   in    λ(f : cObject → cpObject)
       → λ(g : cObject → dObject)

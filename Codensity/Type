@@ -1,5 +1,6 @@
-    let object = Type
-
-in    λ(arrow : object → object → Type)
-    → λ(m : object → object)
-    → ./../Ran/Type object object arrow m m
+  λ(cObject : Kind)
+→     let dObject = Type
+  
+  in    λ(dArrow : dObject → dObject → Type)
+      → λ(m : cObject → dObject)
+      → ./../Ran/Type cObject dObject dArrow m m

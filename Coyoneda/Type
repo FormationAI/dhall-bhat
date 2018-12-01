@@ -1,4 +1,3 @@
-    let object = Type
-
-in    λ(arrow : object → object → Type)
-    → ./../Lan/Type object object arrow arrow (./../Identity/Type object)
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ ./../Lan/Type object object arrow (./../Identity/Type object)

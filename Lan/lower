@@ -3,15 +3,17 @@
 → λ(cpArrow : cpObject → cpObject → Type)
 →     let dObject = Type
   
-  in    λ(dArrow : dObject → dObject → Type)
-      → λ(dSemigroupoid : ./../Semigroupoid/Type dObject dArrow)
-      → λ(h : cpObject → dObject)
+  in  let dArrow = ./../Function/Type
+  
+  in  let dSemigroupoid = ./../Function/semigroupoid
+  
+  in    λ(h : cpObject → dObject)
       → λ(functor : ./../Functor/Type cpObject dObject cpArrow dArrow h)
       → λ(f : cObject → cpObject)
       → λ(g : cObject → dObject)
       → λ(duplicate : ∀(b : cObject) → dArrow (g b) (h (f b)))
       → λ(a : cpObject)
-      → λ(lan : ./Type cObject cpObject cpArrow dArrow f g a)
+      → λ(lan : ./Type cObject cpObject cpArrow f g a)
       → lan
         (h a)
         (   λ(b : cObject)

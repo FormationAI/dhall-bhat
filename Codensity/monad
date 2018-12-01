@@ -3,18 +3,25 @@
 in  let arrow = ./../Function/Type
 
 in    λ(category : ./../Category/Type object arrow)
-    → λ(m : object → object)
-    → ./../Monad/fromPureBind
-      object
-      arrow
-      category
-      (./Type arrow m)
-      (λ(a : object) → λ(x : a) → λ(b : object) → λ(k : arrow a (m b)) → k x)
-      (   λ(a : object)
-        → λ(b : object)
-        → λ(k : arrow a (./Type arrow m b))
-        → λ(codensity : ./Type arrow m a)
-        → λ(c : object)
-        → λ(l : arrow b (m c))
-        → codensity c (λ(x : a) → k x c l)
-      )
+    →     let Codensity = ./Type object arrow
+      
+      in    λ(m : object → object)
+          → ./../Monad/fromPureBind
+            object
+            arrow
+            category
+            (Codensity m)
+            (   λ(a : object)
+              → λ(x : a)
+              → λ(b : object)
+              → λ(k : arrow a (m b))
+              → k x
+            )
+            (   λ(a : object)
+              → λ(b : object)
+              → λ(k : arrow a (Codensity m b))
+              → λ(codensity : Codensity m a)
+              → λ(c : object)
+              → λ(l : arrow b (m c))
+              → codensity c (λ(x : a) → k x c l)
+            )

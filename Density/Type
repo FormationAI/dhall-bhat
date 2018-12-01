@@ -1,6 +1,6 @@
   λ(cObject : Kind)
 →     let dObject = Type
   
-  in    λ(dArrow : dObject → dObject → Type)
-      → λ(f : cObject → dObject)
-      → ./../Lan/Type cObject dObject dArrow dArrow f f
+  in  let dArrow = ./../Function/Type
+  
+  in  λ(f : cObject → dObject) → ./../Lan/Type cObject dObject dArrow f f

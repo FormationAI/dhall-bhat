@@ -1,17 +1,19 @@
-    let object = Type
-
-in    λ(arrow : object → object → Type)
-    → λ(category : ./../Category/Type object arrow)
-    → λ(f : object → object)
-    → λ(functor : ./../Functor/Type object object arrow arrow f)
-    → ./../Lan/lower
-      object
-      object
-      arrow
-      arrow
-      (./../Category/extractSemigroupoid object arrow category)
-      f
-      functor
-      (./../Identity/Type object)
-      f
-      (λ(b : object) → category.identity (f b))
+  λ(cObject : Kind)
+→ λ(cArrow : cObject → cObject → Type)
+→     let dObject = Type
+  
+  in  let dArrow = ./../Function/Type
+  
+  in  let dCategory = ./../Function/category
+  
+  in    λ(f : cObject → dObject)
+      → λ(functor : ./../Functor/Type cObject dObject cArrow dArrow f)
+      → ./../Lan/lower
+        cObject
+        cObject
+        cArrow
+        f
+        functor
+        (./../Identity/Type cObject)
+        f
+        (λ(b : cObject) → dCategory.identity (f b))

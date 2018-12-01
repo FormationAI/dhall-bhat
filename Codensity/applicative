@@ -2,14 +2,16 @@
 
 in  let arrow = ./../Function/Type
 
+in  let Codensity = ./Type object arrow
+
 in    λ(m : object → object)
     → ./../Applicative/fromPureAp
-      (./Type arrow m)
+      (Codensity m)
       (λ(a : object) → λ(x : a) → λ(b : object) → λ(k : arrow a (m b)) → k x)
       (   λ(a : object)
         → λ(b : object)
-        → λ(f : ./Type arrow m (a → b))
-        → λ(g : ./Type arrow m a)
+        → λ(f : Codensity m (a → b))
+        → λ(g : Codensity m a)
         → λ(c : object)
         → λ(k : arrow b (m c))
         → f c (λ(h : arrow a b) → g c (λ(x : a) → k (h x)))
