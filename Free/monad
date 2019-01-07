@@ -1,0 +1,9 @@
+let Monad = ../Monad/Type
+
+let Free = ./Type
+
+let monad
+    : ∀(f : Type → Type) → Monad (Free f)
+    = λ(f : Type → Type) → ./applicative f ∧ { bind = ./bind f }
+
+in  monad

@@ -1,0 +1,5 @@
+let Free
+    : ∀(f : Type → Type) → ∀(a : Type) → Type
+    = λ(f : Type → Type) → λ(a : Type) → ∀(r : Type) → (a → r) → (f r → r) → r
+
+in  Free

@@ -1,0 +1,18 @@
+let Free = ./Type
+let ap
+    :   ∀(f : Type -> Type)
+     -> ∀(a : Type)
+     -> ∀(b : Type)
+     -> Free f (a -> b)
+     -> Free f a
+     -> Free f b
+    =   λ(f : Type -> Type)
+     -> λ(a : Type)
+     -> λ(b : Type)
+     -> λ(mf : Free f (a -> b))
+     -> λ(mx : Free f a)
+     -> λ(r : Type)
+     -> λ(kp : b -> r)
+     -> λ(kf : f r -> r)
+     -> mf r (\(ff : a -> b) -> mx r (\(xx : a) -> kp (ff xx)) kf) kf
+in  ap

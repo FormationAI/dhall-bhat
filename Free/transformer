@@ -1,0 +1,18 @@
+let Functor = ../Functor/Type
+
+let Monad = ../Monad/Type
+
+let Transformer = ../Transformer/Type
+
+let Free = ./Type
+
+let transformer
+    : Transformer Free
+    = { lift =
+            λ(m : Type → Type)
+          → λ(MM : Monad m)
+          → λ(a : Type)
+          → ./liftF m { map = MM.map } a
+      }
+
+in  transformer

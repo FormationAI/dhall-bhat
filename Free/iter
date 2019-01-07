@@ -1,0 +1,11 @@
+let Free = ./Type
+
+let iter
+    : ∀(f : Type → Type) → ∀(a : Type) → (f a → a) → Free f a → a
+    =   λ(f : Type → Type)
+      → λ(a : Type)
+      → λ(phi : f a → a)
+      → λ(m : Free f a)
+      → m a (λ(x : a) → x) phi
+
+in  iter

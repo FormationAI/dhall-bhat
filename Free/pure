@@ -1,0 +1,13 @@
+let Free = ./Type
+
+let pure
+    : ∀(f : Type → Type) → ∀(a : Type) → a → Free f a
+    =   λ(f : Type → Type)
+      → λ(a : Type)
+      → λ(x : a)
+      → λ(r : Type)
+      → λ(kp : a → r)
+      → λ(kf : f r → r)
+      → kp x
+
+in  pure

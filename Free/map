@@ -1,0 +1,20 @@
+let Free = ./Type
+
+let map
+    :   ∀(f : Type → Type)
+      → ∀(a : Type)
+      → ∀(b : Type)
+      → (a → b)
+      → Free f a
+      → Free f b
+    =   λ(f : Type → Type)
+      → λ(a : Type)
+      → λ(b : Type)
+      → λ(g : a → b)
+      → λ(m : Free f a)
+      → λ(r : Type)
+      → λ(kp : b → r)
+      → λ(kf : f r → r)
+      → m r (λ(x : a) → kp (g x)) kf
+
+in  map

@@ -1,0 +1,21 @@
+let Applicative = ../Applicative/Type
+
+let Free = ./Type
+
+let iterA
+    :   ∀(f : Type → Type)
+      → ∀(g : Type → Type)
+      → Applicative g
+      → ∀(a : Type)
+      → (f (g a) → g a)
+      → Free f a
+      → g a
+    =   λ(f : Type → Type)
+      → λ(g : Type → Type)
+      → λ(AG : Applicative g)
+      → λ(a : Type)
+      → λ(phi : f (g a) → g a)
+      → λ(m : Free f a)
+      → m (g a) (AG.pure a) phi
+
+in  iterA

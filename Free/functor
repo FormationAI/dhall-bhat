@@ -1,0 +1,9 @@
+let Functor = ../Functor/Type
+
+let Free = ./Type
+
+let functor
+    : ∀(f : Type → Type) → Functor (Free f)
+    = λ(f : Type → Type) → { map = ./map f }
+
+in  functor

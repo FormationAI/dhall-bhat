@@ -1,0 +1,9 @@
+let Applicative = ../Applicative/Type
+
+let Free = ./Type
+
+let applicative
+    : ∀(f : Type → Type) → Applicative (Free f)
+    = λ(f : Type → Type) → ./functor f ∧ { ap = ./ap f, pure = ./pure f }
+
+in  applicative

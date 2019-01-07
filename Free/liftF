@@ -1,0 +1,16 @@
+let Free = ./Type
+
+let Functor = ../Functor/Type
+
+let liftF
+    : ∀(f : Type → Type) → Functor f → ∀(a : Type) → f a → Free f a
+    =   λ(f : Type → Type)
+      → λ(FF : Functor f)
+      → λ(a : Type)
+      → λ(x : f a)
+      → λ(r : Type)
+      → λ(kp : a → r)
+      → λ(kf : f r → r)
+      → kf (FF.map a r kp x)
+
+in  liftF

@@ -1,0 +1,15 @@
+let Monad = ../Monad/Type
+
+let monad = ../Monad/package.dhall
+
+let Free = ./Type
+
+let retract
+    : ∀(f : Type → Type) → ∀(a : Type) → Monad f → Free f a → f a
+    =   λ(f : Type → Type)
+      → λ(a : Type)
+      → λ(MF : Monad f)
+      → λ(m : Free f a)
+      → m (f a) (MF.pure a) ((monad f MF).join a)
+
+in  retract

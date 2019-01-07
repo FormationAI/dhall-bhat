@@ -1,0 +1,20 @@
+let Free = ./Type
+
+let bind
+    :   ∀(f : Type → Type)
+      → ∀(a : Type)
+      → ∀(b : Type)
+      → Free f a
+      → (a → Free f b)
+      → Free f b
+    =   λ(f : Type → Type)
+      → λ(a : Type)
+      → λ(b : Type)
+      → λ(m : Free f a)
+      → λ(g : a → Free f b)
+      → λ(r : Type)
+      → λ(kp : b → r)
+      → λ(kf : f r → r)
+      → m r (λ(x : a) → g x r kp kf) kf
+
+in  bind

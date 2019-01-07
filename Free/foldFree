@@ -1,0 +1,23 @@
+let Free = ./Type
+
+let Monad = ../Monad/Type
+
+let monad = ../Monad/package.dhall
+
+let foldFree
+    :   ∀(f : Type → Type)
+      → ∀(g : Type → Type)
+      → Monad g
+      → ∀(a : Type)
+      → (∀(x : Type) → f x → g x)
+      → Free f a
+      → g a
+    =   λ(f : Type → Type)
+      → λ(g : Type → Type)
+      → λ(MG : Monad g)
+      → λ(a : Type)
+      → λ(n : ∀(x : Type) → f x → g x)
+      → λ(m : Free f a)
+      → m (g a) (MG.pure a) (λ(q : f (g a)) → (monad g MG).join a (n (g a) q))
+
+in  foldFree

@@ -1,0 +1,16 @@
+let Functor = ../Functor/Type
+
+let Free = ./Type
+
+let wrap
+    : ∀(f : Type → Type) → ∀(a : Type) → Functor f → f (Free f a) → Free f a
+    =   λ(f : Type → Type)
+      → λ(a : Type)
+      → λ(FF : Functor f)
+      → λ(x : f (Free f a))
+      → λ(r : Type)
+      → λ(kp : a → r)
+      → λ(kf : f r → r)
+      → kf (FF.map (Free f a) r (λ(m : Free f a) → m r kp kf) x)
+
+in  wrap
