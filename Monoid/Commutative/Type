@@ -1,10 +1,4 @@
-{- A commutative monoid implies a preorder. Technically, a preorder could be
-   defined with `≤` where both `x ≤ y` and `y ≤ x` may be false. However, with
-   structural typing it makes it impossible to distinguish a preordered
-   structure from a totally-ordered structure.
+{- A commutative monoid implies a preorder. However, that currently forces us
+   into *Set*, so we instead just alias the non-commutative type to avoid specializing.
 -}
-    let object = Type
-
-in  let cat = ./../../Category/Monoidal/Set/cartesian
-
-in  λ(m : object) → { preLE : m → m → Optional Bool } ⩓ ./../Type object cat m
+./../Type

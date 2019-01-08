@@ -1,6 +1,3 @@
   λ(object : Kind)
 → λ(arrow : object → object → Type)
-→ λ(w : object → object)
-→ λ(a : object)
-→ λ(b : object)
-→ arrow (w a) b
+→ ./../Star/Type object (./../Category/Op/Type object arrow)

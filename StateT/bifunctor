@@ -1,0 +1,5 @@
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(product : object → object → object)
+→ λ(m : object → object)
+→ ./../State/bifunctor object (./../Star/Type object arrow m) product

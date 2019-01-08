@@ -1,36 +1,7 @@
   λ(object : Kind)
 → λ(arrow : object → object → Type)
 → λ(category : ./../Category/Type object arrow)
-→ λ(w : object → object)
-→     let costarArrow = ./../Costar/Type object arrow w
-  
-  in    λ(extract : ∀(a : object) → costarArrow a a)
-      → λ ( extend
-          :   ∀(a : object)
-            → ∀(b : object)
-            → ∀(f : costarArrow a b)
-            → arrow (w a) (w b)
-          )
-      →   { map =
-                λ(b : object)
-              → λ(a : object)
-              → λ(fn : arrow a b)
-              → extend
-                a
-                b
-                ( category.op
-                  (w a)
-                  b
-                  (   λ(r : Type)
-                    → λ ( arrowsOut
-                        : ∀(z : object) → arrow z b → arrow (w a) z → r
-                        )
-                    → arrowsOut a fn (extract a)
-                  )
-                )
-          , identity =
-              extract
-          , op =
-              λ(a : object) → extend a (w a) (category.identity (w a))
-          }
-        : ./Type object arrow w
+→ ./../Monad/fromPureBind
+  object
+  (./../Category/Op/Type object arrow)
+  (./../Category/Op/category object arrow category)

@@ -1,5 +1,7 @@
     let object = Type
 
+in  let cat = ./../../Category/Monoidal/Set/cartesian
+
 in    λ(m : object)
     → λ(ring : ./Type m)
     →   { additive =
@@ -9,4 +11,4 @@ in    λ(m : object)
         , multiplicative =
             ring.multiplicative
         }
-      : ./../Type m
+      : ./../Type object cat m

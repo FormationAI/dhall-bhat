@@ -1,0 +1,7 @@
+  λ(max : { _1 : Natural, _2 : Natural } → Natural)
+→   { additive =
+        { identity = λ(_ : {}) → 0, op = max }
+    , multiplicative =
+        ./monoid
+    }
+  : ./../UnitedMonoid/Type Type ./../Category/Monoidal/Set/cartesian Natural

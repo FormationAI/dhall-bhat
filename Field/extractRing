@@ -1,12 +1,10 @@
-    let object = Type
-
-in  let cat = ./../Category/Monoidal/Set/cartesian
-
-in    λ(m : object)
-    → λ(field : ./Type m)
-    →   { additive =
-            field.additive
-        , multiplicative =
-            ./../Group/Commutative/extractMonoid m field.multiplicative
-        }
-      : ./../Ring/Type m
+  λ(object : Kind)
+→ λ(cat : ./../Category/Monoidal/Type object)
+→ λ(m : object)
+→ λ(field : ./Type object cat m)
+→   { additive =
+        field.additive
+    , multiplicative =
+        ./../Group/Commutative/extractMonoid object cat m field.multiplicative
+    }
+  : ./../Ring/Type object cat m

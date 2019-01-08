@@ -1,5 +1,7 @@
     let object = Type
 
+in  let cat = ./../../Category/Monoidal/Set/cartesian
+
 in    λ(m : object)
     → λ(field : ./Type m)
     →   { additive =
@@ -7,6 +9,6 @@ in    λ(m : object)
             m
             field.additive
         , multiplicative =
-            field.multiplicative
+            field.multiplicative.{ identity, inverse, op }
         }
-      : ./../Type m
+      : ./../Type object cat m

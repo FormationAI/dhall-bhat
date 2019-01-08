@@ -1,10 +1,15 @@
   λ(object : Kind)
 → λ(arrow : object → object → Type)
 → λ(semigroupoid : ./../Semigroupoid/Type object arrow)
-→ λ(r : object)
-→ ./../ReaderT/withReader
-  object
-  arrow
-  semigroupoid
-  r
-  (./../Identity/Type object)
+→ λ(e : object)
+→ λ(a : object)
+→ λ(ePrime : object)
+→ λ(f : arrow ePrime e)
+→ λ(reader : ./Type object arrow e a)
+→ semigroupoid.op
+  ePrime
+  a
+  (   λ(r : Type)
+    → λ(fn : ∀(z : object) → arrow z a → arrow ePrime z → r)
+    → fn e reader f
+  )

@@ -1,5 +1,22 @@
-    let object = Type
-
-in    λ(m : object)
-    → λ(field : ./Type m)
-    → ./../Group/Commutative/quotient m field.multiplicative
+  λ(object : Kind)
+→ λ(cat : ./../Category/Monoidal/Type object)
+→ λ(category : ./../Category/Type object cat.arrow)
+→ λ ( bifunctor
+    : ./../Functor/Bifunctor/Type
+      object
+      object
+      object
+      cat.arrow
+      cat.arrow
+      cat.arrow
+      cat.product
+    )
+→ λ(m : object)
+→ λ(field : ./Type object cat m)
+→ ./../Group/Commutative/quotient
+  object
+  cat
+  category
+  bifunctor
+  m
+  field.multiplicative

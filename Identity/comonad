@@ -1,10 +1,7 @@
   λ(object : Kind)
 → λ(arrow : object → object → Type)
 → λ(category : ./../Category/Type object arrow)
-→ ./../Comonad/fromExtractExtend
+→ ./monad
   object
-  arrow
-  category
-  (./Type object)
-  category.identity
-  (λ(a : object) → λ(b : object) → λ(f : arrow a b) → f)
+  (./../Category/Op/Type object arrow)
+  (./../Category/Op/category object arrow category)

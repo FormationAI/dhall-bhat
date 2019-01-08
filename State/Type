@@ -1,1 +1,6 @@
-λ(s : Type) → ./../StateT/Type s (./../Identity/Type Type)
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(product : object → object → object)
+→ λ(s : object)
+→ λ(a : object)
+→ arrow s (product s a)

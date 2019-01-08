@@ -1,17 +1,22 @@
-    let object = Type
-
-in  let cat = ./../../Category/Monoidal/Set/cartesian
-
-in  let category = ./../../Function/category
-
-in  let bifunctor = ./../../Tuple/functor/pair
-
-in    λ(m : object)
-    → λ(group : ./Type m)
-    → ./../rightQuotient
+  λ(object : Kind)
+→ λ(cat : ./../../Category/Monoidal/Type object)
+→ λ(category : ./../../Category/Type object cat.arrow)
+→ λ ( bifunctor
+    : ./../../Functor/Bifunctor/Type
       object
-      cat
-      category
-      bifunctor
-      m
-      (./extractGroup m group)
+      object
+      object
+      cat.arrow
+      cat.arrow
+      cat.arrow
+      cat.product
+    )
+→ λ(m : object)
+→ λ(group : ./Type object cat m)
+→ ./../rightQuotient
+  object
+  cat
+  category
+  bifunctor
+  m
+  (./extractGroup object cat m group)

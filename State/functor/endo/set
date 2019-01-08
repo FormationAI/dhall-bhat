@@ -1,5 +1,0 @@
-  λ(s : Type)
-→ ./../../../StateT/functor/endo/set
-  s
-  (./../../../Identity/Type Type)
-  (./../../../Identity/functor/endo Type ./../../../Function/Type)

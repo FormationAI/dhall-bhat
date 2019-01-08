@@ -1,6 +1,4 @@
   λ(object : Kind)
 → λ(arrow : object → object → Type)
-→ λ(r : object)
 → λ(m : object → object)
-→ λ(a : object)
-→ arrow r (m a)
+→ ./../Reader/Type object (./../Star/Type object arrow m)

@@ -1,0 +1,5 @@
+{- A functor to *Set* from some other category.
+-}
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ ./Type object Type arrow ./../Function/Type

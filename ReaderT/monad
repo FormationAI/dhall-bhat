@@ -1,18 +1,24 @@
-    let ReaderT = ./Type Type ./../Function/Type
+    let object = Type
 
-in    λ(r : Type)
-    → λ(m : Type → Type)
-    → λ(monad : ./../Monad/Type Type ./../Function/Type m)
+in  let arrow = ./../Function/Type
+
+in  let category = ./../Function/category
+
+in  let ReaderT = ./Type object arrow
+
+in    λ(r : object)
+    → λ(m : object → object)
+    → λ(monad : ./../Monad/Type object arrow m)
     → ./../Monad/fromPureBind
-      Type
-      ./../Function/Type
-      ./../Function/category
-      (ReaderT r m)
-      (λ(a : Type) → λ(x : a) → λ(_ : r) → monad.identity a x)
-      (   λ(a : Type)
-        → λ(b : Type)
-        → λ(k : a → ReaderT r m b)
-        → λ(fa : ReaderT r m a)
+      object
+      arrow
+      category
+      (ReaderT m r)
+      (λ(a : object) → λ(x : a) → λ(_ : r) → monad.identity a x)
+      (   λ(a : object)
+        → λ(b : object)
+        → λ(k : a → ReaderT m r b)
+        → λ(fa : ReaderT m r a)
         → λ(env : r)
         → monad.op b (monad.map a (m b) (λ(x : a) → k x env) (fa env))
       )

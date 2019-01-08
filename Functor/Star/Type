@@ -1,0 +1,6 @@
+{- A functor from a Kleisli category to the underlying non-Kleisli category.
+-}
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(m : object → object)
+→ ./../Type object object (./../../Star/Type object arrow m) arrow

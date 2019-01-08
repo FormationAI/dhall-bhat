@@ -4,4 +4,4 @@
     , op =
         λ(x : { _1 : List a, _2 : List a }) → x._1 # x._2
     }
-  : ./../Monoid/Set (List a)
+  : ./../Monoid/Type Type ./../Category/Monoidal/Set/cartesian (List a)

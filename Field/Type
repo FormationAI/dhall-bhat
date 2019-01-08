@@ -1,8 +1,8 @@
-    let object = Type
-
-in    λ(m : object)
-    → { additive :
-          ./../Group/Commutative/Type m
-      , multiplicative :
-          ./../Group/Commutative/Type m
-      }
+  λ(object : Kind)
+→ λ(cat : ./../Category/Monoidal/Type object)
+→ λ(m : object)
+→ { additive :
+      ./../Group/Commutative/Type object cat m
+  , multiplicative :
+      ./../Group/Commutative/Type object cat m
+  }

@@ -4,5 +4,5 @@ in    λ(m : object)
     → { additive :
           ./../../Group/OrderedCommutative/Type m
       , multiplicative :
-          ./../../Group/Commutative/Type m
+          ./../../Group/Commutative/Set m
       }

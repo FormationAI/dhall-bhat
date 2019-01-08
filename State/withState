@@ -1,1 +1,26 @@
-λ(s : Type) → ./../StateT/withState s (./../Identity/Type Type)
+{-  This is basically
+
+        ./bifunctor.map
+        { _1 : s, _2 : a }
+        { _1 : s, _2 : a }
+        { _1 = { _1 = f, _2 = category.id }, _2 = category.id}
+
+    but this implementation is less constrained.
+-}
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ λ(product : object → object → object)
+→ λ(semigroupoid : ./../Semigroupoid/Type object arrow)
+→     let State = ./Type object arrow product
+  
+  in    λ(s : object)
+      → λ(a : object)
+      → λ(f : arrow s s)
+      → λ(state : State s a)
+      → semigroupoid.op
+        s
+        (product s a)
+        (   λ(r : Type)
+          → λ(arrowsOut : ∀(z : object) → arrow z (product s a) → arrow s z → r)
+          → arrowsOut s state f
+        )

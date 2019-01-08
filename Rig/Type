@@ -2,13 +2,11 @@
    described in https://ncatlab.org/nlab/show/rig, reserving “semiring” for a
    rig without multiplicative identity.
 -}
-    let object = Type
-
-in  let cat = ./../Category/Monoidal/Set/cartesian
-
-in    λ(m : object)
-    → { additive :
-          ./../Monoid/Commutative/Type m
-      , multiplicative :
-          ./../Monoid/Type object cat m
-      }
+  λ(object : Kind)
+→ λ(cat : ./../Category/Monoidal/Type object)
+→ λ(m : object)
+→ { additive :
+      ./../Monoid/Commutative/Type object cat m
+  , multiplicative :
+      ./../Monoid/Type object cat m
+  }

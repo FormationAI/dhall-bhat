@@ -3,4 +3,4 @@
   , op =
       λ(p : { _1 : Bool, _2 : Bool }) → p._1 || p._2
   }
-: ./../../Monoid/Set Bool
+: ./../../Monoid/Type Type ./../../Category/Monoidal/Set/cartesian Bool

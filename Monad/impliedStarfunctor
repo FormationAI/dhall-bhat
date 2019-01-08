@@ -15,4 +15,4 @@
             → arrowsOut (m (m b)) (monad.op b) (monad.map a (m b) f)
           )
     }
-  : ./../Functor/ToTypes/Star/Type object arrow m m
+  : ./../Functor/Star/Type object arrow m m

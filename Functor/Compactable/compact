@@ -4,4 +4,4 @@
 → compactable.map
   (Optional a)
   a
-  ((./../../../Function/category).identity (Optional a))
+  ((./../../Function/category).identity (Optional a))

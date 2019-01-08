@@ -1,0 +1,12 @@
+    let object = Type
+
+in  let cat = ./../../Category/Monoidal/Set/cartesian
+
+in    λ(m : object)
+    → λ(ring : ./Set m)
+    →   { additive =
+            ring.additive.{ identity, inverse, op }
+        , multiplicative =
+            ./../../Monoid/Commutative/extractMonoid m ring.multiplicative
+        }
+      : ./../Type object cat m

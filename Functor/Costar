@@ -1,0 +1,4 @@
+{- A functor from a Cokleisli category to the underlying category -}
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→ ./Star/Type object (./../Category/Op/Type object arrow)

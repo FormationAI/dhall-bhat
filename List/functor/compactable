@@ -13,4 +13,4 @@
         )
         ([] : List b)
   }
-: ./../../../Functor/ToTypes/Compactable/type List
+: ./../../Functor/Compactable/Type List

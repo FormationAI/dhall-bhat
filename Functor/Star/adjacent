@@ -6,7 +6,7 @@
 -}
   λ(object : Kind)
 → λ(arrow : object → object → Type)
-→ λ(category : ./../../../Category/Type object arrow)
+→ λ(category : ./../../Category/Type object arrow)
 → λ(m : object → object)
 → λ(n : object → object)
 → λ(natural : ∀(a : object) → arrow (m a) (n a))

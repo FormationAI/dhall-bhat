@@ -1,5 +1,16 @@
-    let object = Type
-
-in    λ(m : object)
-    → λ(ring : ./Type m)
-    → ./../Group/Commutative/quotient m ring.additive
+  λ(object : Kind)
+→ λ(cat : ./../Category/Monoidal/Type object)
+→ λ(category : ./../Category/Type object cat.arrow)
+→ λ ( bifunctor
+    : ./../Functor/Bifunctor/Type
+      object
+      object
+      object
+      cat.arrow
+      cat.arrow
+      cat.arrow
+      cat.product
+    )
+→ λ(m : object)
+→ λ(ring : ./Type object cat m)
+→ ./../Group/Commutative/quotient object cat category bifunctor m ring.additive

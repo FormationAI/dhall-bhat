@@ -1,14 +1,21 @@
-    let Monad = ./../Monad/Type Type ./../Function/Type
+    let object = Type
 
-in  let ReaderT = ./Type Type ./../Function/Type
+in  let arrow = ./../Function/Type
 
-in    λ(r : Type)
+in  let Monad = ./../Monad/Type object arrow
+
+in  let ReaderT = ./Type object arrow
+
+in    λ(r : object)
     →   { lift =
-              λ(m : Type → Type)
+              λ(m : object → object)
             → λ(monad : Monad m)
-            → λ(a : Type)
+            → λ(a : object)
             → λ(ma : m a)
             → λ(env : r)
             → ma
         }
-      : ./../Transformer/Type (ReaderT r)
+      : ./../Transformer/Type
+        object
+        arrow
+        (λ(m : object → object) → ReaderT m r)

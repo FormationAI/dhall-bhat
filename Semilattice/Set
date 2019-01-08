@@ -1,0 +1,4 @@
+    let object = Type
+
+in    λ(m : object)
+    → { partialLE : m → m → Optional Bool } ⩓ ./../Monoid/Commutative/Set m

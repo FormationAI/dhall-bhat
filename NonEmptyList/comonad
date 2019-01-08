@@ -4,8 +4,8 @@ Type
 ./../Function/category
 ./Type
 (λ(a : Type) → λ(nel : ./Type a) → nel.head)
-(   λ(a : Type)
-  → λ(b : Type)
+(   λ(b : Type)
+  → λ(a : Type)
   → λ(f : ./Type a → b)
   → λ(nel : ./Type a)
   → { head = f nel, tail = [] : List b }

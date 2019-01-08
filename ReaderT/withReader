@@ -6,7 +6,7 @@
 → λ(a : object)
 → λ(ePrime : object)
 → λ(f : arrow ePrime e)
-→ λ(reader : ./Type object arrow e m a)
+→ λ(reader : ./Type object arrow m e a)
 → semigroupoid.op
   ePrime
   (m a)

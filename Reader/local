@@ -2,4 +2,5 @@
 → λ(arrow : object → object → Type)
 → λ(semigroupoid : ./../Semigroupoid/Type object arrow)
 → λ(r : object)
-→ ./../ReaderT/local object arrow semigroupoid r (./../Identity/Type object)
+→ λ(a : object)
+→ ./withReader object arrow semigroupoid r a r

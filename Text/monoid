@@ -3,4 +3,4 @@
   , op =
       λ(a : { _1 : Text, _2 : Text }) → a._1 ++ a._2
   }
-: ./../Monoid/Set Text
+: ./../Monoid/Type Type ./../Category/Monoidal/Set/cartesian Text

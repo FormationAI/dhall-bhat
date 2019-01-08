@@ -1,6 +1,6 @@
     let Foldable = ./Type
 
-in  let Monoid = ./../Monoid/Set
+in  let Monoid = ./../Monoid/Type Type ./../Category/Monoidal/Set/cartesian
 
 in    λ(m : Type)
     → λ(monoid : Monoid m)

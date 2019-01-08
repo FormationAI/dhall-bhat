@@ -3,4 +3,4 @@
   , op =
       λ(t : { _1 : Natural, _2 : Natural }) → t._1 + t._2
   }
-: ./../Monoid/Set Natural
+: ./../Monoid/Type Type ./../Category/Monoidal/Set/cartesian Natural

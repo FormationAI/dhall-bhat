@@ -1,0 +1,7 @@
+  ./../../Monad/impliedStarfunctor
+  Type
+  ./../../Function/Type
+  ./../../Function/semigroupoid
+  Optional
+  ./../monad
+: ./../../Functor/Compactable/type Optional
