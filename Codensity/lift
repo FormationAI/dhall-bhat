@@ -5,4 +5,4 @@
   (./../Monad/extractFunctor f monad)
   f
   f
-  (./../Monad/package.dhall f monad).join
+  (./../Monad/terms.dhall f monad).join
