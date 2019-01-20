@@ -19,11 +19,13 @@ It’s common to define a type and a number of related expressions for it. When 
   - Type (the file containing the type itself, capitalized)
   - functor (file contaning a Functor instance for this type, lowercase)
   - op (some operation defined on this type, lowercase)
-  - package.dhall (file contanining a record of all the terms related to this type)
+  - terms.dhall (file contanining a record of all the terms related to this type)
 
 ### use `dhall format`
 
-`make format` (or, even better, `make lint`) in this repo will automatically apply this to the entire repository.
+`make format` in this repo will automatically apply this to the entire repository.
+
+`make lint` implies `format`, but you should only do it when you don’t have work-in-progress (e.g., when you’re about to commit), as it will additionally remove any unused subexpressions.
 
 **NB**: `dhall format` (and `lint`) currently [removes all comments from the file](https://github.com/dhall-lang/dhall-haskell/issues/145) except for a single “heading” comment. So be careful that you don’t lose important comments this way.
 
@@ -57,8 +59,6 @@ This is because it isn’t enough that they have a valid type, but that type nee
 
 ### don’t define type class methods in their own files
 
-Rather than making each definition its own file, we tend to define methods within the instance. One reason for this is that there are often _multiple_ instances of a type class for a single type, so it’s not always clear which one should be “blessed” at the top-level. E.g., having two incompatible `Applicative` instances isn’t unusual, so defining a “./Foo/ap” can be confusing.
+Rather than making each definition its own file, we tend to define methods within the instance. One reason for this is that there are often _multiple_ instances of a type class for a single type, so it’s not always clear which one should be “blessed” at the top-level. E.g., having two incompatible `Applicative` instances isn’t unusual, so defining a “./Foo/ap” can be confusing. See “Either/Sequential/applicative” and “Either/Parallel/applicative” for an example of how multiple instances are defined.
 
-It’s also the case that those methods don’t really have meaning outside of the laws that relate them to the type class, so we constrain the definition to where those laws apply. So we keep those names scoped to the classes, and then also expose them through “./Foo/package.dhall” module that provides names for all operations of a type.
-
-**NB**: We will eventually [replace “package.dhall” with “terms.dhall”](https://github.com/FormationAI/dhall-bhat/issues/46).
+It’s also the case that those methods don’t really have meaning outside of the laws that relate them to the type class, so we constrain the definition to where those laws apply. So we keep those names scoped to the classes, and then also expose them through “./Foo/terms.dhall” module that provides names for all operations of a type.
