@@ -1,29 +1,32 @@
-  λ(m : Type → Type)
-→ λ(applicative : ./../../../Applicative/Type m)
-→     let NonEmpty = ./../../Type
-  
-  in  let List/mFunctor = ./../../../List/functor/endo/star m applicative
-  
-  in    { map =
-              λ(a : Type)
-            → λ(b : Type)
-            → λ(f : a → m b)
-            → λ(fa : NonEmpty a)
-            → ./../../../Applicative/ap
-              m
-              applicative
-              (List b)
-              (NonEmpty b)
-              ( (./../../../Applicative/impliedEndofunctor m applicative).map
-                b
-                (List b → NonEmpty b)
-                (λ(h : b) → λ(t : List b) → { head = h, tail = t })
-                (f fa.head)
-              )
-              (List/mFunctor.map a b f fa.tail)
-        }
-      : ./../../../Functor/Endo/Star/Type
-        Type
-        ./../../../Function/Type
-        m
-        NonEmpty
+    let cat = ./../../../Category/Monoidal/Set/cartesian
+
+in    λ(m : Type → Type)
+    → λ(applicative : ./../../../Applicative/Type cat m)
+    →     let NonEmpty = ./../../Type
+      
+      in  let List/mFunctor = ./../../../List/functor/endo/star m applicative
+      
+      in    { map =
+                  λ(a : Type)
+                → λ(b : Type)
+                → λ(f : a → m b)
+                → λ(fa : NonEmpty a)
+                → ./../../../Applicative/ap
+                  m
+                  applicative
+                  (List b)
+                  (NonEmpty b)
+                  ( ( ./../../../Applicative/impliedEndofunctor m applicative
+                    ).map
+                    b
+                    (List b → NonEmpty b)
+                    (λ(h : b) → λ(t : List b) → { head = h, tail = t })
+                    (f fa.head)
+                  )
+                  (List/mFunctor.map a b f fa.tail)
+            }
+          : ./../../../Functor/Endo/Star/Type
+            Type
+            ./../../../Function/Type
+            m
+            NonEmpty

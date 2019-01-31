@@ -1,4 +1,6 @@
-    let cObject = Type
+    let cat = ./../Category/Monoidal/Set/cartesian
+
+in  let cObject = Type
 
 in  let cpObject = Type
 
@@ -7,7 +9,7 @@ in  let cpArrow = ./../Function/Type
 in  let dObject = Type
 
 in    λ(p : cObject → cpObject)
-    → λ(applicative : ./../Applicative/Type p)
+    → λ(applicative : ./../Applicative/Type cat p)
     → λ(f : cObject → dObject)
     → λ(a : cpObject)
     → λ(ran : ./Type cObject cpObject cpArrow p f a)

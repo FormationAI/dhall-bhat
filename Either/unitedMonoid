@@ -1,0 +1,18 @@
+    let object = Type
+
+in  let cat = ./../Category/Monoidal/Set/cartesian
+
+in  let CommutativeSemigroup =
+          ./../Semigroup/Commutative/Type object cat.arrow cat.op
+
+in    λ(a : Type)
+    → λ(semigroup : CommutativeSemigroup a)
+    →   { additive =
+            ./applicative/parallel a semigroup
+        , multiplicative =
+            ./applicative/sequential a
+        }
+      : ./../UnitedMonoid/Type
+        (object → object)
+        (./../Category/Monoidal/Endofunctor/applicative cat)
+        (./Type a)

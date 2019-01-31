@@ -1,8 +1,1 @@
-  { arrow =
-      ./../../../Function/Type
-  , product =
-      ./../../../Tuple/Type
-  , identity =
-      {}
-  }
-: ./../Type Type
+./../../Rig/extractMultiplicative Type ./../../Rig/Set

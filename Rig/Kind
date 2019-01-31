@@ -1,0 +1,10 @@
+{- This is what is often called a “semiring”, but here we follow the convention
+   described in https://ncatlab.org/nlab/show/rig, reserving “semiring” for a
+   rig without multiplicative identity.
+-}
+  λ(m : Kind)
+→ { additive :
+      ./../Monoid/Commutative/Kind m
+  , multiplicative :
+      ./../Monoid/Kind m
+  }

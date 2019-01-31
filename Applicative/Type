@@ -1,17 +1,6 @@
-    let cObject = Type
+    let object = Type
 
-in  let c = ./../Category/Monoidal/Set/cartesian
-
-in  let dObject = Type
-
-in  let d = ./../Category/Monoidal/Set/cartesian
-
-in  ./../Monoid/Type
-    (cObject → dObject)
-    { arrow =
-        ./../NaturalTransformation/Type cObject dObject d.arrow
-    , product =
-        ./../Day/Type cObject c d
-    , identity =
-        ./../Identity/Type dObject
-    }
+in    λ(cat : ./../Category/Monoidal/Type object)
+    → ./../Monoid/Type
+      (object → object)
+      (./../Category/Monoidal/Endofunctor/applicative cat)

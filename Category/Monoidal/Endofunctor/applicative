@@ -1,0 +1,6 @@
+    let object = Type
+
+in    λ(cat : ./../../Monoidal/Type object)
+    → ./../../Duoidal/extractAdditive
+      (object → object)
+      (./../../Duoidal/Endofunctor cat)

@@ -9,19 +9,19 @@
       cat.arrow
       cat.arrow
       cat.arrow
-      cat.product
+      cat.op
     )
 → λ(m : object)
 → λ(group : ./Type object cat m)
 → category.op
-  (cat.product m m)
+  (cat.op m m)
   m
   (   λ(r : Type)
     → λ ( arrowsOut
-        : ∀(z : object) → cat.arrow z m → cat.arrow (cat.product m m) z → r
+        : ∀(z : object) → cat.arrow z m → cat.arrow (cat.op m m) z → r
         )
     → arrowsOut
-      (cat.product m m)
+      (cat.op m m)
       group.op
       ( ( ./../Functor/Bifunctor/impliedFirstFunctor
           object
@@ -31,7 +31,7 @@
           category
           object
           cat.arrow
-          cat.product
+          cat.op
           bifunctor
           m
         ).map

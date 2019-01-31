@@ -6,6 +6,6 @@
   ∧ ./../Semigroup/terms.dhall
     object
     cat.arrow
-    cat.product
+    cat.op
     m
     (./extractSemigroup object cat m monoid)

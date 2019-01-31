@@ -7,7 +7,7 @@
 → λ(cat : ./../Category/Monoidal/Type object)
 → λ(m : object)
 → { additive :
-      ./../Semigroup/Type object cat.arrow cat.product m
+      ./../Semigroup/Type object cat.arrow cat.op m
   , multiplicative :
       ./../Monoid/Type object cat m
   }

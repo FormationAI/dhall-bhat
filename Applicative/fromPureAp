@@ -2,40 +2,42 @@
    using `ap` instead of the monoidal product (`op`). This function generates a
    monoidal definiton from a Haskell-style one.
 -}
-  λ(m : Type → Type)
-→ λ(pure : ∀(a : Type) → a → m a)
-→ λ(ap : ∀(a : Type) → ∀(b : Type) → m (a → b) → m a → m b)
-→   { identity =
-        pure
-    , op =
-          λ(i : Type)
-        → λ ( day
-            :   ∀(r : Type)
-              → (   ∀(d : { _1 : Type, _2 : Type })
-                  → ({ _1 : d._1, _2 : d._2 } → i)
-                  → { _1 : m d._1, _2 : m d._2 }
+    let cat = ./../Category/Monoidal/Set/cartesian
+
+in    λ(m : Type → Type)
+    → λ(pure : ∀(a : Type) → a → m a)
+    → λ(ap : ∀(a : Type) → ∀(b : Type) → m (a → b) → m a → m b)
+    →   { identity =
+            pure
+        , op =
+              λ(i : Type)
+            → λ ( day
+                :   ∀(r : Type)
+                  → (   ∀(d : { _1 : Type, _2 : Type })
+                      → ({ _1 : d._1, _2 : d._2 } → i)
+                      → { _1 : m d._1, _2 : m d._2 }
+                      → r
+                    )
                   → r
                 )
-              → r
-            )
-        → day
-          (m i)
-          (   λ(p : { _1 : Type, _2 : Type })
-            → λ(fn : { _1 : p._1, _2 : p._2 } → i)
-            → λ(args : { _1 : m p._1, _2 : m p._2 })
-            → ap
-              p._2
-              i
-              ( ap
-                p._1
-                (p._2 → i)
-                ( pure
-                  (p._1 → p._2 → i)
-                  (λ(x : p._1) → λ(y : p._2) → fn { _1 = x, _2 = y })
-                )
-                args._1
+            → day
+              (m i)
+              (   λ(p : { _1 : Type, _2 : Type })
+                → λ(fn : { _1 : p._1, _2 : p._2 } → i)
+                → λ(args : { _1 : m p._1, _2 : m p._2 })
+                → ap
+                  p._2
+                  i
+                  ( ap
+                    p._1
+                    (p._2 → i)
+                    ( pure
+                      (p._1 → p._2 → i)
+                      (λ(x : p._1) → λ(y : p._2) → fn { _1 = x, _2 = y })
+                    )
+                    args._1
+                  )
+                  args._2
               )
-              args._2
-          )
-    }
-  : ./Type m
+        }
+      : ./Type cat m

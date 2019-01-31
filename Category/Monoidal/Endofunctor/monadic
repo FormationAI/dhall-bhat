@@ -1,0 +1,13 @@
+{- NB: This doesn’t use `Duoidal/extractMultiplicative` because that has a fixed
+      `object`.
+-}
+  λ(object : Kind)
+→ λ(arrow : object → object → Type)
+→   { arrow =
+        ./../../../NaturalTransformation/Type object object arrow
+    , identity =
+        ./../../../Identity/Type object
+    , op =
+        ./../../../Compose/Type object object object
+    }
+  : ./../Type (object → object)

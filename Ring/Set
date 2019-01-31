@@ -1,12 +1,10 @@
-  λ(object : Kind)
-→ λ(cat : ./../Category/Monoidal/Type object)
-→     let object = Type
-  
-  in  let cat = ./../Category/Monoidal/Set/cartesian
-  
-  in    λ(m : object)
-      → { additive :
-            ./../Group/Commutative/Set m
-        , multiplicative :
-            ./../Monoid/Type object cat m
-        }
+    let object = Type
+
+in  let cat = ./../Category/Monoidal/Set/cartesian
+
+in    λ(m : object)
+    → { additive :
+          ./../Group/Commutative/Set m
+      , multiplicative :
+          ./../Monoid/Type object cat m
+      }

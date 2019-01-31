@@ -9,7 +9,7 @@
       cat.arrow
       cat.arrow
       cat.arrow
-      cat.product
+      cat.op
     )
 → λ(m : object)
 → λ(group : ./Type object cat m)

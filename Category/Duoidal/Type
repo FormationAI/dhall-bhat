@@ -1,0 +1,2 @@
+  λ(object : Kind)
+→ { arrow : object → object → Type } ⩓ ./../../UnitedMonoid/Kind object

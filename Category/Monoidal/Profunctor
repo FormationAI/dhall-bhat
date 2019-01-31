@@ -6,7 +6,7 @@
                 λ(p : profunctor)
               → λ(q : profunctor)
               → ∀(a : object) → ∀(b : object) → p a b → q a b
-          , product =
+          , op =
                 λ(p : profunctor)
               → λ(q : profunctor)
               → λ(a : object)

@@ -8,5 +8,5 @@
       → λ(a : cObject)
       → λ(r : vObject)
       →   ∀(b : { _1 : cObject, _2 : cObject })
-        → c.arrow (c.product b._1 b._2) a
-        → v.arrow (v.product (f b._1) (g b._2)) r
+        → c.arrow (c.op b._1 b._2) a
+        → v.arrow (v.op (f b._1) (g b._2)) r

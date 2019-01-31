@@ -1,20 +1,22 @@
-  λ(m : Type → Type)
-→ λ(applicative : ./../../../Applicative/Type m)
-→ λ(a : Type)
-→   { map =
-          λ(b : Type)
-        → λ(c : Type)
-        → λ(f : b → m c)
-        → ( ./../pair
-            m
-            (./../../../Applicative/impliedEndofunctor m applicative)
-          ).map
-          { _1 = a, _2 = b }
-          { _1 = a, _2 = c }
-          { _1 = applicative.identity a, _2 = f }
-    }
-  : ./../../../Functor/Endo/Star/Type
-    Type
-    ./../../../Function/Type
-    m
-    (./../../Type a)
+    let cat = ./../../../Category/Monoidal/Set/cartesian
+
+in    λ(m : Type → Type)
+    → λ(applicative : ./../../../Applicative/Type cat m)
+    → λ(a : Type)
+    →   { map =
+              λ(b : Type)
+            → λ(c : Type)
+            → λ(f : b → m c)
+            → ( ./../pair
+                m
+                (./../../../Applicative/impliedEndofunctor m applicative)
+              ).map
+              { _1 = a, _2 = b }
+              { _1 = a, _2 = c }
+              { _1 = applicative.identity a, _2 = f }
+        }
+      : ./../../../Functor/Endo/Star/Type
+        Type
+        ./../../../Function/Type
+        m
+        (./../../Type a)

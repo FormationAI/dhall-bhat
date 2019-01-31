@@ -11,4 +11,4 @@
       →     let cat = ./../Category/Monoidal/Profunctor object morphism
         
         in    { identity : ∀(a : object) → morphism a a }
-            ⩓ ./../Semigroup/Type profunctor cat.arrow cat.product morphism
+            ⩓ ./../Semigroup/Type profunctor cat.arrow cat.op morphism

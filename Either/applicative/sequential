@@ -1,5 +1,7 @@
-    let Either = ./../Type
+    let cat = ./../../Category/Monoidal/Set/cartesian
+
+in  let Either = ./../Type
 
 in    λ(a : Type)
     →   ./../../Monad/impliedApplicative (Either a) (./../monad a)
-      : ./../../Applicative/Type (Either a)
+      : ./../../Applicative/Type cat (Either a)

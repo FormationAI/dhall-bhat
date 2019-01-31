@@ -1,0 +1,9 @@
+{- A united monoid is actually a pair of monoids with a shared `identity`. The
+  `additive.op` distributes over the `multiplicative.op` as well.
+-}
+  λ(m : Kind)
+→ { additive :
+      ./../Semilattice/Bounded/Kind m
+  , multiplicative :
+      ./../Monoid/Kind m
+  }

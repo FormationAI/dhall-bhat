@@ -17,20 +17,20 @@
               → day
                 (Day f g b)
                 (   λ(d : { _1 : cObject, _2 : cObject })
-                  → λ(fn2 : c.arrow (c.product d._1 d._2) a)
-                  → λ(e : v.product (f d._1) (g d._2))
+                  → λ(fn2 : c.arrow (c.op d._1 d._2) a)
+                  → λ(e : v.op (f d._1) (g d._2))
                   → λ(r0 : vObject)
                   → λ(day0 : ./convolution cObject c v f g b r0)
                   → day0
                     d
                     ( semigroupoid.op
-                      (c.product d._1 d._2)
+                      (c.op d._1 d._2)
                       b
                       (   λ(r : Type)
                         → λ ( arrowsOut
                             :   ∀(z : cObject)
                               → c.arrow z b
-                              → c.arrow (c.product d._1 d._2) z
+                              → c.arrow (c.op d._1 d._2) z
                               → r
                             )
                         → arrowsOut a fn fn2

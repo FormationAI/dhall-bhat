@@ -9,5 +9,5 @@
         { _1 : cObject, _2 : cObject }
         cObject
         c.arrow
-        (λ(p : { _1 : cObject, _2 : cObject }) → c.product p._1 p._2)
-        (λ(p : { _1 : cObject, _2 : cObject }) → v.product (f p._1) (g p._2))
+        (λ(p : { _1 : cObject, _2 : cObject }) → c.op p._1 p._2)
+        (λ(p : { _1 : cObject, _2 : cObject }) → v.op (f p._1) (g p._2))

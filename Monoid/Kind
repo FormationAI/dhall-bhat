@@ -1,0 +1,1 @@
+λ(m : Kind) → { identity : m } ⩓ ./../Semigroup/Kind m

@@ -103,7 +103,7 @@
       , Ring =
           ./../../Ring/Type object cat
       , Semigroup =
-          ./../../Semigroup/Type object cat.arrow cat.product
+          ./../../Semigroup/Type object cat.arrow cat.op
       , Semigroupoid =
           ./../../Semigroupoid/Type object
       , Semiring =
@@ -111,9 +111,9 @@
       , Star =
           Star
       , State =
-          ./../../State/Type object cat.arrow cat.product
+          ./../../State/Type object cat.arrow cat.op
       , StateT =
-          ./../../StateT/Type object cat.arrow cat.product
+          ./../../StateT/Type object cat.arrow cat.op
       , Strong =
           ./../../Strong/Type object object cat.arrow cat.arrow
       , Transformer =

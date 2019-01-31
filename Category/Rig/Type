@@ -1,0 +1,1 @@
+λ(object : Kind) → { arrow : object → object → Type } ⩓ ./../../Rig/Kind object

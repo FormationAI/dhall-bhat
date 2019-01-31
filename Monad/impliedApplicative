@@ -31,4 +31,4 @@ in    λ(f : object → object)
                   )
               )
         }
-      : ./../Applicative/Type f
+      : ./../Applicative/Type cat f

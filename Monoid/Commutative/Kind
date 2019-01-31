@@ -1,0 +1,5 @@
+{- A commutative monoid implies a preorder. However, that currently forces us
+   into *Set*, so we instead just alias the non-commutative type to avoid
+   specializing.
+-}
+./../Kind

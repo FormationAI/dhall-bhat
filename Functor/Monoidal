@@ -12,6 +12,6 @@
     , op :
           ∀(a : cObject)
         → ∀(b : cObject)
-        → d.arrow (d.product (f a) (f b)) (f (c.product a b))
+        → d.arrow (d.op (f a) (f b)) (f (c.op a b))
     }
   ⩓ ./Type cObject dObject c.arrow d.arrow f

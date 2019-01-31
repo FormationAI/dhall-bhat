@@ -1,0 +1,21 @@
+{- NB: `object` is fixed because of `Day/Type`.
+-}
+    let object = Type
+
+in    λ(cat : ./../../Category/Monoidal/Type object)
+    →   { arrow =
+            ./../../NaturalTransformation/Type object object cat.arrow
+        , additive =
+            { identity =
+                ./../../Identity/Type object
+            , op =
+                ./../../Day/Type object cat cat
+            }
+        , multiplicative =
+            { identity =
+                ./../../Identity/Type object
+            , op =
+                ./../../Compose/Type object object object
+            }
+        }
+      : ./Type (object → object)

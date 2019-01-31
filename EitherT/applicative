@@ -1,4 +1,6 @@
-    let Applicative = ./../Applicative/Type
+    let cat = ./../Category/Monoidal/Set/cartesian
+
+in  let Applicative = ./../Applicative/Type cat
 
 in  let Either = ./../Either/Type
 

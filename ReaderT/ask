@@ -1,5 +1,7 @@
-  λ(r : Type)
-→ λ(m : Type → Type)
-→ λ(applicative : ./../Applicative/Type m)
-→ λ(env : r)
-→ applicative.identity r env
+    let cat = ./../Category/Monoidal/Set/cartesian
+
+in    λ(r : Type)
+    → λ(m : Type → Type)
+    → λ(applicative : ./../Applicative/Type cat m)
+    → λ(env : r)
+    → applicative.identity r env

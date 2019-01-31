@@ -1,0 +1,10 @@
+  λ(object : Kind)
+→ λ(rig : ./Type object)
+→   { arrow =
+        rig.arrow
+    , identity =
+        rig.multiplicative.identity
+    , op =
+        rig.multiplicative.op
+    }
+  : ./../Monoidal/Type object

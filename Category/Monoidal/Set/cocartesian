@@ -1,8 +1,1 @@
-  { arrow =
-      ./../../../Function/Type
-  , product =
-      ./../../../Either/Type
-  , identity =
-      <>
-  }
-: ./../Type Type
+./../../Rig/extractAdditive Type ./../../Rig/Set

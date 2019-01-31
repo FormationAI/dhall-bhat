@@ -9,7 +9,7 @@ in  let c = ./../Category/Monoidal/Set/cartesian
 
 in  let dObject = Type
 
-in  let Applicative = ./../Applicative/Type
+in  let Applicative = ./../Applicative/Type c
 
 in  let Compose = ./Type cObject dObject cObject
 

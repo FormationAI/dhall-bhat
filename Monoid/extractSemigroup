@@ -2,4 +2,4 @@
 → λ(cat : ./../Category/Monoidal/Type object)
 → λ(m : object)
 → λ(monoid : ./Type object cat m)
-→ monoid.{ op } : ./../Semigroup/Type object cat.arrow cat.product m
+→ monoid.{ op } : ./../Semigroup/Type object cat.arrow cat.op m

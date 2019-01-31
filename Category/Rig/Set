@@ -1,0 +1,8 @@
+  { arrow =
+      ./../../Function/Type
+  , additive =
+      { identity = <>, op = ./../../Either/Type }
+  , multiplicative =
+      { identity = {}, op = ./../../Tuple/Type }
+  }
+: ./Type Type

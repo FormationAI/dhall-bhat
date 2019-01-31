@@ -2,7 +2,7 @@
 
 in  let cat = ./../../Category/Monoidal/Set/cartesian
 
-in  let Semigroup = ./../../Semigroup/Type object cat.arrow cat.product
+in  let Semigroup = ./../../Semigroup/Type object cat.arrow cat.op
 
 in  let Either = ./../Type
 

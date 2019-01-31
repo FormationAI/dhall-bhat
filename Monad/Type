@@ -7,11 +7,5 @@
 →   ./../Functor/Endo/Type object arrow m
   ⩓ ./../Monoid/Type
     (object → object)
-    { arrow =
-        ./../NaturalTransformation/Type object object arrow
-    , product =
-        ./../Compose/Type object object object
-    , identity =
-        ./../Identity/Type object
-    }
+    (./../Category/Monoidal/Endofunctor/monadic object arrow)
     m
