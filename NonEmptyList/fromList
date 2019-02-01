@@ -1,16 +1,20 @@
-  λ(a : Type)
-→ λ(list : List a)
-→ List/fold
-  a
-  list
-  (Optional (./Type a))
-  (   λ(x : a)
-    → λ(acc : Optional (./Type a))
-    → Optional/fold
-      (./Type a)
-      acc
-      (Optional (./Type a))
-      (λ(nel : ./Type a) → Some { head = x, tail = [ nel.head ] # nel.tail })
-      (Some { head = x, tail = [] : List a })
-  )
-  (None (./Type a))
+let NonEmpty = ./Type
+
+in    λ(a : Type)
+    → λ(list : List a)
+    → List/fold
+      a
+      list
+      (Optional (NonEmpty a))
+      (   λ(x : a)
+        → λ(acc : Optional (NonEmpty a))
+        → Optional/fold
+          (NonEmpty a)
+          acc
+          (Optional (NonEmpty a))
+          (   λ(nel : NonEmpty a)
+            → Some { head = x, tail = [ nel.head ] # nel.tail }
+          )
+          (Some { head = x, tail = [] : List a })
+      )
+      (None (NonEmpty a))
