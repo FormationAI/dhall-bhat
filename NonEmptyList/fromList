@@ -1,0 +1,16 @@
+  λ(a : Type)
+→ λ(list : List a)
+→ List/fold
+  a
+  list
+  (Optional (./Type a))
+  (   λ(x : a)
+    → λ(acc : Optional (./Type a))
+    → Optional/fold
+      (./Type a)
+      acc
+      (Optional (./Type a))
+      (λ(nel : ./Type a) → Some { head = x, tail = [ nel.head ] # nel.tail })
+      (Some { head = x, tail = [] : List a })
+  )
+  (None (./Type a))
