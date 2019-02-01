@@ -1,3 +1,19 @@
+{-
+
+Create a NonEmptyList from a List as long as there is at least one element
+in the List; otherwise, return None.
+
+Examples:
+
+```
+./NonEmptyList/fromList Natural [1, 2, 3, 4, 5]
+= Some { head = 1, tail = [ 2, 3, 4, 5 ] }
+
+./NonEmptyList/fromList Natural ([] : List Natural)
+= None { head : Natural, tail : List Natural }
+```
+
+-}
 let NonEmpty = ./Type
 
 in    λ(a : Type)
