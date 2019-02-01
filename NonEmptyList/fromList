@@ -14,23 +14,23 @@ Examples:
 ```
 
 -}
-let NonEmpty = ./Type
+    let NonEmptyList = ./Type
 
 in    λ(a : Type)
     → λ(list : List a)
     → List/fold
       a
       list
-      (Optional (NonEmpty a))
+      (Optional (NonEmptyList a))
       (   λ(x : a)
-        → λ(acc : Optional (NonEmpty a))
+        → λ(acc : Optional (NonEmptyList a))
         → Optional/fold
-          (NonEmpty a)
+          (NonEmptyList a)
           acc
-          (Optional (NonEmpty a))
-          (   λ(nel : NonEmpty a)
+          (Optional (NonEmptyList a))
+          (   λ(nel : NonEmptyList a)
             → Some { head = x, tail = [ nel.head ] # nel.tail }
           )
           (Some { head = x, tail = [] : List a })
       )
-      (None (NonEmpty a))
+      (None (NonEmptyList a))
