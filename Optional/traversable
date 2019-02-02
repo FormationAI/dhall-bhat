@@ -16,12 +16,8 @@ in      ./foldable
               ts
               (f (Optional b))
               (   λ(x : a)
-                → applicative.map
-                  b
-                  (Optional b)
-                  (λ(y : b) → [ y ] : Optional b)
-                  (g x)
+                → applicative.map b (Optional b) (λ(y : b) → Some y) (g x)
               )
-              (applicative.pure (Optional b) ([] : Optional b))
+              (applicative.pure (Optional b) (None b))
         }
     : Traversable Optional
