@@ -1,0 +1,5 @@
+  ./../Compactable/fromSeparate
+  List
+  ./functor
+  (λ(a : Type) → λ(b : Type) → ./../Either/partition a b)
+: ./../Compactable/Type List
