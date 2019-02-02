@@ -1,0 +1,14 @@
+    let Either = ./../Either/Type
+
+in  let Functor = ./../Functor/Type
+
+in    λ(f : Type → Type)
+    → { compact :
+          ∀(functor : Functor f) → ∀(a : Type) → f (Optional a) → f a
+      , separate :
+            ∀(functor : Functor f)
+          → ∀(a : Type)
+          → ∀(b : Type)
+          → f (Either a b)
+          → { _1 : f a, _2 : f b }
+      }
