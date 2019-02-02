@@ -1,3 +1,27 @@
+{-
+
+Turns an `Either a b` into an `Optional b` by hushing `Left` values to `None` and
+converting `Right` values to `Some`.
+
+Examples:
+```
+    let Either = ./Either/Type
+
+in  let E = constructors (Either Text Natural)
+
+in  ./Either/hush Text Natural (E.Right 42)
+= Some 42
+
+
+    let Either = ./Either/Type
+
+in  let E = constructors (Either Text Natural)
+
+in  ./Either/hush Text Natural (E.Left "ohno")
+= None Natural
+```
+
+-}
   λ(a : Type)
 → λ(b : Type)
 → ./fold a b (Optional b) (λ(_ : a) → None b) (λ(x : b) → Some x)
