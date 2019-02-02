@@ -1,37 +1,24 @@
     let Either = ./Type
 
-in  let partition
-        :   ∀(a : Type)
-          → ∀(b : Type)
-          → List (Either a b)
-          → { lefts : List a, rights : List b }
-        =   λ(a : Type)
-          → λ(b : Type)
-          → λ(eithers : List (Either a b))
-          →     let left =
-                        λ(acc : { lefts : List a, rights : List b })
-                      → λ(x : a)
-                      → { lefts = [ x ] # acc.lefts, rights = acc.rights }
-            
-            in  let right =
-                        λ(acc : { lefts : List a, rights : List b })
-                      → λ(y : b)
-                      → { lefts = acc.lefts, rights = [ y ] # acc.rights }
-            
-            in  List/fold
-                (Either a b)
-                eithers
-                { lefts : List a, rights : List b }
-                (   λ(e : Either a b)
-                  → λ(acc : { lefts : List a, rights : List b })
-                  → ./fold
-                    a
-                    b
-                    { lefts : List a, rights : List b }
-                    (left acc)
-                    (right acc)
-                    e
-                )
-                { lefts = [] : List a, rights = [] : List b }
-
-in  partition
+in    λ(a : Type)
+    → λ(b : Type)
+    → λ(eithers : List (Either a b))
+    →     let left =
+                  λ(acc : { _1 : List a, _2 : List b })
+                → λ(x : a)
+                → { _1 = [ x ] # acc._1, _2 = acc._2 }
+      
+      in  let right =
+                  λ(acc : { _1 : List a, _2 : List b })
+                → λ(y : b)
+                → { _1 = acc._1, _2 = [ y ] # acc._2 }
+      
+      in  List/fold
+          (Either a b)
+          eithers
+          { _1 : List a, _2 : List b }
+          (   λ(e : Either a b)
+            → λ(acc : { _1 : List a, _2 : List b })
+            → ./fold a b { _1 : List a, _2 : List b } (left acc) (right acc) e
+          )
+          { _1 = [] : List a, _2 = [] : List b }
