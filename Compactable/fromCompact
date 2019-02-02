@@ -1,3 +1,9 @@
+{-
+fromCompact gives a Compactable instance by supplying a functor instance for f and the compact function.
+
+`separate` can be defined by mapping over `f (Either a b)` and `f (Either b a)`, using `hush` to convert to
+an `Optional` and compact to convert to `f a` and `f b`, respectively.
+-}
     let Either = ./../Either/Type
 
 in  let Functor = ./../Functor/Type
