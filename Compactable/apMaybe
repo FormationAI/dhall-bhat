@@ -1,7 +1,5 @@
     let Applicative = ./../Applicative/Type
 
-in  let extractFunctor = ./../Applicative/extractFunctor
-
 in    λ(f : Type → Type)
     → λ(c : ./Type f)
     → λ(applicative : Applicative f)
@@ -9,7 +7,4 @@ in    λ(f : Type → Type)
     → λ(b : Type)
     → λ(k : f (a → Optional b))
     → λ(fa : f a)
-    → c.compact
-      (extractFunctor f applicative)
-      b
-      (applicative.ap a (Optional b) k fa)
+    → c.compact b (applicative.ap a (Optional b) k fa)

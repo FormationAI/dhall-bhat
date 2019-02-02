@@ -1,7 +1,5 @@
     let Monad = ./../Monad/Type
 
-in  let extractFunctor = ./../Monad/extractFunctor
-
 in    λ(f : Type → Type)
     → λ(c : ./Type f)
     → λ(monad : Monad f)
@@ -9,4 +7,4 @@ in    λ(f : Type → Type)
     → λ(b : Type)
     → λ(k : a → f (Optional b))
     → λ(fa : f a)
-    → c.compact (extractFunctor f monad) b (monad.bind a (Optional b) fa k)
+    → c.compact b (monad.bind a (Optional b) fa k)

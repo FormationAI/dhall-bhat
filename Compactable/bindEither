@@ -1,7 +1,5 @@
     let Monad = ./../Monad/Type
 
-in  let extractFunctor = ./../Monad/extractFunctor
-
 in  let Either = ./../Either/Type
 
 in    λ(f : Type → Type)
@@ -11,4 +9,4 @@ in    λ(f : Type → Type)
     → λ(b : Type)
     → λ(k : a → f (Either a b))
     → λ(fa : f a)
-    → c.separate (extractFunctor f monad) a b (monad.bind a (Either a b) fa k)
+    → c.separate a b (monad.bind a (Either a b) fa k)

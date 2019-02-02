@@ -3,23 +3,18 @@
 in  let Functor = ./../Functor/Type
 
 in    λ(f : Type → Type)
+    → λ(functor : Functor f)
     → λ ( separate
-        :   ∀(functor : Functor f)
-          → ∀(a : Type)
-          → ∀(b : Type)
-          → f (Either a b)
-          → { _1 : f a, _2 : f b }
+        : ∀(a : Type) → ∀(b : Type) → f (Either a b) → { _1 : f a, _2 : f b }
         )
     → { separate =
           separate
       , compact =
-            λ(functor : Functor f)
-          → λ(a : Type)
+            λ(a : Type)
           → λ(optionals : f (Optional a))
           →     let E = constructors (Either a {})
             
             in  ( separate
-                  functor
                   a
                   {}
                   ( functor.map
