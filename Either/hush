@@ -2,4 +2,4 @@
 
 in    λ(a : Type)
     → λ(b : Type)
-    → ./fold a b (Optional b) (λ(_ : a) → [] : Optional b) (λ(x : b) → Some x)
+    → ./fold a b (Optional b) (λ(_ : a) → None b) (λ(x : b) → Some x)
