@@ -1,23 +1,21 @@
 {-
 
-mapOptional maps a function to Optionals over the `f` and `compact`s away the `None` values.
+apOptional maps a `f` of functions to Optionals over the `f` and `compact`s away the `None` values.
 
 Examples:
 
 ```
-    let E = constructors (./Either/Type Natural Natural)
-
-in  ./Compactable/apEither
-    List
-    ./List/compactable
-    ./List/applicative
-    Natural
-    Natural
-    [ λ(n : Natural) → if Natural/even n then E.Left n else E.Right n
-    , λ(n : Natural) → if Natural/odd n then E.Left n else E.Right n
-    ]
-    [ 0, 1, 2, 3, 4, 5 ]
-= { _1 = [ 0, 2, 4, 1, 3, 5 ], _2 = [ 1, 3, 5, 0, 2, 4 ] }
+./Compactable/apOptional
+List
+./List/compactable
+./List/applicative
+Natural
+Natural
+[ λ(n : Natural) → if Natural/even n then Some n else None Natural
+, λ(n : Natural) → if Natural/odd n then Some n else None Natural
+]
+[ 0, 1, 2, 3, 4, 5 ]
+= [ 0, 2, 4, 1, 3, 5 ]
 ```
 
 -}
