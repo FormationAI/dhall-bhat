@@ -7,7 +7,8 @@ in  let flipEither = ./../Either/flipEither
 in  let hush = ./../Either/hush
 
 in    λ(f : Type → Type)
-    → λ(compact : ∀(functor : Functor f) → ∀(a : Type) → f (Optional a) → f a)
+    → λ(functor : Functor f)
+    → λ(compact : ∀(a : Type) → f (Optional a) → f a)
     → { compact =
           compact
       , separate =
@@ -17,7 +18,6 @@ in    λ(f : Type → Type)
           → λ(eithers : f (Either a b))
           → { _1 =
                 compact
-                functor
                 a
                 ( functor.map
                   (Either a b)
@@ -27,7 +27,6 @@ in    λ(f : Type → Type)
                 )
             , _2 =
                 compact
-                functor
                 b
                 (functor.map (Either a b) (Optional b) (hush a b) eithers)
             }
