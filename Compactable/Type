@@ -1,4 +1,5 @@
 {-
+
 Compactable serves as an abstraction over filtering and partitioning, using two functions
 compact and separate, respectively.
 
@@ -12,6 +13,7 @@ values to the _1 element of a tuple, and Right values to the _2 element of a tup
 
 Since both functions can be written in terms of the other, we can create instances by choosing one
 of the function fromCompact or fromSeparate.
+
 -}
     let Either = ./../Either/Type
 

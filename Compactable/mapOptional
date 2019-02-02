@@ -1,3 +1,22 @@
+{-
+
+mapOptional maps a function to Optionals over the `f` and `compact`s away the `None` values.
+
+Examples:
+
+```
+./Compactable/mapOptional
+List
+./List/compactable
+./List/functor
+Natural
+Natural
+(λ(n : Natural) → if Natural/even n then Some n else None Natural)
+[ 1, 2, 3, 4, 5 ]
+= [ 2, 4 ]
+```
+
+-}
     let Functor = ./../Functor/Type
 
 in    λ(f : Type → Type)

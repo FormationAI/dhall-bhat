@@ -1,8 +1,10 @@
 {-
+
 fromSeparate gives a Compactable instance by supplying a functor instance for f and the separate function.
 
 `compact` can be defined by converting `Option a` into `Either a {}`, using `separate` and take the `_1`
 element from the tuple.
+
 -}
     let Either = ./../Either/Type
 
