@@ -1,0 +1,12 @@
+    let Functor = ./../Functor/Type
+
+in  let Either = ./../Either/Type
+
+in    λ(f : Type → Type)
+    → λ(c : ./Type f)
+    → λ(functor : Functor f)
+    → λ(a : Type)
+    → λ(b : Type)
+    → λ(k : a → Either a b)
+    → λ(fa : f a)
+    → c.separate functor a b (functor.map a (Either a b) k fa)

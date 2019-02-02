@@ -1,0 +1,20 @@
+    let Traversable = ./../Traversable/Type
+
+in  let extractFunctor = ./../Traversable/extractFunctor
+
+in  let Applicative = ./../Applicative/Type
+
+in    λ(f : Type → Type)
+    → λ(c : ./Type f)
+    → λ(traversable : Traversable f)
+    → λ(g : Type → Type)
+    → λ(applicative : Applicative g)
+    → λ(a : Type)
+    → λ(b : Type)
+    → λ(k : a → g (Optional b))
+    → λ(fa : f a)
+    → applicative.map
+      (f (Optional b))
+      (f b)
+      (c.compact (extractFunctor f traversable) b)
+      (traversable.traverse g applicative a (Optional b) k fa)

@@ -1,0 +1,10 @@
+    let Functor = ./../Functor/Type
+
+in    λ(f : Type → Type)
+    → λ(c : ./Type f)
+    → λ(functor : Functor f)
+    → λ(a : Type)
+    → λ(b : Type)
+    → λ(k : a → Optional b)
+    → λ(fa : f a)
+    → c.compact functor b (functor.map a (Optional b) k fa)

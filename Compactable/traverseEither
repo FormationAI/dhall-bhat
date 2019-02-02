@@ -1,0 +1,22 @@
+    let Traversable = ./../Traversable/Type
+
+in  let extractFunctor = ./../Traversable/extractFunctor
+
+in  let Applicative = ./../Applicative/Type
+
+in  let Either = ./../Either/Type
+
+in    λ(f : Type → Type)
+    → λ(c : ./Type f)
+    → λ(traversable : Traversable f)
+    → λ(g : Type → Type)
+    → λ(applicative : Applicative g)
+    → λ(a : Type)
+    → λ(b : Type)
+    → λ(k : a → g (Either a b))
+    → λ(fa : f a)
+    → applicative.map
+      (f (Either a b))
+      { _1 : f a, _2 : f b }
+      (c.separate (extractFunctor f traversable) a b)
+      (traversable.traverse g applicative a (Either a b) k fa)
