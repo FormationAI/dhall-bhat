@@ -12,8 +12,7 @@ in    λ(f : Type → Type)
     → { compact =
           compact
       , separate =
-            λ(functor : Functor f)
-          → λ(a : Type)
+            λ(a : Type)
           → λ(b : Type)
           → λ(eithers : f (Either a b))
           → { _1 =

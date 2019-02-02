@@ -4,28 +4,31 @@ in  let Monoid = ./../Monoid/Type
 
 in    λ(m : Type)
     → λ(monoid : Monoid m)
-    → ./../Compactable/fromSeparate
-      (Either m)
-      (./functor m)
-      (   λ(a : Type)
-        → λ(b : Type)
-        → λ(e : Either m (Either a b))
-        →     let EB = constructors (Either m b)
-          
-          in  let EA = constructors (Either m a)
-          
-          in  merge
-              { Left =
-                  λ(x : m) → { _1 = EA.Left x, _2 = EB.Left x }
-              , Right =
-                    λ(ee : Either a b)
-                  → merge
-                    { Left =
-                        λ(l : a) → { _1 = EA.Right l, _2 = EB.Left monoid.unit }
-                    , Right =
-                        λ(r : b) → { _1 = EA.Left monoid.unit, _2 = EB.Right r }
-                    }
-                    ee
-              }
-              e
-      )
+    →   ./../Compactable/fromSeparate
+        (Either m)
+        (./functor m)
+        (   λ(a : Type)
+          → λ(b : Type)
+          → λ(e : Either m (Either a b))
+          →     let EB = constructors (Either m b)
+            
+            in  let EA = constructors (Either m a)
+            
+            in  merge
+                { Left =
+                    λ(x : m) → { _1 = EA.Left x, _2 = EB.Left x }
+                , Right =
+                      λ(ee : Either a b)
+                    → merge
+                      { Left =
+                            λ(l : a)
+                          → { _1 = EA.Right l, _2 = EB.Left monoid.unit }
+                      , Right =
+                            λ(r : b)
+                          → { _1 = EA.Left monoid.unit, _2 = EB.Right r }
+                      }
+                      ee
+                }
+                e
+        )
+      : ./../Compactable/Type (Either m)
