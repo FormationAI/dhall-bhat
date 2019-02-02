@@ -1,0 +1,5 @@
+    let Either = ./Type
+
+in    λ(a : Type)
+    → λ(b : Type)
+    → ./fold a b (Optional b) (λ(_ : a) → None) (λ(x : b) → Some x)

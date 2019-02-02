@@ -1,0 +1,7 @@
+    let Either = ./Type
+
+in    λ(a : Type)
+    → λ(b : Type)
+    →     let E = constructors (Either b a)
+      
+      in  ./fold a b (Either b a) E.Right E.Left
