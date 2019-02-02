@@ -1,3 +1,31 @@
+{-
+
+bindOptional binds to a `f` of Optional over the `f a` and `compact`s away the `None` values.
+
+Examples:
+
+```
+    let replicate =
+          https://raw.githubusercontent.com/dhall-lang/dhall-lang/master/Prelude/List/replicate
+
+in  ./Compactable/bindOptional
+    List
+    ./List/compactable
+    ./List/monad
+    Natural
+    Natural
+    (   λ(n : Natural)
+      →       if Natural/even n
+        
+        then  replicate n (Optional Natural) (Some n)
+        
+        else  [] : List (Optional Natural)
+    )
+    [ 0, 1, 2, 3, 4, 5 ]
+= [ 2, 2, 4, 4, 4, 4 ]
+```
+
+-}
     let Monad = ./../Monad/Type
 
 in    λ(f : Type → Type)
