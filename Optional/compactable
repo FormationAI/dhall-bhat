@@ -1,0 +1,6 @@
+    let join = (./../Monad/package.dhall Optional ./monad).join
+
+in  ./../Compactable/fromCompact
+    Optional
+    ./functor
+    (λ(a : Type) → λ(o : Optional (Optional a)) → join a o)
