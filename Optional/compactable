@@ -1,7 +1,11 @@
-    let join = (./../Monad/package.dhall Optional ./monad).join
+    let bind = (./monad).bind
 
-in    ./../Compactable/fromCompact
+in    ./../Compactable/fromMapOptional
       Optional
-      ./functor
-      (λ(a : Type) → λ(o : Optional (Optional a)) → join a o)
+      (   λ(a : Type)
+        → λ(b : Type)
+        → λ(k : a → Optional b)
+        → λ(o : Optional a)
+        → bind a b o k
+      )
     : ./../Compactable/Type Optional

@@ -1,0 +1,47 @@
+{-
+
+fromCompact gives a Compactable instance by supplying a functor instance for f and the compact function.
+
+`separate` can be defined by mapping over `f (Either a b)` and `f (Either b a)`, using `hush` to convert to
+an `Optional` and compact to convert to `f a` and `f b`, respectively.
+
+-}
+    let Either = ./../Either/Type
+
+in  let flipEither = ./../Either/flipEither
+
+in  let hush = ./../Either/hush
+
+in  let compose = (./../Function/category).compose
+
+in    λ(f : Type → Type)
+    → λ(mapOptional : ∀(a : Type) → ∀(b : Type) → (a → Optional b) → f a → f b)
+    →   { mapOptional =
+            mapOptional
+        , mapEither =
+              λ(a : Type)
+            → λ(l : Type)
+            → λ(r : Type)
+            → λ(k : a → Either l r)
+            → λ(fa : f a)
+            → { _1 =
+                  mapOptional
+                  a
+                  l
+                  ( compose
+                    a
+                    (Either r l)
+                    (Optional l)
+                    (hush r l)
+                    (compose a (Either l r) (Either r l) (flipEither l r) k)
+                  )
+                  fa
+              , _2 =
+                  mapOptional
+                  a
+                  r
+                  (compose a (Either l r) (Optional r) (hush l r) k)
+                  fa
+              }
+        }
+      : ./Type f

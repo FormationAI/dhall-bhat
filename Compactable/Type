@@ -18,8 +18,13 @@ of the function fromCompact or fromSeparate.
     let Either = ./../Either/Type
 
 in    λ(f : Type → Type)
-    → { compact :
-          ∀(a : Type) → f (Optional a) → f a
-      , separate :
-          ∀(a : Type) → ∀(b : Type) → f (Either a b) → { _1 : f a, _2 : f b }
+    → { mapOptional :
+          ∀(a : Type) → ∀(b : Type) → (a → Optional b) → f a → f b
+      , mapEither :
+            ∀(a : Type)
+          → ∀(l : Type)
+          → ∀(r : Type)
+          → (a → Either l r)
+          → f a
+          → { _1 : f l, _2 : f r }
       }

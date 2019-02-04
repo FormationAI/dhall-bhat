@@ -14,5 +14,5 @@ in    λ(f : Type → Type)
     → applicative.map
       (f (Optional b))
       (f b)
-      (c.compact b)
+      (./compact f c b)
       (traversable.traverse g applicative a (Optional b) k fa)

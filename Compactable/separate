@@ -19,15 +19,16 @@ in  ./Compactable/mapEither
 ```
 
 -}
-    let Functor = ./../Functor/Type
-
-in  let Either = ./../Either/Type
+    let Either = ./../Either/Type
 
 in    λ(f : Type → Type)
     → λ(c : ./Type f)
-    → λ(functor : Functor f)
-    → λ(a : Type)
-    → λ(b : Type)
-    → λ(k : a → Either a b)
-    → λ(fa : f a)
-    → c.separate a b (functor.map a (Either a b) k fa)
+    → λ(l : Type)
+    → λ(r : Type)
+    → λ(fa : f (Either l r))
+    → c.mapEither
+      (Either l r)
+      l
+      r
+      ((./../Function/category).identity (Either l r))
+      fa

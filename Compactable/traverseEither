@@ -16,5 +16,5 @@ in    λ(f : Type → Type)
     → applicative.map
       (f (Either a b))
       { _1 : f a, _2 : f b }
-      (c.separate a b)
+      (./separate f c a b)
       (traversable.traverse g applicative a (Either a b) k fa)

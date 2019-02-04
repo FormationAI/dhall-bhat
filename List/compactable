@@ -1,5 +1,22 @@
-  ./../Compactable/fromSeparate
-  List
-  ./functor
-  (λ(a : Type) → λ(b : Type) → ./../Either/partition a b)
-: ./../Compactable/Type List
+    let Either = ./../Either/Type
+
+in  let compose = (./../Function/category).compose
+
+in  let partition = ./../Either/partition
+
+in  let map = (./functor).map
+
+in    ./../Compactable/fromMapEither
+      List
+      (   λ(a : Type)
+        → λ(l : Type)
+        → λ(r : Type)
+        → λ(k : a → Either l r)
+        → compose
+          (List a)
+          (List (Either l r))
+          { _1 : List l, _2 : List r }
+          (partition l r)
+          (map a (Either l r) k)
+      )
+    : ./../Compactable/Type List

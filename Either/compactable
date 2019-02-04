@@ -1,33 +1,37 @@
+{-
+mapEither : (a -> Either l r) -> Either m a -> { _1 : Either m l, _2 : Either m r }
+-}
     let Either = ./Type
 
 in  let Monoid = ./../Monoid/Type
 
 in    λ(m : Type)
     → λ(monoid : Monoid m)
-    →   ./../Compactable/fromSeparate
+    →   ./../Compactable/fromMapEither
         (Either m)
-        (./functor m)
         (   λ(a : Type)
-          → λ(b : Type)
-          → λ(e : Either m (Either a b))
-          →     let EB = constructors (Either m b)
+          → λ(l : Type)
+          → λ(r : Type)
+          → λ(k : a → Either l r)
+          → λ(e : Either m a)
+          →     let EL = constructors (Either m l)
             
-            in  let EA = constructors (Either m a)
+            in  let ER = constructors (Either m r)
             
             in  merge
                 { Left =
-                    λ(x : m) → { _1 = EA.Left x, _2 = EB.Left x }
+                    λ(x : m) → { _1 = EL.Left x, _2 = ER.Left x }
                 , Right =
-                      λ(ee : Either a b)
+                      λ(x : a)
                     → merge
                       { Left =
-                            λ(l : a)
-                          → { _1 = EA.Right l, _2 = EB.Left monoid.unit }
+                            λ(x : l)
+                          → { _1 = EL.Right x, _2 = ER.Left monoid.unit }
                       , Right =
-                            λ(r : b)
-                          → { _1 = EA.Left monoid.unit, _2 = EB.Right r }
+                            λ(y : r)
+                          → { _1 = EL.Left monoid.unit, _2 = ER.Right y }
                       }
-                      ee
+                      (k x)
                 }
                 e
         )
