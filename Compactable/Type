@@ -15,16 +15,5 @@ Since both functions can be written in terms of the other, we can create instanc
 of the function fromCompact or fromSeparate.
 
 -}
-    let Either = ./../Either/Type
-
-in    λ(f : Type → Type)
-    → { mapOptional :
-          ∀(a : Type) → ∀(b : Type) → (a → Optional b) → f a → f b
-      , mapEither :
-            ∀(a : Type)
-          → ∀(l : Type)
-          → ∀(r : Type)
-          → (a → Either l r)
-          → f a
-          → { _1 : f l, _2 : f r }
-      }
+  λ(f : Type → Type)
+→ { mapOptional : ∀(a : Type) → ∀(b : Type) → (a → Optional b) → f a → f b }

@@ -21,14 +21,29 @@ in  ./Compactable/mapEither
 -}
     let Either = ./../Either/Type
 
+in  let compose = (./../Function/category).compose
+
+in  let hush = ./../Either/hush
+
+in  let flipEither = ./../Either/flipEither
+
 in    λ(f : Type → Type)
     → λ(c : ./Type f)
     → λ(l : Type)
     → λ(r : Type)
     → λ(fa : f (Either l r))
-    → c.mapEither
-      (Either l r)
-      l
-      r
-      ((./../Function/category).identity (Either l r))
-      fa
+    → { _1 =
+          c.mapOptional
+          (Either l r)
+          l
+          ( compose
+            (Either l r)
+            (Either r l)
+            (Optional l)
+            (hush r l)
+            (flipEither l r)
+          )
+          fa
+      , _2 =
+          c.mapOptional (Either l r) r (hush l r) fa
+      }
