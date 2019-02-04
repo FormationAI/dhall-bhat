@@ -2,6 +2,7 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+DHALL=dhall
 project=$(basename -- $(realpath "./"))
 type_pattern='Type$'
 
@@ -13,24 +14,28 @@ echo '</head>'
 echo '<body>'
 echo '<h1>'$project'</h1>'
 
-for f in $(./scripts/find-dhall-files.sh)
+for f in $(./scripts/find-dhall-files.sh | sort)
 do
     if [ -d "$f" ]; then
-        echo '<h2 style="background-color: #bbb; width: 100%">'$f'</h2>'
+        level=$(awk -F"/" '{print NF}' <<< $f)
+        echo "<h$level style=\"background-color: #bbb; width: 100%\">$f</h$level>"
     else
-        type=$(dhall resolve <<< $f | dhall type)
+        comment=$(cat $f | grep -Pzo '(?s){-(.*)-}' || true)
+        type=$($DHALL resolve <<< $f | $DHALL type)
         if [[ $type =~ $type_pattern ]] ; then
-            echo "<h3>"$(basename -- "$f")" (type)</h3>";
+            echo "<h4>"$(basename -- "$f")" (type)</h4>";
+            echo "<p>$comment</p>"
             echo '<dl>'
             echo '<dt>kind</dt><dd><pre>'
             echo "$type"
             echo '</pre></dd>'
             echo '<dt>type</dt><dd><pre>'
-            dhall <<< $f
+            $DHALL <<< $f
             echo '</pre></dd>'
             echo '</dl>'
         else
-            echo "<h3>"$(basename -- "$f")" (term)</h3>";
+            echo "<h4>"$(basename -- "$f")" (term)</h4>";
+            echo "<p>$comment</p>"
             echo '<dl>'
             echo '<dt>type</dt><dd><pre>'
             echo "$type"
