@@ -8,14 +8,6 @@ in    λ(cObject : Kind)
     → λ(dArrow : kArrow (kProduct dObject dObject) Type)
     →     let object = { _1 : dObject, _2 : cObject }
       
-      in  let arrow =
-                  λ(a : { _1 : object, _2 : object })
-                → { _1 :
-                      ./../Category/Op/Type dObject dArrow a._1._1 a._2._1
-                  , _2 :
-                      cArrow { _1 = a._1._2, _2 = a._2._2 }
-                  }
-      
       in    λ(f : kArrow (kProduct dObject cObject) Type)
           →   { lmap :
                     ∀(a : dObject)

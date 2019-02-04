@@ -12,7 +12,5 @@ in    λ(object : Kind)
     →     let profunctor = kArrow (kProduct object object) Type
       
       in    λ(morphism : profunctor)
-          →     let cat = ./../Category/Monoidal/Profunctor object morphism
-            
-            in    { identity : ∀(a : object) → morphism { _1 = a, _2 = a } }
-                ⩓ ./../Semigroupoid/Type object morphism
+          →   { identity : ∀(a : object) → morphism { _1 = a, _2 = a } }
+            ⩓ ./../Semigroupoid/Type object morphism

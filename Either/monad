@@ -1,6 +1,4 @@
-    let Monad = ./../Monad/Type
-
-in  let Either = ./Type
+    let Either = ./Type
 
 in    λ(a : Type)
     → ./../Monad/fromPureBind

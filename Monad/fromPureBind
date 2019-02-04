@@ -5,39 +5,36 @@ in  let kProduct = ./../Tuple/Kind
 in    λ(object : Kind)
     → λ(arrow : kArrow (kProduct object object) Type)
     → λ(category : ./../Category/Type object arrow)
-    →     let Leibniz/category =
-                ./../Leibniz/category object object arrow category
-      
-      in    λ(f : kArrow object object)
-          → λ(pure : ∀(a : object) → arrow { _1 = a, _2 = f a })
-          → λ ( bind
-              :   ∀(a : object)
-                → ∀(b : object)
-                → arrow { _1 = a, _2 = f b }
-                → arrow { _1 = f a, _2 = f b }
-              )
-          →   { map =
-                    λ(a : object)
-                  → λ(b : object)
-                  → λ(fn : arrow { _1 = a, _2 = b })
-                  → bind
-                    a
-                    b
-                    ( category.op
-                      { _1 = a, _2 = f b }
-                      (   λ(r : Type)
-                        → λ ( arrowsOut
-                            :   ∀(z : object)
-                              → arrow { _1 = z, _2 = f b }
-                              → arrow { _1 = a, _2 = z }
-                              → r
-                            )
-                        → arrowsOut b (pure b) fn
+    → λ(f : kArrow object object)
+    → λ(pure : ∀(a : object) → arrow { _1 = a, _2 = f a })
+    → λ ( bind
+        :   ∀(a : object)
+          → ∀(b : object)
+          → arrow { _1 = a, _2 = f b }
+          → arrow { _1 = f a, _2 = f b }
+        )
+    →   { map =
+              λ(a : object)
+            → λ(b : object)
+            → λ(fn : arrow { _1 = a, _2 = b })
+            → bind
+              a
+              b
+              ( category.op
+                { _1 = a, _2 = f b }
+                (   λ(r : Type)
+                  → λ ( arrowsOut
+                      :   ∀(z : object)
+                        → arrow { _1 = z, _2 = f b }
+                        → arrow { _1 = a, _2 = z }
+                        → r
                       )
-                    )
-              , identity =
-                  pure
-              , op =
-                  λ(a : object) → bind (f a) a (category.identity (f a))
-              }
-            : ./Type object arrow f
+                  → arrowsOut b (pure b) fn
+                )
+              )
+        , identity =
+            pure
+        , op =
+            λ(a : object) → bind (f a) a (category.identity (f a))
+        }
+      : ./Type object arrow f
