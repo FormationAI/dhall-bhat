@@ -1,7 +1,9 @@
-  λ(cObject : Kind)
-→ λ(dObject : Kind)
-→ λ(eObject : Kind)
-→ λ(f : dObject → eObject)
-→ λ(g : cObject → dObject)
-→ λ(a : cObject)
-→ f (g a)
+    let kArrow = ./../Function/Kind
+
+in    λ(cObject : Kind)
+    → λ(dObject : Kind)
+    → λ(eObject : Kind)
+    → λ(f : kArrow dObject eObject)
+    → λ(g : kArrow cObject dObject)
+    → λ(a : cObject)
+    → f (g a)

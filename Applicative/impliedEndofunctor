@@ -22,4 +22,7 @@ in    λ(f : Type → Type)
                   { _1 = applicative.identity (a → b) fn, _2 = fa }
               )
         }
-      : ./../Functor/Endo/Type Type ./../Function/Type f
+      : ./../Functor/Endo/Type
+        Type
+        (./../uncurryT Type Type Type ./../Function/Type)
+        f

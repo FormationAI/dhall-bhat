@@ -1,8 +1,20 @@
-  { arrow =
-      ./../../Function/Type
-  , additive =
-      { identity = <>, op = ./../../Either/Type }
-  , multiplicative =
-      { identity = {}, op = ./../../Tuple/Type }
-  }
-: ./Type Type
+    let kArrow = ./../../Function/Kind
+
+in  let kProduct = ./../../Tuple/Kind
+
+in    { arrow =
+          ./../../uncurryT Type Type Type ./../../Function/Type
+      , additive =
+          { identity =
+              <>
+          , op =
+              ./../../uncurryT Type Type Type ./../../Either/Type
+          }
+      , multiplicative =
+          { identity =
+              {}
+          , op =
+              ./../../uncurryT Type Type Type ./../../Tuple/Type
+          }
+      }
+    : ./Type kArrow kProduct Type

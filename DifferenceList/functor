@@ -1,1 +1,5 @@
-./../Monad/extractEndofunctor Type ./../Function/Type ./Type ./monad
+./../Monad/extractEndofunctor
+Type
+(./../uncurryT Type Type Type ./../Function/Type)
+./Type
+./monad

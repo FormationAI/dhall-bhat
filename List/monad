@@ -11,4 +11,4 @@
           (λ(x : List a) → λ(y : List a) → x # y)
           ([] : List a)
     }
-: ./../Monad/Type Type ./../Function/Type List
+: ./../Monad/Type Type (./../uncurryT Type Type Type ./../Function/Type) List

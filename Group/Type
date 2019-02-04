@@ -1,4 +1,8 @@
-  λ(object : Kind)
-→ λ(cat : ./../Category/Monoidal/Type object)
-→ λ(m : object)
-→ { inverse : cat.arrow m m } ⩓ ./../Monoid/Type object cat m
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(object : Kind)
+    → λ(cat : ./../Category/Monoidal/Type kArrow kProduct object)
+    → λ(m : object)
+    → { inverse : cat.arrow { _1 = m, _2 = m } } ⩓ ./../Monoid/Type object cat m

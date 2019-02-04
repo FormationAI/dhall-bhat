@@ -1,16 +1,26 @@
-  λ(object : Kind)
-→ λ(cat : ./../Category/Monoidal/Type object)
-→ λ(category : ./../Category/Type object cat.arrow)
-→ λ ( bifunctor
-    : ./../Functor/Bifunctor/Type
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(object : Kind)
+    → λ(cat : ./../Category/Monoidal/Type kArrow kProduct object)
+    → λ(category : ./../Category/Type object cat.arrow)
+    → λ ( bifunctor
+        : ./../Functor/Bifunctor/Type
+          object
+          object
+          object
+          cat.arrow
+          cat.arrow
+          cat.arrow
+          cat.op
+        )
+    → λ(m : object)
+    → λ(ring : ./Type object cat m)
+    → ./../Group/Commutative/quotient
       object
-      object
-      object
-      cat.arrow
-      cat.arrow
-      cat.arrow
-      cat.op
-    )
-→ λ(m : object)
-→ λ(ring : ./Type object cat m)
-→ ./../Group/Commutative/quotient object cat category bifunctor m ring.additive
+      cat
+      category
+      bifunctor
+      m
+      ring.additive

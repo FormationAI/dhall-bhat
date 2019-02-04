@@ -1,0 +1,8 @@
+{- A `Type`-level definition of `uncurry`.
+-}
+  λ(a : Kind)
+→ λ(b : Kind)
+→ λ(c : Kind)
+→ λ(f : a → b → c)
+→ λ(p : { _1 : a, _2 : b })
+→ f p._1 p._2

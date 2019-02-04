@@ -1,0 +1,1 @@
+λ(a : Kind) → λ(b : Kind) → < Left : a | Right : b >

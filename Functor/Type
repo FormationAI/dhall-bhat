@@ -1,6 +1,15 @@
-  λ(cObject : Kind)
-→ λ(dObject : Kind)
-→ λ(cArrow : cObject → cObject → Type)
-→ λ(dArrow : dObject → dObject → Type)
-→ λ(f : cObject → dObject)
-→ { map : ∀(a : cObject) → ∀(b : cObject) → cArrow a b → dArrow (f a) (f b) }
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(cObject : Kind)
+    → λ(dObject : Kind)
+    → λ(cArrow : kArrow (kProduct cObject cObject) Type)
+    → λ(dArrow : kArrow (kProduct dObject dObject) Type)
+    → λ(f : kArrow cObject dObject)
+    → { map :
+            ∀(a : cObject)
+          → ∀(b : cObject)
+          → cArrow { _1 = a, _2 = b }
+          → dArrow { _1 = f a, _2 = f b }
+      }

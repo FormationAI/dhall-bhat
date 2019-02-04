@@ -1,7 +1,12 @@
-  λ(cObject : Kind)
-→ λ(cArrow : cObject → cObject → Type)
-→ λ(dObject : Kind)
-→ λ(dArrow : dObject → dObject → Type)
-→ λ(f : dObject → cObject → Type)
-→ λ(strong : ./Type cObject dObject cArrow dArrow f)
-→ strong.{ map } : ./../Functor/Profunctor/Type cObject dObject cArrow dArrow f
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(cObject : Kind)
+    → λ(cArrow : kArrow (kProduct cObject cObject) Type)
+    → λ(dObject : Kind)
+    → λ(dArrow : kArrow (kProduct dObject dObject) Type)
+    → λ(f : kArrow (kProduct dObject cObject) Type)
+    → λ(strong : ./Type cObject dObject cArrow dArrow f)
+    →   strong.{ map }
+      : ./../Functor/Profunctor/Type cObject dObject cArrow dArrow f

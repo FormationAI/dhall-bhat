@@ -1,4 +1,13 @@
-  λ(object : Kind)
-→ λ(arrow : object → object → Type)
-→   { map = λ(a : object) → λ(b : object) → λ(fn : arrow a b) → fn }
-  : ./../../Functor/Endo/Type object arrow (./../Type object)
+    let kArrow = ./../../Function/Kind
+
+in  let kProduct = ./../../Tuple/Kind
+
+in    λ(object : Kind)
+    → λ(arrow : kArrow (kProduct object object) Type)
+    →   { map =
+              λ(a : object)
+            → λ(b : object)
+            → λ(fn : arrow { _1 = a, _2 = b })
+            → fn
+        }
+      : ./../../Functor/Endo/Type object arrow (./../Type object)

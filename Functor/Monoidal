@@ -2,16 +2,24 @@
    much like a `../Monoid/Type` … but I don’t yet know how to define them that
    way.
 -}
-  λ(cObject : Kind)
-→ λ(dObject : Kind)
-→ λ(c : ./../Category/Monoidal/Type cObject)
-→ λ(d : ./../Category/Monoidal/Type dObject)
-→ λ(f : cObject → dObject)
-→   { identity :
-        d.arrow d.identity (f c.identity)
-    , op :
-          ∀(a : cObject)
-        → ∀(b : cObject)
-        → d.arrow (d.op (f a) (f b)) (f (c.op a b))
-    }
-  ⩓ ./Type cObject dObject c.arrow d.arrow f
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(cObject : Kind)
+    → λ(dObject : Kind)
+    → λ(c : ./../Category/Monoidal/Type kArrow kProduct cObject)
+    → λ(d : ./../Category/Monoidal/Type kArrow kProduct dObject)
+    → λ(f : kArrow cObject dObject)
+    →   { identity :
+            d.arrow { _1 = d.identity, _2 = f c.identity }
+        , op :
+              ∀(a : { _1 : cObject, _2 : cObject })
+            → d.arrow
+              { _1 =
+                  d.op { _1 = f a._1, _2 = f a._2 }
+              , _2 =
+                  f (c.op { _1 = a._1, _2 = a._2 })
+              }
+        }
+      ⩓ ./Type cObject dObject c.arrow d.arrow f

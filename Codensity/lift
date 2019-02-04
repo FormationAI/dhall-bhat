@@ -1,17 +1,21 @@
-  λ(object : Kind)
-→ λ(arrow : object → object → Type)
-→ λ(semigroupoid : ./../Semigroupoid/Type object arrow)
-→ λ(f : object → object)
-→ λ(monad : ./../Monad/Type object arrow f)
-→ ./../Ran/lift
-  object
-  object
-  object
-  arrow
-  arrow
-  semigroupoid
-  f
-  (./../Monad/extractEndofunctor object arrow f monad)
-  f
-  f
-  monad.op
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(object : Kind)
+    → λ(arrow : kArrow (kProduct object object) Type)
+    → λ(semigroupoid : ./../Semigroupoid/Type object arrow)
+    → λ(f : kArrow object object)
+    → λ(monad : ./../Monad/Type object arrow f)
+    → ./../Ran/lift
+      object
+      object
+      object
+      arrow
+      arrow
+      semigroupoid
+      f
+      (./../Monad/extractEndofunctor object arrow f monad)
+      f
+      f
+      monad.op

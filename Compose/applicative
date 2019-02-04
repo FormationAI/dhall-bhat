@@ -3,7 +3,9 @@
        distinguish them. So take them with a grain of salt if you’re editing
        this file.
 -}
-    let cObject = Type
+    let kArrow = ./../Function/Kind
+
+in  let cObject = Type
 
 in  let c = ./../Category/Monoidal/Set/cartesian
 
@@ -17,9 +19,9 @@ in  let Day = ./../Day/Type cObject c c
 
 in  let Day/convolution = ./../Day/convolution cObject c c
 
-in    λ(f : dObject → cObject)
+in    λ(f : kArrow dObject cObject)
     → λ(fApplicative : Applicative f)
-    → λ(g : cObject → dObject)
+    → λ(g : kArrow cObject dObject)
     → λ(gApplicative : Applicative g)
     →   { identity =
               λ(a : cObject)

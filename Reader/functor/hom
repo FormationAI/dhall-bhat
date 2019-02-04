@@ -1,29 +1,52 @@
-  λ(object : Kind)
-→ λ(arrow : object → object → Type)
-→ λ(semigroupoid : ./../../Semigroupoid/Type object arrow)
-→   { map =
-          λ(a : { _1 : object, _2 : object })
-        → λ(b : { _1 : object, _2 : object })
-        → λ(f : { _1 : arrow b._1 a._1, _2 : arrow a._2 b._2 })
-        → λ(fa : arrow a._1 a._2)
-        → semigroupoid.op
-          b._1
-          b._2
-          (   λ(r : Type)
-            → λ(arrowsOut : ∀(z : object) → arrow z b._2 → arrow b._1 z → r)
-            → arrowsOut
-              a._2
-              f._2
-              ( semigroupoid.op
-                b._1
-                a._2
-                (   λ(r : Type)
-                  → λ ( arrowsOut
-                      : ∀(z : object) → arrow z a._2 → arrow b._1 z → r
-                      )
-                  → arrowsOut a._1 fa f._1
+{- TODO: Why `fa : arrow { _1 = a._1, _2 = a._2 }` instead of just
+        `fa : arrow a`. And the same with
+        `semigroupoid.op { _1 = b._1, _2 = b._2 }`.
+-}
+    let kArrow = ./../../Function/Kind
+
+in  let kProduct = ./../../Tuple/Kind
+
+in    λ(object : Kind)
+    → λ(arrow : kArrow (kProduct object object) Type)
+    → λ(semigroupoid : ./../../Semigroupoid/Type object arrow)
+    →   { map =
+              λ(a : { _1 : object, _2 : object })
+            → λ(b : { _1 : object, _2 : object })
+            → λ ( f
+                : { _1 :
+                      arrow { _1 = b._1, _2 = a._1 }
+                  , _2 :
+                      arrow { _1 = a._2, _2 = b._2 }
+                  }
                 )
+            → λ(fa : arrow { _1 = a._1, _2 = a._2 })
+            → semigroupoid.op
+              { _1 = b._1, _2 = b._2 }
+              (   λ(r : Type)
+                → λ ( arrowsOut
+                    :   ∀(z : object)
+                      → arrow { _1 = z, _2 = b._2 }
+                      → arrow { _1 = b._1, _2 = z }
+                      → r
+                    )
+                → arrowsOut
+                  a._2
+                  f._2
+                  ( semigroupoid.op
+                    { _1 = b._1, _2 = a._2 }
+                    (   λ(r : Type)
+                      → λ ( arrowsOut
+                          :   ∀(z : object)
+                            → arrow { _1 = z, _2 = a._2 }
+                            → arrow { _1 = b._1, _2 = z }
+                            → r
+                          )
+                      → arrowsOut a._1 fa f._1
+                    )
+                  )
               )
-          )
-    }
-  : ./../../Functor/Hom object arrow (./../Type object arrow)
+        }
+      : ./../../Functor/Hom
+        object
+        arrow
+        (./../../uncurryT object object Type (./../Type object arrow))

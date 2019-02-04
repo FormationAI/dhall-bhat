@@ -1,6 +1,10 @@
-    let object = Type
+    let kArrow = ./../Function/Kind
 
-in    λ(arrow : object → object → Type)
+in  let kProduct = ./../Tuple/Kind
+
+in  let object = Type
+
+in    λ(arrow : kArrow (kProduct object object) Type)
     → λ(semigroupoid : ./../Semigroupoid/Type object arrow)
-    → λ(m : object → object)
+    → λ(m : kArrow object object)
     → ./../Ran/functor object object arrow semigroupoid m m

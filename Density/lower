@@ -1,8 +1,10 @@
-    let object = Type
+    let kArrow = ./../Function/Kind
 
-in  let arrow = ./../Function/Type
+in  let object = Type
 
-in    λ(f : object → object)
+in  let arrow = ./../uncurryT Type Type Type ./../Function/Type
+
+in    λ(f : kArrow object object)
     → λ(comonad : ./../Comonad/Type object arrow f)
     → ./../Lan/lower
       object

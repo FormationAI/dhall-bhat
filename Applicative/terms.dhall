@@ -15,6 +15,6 @@ in    λ(f : Type → Type)
             }
           ∧ ./../Functor/Endo/terms.dhall
             Type
-            ./../Function/Type
+            (./../uncurryT Type Type Type ./../Function/Type)
             f
             extractFunctor

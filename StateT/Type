@@ -1,5 +1,14 @@
-  λ(object : Kind)
-→ λ(arrow : object → object → Type)
-→ λ(product : object → object → object)
-→ λ(m : object → object)
-→ ./../State/Type object (./../Star/Type object arrow m) product
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(object : Kind)
+    → λ(arrow : kArrow (kProduct object object) Type)
+    → λ(product : kArrow (kProduct object object) object)
+    → λ(m : kArrow object object)
+    → ./../State/Type
+      object
+      (   λ(p : { _1 : object, _2 : object })
+        → ./../Star/Type object arrow m p._1 p._2
+      )
+      product

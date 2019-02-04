@@ -2,4 +2,8 @@
 → ./../StateT/get
   s
   (./../Identity/Type Type)
-  (./../Identity/monad Type ./../Function/Type ./../Function/category)
+  ( ./../Identity/monad
+    Type
+    (./../uncurryT Type Type Type ./../Function/Type)
+    ./../Function/category
+  )

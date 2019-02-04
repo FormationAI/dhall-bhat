@@ -5,12 +5,15 @@ in  { traverse =
     , pair =
         ./functor/pair
         (./../Identity/Type Type)
-        (./../Identity/functor/endo Type ./../Function/Type)
+        ( ./../Identity/functor/endo
+          Type
+          (./../uncurryT Type Type Type ./../Function/Type)
+        )
     , a =
           λ(a : Type)
         → ./../Monad/terms.dhall
           Type
-          ./../Function/Type
+          (./../uncurryT Type Type Type ./../Function/Type)
           ./../Function/semigroupoid
           (Either a)
           (./monad a)

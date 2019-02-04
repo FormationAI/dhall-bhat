@@ -1,19 +1,30 @@
-  λ(cObject : Kind)
-→ λ(cArrow : cObject → cObject → Type)
-→     let dObject = Type
-  
-  in  let dArrow = ./../Function/Type
-  
-  in  let dCategory = ./../Function/category
-  
-  in    λ(f : cObject → dObject)
-      → λ(functor : ./../Functor/Type cObject dObject cArrow dArrow f)
-      → ./../Lan/lower
-        cObject
-        cObject
-        cArrow
-        f
-        functor
-        (./../Identity/Type cObject)
-        f
-        (λ(b : cObject) → dCategory.identity (f b))
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(cObject : Kind)
+    → λ(cArrow : kArrow (kProduct cObject cObject) Type)
+    →     let dObject = Type
+      
+      in  let dArrow = ./../Function/Type
+      
+      in  let dCategory = ./../Function/category
+      
+      in    λ(f : kArrow cObject dObject)
+          → λ ( functor
+              : ./../Functor/Type
+                cObject
+                dObject
+                cArrow
+                (./../uncurryT dObject dObject Type dArrow)
+                f
+              )
+          → ./../Lan/lower
+            cObject
+            cObject
+            cArrow
+            f
+            functor
+            (./../Identity/Type cObject)
+            f
+            (λ(b : cObject) → dCategory.identity (f b))

@@ -1,6 +1,6 @@
 ./../Comonad/fromExtractExtend
 Type
-./../Function/Type
+(./../uncurryT Type Type Type ./../Function/Type)
 ./../Function/category
 ./Type
 (λ(a : Type) → λ(nel : ./Type a) → nel.head)

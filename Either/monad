@@ -5,7 +5,7 @@ in  let Either = ./Type
 in    λ(a : Type)
     → ./../Monad/fromPureBind
       Type
-      ./../Function/Type
+      (./../uncurryT Type Type Type ./../Function/Type)
       ./../Function/category
       (Either a)
       (λ(b : Type) → λ(x : b) → < Right = x | Left : a >)

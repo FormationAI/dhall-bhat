@@ -1,4 +1,4 @@
-    let Set = ./../../Function/Type
+    let Set = ./../../uncurryT Type Type Type ./../../Function/Type
 
 in  let Eq = ./../Type
 

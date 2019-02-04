@@ -1,32 +1,35 @@
-  λ(cObject : Kind)
-→ λ(dObject : Kind)
-→ λ(cArrow : cObject → cObject → Type)
-→ λ(dArrow : dObject → dObject → Type)
-→     let object = { _1 : dObject, _2 : cObject }
-  
-  in  let arrow =
-              λ(a : object)
-            → λ(b : object)
-            → { _1 :
-                  ./../Category/Op/Type dObject dArrow a._1 b._1
-              , _2 :
-                  cArrow a._2 b._2
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(cObject : Kind)
+    → λ(dObject : Kind)
+    → λ(cArrow : kArrow (kProduct cObject cObject) Type)
+    → λ(dArrow : kArrow (kProduct dObject dObject) Type)
+    →     let object = { _1 : dObject, _2 : cObject }
+      
+      in  let arrow =
+                  λ(a : { _1 : object, _2 : object })
+                → { _1 :
+                      ./../Category/Op/Type dObject dArrow a._1._1 a._2._1
+                  , _2 :
+                      cArrow { _1 = a._1._2, _2 = a._2._2 }
+                  }
+      
+      in    λ(f : kArrow (kProduct dObject cObject) Type)
+          →   { lmap :
+                    ∀(a : dObject)
+                  → ∀(b : dObject)
+                  → ∀(c : cObject)
+                  → ./../Category/Op/Type dObject dArrow a b
+                  → f { _1 = a, _2 = c }
+                  → f { _1 = b, _2 = c }
+              , rmap :
+                    ∀(a : dObject)
+                  → ∀(b : cObject)
+                  → ∀(c : cObject)
+                  → cArrow { _1 = b, _2 = c }
+                  → f { _1 = a, _2 = b }
+                  → f { _1 = a, _2 = c }
               }
-  
-  in    λ(f : dObject → cObject → Type)
-      →   { lmap :
-                ∀(a : dObject)
-              → ∀(b : dObject)
-              → ∀(c : cObject)
-              → ./../Category/Op/Type dObject dArrow a b
-              → f a c
-              → f b c
-          , rmap :
-                ∀(a : dObject)
-              → ∀(b : cObject)
-              → ∀(c : cObject)
-              → cArrow b c
-              → f a b
-              → f a c
-          }
-        ⩓ ./../Functor/Profunctor/Type cObject dObject cArrow dArrow f
+            ⩓ ./../Functor/Profunctor/Type cObject dObject cArrow dArrow f

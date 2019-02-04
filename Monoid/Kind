@@ -1,1 +1,7 @@
-λ(m : Kind) → { identity : m } ⩓ ./../Semigroup/Kind m
+{- NB: `identity` would ideally be defined with `: arrow identity m`, but
+       there’s no Kind-level `{}` to use there.
+-}
+  λ(kArrow : Kind → Kind → Kind)
+→ λ(kProduct : Kind → Kind → Kind)
+→ λ(m : Kind)
+→ { identity : m } ⩓ ./../Semigroup/Kind kArrow kProduct m

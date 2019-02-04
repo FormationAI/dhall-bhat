@@ -1,18 +1,26 @@
-  λ(object : Kind)
-→ λ(arrow : object → object → Type)
-→ λ(semigroupoid : ./../Semigroupoid/Type object arrow)
-→ λ(m : object → object)
-→ λ(monad : ./Type object arrow m)
-→   { map =
-          λ(a : object)
-        → λ(b : object)
-        → λ(f : arrow a (m b))
-        → semigroupoid.op
-          (m a)
-          (m b)
-          (   λ(r : Type)
-            → λ(arrowsOut : ∀(z : object) → arrow z (m b) → arrow (m a) z → r)
-            → arrowsOut (m (m b)) (monad.op b) (monad.map a (m b) f)
-          )
-    }
-  : ./../Functor/Star/Type object arrow m m
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(object : Kind)
+    → λ(arrow : kArrow (kProduct object object) Type)
+    → λ(semigroupoid : ./../Semigroupoid/Type object arrow)
+    → λ(m : kArrow object object)
+    → λ(monad : ./Type object arrow m)
+    →   { map =
+              λ(a : object)
+            → λ(b : object)
+            → λ(f : arrow { _1 = a, _2 = m b })
+            → semigroupoid.op
+              { _1 = m a, _2 = m b }
+              (   λ(r : Type)
+                → λ ( arrowsOut
+                    :   ∀(z : object)
+                      → arrow { _1 = z, _2 = m b }
+                      → arrow { _1 = m a, _2 = z }
+                      → r
+                    )
+                → arrowsOut (m (m b)) (monad.op b) (monad.map a (m b) f)
+              )
+        }
+      : ./../Functor/Star/Type object arrow m m

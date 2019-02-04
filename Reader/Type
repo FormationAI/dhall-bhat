@@ -1,5 +1,9 @@
-  λ(object : Kind)
-→ λ(arrow : object → object → Type)
-→ λ(r : object)
-→ λ(a : object)
-→ arrow r a
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(object : Kind)
+    → λ(arrow : kArrow (kProduct object object) Type)
+    → λ(r : object)
+    → λ(a : object)
+    → arrow { _1 = r, _2 = a }

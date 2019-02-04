@@ -1,12 +1,16 @@
-    let object = Type
+    let kArrow = ./../Function/Kind
 
-in    λ(arrow : object → object → Type)
+in  let kProduct = ./../Tuple/Kind
+
+in  let object = Type
+
+in    λ(arrow : kArrow (kProduct object object) Type)
     → λ(semigroupoid : ./../Semigroupoid/Type object arrow)
-    → λ(f : object → object)
+    → λ(f : kArrow object object)
     → λ(comonad : ./../Comonad/Type object arrow f)
-    → λ(g : object → object)
+    → λ(g : kArrow object object)
     → λ(a : object)
     → λ(x : g a)
     → λ(r : Type)
-    → λ(k : ∀(b : object) → arrow (f b) a → g b → r)
+    → λ(k : ∀(b : object) → arrow { _1 = f b, _2 = a } → g b → r)
     → k a (comonad.identity a) x

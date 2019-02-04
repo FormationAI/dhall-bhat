@@ -1,1 +1,4 @@
-λ(m : Kind) → { op : m → m → m }
+  λ(kArrow : Kind → Kind → Kind)
+→ λ(kProduct : Kind → Kind → Kind)
+→ λ(m : Kind)
+→ { op : kArrow (kProduct m m) m }

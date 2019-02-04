@@ -1,13 +1,19 @@
-  λ(cObject : Kind)
-→ λ(c : ./../Category/Monoidal/Type cObject)
-→     let vObject = Type
-  
-  in    λ(v : ./../Category/Monoidal/Type vObject)
-      → λ(f : cObject → vObject)
-      → λ(g : cObject → vObject)
-      → ./../Lan/Type
-        { _1 : cObject, _2 : cObject }
-        cObject
-        c.arrow
-        (λ(p : { _1 : cObject, _2 : cObject }) → c.op p._1 p._2)
-        (λ(p : { _1 : cObject, _2 : cObject }) → v.op (f p._1) (g p._2))
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(cObject : Kind)
+    → λ(c : ./../Category/Monoidal/Type kArrow kProduct cObject)
+    →     let vObject = Type
+      
+      in    λ(v : ./../Category/Monoidal/Type kArrow kProduct vObject)
+          → λ(f : kArrow cObject vObject)
+          → λ(g : kArrow cObject vObject)
+          → ./../Lan/Type
+            { _1 : cObject, _2 : cObject }
+            cObject
+            c.arrow
+            c.op
+            (   λ(p : { _1 : cObject, _2 : cObject })
+              → v.op { _1 = f p._1, _2 = g p._2 }
+            )

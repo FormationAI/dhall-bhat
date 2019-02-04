@@ -1,42 +1,48 @@
-  λ(object : Kind)
-→ λ(cat : ./../Category/Monoidal/Type object)
-→ λ(category : ./../Category/Type object cat.arrow)
-→ λ ( bifunctor
-    : ./../Functor/Bifunctor/Type
-      object
-      object
-      object
-      cat.arrow
-      cat.arrow
-      cat.arrow
-      cat.op
-    )
-→ λ(m : object)
-→ λ(group : ./Type object cat m)
-→ category.op
-  (cat.op m m)
-  m
-  (   λ(r : Type)
-    → λ ( arrowsOut
-        : ∀(z : object) → cat.arrow z m → cat.arrow (cat.op m m) z → r
-        )
-    → arrowsOut
-      (cat.op m m)
-      group.op
-      ( ( ./../Functor/Bifunctor/impliedSecondFunctor
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(object : Kind)
+    → λ(cat : ./../Category/Monoidal/Type kArrow kProduct object)
+    → λ(category : ./../Category/Type object cat.arrow)
+    → λ ( bifunctor
+        : ./../Functor/Bifunctor/Type
+          object
+          object
           object
           cat.arrow
-          category
-          object
           cat.arrow
-          object
           cat.arrow
           cat.op
-          bifunctor
-          m
-        ).map
-        m
-        m
-        group.inverse
+        )
+    → λ(m : object)
+    → λ(group : ./Type object cat m)
+    → category.op
+      { _1 = cat.op { _1 = m, _2 = m }, _2 = m }
+      (   λ(r : Type)
+        → λ ( arrowsOut
+            :   ∀(z : object)
+              → cat.arrow { _1 = z, _2 = m }
+              → cat.arrow { _1 = cat.op { _1 = m, _2 = m }, _2 = z }
+              → r
+            )
+        → arrowsOut
+          (cat.op { _1 = m, _2 = m })
+          group.op
+          ( ( ./../Functor/Bifunctor/impliedSecondFunctor
+              object
+              cat.arrow
+              category
+              object
+              cat.arrow
+              object
+              cat.arrow
+              cat.op
+              bifunctor
+              m
+            ).map
+            m
+            m
+            group.inverse
+          )
       )
-  )

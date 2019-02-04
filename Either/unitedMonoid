@@ -1,4 +1,6 @@
-    let object = Type
+    let kArrow = ./../Function/Kind
+
+in  let object = Type
 
 in  let cat = ./../Category/Monoidal/Set/cartesian
 
@@ -13,6 +15,6 @@ in    λ(a : Type)
             ./applicative/sequential a
         }
       : ./../UnitedMonoid/Type
-        (object → object)
+        (kArrow object object)
         (./../Category/Monoidal/Endofunctor/applicative cat)
         (./Type a)

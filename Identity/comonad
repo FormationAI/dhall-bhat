@@ -1,7 +1,11 @@
-  λ(object : Kind)
-→ λ(arrow : object → object → Type)
-→ λ(category : ./../Category/Type object arrow)
-→ ./monad
-  object
-  (./../Category/Op/Type object arrow)
-  (./../Category/Op/category object arrow category)
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(object : Kind)
+    → λ(arrow : kArrow (kProduct object object) Type)
+    → λ(category : ./../Category/Type object arrow)
+    → ./monad
+      object
+      (./../uncurryT object object Type (./../Category/Op/Type object arrow))
+      (./../Category/Op/category object arrow category)

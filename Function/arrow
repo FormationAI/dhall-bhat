@@ -22,12 +22,16 @@ in    { arr =
       , identity =
           identity
       , op =
-            λ(a : Type)
-          → λ(b : Type)
-          → λ(p : ∀(r : Type) → (∀(z : Type) → (z → b) → (a → z) → r) → r)
+            λ(a : { _1 : Type, _2 : Type })
+          → λ(p : ∀(r : Type) → (∀(z : Type) → (z → a._2) → (a._1 → z) → r) → r)
           → p
-            (a → b)
-            (λ(z : Type) → λ(f : z → b) → λ(g : a → z) → λ(x : a) → f (g x))
+            (a._1 → a._2)
+            (   λ(z : Type)
+              → λ(f : z → a._2)
+              → λ(g : a._1 → z)
+              → λ(x : a._1)
+              → f (g x)
+            )
       , lmap =
             λ(a : Type)
           → λ(b : Type)
@@ -52,4 +56,4 @@ in    { arr =
           → λ(x : b._1)
           → f._2 (fn (f._1 x))
       }
-    : ./../Arrow/type ./type
+    : ./../Arrow/Type (./../uncurryT Type Type Type ./Type)

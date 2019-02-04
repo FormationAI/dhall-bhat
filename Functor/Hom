@@ -2,6 +2,10 @@
   `Profunctor`. Not to be confused with Dhall’s `./Profunctor`, which is more
    general.
 -}
-  λ(object : Kind)
-→ λ(arrow : object → object → Type)
-→ ./Profunctor/Type object object arrow arrow
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(object : Kind)
+    → λ(arrow : kArrow (kProduct object object) Type)
+    → ./Profunctor/Type object object arrow arrow

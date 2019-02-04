@@ -1,21 +1,37 @@
 {- NB: `object` is fixed because of `Day/Type`.
 -}
-    let object = Type
+    let kArrow = ./../../Function/Kind
 
-in    λ(cat : ./../../Category/Monoidal/Type object)
+in  let kProduct = ./../../Tuple/Kind
+
+in  let object = Type
+
+in    λ(cat : ./../../Category/Monoidal/Type kArrow kProduct object)
     →   { arrow =
-            ./../../NaturalTransformation/Type object object cat.arrow
+            ./../../uncurryT
+            (kArrow object object)
+            (kArrow object object)
+            Type
+            (./../../NaturalTransformation/Type object object cat.arrow)
         , additive =
             { identity =
                 ./../../Identity/Type object
             , op =
-                ./../../Day/Type object cat cat
+                ./../../uncurryT
+                (kArrow object object)
+                (kArrow object object)
+                (kArrow object object)
+                (./../../Day/Type object cat cat)
             }
         , multiplicative =
             { identity =
                 ./../../Identity/Type object
             , op =
-                ./../../Compose/Type object object object
+                ./../../uncurryT
+                (kArrow object object)
+                (kArrow object object)
+                (kArrow object object)
+                (./../../Compose/Type object object object)
             }
         }
-      : ./Type (object → object)
+      : ./Type kArrow kProduct (kArrow object object)

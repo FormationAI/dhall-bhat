@@ -1,7 +1,19 @@
 {- A contravariant functor `C → D` is equivalent to a covariant functor
   `C^op → D`.
 -}
-  λ(cObject : Kind)
-→ λ(dObject : Kind)
-→ λ(cArrow : cObject → cObject → Type)
-→ ./Type cObject dObject (./../Category/Op/Type cObject cArrow)
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(cObject : Kind)
+    → λ(dObject : Kind)
+    → λ(cArrow : kArrow (kProduct cObject cObject) Type)
+    → ./Type
+      cObject
+      dObject
+      ( ./../uncurryT
+        cObject
+        cObject
+        Type
+        (./../Category/Op/Type cObject cArrow)
+      )

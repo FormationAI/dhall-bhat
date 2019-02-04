@@ -1,1 +1,1 @@
-./../Arrow/extractCategory ./Type ./arrow
+./../Arrow/extractCategory (./../uncurryT Type Type Type ./Type) ./arrow

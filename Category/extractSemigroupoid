@@ -1,4 +1,8 @@
-  λ(object : Kind)
-→ λ(arrow : object → object → Type)
-→ λ(category : ./Type object arrow)
-→ category.{ op } : ./../Semigroupoid/Type object arrow
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(object : Kind)
+    → λ(arrow : kArrow (kProduct object object) Type)
+    → λ(category : ./Type object arrow)
+    → category.{ op } : ./../Semigroupoid/Type object arrow

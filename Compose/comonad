@@ -1,21 +1,25 @@
-  λ(cObject : Kind)
-→ λ(cArrow : cObject → cObject → Type)
-→ λ(dObject : Kind)
-→ λ(dArrow : dObject → dObject → Type)
-→ λ(f : dObject → cObject)
-→ λ(fFunctor : ./../Functor/Type dObject cObject dArrow cArrow f)
-→ λ(g : cObject → dObject)
-→ λ(gFunctor : ./../Functor/Type cObject dObject cArrow dArrow g)
-→ λ(adjunction : ./../Adjunction/Type cObject dObject cArrow dArrow f g)
-→   { map =
-          λ(b : cObject)
-        → λ(a : cObject)
-        → λ(fn : cArrow a b)
-        → fFunctor.map (g a) (g b) (gFunctor.map a b fn)
-    , identity =
-        adjunction.counit
-    , op =
-          λ(a : cObject)
-        → fFunctor.map (g a) (g (f (g a))) (adjunction.unit (g a))
-    }
-  : ./../Comonad/Type cObject cArrow (./Type cObject dObject cObject f g)
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(cObject : Kind)
+    → λ(cArrow : kArrow (kProduct cObject cObject) Type)
+    → λ(dObject : Kind)
+    → λ(dArrow : kArrow (kProduct dObject dObject) Type)
+    → λ(f : kArrow dObject cObject)
+    → λ(fFunctor : ./../Functor/Type dObject cObject dArrow cArrow f)
+    → λ(g : kArrow cObject dObject)
+    → λ(gFunctor : ./../Functor/Type cObject dObject cArrow dArrow g)
+    → λ(adjunction : ./../Adjunction/Type cObject dObject cArrow dArrow f g)
+    →   { map =
+              λ(b : cObject)
+            → λ(a : cObject)
+            → λ(fn : cArrow { _1 = a, _2 = b })
+            → fFunctor.map (g a) (g b) (gFunctor.map a b fn)
+        , identity =
+            adjunction.counit
+        , op =
+              λ(a : cObject)
+            → fFunctor.map (g a) (g (f (g a))) (adjunction.unit (g a))
+        }
+      : ./../Comonad/Type cObject cArrow (./Type cObject dObject cObject f g)

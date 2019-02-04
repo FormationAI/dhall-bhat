@@ -1,15 +1,25 @@
-  λ(cObject : Kind)
-→ λ(dObject : Kind)
-→ λ(cArrow : cObject → cObject → Type)
-→ λ(dArrow : dObject → dObject → Type)
-→ λ(f : dObject → cObject)
-→ λ(g : cObject → dObject)
-→ { unit :
-      ∀(a : dObject) → dArrow a (g (f a))
-  , counit :
-      ∀(a : cObject) → cArrow (f (g a)) a
-  , leftAdjunct :
-      ∀(a : dObject) → ∀(b : cObject) → cArrow (f a) b → dArrow a (g b)
-  , rightAdjunct :
-      ∀(a : dObject) → ∀(b : cObject) → dArrow a (g b) → cArrow (f a) b
-  }
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(cObject : Kind)
+    → λ(dObject : Kind)
+    → λ(cArrow : kArrow (kProduct cObject cObject) Type)
+    → λ(dArrow : kArrow (kProduct dObject dObject) Type)
+    → λ(f : kArrow dObject cObject)
+    → λ(g : kArrow cObject dObject)
+    → { unit :
+          ∀(a : dObject) → dArrow { _1 = a, _2 = g (f a) }
+      , counit :
+          ∀(a : cObject) → cArrow { _1 = f (g a), _2 = a }
+      , leftAdjunct :
+            ∀(a : dObject)
+          → ∀(b : cObject)
+          → cArrow { _1 = f a, _2 = b }
+          → dArrow { _1 = a, _2 = g b }
+      , rightAdjunct :
+            ∀(a : dObject)
+          → ∀(b : cObject)
+          → dArrow { _1 = a, _2 = g b }
+          → cArrow { _1 = f a, _2 = b }
+      }

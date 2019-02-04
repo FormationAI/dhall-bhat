@@ -17,6 +17,6 @@ in    λ(m : Type → Type)
         }
       : ./../../../Functor/Endo/Star/Type
         Type
-        ./../../../Function/Type
+        (./../../../uncurryT Type Type Type ./../../../Function/Type)
         m
         (./../../Type a)

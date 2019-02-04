@@ -9,11 +9,11 @@ in  let eitherF = ./../../../Either/functor/endo/set
 in  let composeF =
           ./../../../Compose/functor
           Type
-          ./../../../Function/Type
+          (./../../../uncurryT Type Type Type ./../../../Function/Type)
           Type
-          ./../../../Function/Type
+          (./../../../uncurryT Type Type Type ./../../../Function/Type)
           Type
-          ./../../../Function/Type
+          (./../../../uncurryT Type Type Type ./../../../Function/Type)
 
 in    λ(a : Type)
     → λ(f : Type → Type)

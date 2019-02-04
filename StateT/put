@@ -1,4 +1,5 @@
-    let Monad = ./../Monad/Type Type ./../Function/Type
+    let Monad =
+          ./../Monad/Type Type (./../uncurryT Type Type Type ./../Function/Type)
 
 in    λ(s : Type)
     → λ(m : Type → Type)

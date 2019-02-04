@@ -1,30 +1,40 @@
-  λ(cObject : Kind)
-→ λ(cpObject : Kind)
-→ λ(cpArrow : cpObject → cpObject → Type)
-→     let dObject = Type
-  
-  in  let dArrow = ./../Function/Type
-  
-  in  let dSemigroupoid = ./../Function/semigroupoid
-  
-  in    λ(h : cpObject → dObject)
-      → λ(functor : ./../Functor/Type cpObject dObject cpArrow dArrow h)
-      → λ(f : cObject → cpObject)
-      → λ(g : cObject → dObject)
-      → λ(duplicate : ∀(b : cObject) → dArrow (g b) (h (f b)))
-      → λ(a : cpObject)
-      → λ(lan : ./Type cObject cpObject cpArrow f g a)
-      → lan
-        (h a)
-        (   λ(b : cObject)
-          → λ(k : cpArrow (f b) a)
-          → dSemigroupoid.op
-            (g b)
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(cObject : Kind)
+    → λ(cpObject : Kind)
+    → λ(cpArrow : kArrow (kProduct cpObject cpObject) Type)
+    →     let dObject = Type
+      
+      in  let dArrow = ./../Function/Type
+      
+      in  let dSemigroupoid = ./../Function/semigroupoid
+      
+      in    λ(h : kArrow cpObject dObject)
+          → λ ( functor
+              : ./../Functor/Type
+                cpObject
+                dObject
+                cpArrow
+                (./../uncurryT dObject dObject Type dArrow)
+                h
+              )
+          → λ(f : kArrow cObject cpObject)
+          → λ(g : kArrow cObject dObject)
+          → λ(duplicate : ∀(b : cObject) → dArrow (g b) (h (f b)))
+          → λ(a : cpObject)
+          → λ(lan : ./Type cObject cpObject cpArrow f g a)
+          → lan
             (h a)
-            (   λ(r : Type)
-              → λ ( arrowsOut
-                  : ∀(z : dObject) → dArrow z (h a) → dArrow (g b) z → r
-                  )
-              → arrowsOut (h (f b)) (functor.map (f b) a k) (duplicate b)
+            (   λ(b : cObject)
+              → λ(k : cpArrow { _1 = f b, _2 = a })
+              → dSemigroupoid.op
+                { _1 = g b, _2 = h a }
+                (   λ(r : Type)
+                  → λ ( arrowsOut
+                      : ∀(z : dObject) → dArrow z (h a) → dArrow (g b) z → r
+                      )
+                  → arrowsOut (h (f b)) (functor.map (f b) a k) (duplicate b)
+                )
             )
-        )

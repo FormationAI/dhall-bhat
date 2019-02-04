@@ -1,6 +1,8 @@
-    let object = Type
+    let kArrow = ./../Function/Kind
 
-in  let arrow = ./../Function/Type
+in  let object = Type
+
+in  let arrow = ./../uncurryT Type Type Type ./../Function/Type
 
 in  let Monad = ./../Monad/Type object arrow
 
@@ -8,7 +10,7 @@ in  let ReaderT = ./Type object arrow
 
 in    λ(r : object)
     →   { lift =
-              λ(m : object → object)
+              λ(m : kArrow object object)
             → λ(monad : Monad m)
             → λ(a : object)
             → λ(ma : m a)
@@ -18,4 +20,4 @@ in    λ(r : object)
       : ./../Transformer/Type
         object
         arrow
-        (λ(m : object → object) → ReaderT m r)
+        (λ(m : kArrow object object) → ReaderT m r)

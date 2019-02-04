@@ -11,4 +11,7 @@
           ((./../Function/category).identity (Optional a))
           ([] : Optional a)
     }
-: ./../Monad/Type Type ./../Function/Type Optional
+: ./../Monad/Type
+  Type
+  (./../uncurryT Type Type Type ./../Function/Type)
+  Optional

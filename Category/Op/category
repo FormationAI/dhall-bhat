@@ -1,30 +1,37 @@
-  λ(object : Kind)
-→ λ(arrow : object → object → Type)
-→ λ(category : ./../Type object arrow)
-→     let opArrow = ./Type object arrow
-  
-  in    { identity =
-            category.identity
-        , op =
-              λ(a : object)
-            → λ(b : object)
-            → λ ( p
-                :   ∀(r : Type)
-                  → (∀(z : object) → opArrow z b → opArrow a z → r)
-                  → r
-                )
-            → category.op
-              b
-              a
-              (   λ(r : Type)
-                → λ(arrowsOut : ∀(z : object) → arrow z a → arrow b z → r)
-                → p
-                  r
-                  (   λ(z : object)
-                    → λ(f : opArrow z b)
-                    → λ(g : opArrow a z)
-                    → arrowsOut z g f
+    let kArrow = ./../../Function/Kind
+
+in  let kProduct = ./../../Tuple/Kind
+
+in    λ(object : Kind)
+    → λ(arrow : kArrow (kProduct object object) Type)
+    → λ(category : ./../Type object arrow)
+    →     let opArrow = ./Type object arrow
+      
+      in    { identity =
+                category.identity
+            , op =
+                  λ(a : { _1 : object, _2 : object })
+                → λ ( p
+                    :   ∀(r : Type)
+                      → (∀(z : object) → opArrow z a._2 → opArrow a._1 z → r)
+                      → r
+                    )
+                → category.op
+                  { _1 = a._2, _2 = a._1 }
+                  (   λ(r : Type)
+                    → λ ( arrowsOut
+                        :   ∀(z : object)
+                          → arrow { _1 = z, _2 = a._1 }
+                          → arrow { _1 = a._2, _2 = z }
+                          → r
+                        )
+                    → p
+                      r
+                      (   λ(z : object)
+                        → λ(f : opArrow z a._2)
+                        → λ(g : opArrow a._1 z)
+                        → arrowsOut z g f
+                      )
                   )
-              )
-        }
-      : ./../Type object opArrow
+            }
+          : ./../Type object (./../../uncurryT object object Type opArrow)

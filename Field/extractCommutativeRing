@@ -1,14 +1,18 @@
-  λ(object : Kind)
-→ λ(cat : ./../Category/Monoidal/Type object)
-→ λ(m : object)
-→ λ(field : ./Type object cat m)
-→   { additive =
-        field.additive
-    , multiplicative =
-        ./../Group/Commutative/extractCommutativeMonoid
-        object
-        cat
-        m
-        field.multiplicative
-    }
-  : ./../Ring/Commutative/Type object cat m
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(object : Kind)
+    → λ(cat : ./../Category/Monoidal/Type kArrow kProduct object)
+    → λ(m : object)
+    → λ(field : ./Type object cat m)
+    →   { additive =
+            field.additive
+        , multiplicative =
+            ./../Group/Commutative/extractCommutativeMonoid
+            object
+            cat
+            m
+            field.multiplicative
+        }
+      : ./../Ring/Commutative/Type object cat m

@@ -1,6 +1,6 @@
 {- These are various operations, grouped by type, specialized to **Set**.
 -}
-    let Set = ./../../Function/Type
+    let Set = ./../../uncurryT Type Type Type ./../../Function/Type
 
 in  { applicative =
         ./../../Applicative/terms.dhall

@@ -1,8 +1,10 @@
-{- TODO: This should form a commutative monoid, with `refl` as identity.
--}
-  λ(cObject : Kind)
-→ λ(dObject : Kind)
-→ λ(dArrow : dObject → dObject → Type)
-→ λ(a : cObject)
-→ λ(b : cObject)
-→ { subst : ∀(f : cObject → dObject) → dArrow (f a) (f b) }
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(cObject : Kind)
+    → λ(dObject : Kind)
+    → λ(dArrow : kArrow (kProduct dObject dObject) Type)
+    → λ(a : cObject)
+    → λ(b : cObject)
+    → { subst : ∀(f : kArrow cObject dObject) → dArrow { _1 = f a, _2 = f b } }

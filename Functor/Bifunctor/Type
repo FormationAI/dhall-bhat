@@ -1,15 +1,24 @@
-  λ(cObject : Kind)
-→ λ(dObject : Kind)
-→ λ(eObject : Kind)
-→ λ(cArrow : cObject → cObject → Type)
-→ λ(dArrow : dObject → dObject → Type)
-→ λ(eArrow : eObject → eObject → Type)
-→ λ(f : cObject → dObject → eObject)
-→     let object = { _1 : cObject, _2 : dObject }
-  
-  in  ./../Type
-      object
-      eObject
-      (./../../Category/Product/Type cObject dObject cArrow dArrow)
-      eArrow
-      (λ(p : object) → f p._1 p._2)
+    let kArrow = ./../../Function/Kind
+
+in  let kProduct = ./../../Tuple/Kind
+
+in    λ(cObject : Kind)
+    → λ(dObject : Kind)
+    → λ(eObject : Kind)
+    → λ(cArrow : kArrow (kProduct cObject cObject) Type)
+    → λ(dArrow : kArrow (kProduct dObject dObject) Type)
+    → λ(eArrow : kArrow (kProduct eObject eObject) Type)
+    → λ(f : kArrow (kProduct cObject dObject) eObject)
+    →     let object = { _1 : cObject, _2 : dObject }
+      
+      in  ./../Type
+          object
+          eObject
+          ( ./../../uncurryT
+            object
+            object
+            Type
+            (./../../Category/Product/Type cObject dObject cArrow dArrow)
+          )
+          eArrow
+          f

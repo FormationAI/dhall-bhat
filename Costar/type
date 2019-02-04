@@ -1,3 +1,9 @@
-  λ(object : Kind)
-→ λ(arrow : object → object → Type)
-→ ./../Star/Type object (./../Category/Op/Type object arrow)
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(object : Kind)
+    → λ(arrow : kArrow (kProduct object object) Type)
+    → ./../Star/Type
+      object
+      (./../uncurryT object object Type (./../Category/Op/Type object arrow))

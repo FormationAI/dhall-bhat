@@ -1,10 +1,14 @@
-    let cObject = Type
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in  let cObject = Type
 
 in  let c = ./../Category/Monoidal/Set/cartesian
 
 in    λ(dObject : Kind)
-    → λ(dArrow : dObject → dObject → Type)
-    → λ(f : cObject → dObject)
+    → λ(dArrow : kArrow (kProduct dObject dObject) Type)
+    → λ(f : kArrow cObject dObject)
     → λ(functor : ./Type cObject dObject c.arrow dArrow f)
     → λ(a : cObject)
     → functor.map a c.identity (λ(_ : a) → {=})

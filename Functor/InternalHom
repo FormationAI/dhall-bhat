@@ -2,12 +2,16 @@
   `Profunctor`. Not to be confused with Dhall’s `./Profunctor`, which is more
    general.
 -}
-  λ(object : Kind)
-→ λ(arrow : object → object → Type)
-→ ./Bifunctor/type
-  object
-  object
-  object
-  (./../Category/Op/type object arrow)
-  arrow
-  arrow
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(object : Kind)
+    → λ(arrow : kArrow (kProduct object object) Type)
+    → ./Bifunctor/type
+      object
+      object
+      object
+      (./../uncurryT object object Type (./../Category/Op/Type object arrow))
+      arrow
+      arrow

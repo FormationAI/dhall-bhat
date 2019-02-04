@@ -4,7 +4,7 @@ in  let foldable = ./foldable
 
 in  ./../Monad/fromPureBind
     Type
-    ./../Function/Type
+    (./../uncurryT Type Type Type ./../Function/Type)
     ./../Function/category
     DifferenceList
     (λ(a : Type) → λ(x : a) → λ(l : List a) → [ x ] # l)

@@ -1,1 +1,5 @@
-./../../Rig/extractMultiplicative Type ./../../Rig/Set
+    let kArrow = ./../../../Function/Kind
+
+in  let kProduct = ./../../../Tuple/Kind
+
+in  ./../../Rig/extractMultiplicative kArrow kProduct Type ./../../Rig/Set

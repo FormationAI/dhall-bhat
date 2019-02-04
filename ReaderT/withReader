@@ -1,16 +1,24 @@
-  λ(object : Kind)
-→ λ(arrow : object → object → Type)
-→ λ(semigroupoid : ./../Semigroupoid/Type object arrow)
-→ λ(e : object)
-→ λ(m : object → object)
-→ λ(a : object)
-→ λ(ePrime : object)
-→ λ(f : arrow ePrime e)
-→ λ(reader : ./Type object arrow m e a)
-→ semigroupoid.op
-  ePrime
-  (m a)
-  (   λ(r : Type)
-    → λ(fn : ∀(z : object) → arrow z (m a) → arrow ePrime z → r)
-    → fn e reader f
-  )
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(object : Kind)
+    → λ(arrow : kArrow (kProduct object object) Type)
+    → λ(semigroupoid : ./../Semigroupoid/Type object arrow)
+    → λ(e : object)
+    → λ(m : kArrow object object)
+    → λ(a : object)
+    → λ(ePrime : object)
+    → λ(f : arrow { _1 = ePrime, _2 = e })
+    → λ(reader : ./Type object arrow m e a)
+    → semigroupoid.op
+      { _1 = ePrime, _2 = m a }
+      (   λ(r : Type)
+        → λ ( fn
+            :   ∀(z : object)
+              → arrow { _1 = z, _2 = m a }
+              → arrow { _1 = ePrime, _2 = z }
+              → r
+            )
+        → fn e reader f
+      )

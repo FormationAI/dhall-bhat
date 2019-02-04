@@ -1,6 +1,10 @@
-  λ(object : Kind)
-→ λ(arrow : object → object → Type)
-→ λ(w : object → object)
-→ λ(comonad : ./Type object arrow w)
-→   { map = λ(a : object) → λ(b : object) → comonad.map b a }
-  : ./../Functor/Endo/Type object arrow w
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(object : Kind)
+    → λ(arrow : kArrow (kProduct object object) Type)
+    → λ(w : kArrow object object)
+    → λ(comonad : ./Type object arrow w)
+    →   { map = λ(a : object) → λ(b : object) → comonad.map b a }
+      : ./../Functor/Endo/Type object arrow w

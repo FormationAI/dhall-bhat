@@ -1,1 +1,1 @@
-./../Arrow/extractSemigroupoid ./type ./arrow
+./../Arrow/extractSemigroupoid (./../uncurryT Type Type Type ./Type) ./arrow

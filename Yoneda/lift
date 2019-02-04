@@ -1,19 +1,23 @@
-  λ(cObject : Kind)
-→ λ(cArrow : cObject → cObject → Type)
-→ λ(dObject : Kind)
-→ λ(dArrow : dObject → dObject → Type)
-→ λ(dCategory : ./../Category/Type dObject dArrow)
-→ λ(f : cObject → dObject)
-→ λ(functor : ./../Functor/Type cObject dObject cArrow dArrow f)
-→ ./../Ran/lift
-  cObject
-  cObject
-  dObject
-  cArrow
-  dArrow
-  (./../Category/extractSemigroupoid dObject dArrow dCategory)
-  f
-  functor
-  (./../Identity/Type cObject)
-  f
-  (λ(a : cObject) → dCategory.identity (f a))
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(cObject : Kind)
+    → λ(cArrow : kArrow (kProduct cObject cObject) Type)
+    → λ(dObject : Kind)
+    → λ(dArrow : kArrow (kProduct dObject dObject) Type)
+    → λ(dCategory : ./../Category/Type dObject dArrow)
+    → λ(f : kArrow cObject dObject)
+    → λ(functor : ./../Functor/Type cObject dObject cArrow dArrow f)
+    → ./../Ran/lift
+      cObject
+      cObject
+      dObject
+      cArrow
+      dArrow
+      (./../Category/extractSemigroupoid dObject dArrow dCategory)
+      f
+      functor
+      (./../Identity/Type cObject)
+      f
+      (λ(a : cObject) → dCategory.identity (f a))

@@ -1,0 +1,5 @@
+  λ(cArrow : Kind → Kind → Kind)
+→ λ(dArrow : Kind → Kind → Kind)
+→ λ(a : { _1 : Kind, _2 : Kind })
+→ λ(b : { _1 : Kind, _2 : Kind })
+→ { _1 : cArrow a._1 b._1, _2 : dArrow a._2 b._2 }

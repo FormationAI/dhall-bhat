@@ -1,6 +1,6 @@
     let object = Type
 
-in  let arrow = ./../Function/Type
+in  let arrow = ./../uncurryT object object Type ./../Function/Type
 
 in  let category = ./../Function/category
 

@@ -1,6 +1,10 @@
-    let object = Type
+    let kArrow = ./../Function/Kind
 
-in    λ(cat : ./../Category/Monoidal/Type object)
+in  let kProduct = ./../Tuple/Kind
+
+in  let object = Type
+
+in    λ(cat : ./../Category/Monoidal/Type kArrow kProduct object)
     → ./../Monoid/Type
-      (object → object)
+      (kArrow object object)
       (./../Category/Monoidal/Endofunctor/applicative cat)

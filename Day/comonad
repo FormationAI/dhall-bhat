@@ -1,4 +1,6 @@
-    let object = Type
+    let kArrow = ./../Function/Kind
+
+in  let object = Type
 
 in  let cat = ./../Category/Monoidal/Set/cartesian
 
@@ -9,9 +11,9 @@ in    λ(semigroupoid : ./../Semigroupoid/Type object cat.arrow)
       
       in  let Day/convolution = ./../Day/convolution object cat cat
       
-      in    λ(f : object → object)
+      in    λ(f : kArrow object object)
           → λ(fComonad : Comonad f)
-          → λ(g : object → object)
+          → λ(g : kArrow object object)
           → λ(gComonad : Comonad g)
           →   { map =
                     λ(b : object)

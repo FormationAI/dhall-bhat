@@ -1,35 +1,42 @@
-  λ(cObject : Kind)
-→ λ(cArrow : cObject → cObject → Type)
-→ λ(dObject : Kind)
-→ λ(dArrow : dObject → dObject → Type)
-→ λ(dCategory : ./../Category/Type dObject dArrow)
-→     let object = cObject → dObject
-  
-  in  let arrow = ./Type cObject dObject dArrow
-  
-  in    { identity =
-            λ(a : object) → λ(i : cObject) → dCategory.identity (a i)
-        , op =
-              λ(a : object)
-            → λ(b : object)
-            → λ ( p
-                : ∀(r : Type) → (∀(z : object) → arrow z b → arrow a z → r) → r
-                )
-            → λ(i : cObject)
-            → dCategory.op
-              (a i)
-              (b i)
-              (   λ(r : Type)
-                → λ ( arrowsOut
-                    : ∀(z : dObject) → dArrow z (b i) → dArrow (a i) z → r
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(cObject : Kind)
+    → λ(cArrow : kArrow (kProduct cObject cObject) Type)
+    → λ(dObject : Kind)
+    → λ(dArrow : kArrow (kProduct dObject dObject) Type)
+    → λ(dCategory : ./../Category/Type dObject dArrow)
+    →     let object = kArrow cObject dObject
+      
+      in  let arrow = ./Type cObject dObject dArrow
+      
+      in    { identity =
+                λ(a : object) → λ(i : cObject) → dCategory.identity (a i)
+            , op =
+                  λ(a : { _1 : object, _2 : object })
+                → λ ( p
+                    :   ∀(r : Type)
+                      → (∀(z : object) → arrow z a._2 → arrow a._1 z → r)
+                      → r
                     )
-                → p
-                  r
-                  (   λ(z : object)
-                    → λ(f : arrow z b)
-                    → λ(g : arrow a z)
-                    → arrowsOut (z i) (f i) (g i)
+                → λ(i : cObject)
+                → dCategory.op
+                  { _1 = a._1 i, _2 = a._2 i }
+                  (   λ(r : Type)
+                    → λ ( arrowsOut
+                        :   ∀(z : dObject)
+                          → dArrow { _1 = z, _2 = a._2 i }
+                          → dArrow { _1 = a._1 i, _2 = z }
+                          → r
+                        )
+                    → p
+                      r
+                      (   λ(z : object)
+                        → λ(f : arrow z a._2)
+                        → λ(g : arrow a._1 z)
+                        → arrowsOut (z i) (f i) (g i)
+                      )
                   )
-              )
-        }
-      : ./../Category/Type object arrow
+            }
+          : ./../Category/Type object (./../uncurryT object object Type arrow)

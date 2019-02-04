@@ -1,6 +1,14 @@
 {- A functor from a Kleisli category to the underlying non-Kleisli category.
 -}
-  λ(object : Kind)
-→ λ(arrow : object → object → Type)
-→ λ(m : object → object)
-→ ./../Type object object (./../../Star/Type object arrow m) arrow
+    let kArrow = ./../../Function/Kind
+
+in  let kProduct = ./../../Tuple/Kind
+
+in    λ(object : Kind)
+    → λ(arrow : kArrow (kProduct object object) Type)
+    → λ(m : kArrow object object)
+    → ./../Type
+      object
+      object
+      (./../../uncurryT object object Type (./../../Star/Type object arrow m))
+      arrow

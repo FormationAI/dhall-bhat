@@ -1,6 +1,6 @@
     let Foldable = ./../Foldable/Type
 
-in  let Yoneda = ./Type Type ./../Function/Type
+in  let Yoneda = ./Type Type (./../uncurryT Type Type Type ./../Function/Type)
 
 in    λ(f : Type → Type)
     → λ(foldable : Foldable f)

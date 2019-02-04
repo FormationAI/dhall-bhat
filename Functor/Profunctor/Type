@@ -2,14 +2,23 @@
    is much more general than Haskell’s `Profunctor`. See `Hom` and `InternalHom`
    for that.
 -}
-  λ(cObject : Kind)
-→ λ(dObject : Kind)
-→ λ(cArrow : cObject → cObject → Type)
-→ λ(dArrow : dObject → dObject → Type)
-→ ./../Bifunctor/Type
-  dObject
-  cObject
-  Type
-  (./../../Category/Op/Type dObject dArrow)
-  cArrow
-  ./../../Function/Type
+    let kArrow = ./../../Function/Kind
+
+in  let kProduct = ./../../Tuple/Kind
+
+in    λ(cObject : Kind)
+    → λ(dObject : Kind)
+    → λ(cArrow : kArrow (kProduct cObject cObject) Type)
+    → λ(dArrow : kArrow (kProduct dObject dObject) Type)
+    → ./../Bifunctor/Type
+      dObject
+      cObject
+      Type
+      ( ./../../uncurryT
+        dObject
+        dObject
+        Type
+        (./../../Category/Op/Type dObject dArrow)
+      )
+      cArrow
+      (./../../uncurryT Type Type Type ./../../Function/Type)

@@ -4,28 +4,36 @@
    NB: This looks a lot like a contravariant functor in the category of
        endofunctors … right?
 -}
-  λ(object : Kind)
-→ λ(arrow : object → object → Type)
-→ λ(category : ./../../Category/Type object arrow)
-→ λ(m : object → object)
-→ λ(n : object → object)
-→ λ(natural : ∀(a : object) → arrow (m a) (n a))
-→ λ(f : object → object)
-→ λ(star : ./Type object arrow n f)
-→   { map =
-          λ(a : object)
-        → λ(b : object)
-        → λ(fn : arrow a (m b))
-        → star.map
-          a
-          b
-          ( category.op
-            a
-            (n b)
-            (   λ(r : Type)
-              → λ(arrowsOut : ∀(z : object) → arrow z (n b) → arrow a z → r)
-              → arrowsOut (m b) (natural b) fn
-            )
-          )
-    }
-  : ./Type object arrow m f
+    let kArrow = ./../../Function/Kind
+
+in  let kProduct = ./../../Tuple/Kind
+
+in    λ(object : Kind)
+    → λ(arrow : kArrow (kProduct object object) Type)
+    → λ(category : ./../../Category/Type object arrow)
+    → λ(m : kArrow object object)
+    → λ(n : kArrow object object)
+    → λ(natural : ∀(a : object) → arrow { _1 = m a, _2 = n a })
+    → λ(f : kArrow object object)
+    → λ(star : ./Type object arrow n f)
+    →   { map =
+              λ(a : object)
+            → λ(b : object)
+            → λ(fn : arrow { _1 = a, _2 = m b })
+            → star.map
+              a
+              b
+              ( category.op
+                { _1 = a, _2 = n b }
+                (   λ(r : Type)
+                  → λ ( arrowsOut
+                      :   ∀(z : object)
+                        → arrow { _1 = z, _2 = n b }
+                        → arrow { _1 = a, _2 = z }
+                        → r
+                      )
+                  → arrowsOut (m b) (natural b) fn
+                )
+              )
+        }
+      : ./Type object arrow m f

@@ -7,4 +7,7 @@ in    { map =
           → λ(t : Tuple a._1 a._2)
           → { _1 = f._1 t._1, _2 = f._2 t._2 }
       }
-    : ./../../Functor/Pair/Type Type ./../../Function/Type Tuple
+    : ./../../Functor/Pair/Type
+      Type
+      (./../../uncurryT Type Type Type ./../../Function/Type)
+      (./../../uncurryT Type Type Type Tuple)

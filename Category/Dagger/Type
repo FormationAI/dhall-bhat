@@ -2,8 +2,12 @@
    morphisms. I’m not sure how to implement that, so this structure simply uses
    pairs of morphisms as the morphism.
 -}
-  λ(object : Kind)
-→ λ(arrow : object → object → Type)
-→ λ(a : object)
-→ λ(b : object)
-→ { _1 : arrow a b, _2 : arrow b a }
+    let kArrow = ./../../Function/Kind
+
+in  let kProduct = ./../../Tuple/Kind
+
+in    λ(object : Kind)
+    → λ(arrow : kArrow (kProduct object object) Type)
+    → λ(a : object)
+    → λ(b : object)
+    → { _1 : arrow { _1 = a, _2 = b }, _2 : arrow { _1 = b, _2 = a } }

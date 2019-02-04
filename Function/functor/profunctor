@@ -1,1 +1,3 @@
-./../../Arrow/extractProfunctor ./../type ./../arrow
+./../../Arrow/extractProfunctor
+(./../../uncurryT Type Type Type ./../Type)
+./../arrow

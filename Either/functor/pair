@@ -21,5 +21,12 @@ in    λ(m : Type → Type)
         }
       : ./../../Functor/Pair/type
         Type
-        (./../../Star/type Type ./../../Function/Type m)
-        Either
+        (   λ(p : { _1 : Type, _2 : Type })
+          → ./../../Star/type
+            Type
+            (./../../uncurryT Type Type Type ./../../Function/Type)
+            m
+            p._1
+            p._2
+        )
+        (./../../uncurryT Type Type Type Either)

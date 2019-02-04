@@ -1,54 +1,63 @@
-  λ(cObject : Kind)
-→ λ(cArrow : cObject → cObject → Type)
-→ λ(cCategory : ./../type cObject cArrow)
-→ λ(dObject : Kind)
-→ λ(dArrow : dObject → dObject → Type)
-→ λ(dCategory : ./../type dObject dArrow)
-→     let object = { _1 : cObject, _2 : dObject }
-  
-  in  let arrow = ./type cObject dObject cArrow dArrow
-  
-  in    { identity =
-              λ(a : object)
-            → { _1 = cCategory.identity a._1, _2 = dCategory.identity a._2 }
-        , op =
-              λ(a : object)
-            → λ(b : object)
-            → λ ( p
-                : ∀(r : Type) → (∀(z : object) → arrow z b → arrow a z → r) → r
-                )
-            → { _1 =
-                  cCategory.op
-                  a._1
-                  b._1
-                  (   λ(r : Type)
-                    → λ ( arrowsOut
-                        : ∀(z : cObject) → cArrow z b._1 → cArrow a._1 z → r
-                        )
-                    → p
-                      r
-                      (   λ(z : object)
-                        → λ(f : arrow z b)
-                        → λ(g : arrow a z)
-                        → arrowsOut z._1 f._1 g._1
+    let kArrow = ./../../Function/Kind
+
+in  let kProduct = ./../../Tuple/Kind
+
+in    λ(cObject : Kind)
+    → λ(cArrow : kArrow (kProduct cObject cObject) Type)
+    → λ(cCategory : ./../type cObject cArrow)
+    → λ(dObject : Kind)
+    → λ(dArrow : kArrow (kProduct dObject dObject) Type)
+    → λ(dCategory : ./../type dObject dArrow)
+    →     let object = { _1 : cObject, _2 : dObject }
+      
+      in  let arrow = ./Type cObject dObject cArrow dArrow
+      
+      in    { identity =
+                  λ(a : object)
+                → { _1 = cCategory.identity a._1, _2 = dCategory.identity a._2 }
+            , op =
+                  λ(a : { _1 : object, _2 : object })
+                → λ ( p
+                    :   ∀(r : Type)
+                      → (∀(z : object) → arrow z a._2 → arrow a._1 z → r)
+                      → r
+                    )
+                → { _1 =
+                      cCategory.op
+                      { _1 = a._1._1, _2 = a._2._1 }
+                      (   λ(r : Type)
+                        → λ ( arrowsOut
+                            :   ∀(z : cObject)
+                              → cArrow { _1 = z, _2 = a._2._1 }
+                              → cArrow { _1 = a._1._1, _2 = z }
+                              → r
+                            )
+                        → p
+                          r
+                          (   λ(z : object)
+                            → λ(f : arrow z a._2)
+                            → λ(g : arrow a._1 z)
+                            → arrowsOut z._1 f._1 g._1
+                          )
                       )
-                  )
-              , _2 =
-                  dCategory.op
-                  a._2
-                  b._2
-                  (   λ(r : Type)
-                    → λ ( arrowsOut
-                        : ∀(z : dObject) → dArrow z b._2 → dArrow a._2 z → r
-                        )
-                    → p
-                      r
-                      (   λ(z : object)
-                        → λ(f : arrow z b)
-                        → λ(g : arrow a z)
-                        → arrowsOut z._2 f._2 g._2
+                  , _2 =
+                      dCategory.op
+                      { _1 = a._1._2, _2 = a._2._2 }
+                      (   λ(r : Type)
+                        → λ ( arrowsOut
+                            :   ∀(z : dObject)
+                              → dArrow { _1 = z, _2 = a._2._2 }
+                              → dArrow { _1 = a._1._2, _2 = z }
+                              → r
+                            )
+                        → p
+                          r
+                          (   λ(z : object)
+                            → λ(f : arrow z a._2)
+                            → λ(g : arrow a._1 z)
+                            → arrowsOut z._2 f._2 g._2
+                          )
                       )
-                  )
-              }
-        }
-      : ./../type object arrow
+                  }
+            }
+          : ./../Type object (./../../uncurryT object object Type arrow)

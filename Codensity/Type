@@ -1,6 +1,10 @@
-  λ(cObject : Kind)
-→     let dObject = Type
-  
-  in    λ(dArrow : dObject → dObject → Type)
-      → λ(m : cObject → dObject)
-      → ./../Ran/Type cObject dObject dArrow m m
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(cObject : Kind)
+    →     let dObject = Type
+      
+      in    λ(dArrow : kArrow (kProduct dObject dObject) Type)
+          → λ(m : kArrow cObject dObject)
+          → ./../Ran/Type cObject dObject dArrow m m

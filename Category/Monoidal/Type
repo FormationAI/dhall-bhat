@@ -1,2 +1,5 @@
-  λ(object : Kind)
-→ { arrow : object → object → Type } ⩓ ./../../Monoid/Kind object
+  λ(kArrow : Kind → Kind → Kind)
+→ λ(kProduct : Kind → Kind → Kind)
+→ λ(object : Kind)
+→   { arrow : kArrow (kProduct object object) Type }
+  ⩓ ./../../Monoid/Kind kArrow kProduct object

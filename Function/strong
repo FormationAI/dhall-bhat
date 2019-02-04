@@ -1,1 +1,1 @@
-./../Arrow/extractStrong ./type ./arrow
+./../Arrow/extractStrong (./../uncurryT Type Type Type ./Type) ./arrow

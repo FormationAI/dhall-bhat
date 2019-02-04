@@ -1,12 +1,14 @@
-    let Reader = ./Type Type ./../Function/Type
+    let object = Type
+
+in  let arrow = ./../uncurryT object object Type ./../Function/Type
+
+in  let Reader = ./Type object arrow
 
 in    λ(r : Type)
-    →   { withReader =
-            ./withReader Type ./../Function/Type ./../Function/semigroupoid r
-        }
+    →   { withReader = ./withReader object arrow ./../Function/semigroupoid r }
       ∧ ./../Monad/terms.dhall
-        Type
-        ./../Function/Type
+        object
+        arrow
         ./../Function/semigroupoid
         (Reader r)
         (./monad r)

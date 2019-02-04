@@ -10,13 +10,12 @@ in    λ(a : object)
     →   { op =
               λ(p : { _1 : DifferenceList a, _2 : DifferenceList a })
             → category.op
-              (List a)
-              (List a)
+              { _1 = List a, _2 = List a }
               (   λ(r : Type)
                 → λ ( arrowsOut
                     :   ∀(z : Type)
-                      → cat.arrow z (List a)
-                      → cat.arrow (List a) z
+                      → cat.arrow { _1 = z, _2 = List a }
+                      → cat.arrow { _1 = List a, _2 = z }
                       → r
                     )
                 → arrowsOut (List a) p._1 p._2

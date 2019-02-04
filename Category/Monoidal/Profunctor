@@ -1,18 +1,25 @@
-  λ(object : Kind)
-→     let profunctor = object → object → Type
-  
-  in    λ(morphism : profunctor)
-      →   { arrow =
-                λ(p : profunctor)
-              → λ(q : profunctor)
-              → ∀(a : object) → ∀(b : object) → p a b → q a b
-          , op =
-                λ(p : profunctor)
-              → λ(q : profunctor)
-              → λ(a : object)
-              → λ(b : object)
-              → ∀(r : Type) → (∀(z : object) → p z b → q a z → r) → r
-          , identity =
-              morphism
-          }
-        : ./Type profunctor
+    let kArrow = ./../../Function/Kind
+
+in  let kProduct = ./../../Tuple/Kind
+
+in    λ(object : Kind)
+    →     let profunctor = kArrow (kProduct object object) Type
+      
+      in    λ(morphism : profunctor)
+          →   { arrow =
+                    λ(p : { _1 : profunctor, _2 : profunctor })
+                  → ∀(a : { _1 : object, _2 : object }) → p._1 a → p._2 a
+              , op =
+                    λ(p : { _1 : profunctor, _2 : profunctor })
+                  → λ(a : { _1 : object, _2 : object })
+                  →   ∀(r : Type)
+                    → (   ∀(z : object)
+                        → p._1 { _1 = z, _2 = a._2 }
+                        → p._2 { _1 = a._1, _2 = z }
+                        → r
+                      )
+                    → r
+              , identity =
+                  morphism
+              }
+            : ./Type kArrow kProduct profunctor

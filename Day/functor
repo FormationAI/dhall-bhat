@@ -1,42 +1,45 @@
-  λ(cObject : Kind)
-→ λ(c : ./../Category/Monoidal/Type cObject)
-→ λ(semigroupoid : ./../Semigroupoid/Type cObject c.arrow)
-→     let vObject = Type
-  
-  in  let v = ./../Category/Monoidal/Set/cartesian
-  
-  in  let Day = ./Type cObject c v
-  
-  in    λ(f : cObject → vObject)
-      → λ(g : cObject → vObject)
-      →   { map =
-                λ(a : cObject)
-              → λ(b : cObject)
-              → λ(fn : c.arrow a b)
-              → λ(day : Day f g a)
-              → day
-                (Day f g b)
-                (   λ(d : { _1 : cObject, _2 : cObject })
-                  → λ(fn2 : c.arrow (c.op d._1 d._2) a)
-                  → λ(e : v.op (f d._1) (g d._2))
-                  → λ(r0 : vObject)
-                  → λ(day0 : ./convolution cObject c v f g b r0)
-                  → day0
-                    d
-                    ( semigroupoid.op
-                      (c.op d._1 d._2)
-                      b
-                      (   λ(r : Type)
-                        → λ ( arrowsOut
-                            :   ∀(z : cObject)
-                              → c.arrow z b
-                              → c.arrow (c.op d._1 d._2) z
-                              → r
-                            )
-                        → arrowsOut a fn fn2
-                      )
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(cObject : Kind)
+    → λ(c : ./../Category/Monoidal/Type kArrow kProduct cObject)
+    → λ(semigroupoid : ./../Semigroupoid/Type cObject c.arrow)
+    →     let vObject = Type
+      
+      in  let v = ./../Category/Monoidal/Set/cartesian
+      
+      in  let Day = ./Type cObject c v
+      
+      in    λ(f : kArrow cObject vObject)
+          → λ(g : kArrow cObject vObject)
+          →   { map =
+                    λ(a : cObject)
+                  → λ(b : cObject)
+                  → λ(fn : c.arrow { _1 = a, _2 = b })
+                  → λ(day : Day f g a)
+                  → day
+                    (Day f g b)
+                    (   λ(d : { _1 : cObject, _2 : cObject })
+                      → λ(fn2 : c.arrow { _1 = c.op d, _2 = a })
+                      → λ(e : v.op { _1 = f d._1, _2 = g d._2 })
+                      → λ(r0 : vObject)
+                      → λ(day0 : ./convolution cObject c v f g b r0)
+                      → day0
+                        d
+                        ( semigroupoid.op
+                          { _1 = c.op d, _2 = b }
+                          (   λ(r : Type)
+                            → λ ( arrowsOut
+                                :   ∀(z : cObject)
+                                  → c.arrow { _1 = z, _2 = b }
+                                  → c.arrow { _1 = c.op d, _2 = z }
+                                  → r
+                                )
+                            → arrowsOut a fn fn2
+                          )
+                        )
+                        e
                     )
-                    e
-                )
-          }
-        : ./../Functor/Type cObject vObject c.arrow v.arrow (Day f g)
+              }
+            : ./../Functor/Type cObject vObject c.arrow v.arrow (Day f g)

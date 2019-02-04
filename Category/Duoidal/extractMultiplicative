@@ -1,5 +1,7 @@
-  λ(object : Kind)
-→ λ(rig : ./Type object)
+  λ(kArrow : Kind → Kind → Kind)
+→ λ(kProduct : Kind → Kind → Kind)
+→ λ(object : Kind)
+→ λ(rig : ./Type kArrow kProduct object)
 →   { arrow =
         rig.arrow
     , identity =
@@ -7,4 +9,4 @@
     , op =
         rig.multiplicative.op
     }
-  : ./../Monoidal/Type object
+  : ./../Monoidal/Type kArrow kProduct object

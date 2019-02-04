@@ -1,3 +1,7 @@
-  λ(f : Type → Type → Type)
-→ λ(arrow : ./Type f)
-→ arrow.{ identity, op } : ./../Category/Type Type f
+    let kArrow = ./../Function/Kind
+
+in  let kProduct = ./../Tuple/Kind
+
+in    λ(f : kArrow (kProduct Type Type) Type)
+    → λ(arrow : ./Type f)
+    → arrow.{ identity, op } : ./../Category/Type Type f

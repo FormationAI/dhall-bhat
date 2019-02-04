@@ -1,13 +1,15 @@
-    let object = Type
+    let kArrow = ./../Function/Kind
 
-in  let arrow = ./../Function/Type
+in  let object = Type
+
+in  let arrow = ./../uncurryT Type Type Type ./../Function/Type
 
 in  let category = ./../Function/category
 
 in  let ReaderT = ./Type object arrow
 
 in    λ(r : object)
-    → λ(m : object → object)
+    → λ(m : kArrow object object)
     → λ(monad : ./../Monad/Type object arrow m)
     → ./../Monad/fromPureBind
       object

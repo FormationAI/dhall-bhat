@@ -1,13 +1,15 @@
-    let object = Type
+    let kArrow = ./../../../Function/Kind
+
+in  let object = Type
 
 in  let cat = ./../../../Category/Monoidal/Set/cartesian
 
-in    λ(m : object → object)
+in    λ(m : kArrow object object)
     → λ(applicative : ./../../../Applicative/Type cat m)
     →   { map =
               λ(a : object)
             → λ(b : object)
-            → λ(f : cat.arrow a (m b))
+            → λ(f : cat.arrow { _1 = a, _2 = m b })
             → λ(fa : List a)
             →     let liftCons =
                           λ(mb : m b)
