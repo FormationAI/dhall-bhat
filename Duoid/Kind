@@ -1,5 +1,6 @@
-{- A united monoid is actually a pair of monoids with a shared `identity`. The
-  `additive.op` distributes over the `multiplicative.op` as well.
+{- A duoid (also known as a “united monoid”) is actually a pair of monoids with
+   a shared `identity`. The `additive.op` distributes over the
+  `multiplicative.op` as well.
 -}
   λ(arrow : Kind → Kind → Kind)
 → λ(product : Kind → Kind → Kind)

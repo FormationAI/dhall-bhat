@@ -14,7 +14,7 @@ in    λ(a : Type)
         , multiplicative =
             ./applicative/sequential a
         }
-      : ./../UnitedMonoid/Type
+      : ./../Duoid/Type
         (kArrow object object)
         (./../Category/Monoidal/Endofunctor/applicative cat)
         (./Type a)

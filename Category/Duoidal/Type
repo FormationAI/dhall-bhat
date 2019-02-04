@@ -2,4 +2,4 @@
 → λ(kProduct : Kind → Kind → Kind)
 → λ(object : Kind)
 →   { arrow : kArrow (kProduct object object) Type }
-  ⩓ ./../../UnitedMonoid/Kind kArrow kProduct object
+  ⩓ ./../../Duoid/Kind kArrow kProduct object
