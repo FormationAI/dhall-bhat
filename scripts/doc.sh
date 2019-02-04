@@ -4,6 +4,7 @@ IFS=$'\n\t'
 
 DHALL=dhall
 project=$(basename -- $(realpath "./"))
+kind_pattern='Kind$'
 type_pattern='Type$'
 
 echo '<html>'
@@ -22,25 +23,38 @@ do
     else
         comment=$(cat $f | grep -Pzo '(?s){-(.*)-}' || true)
         type=$($DHALL resolve <<< $f | $DHALL type)
-        if [[ $type =~ $type_pattern ]] ; then
-            echo "<h4>"$(basename -- "$f")" (type)</h4>";
+        if [[ $type =~ $kind_pattern ]] ; then
+            echo "<h4>"$(basename -- "$f")" (kind)</h4>";
             echo "<p>$comment</p>"
             echo '<dl>'
-            echo '<dt>kind</dt><dd><pre>'
+            echo '<dt>sort</dt><dd><pre>'
             echo "$type"
             echo '</pre></dd>'
-            echo '<dt>type</dt><dd><pre>'
+            echo '<dt>kind</dt><dd><pre>'
             $DHALL <<< $f
             echo '</pre></dd>'
             echo '</dl>'
         else
-            echo "<h4>"$(basename -- "$f")" (term)</h4>";
-            echo "<p>$comment</p>"
-            echo '<dl>'
-            echo '<dt>type</dt><dd><pre>'
-            echo "$type"
-            echo '</pre></dd>'
-            echo '</dl>'
+            if [[ $type =~ $type_pattern ]] ; then
+                echo "<h4>"$(basename -- "$f")" (type)</h4>";
+                echo "<p>$comment</p>"
+                echo '<dl>'
+                echo '<dt>kind</dt><dd><pre>'
+                echo "$type"
+                echo '</pre></dd>'
+                echo '<dt>type</dt><dd><pre>'
+                $DHALL <<< $f
+                echo '</pre></dd>'
+                echo '</dl>'
+            else
+                echo "<h4>"$(basename -- "$f")" (term)</h4>";
+                echo "<p>$comment</p>"
+                echo '<dl>'
+                echo '<dt>type</dt><dd><pre>'
+                echo "$type"
+                echo '</pre></dd>'
+                echo '</dl>'
+            fi
         fi
     fi
 done

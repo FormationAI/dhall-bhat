@@ -743,38 +743,50 @@
   }
 </pre></dd>
 </dl>
-<h4>Type (term)</h4>
+<h4>Type (kind)</h4>
 <p></p>
 <dl>
-<dt>type</dt><dd><pre>
+<dt>sort</dt><dd><pre>
   ∀(kArrow : Kind → Kind → Kind)
 → ∀(kProduct : Kind → Kind → Kind)
 → ∀(object : Kind)
 → Kind
+</pre></dd>
+<dt>kind</dt><dd><pre>
+  λ(kArrow : Kind → Kind → Kind)
+→ λ(kProduct : Kind → Kind → Kind)
+→ λ(object : Kind)
+→ { additive :
+      { identity : object, op : kArrow (kProduct object object) object }
+  , arrow :
+      kArrow (kProduct object object) Type
+  , multiplicative :
+      { identity : object, op : kArrow (kProduct object object) object }
+  }
 </pre></dd>
 </dl>
 <h4>extractAdditive (term)</h4>
 <p></p>
 <dl>
 <dt>type</dt><dd><pre>
-  ∀(arrow : Kind → Kind → Kind)
-→ ∀(product : Kind → Kind → Kind)
+  ∀(kArrow : Kind → Kind → Kind)
+→ ∀(kProduct : Kind → Kind → Kind)
 → ∀(object : Kind)
 → ∀ ( rig
     : { additive :
-          { identity : object, op : arrow (product object object) object }
+          { identity : object, op : kArrow (kProduct object object) object }
       , arrow :
-          arrow (product object object) Type
+          kArrow (kProduct object object) Type
       , multiplicative :
-          { identity : object, op : arrow (product object object) object }
+          { identity : object, op : kArrow (kProduct object object) object }
       }
     )
 → { arrow :
-      arrow (product object object) Type
+      kArrow (kProduct object object) Type
   , identity :
       object
   , op :
-      arrow (product object object) object
+      kArrow (kProduct object object) object
   }
 </pre></dd>
 </dl>
@@ -903,14 +915,26 @@
 }
 </pre></dd>
 </dl>
-<h4>Type (term)</h4>
+<h4>Type (kind)</h4>
 <p></p>
 <dl>
-<dt>type</dt><dd><pre>
+<dt>sort</dt><dd><pre>
   ∀(kArrow : Kind → Kind → Kind)
 → ∀(kProduct : Kind → Kind → Kind)
 → ∀(object : Kind)
 → Kind
+</pre></dd>
+<dt>kind</dt><dd><pre>
+  λ(kArrow : Kind → Kind → Kind)
+→ λ(kProduct : Kind → Kind → Kind)
+→ λ(object : Kind)
+→ { arrow :
+      kArrow (kProduct object object) Type
+  , identity :
+      object
+  , op :
+      kArrow (kProduct object object) object
+  }
 </pre></dd>
 </dl>
 <h4>types.dhall (term)</h4>
@@ -1128,15 +1152,22 @@
 </pre></dd>
 </dl>
 <h3 style="background-color: #bbb; width: 100%">./Category/Product</h3>
-<h4>Kind (term)</h4>
+<h4>Kind (kind)</h4>
 <p></p>
 <dl>
-<dt>type</dt><dd><pre>
+<dt>sort</dt><dd><pre>
   ∀(cArrow : Kind → Kind → Kind)
 → ∀(dArrow : Kind → Kind → Kind)
 → ∀(a : { _1 : Kind, _2 : Kind })
 → ∀(b : { _1 : Kind, _2 : Kind })
 → Kind
+</pre></dd>
+<dt>kind</dt><dd><pre>
+  λ(cArrow : Kind → Kind → Kind)
+→ λ(dArrow : Kind → Kind → Kind)
+→ λ(a : { _1 : Kind, _2 : Kind })
+→ λ(b : { _1 : Kind, _2 : Kind })
+→ { _1 : cArrow a._1 b._1, _2 : dArrow a._2 b._2 }
 </pre></dd>
 </dl>
 <h4>category (term)</h4>
@@ -1255,14 +1286,26 @@
 }
 </pre></dd>
 </dl>
-<h4>Type (term)</h4>
+<h4>Type (kind)</h4>
 <p></p>
 <dl>
-<dt>type</dt><dd><pre>
+<dt>sort</dt><dd><pre>
   ∀(kArrow : Kind → Kind → Kind)
 → ∀(kProduct : Kind → Kind → Kind)
 → ∀(object : Kind)
 → Kind
+</pre></dd>
+<dt>kind</dt><dd><pre>
+  λ(kArrow : Kind → Kind → Kind)
+→ λ(kProduct : Kind → Kind → Kind)
+→ λ(object : Kind)
+→ { additive :
+      { identity : object, op : kArrow (kProduct object object) object }
+  , arrow :
+      kArrow (kProduct object object) Type
+  , multiplicative :
+      { identity : object, op : kArrow (kProduct object object) object }
+  }
 </pre></dd>
 </dl>
 <h4>extractAdditive (term)</h4>
@@ -2981,11 +3024,14 @@ Type
 </pre></dd>
 </dl>
 <h2 style="background-color: #bbb; width: 100%">./Either</h2>
-<h4>Kind (term)</h4>
+<h4>Kind (kind)</h4>
 <p></p>
 <dl>
-<dt>type</dt><dd><pre>
+<dt>sort</dt><dd><pre>
 ∀(a : Kind) → ∀(b : Kind) → Kind
+</pre></dd>
+<dt>kind</dt><dd><pre>
+λ(a : Kind) → λ(b : Kind) → < Left : a | Right : b >
 </pre></dd>
 </dl>
 <h4>Type (type)</h4>
@@ -4173,11 +4219,14 @@ Type
 </pre></dd>
 </dl>
 <h2 style="background-color: #bbb; width: 100%">./Function</h2>
-<h4>Kind (term)</h4>
+<h4>Kind (kind)</h4>
 <p></p>
 <dl>
-<dt>type</dt><dd><pre>
+<dt>sort</dt><dd><pre>
 ∀(a : Kind) → ∀(b : Kind) → Kind
+</pre></dd>
+<dt>kind</dt><dd><pre>
+λ(a : Kind) → λ(b : Kind) → a → b
 </pre></dd>
 </dl>
 <h4>Type (type)</h4>
@@ -6596,17 +6645,23 @@ Type
 </dl>
 <h2 style="background-color: #bbb; width: 100%">./Monoid</h2>
 <h3 style="background-color: #bbb; width: 100%">./Monoid/Commutative</h3>
-<h4>Kind (term)</h4>
+<h4>Kind (kind)</h4>
 <p>{- A commutative monoid implies a preorder. However, that currently forces us
    into *Set*, so we instead just alias the non-commutative type to avoid
    specializing.
 -}</p>
 <dl>
-<dt>type</dt><dd><pre>
+<dt>sort</dt><dd><pre>
   ∀(kArrow : Kind → Kind → Kind)
 → ∀(kProduct : Kind → Kind → Kind)
 → ∀(m : Kind)
 → Kind
+</pre></dd>
+<dt>kind</dt><dd><pre>
+  λ(kArrow : Kind → Kind → Kind)
+→ λ(kProduct : Kind → Kind → Kind)
+→ λ(m : Kind)
+→ { identity : m, op : kArrow (kProduct m m) m }
 </pre></dd>
 </dl>
 <h4>Set (type)</h4>
@@ -6710,16 +6765,22 @@ Type
 → { op : cat.arrow { _1 = cat.op { _1 = m, _2 = m }, _2 = m } }
 </pre></dd>
 </dl>
-<h4>Kind (term)</h4>
+<h4>Kind (kind)</h4>
 <p>{- NB: `identity` would ideally be defined with `: arrow identity m`, but
        there’s no Kind-level `{}` to use there.
 -}</p>
 <dl>
-<dt>type</dt><dd><pre>
+<dt>sort</dt><dd><pre>
   ∀(kArrow : Kind → Kind → Kind)
 → ∀(kProduct : Kind → Kind → Kind)
 → ∀(m : Kind)
 → Kind
+</pre></dd>
+<dt>kind</dt><dd><pre>
+  λ(kArrow : Kind → Kind → Kind)
+→ λ(kProduct : Kind → Kind → Kind)
+→ λ(m : Kind)
+→ { identity : m, op : kArrow (kProduct m m) m }
 </pre></dd>
 </dl>
 <h4>Type (type)</h4>
@@ -7682,17 +7743,27 @@ Type
 </pre></dd>
 </dl>
 <h2 style="background-color: #bbb; width: 100%">./Rig</h2>
-<h4>Kind (term)</h4>
+<h4>Kind (kind)</h4>
 <p>{- This is what is often called a “semiring”, but here we follow the convention
    described in https://ncatlab.org/nlab/show/rig, reserving “semiring” for a
    rig without multiplicative identity.
 -}</p>
 <dl>
-<dt>type</dt><dd><pre>
+<dt>sort</dt><dd><pre>
   ∀(arrow : Kind → Kind → Kind)
 → ∀(product : Kind → Kind → Kind)
 → ∀(m : Kind)
 → Kind
+</pre></dd>
+<dt>kind</dt><dd><pre>
+  λ(arrow : Kind → Kind → Kind)
+→ λ(product : Kind → Kind → Kind)
+→ λ(m : Kind)
+→ { additive :
+      { identity : m, op : arrow (product m m) m }
+  , multiplicative :
+      { identity : m, op : arrow (product m m) m }
+  }
 </pre></dd>
 </dl>
 <h4>Set (type)</h4>
@@ -8363,14 +8434,20 @@ Type
 → { op : arrow { _1 = product { _1 = m, _2 = m }, _2 = m } }
 </pre></dd>
 </dl>
-<h4>Kind (term)</h4>
+<h4>Kind (kind)</h4>
 <p></p>
 <dl>
-<dt>type</dt><dd><pre>
+<dt>sort</dt><dd><pre>
   ∀(kArrow : Kind → Kind → Kind)
 → ∀(kProduct : Kind → Kind → Kind)
 → ∀(m : Kind)
 → Kind
+</pre></dd>
+<dt>kind</dt><dd><pre>
+  λ(kArrow : Kind → Kind → Kind)
+→ λ(kProduct : Kind → Kind → Kind)
+→ λ(m : Kind)
+→ { op : kArrow (kProduct m m) m }
 </pre></dd>
 </dl>
 <h4>Set (type)</h4>
@@ -8481,14 +8558,20 @@ Type
 </dl>
 <h2 style="background-color: #bbb; width: 100%">./Semilattice</h2>
 <h3 style="background-color: #bbb; width: 100%">./Semilattice/Bounded</h3>
-<h4>Kind (term)</h4>
+<h4>Kind (kind)</h4>
 <p></p>
 <dl>
-<dt>type</dt><dd><pre>
+<dt>sort</dt><dd><pre>
   ∀(kArrow : Kind → Kind → Kind)
 → ∀(kProduct : Kind → Kind → Kind)
 → ∀(m : Kind)
 → Kind
+</pre></dd>
+<dt>kind</dt><dd><pre>
+  λ(kArrow : Kind → Kind → Kind)
+→ λ(kProduct : Kind → Kind → Kind)
+→ λ(m : Kind)
+→ { identity : m, op : kArrow (kProduct m m) m }
 </pre></dd>
 </dl>
 <h4>Type (type)</h4>
@@ -9285,11 +9368,14 @@ Type
 </pre></dd>
 </dl>
 <h2 style="background-color: #bbb; width: 100%">./Tuple</h2>
-<h4>Kind (term)</h4>
+<h4>Kind (kind)</h4>
 <p></p>
 <dl>
-<dt>type</dt><dd><pre>
+<dt>sort</dt><dd><pre>
 ∀(a : Kind) → ∀(b : Kind) → Kind
+</pre></dd>
+<dt>kind</dt><dd><pre>
+λ(a : Kind) → λ(b : Kind) → { _1 : a, _2 : b }
 </pre></dd>
 </dl>
 <h4>Type (type)</h4>
@@ -9423,16 +9509,26 @@ Type
 </pre></dd>
 </dl>
 <h2 style="background-color: #bbb; width: 100%">./UnitedMonoid</h2>
-<h4>Kind (term)</h4>
+<h4>Kind (kind)</h4>
 <p>{- A united monoid is actually a pair of monoids with a shared `identity`. The
   `additive.op` distributes over the `multiplicative.op` as well.
 -}</p>
 <dl>
-<dt>type</dt><dd><pre>
+<dt>sort</dt><dd><pre>
   ∀(arrow : Kind → Kind → Kind)
 → ∀(product : Kind → Kind → Kind)
 → ∀(m : Kind)
 → Kind
+</pre></dd>
+<dt>kind</dt><dd><pre>
+  λ(arrow : Kind → Kind → Kind)
+→ λ(product : Kind → Kind → Kind)
+→ λ(m : Kind)
+→ { additive :
+      { identity : m, op : arrow (product m m) m }
+  , multiplicative :
+      { identity : m, op : arrow (product m m) m }
+  }
 </pre></dd>
 </dl>
 <h4>Type (type)</h4>
