@@ -1,6 +1,7 @@
 {-
 
-bindOptional binds to a `f` of Optional over the `f a` and `compact`s away the `None` values.
+When `f` is a Monad we can apply a function that compacts results, via `Optional`, within the Monadic
+context while still preserving the semantics of `bind`.
 
 Examples:
 

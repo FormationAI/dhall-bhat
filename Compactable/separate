@@ -1,49 +1,33 @@
 {-
 
-mapEither maps a function to Either over the `f` and `separate`s `Left`s from `Right`s.
+`separate` partitions any `Left` values from `f` into the `_1` side of a tuple, and any `Right` values
+from `f` into the `_2` side of a tuple, essentially separating the values.
 
 Examples:
 
 ```
     let E = constructors (./Either/Type Natural Natural)
 
-in  ./Compactable/mapEither
+in  ./Compactable/separate
     List
     ./List/compactable
-    ./List/functor
     Natural
     Natural
-    (λ(n : Natural) → if Natural/even n then E.Left n else E.Right n)
-    [ 1, 2, 3, 4, 5 ]
+    [ E.Right 1, E.Left 2, E.Right 3, E.Left 4, E.Right 5 ]
 = { _1 = [ 2, 4 ], _2 = [ 1, 3, 5 ] }
 ```
 
 -}
     let Either = ./../Either/Type
 
-in  let compose = (./../Function/category).compose
-
-in  let hush = ./../Either/hush
-
-in  let flipEither = ./../Either/flipEither
-
 in    λ(f : Type → Type)
     → λ(c : ./Type f)
     → λ(l : Type)
     → λ(r : Type)
-    → λ(fa : f (Either l r))
-    → { _1 =
-          c.mapOptional
-          (Either l r)
-          l
-          ( compose
-            (Either l r)
-            (Either r l)
-            (Optional l)
-            (hush r l)
-            (flipEither l r)
-          )
-          fa
-      , _2 =
-          c.mapOptional (Either l r) r (hush l r) fa
-      }
+    → ./mapEither
+      f
+      c
+      (Either l r)
+      l
+      r
+      ((./../Function/category).identity (Either l r))

@@ -1,6 +1,7 @@
 {-
 
-apOptional maps a `f` of functions to Optionals over the `f` and `compact`s away the `None` values.
+When `f` is an Applicative we can apply a function that compacts results, via `Optional`, within the Applicative
+context while still preserving the semantics of `ap`.
 
 Examples:
 

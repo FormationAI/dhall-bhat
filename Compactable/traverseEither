@@ -1,3 +1,69 @@
+{-
+
+When `f` is Traverable we can apply a function that separates results, via `Either`, within the Applicative
+context while still preserving the semantics of the `traverse`.
+
+Examples:
+
+```
+    let Either = ./Either/Type
+
+in  let E = constructors (Either Natural Natural)
+
+in  ./Compactable/traverseEither
+    List
+    ./List/compactable
+    ./List/traversable
+    Optional
+    ./Optional/applicative
+    Natural
+    Natural
+    Natural
+    (   λ(x : Natural)
+      →       if Natural/isZero x
+
+        then  None (Either Natural Natural)
+
+        else  if Natural/odd x
+
+        then  Some (E.Left x)
+
+        else  Some (E.Right x)
+    )
+    [ 1, 2, 3, 4, 5]
+= Some { _1 = [ 1, 3, 5 ], _2 = [ 2, 4 ] }
+```
+
+```
+    let Either = ./Either/Type
+
+in  let E = constructors (Either Natural Natural)
+
+in  ./Compactable/traverseEither
+    List
+    ./List/compactable
+    ./List/traversable
+    Optional
+    ./Optional/applicative
+    Natural
+    Natural
+    Natural
+    (   λ(x : Natural)
+      →       if Natural/isZero x
+
+        then  None (Either Natural Natural)
+
+        else  if Natural/odd x
+
+        then  Some (E.Left x)
+
+        else  Some (E.Right x)
+    )
+    [ 0, 1, 2, 3, 4, 5]
+= None { _1 : List Natural, _2 : List Natural }
+```
+
+-}
     let Traversable = ./../Traversable/Type
 
 in  let Applicative = ./../Applicative/Type
@@ -10,11 +76,12 @@ in    λ(f : Type → Type)
     → λ(g : Type → Type)
     → λ(applicative : Applicative g)
     → λ(a : Type)
-    → λ(b : Type)
-    → λ(k : a → g (Either a b))
+    → λ(l : Type)
+    → λ(r : Type)
+    → λ(k : a → g (Either l r))
     → λ(fa : f a)
     → applicative.map
-      (f (Either a b))
-      { _1 : f a, _2 : f b }
-      (./separate f c a b)
-      (traversable.traverse g applicative a (Either a b) k fa)
+      (f (Either l r))
+      { _1 : f l, _2 : f r }
+      (./separate f c l r)
+      (traversable.traverse g applicative a (Either l r) k fa)

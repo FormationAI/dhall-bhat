@@ -1,18 +1,16 @@
 {-
 
-mapOptional maps a function to Optionals over the `f` and `compact`s away the `None` values.
+`compact` removes any `None` values from `f` and preserves the `Some` values, compacting
+the result.
 
 Examples:
 
 ```
-./Compactable/mapOptional
+./Compactable/compact
 List
 ./List/compactable
-./List/functor
 Natural
-Natural
-(λ(n : Natural) → if Natural/even n then Some n else None Natural)
-[ 1, 2, 3, 4, 5 ]
+[ None Natural, Some 2, None Natural, Some 4, None Natural ]
 = [ 2, 4 ]
 ```
 

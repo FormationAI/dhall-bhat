@@ -1,6 +1,11 @@
 {-
-apEither maps an `f` of functions to Eithers over the `f a` and `separate`s `Left`s from `Right`s.
 
+When `f` is an Applicative we can apply a function that separates results, via `Either`, within the Applicative
+context while still preserving the semantics of `ap`.
+
+Examples:
+
+```
     let E = constructors (./Either/Type Natural Natural)
 
 in  ./Compactable/apEither
@@ -14,6 +19,7 @@ in  ./Compactable/apEither
     ]
     [ 0, 1, 2, 3, 4, 5 ]
 = { _1 = [ 0, 2, 4, 1, 3, 5 ], _2 = [ 1, 3, 5, 0, 2, 4 ] }
+```
 
 -}
     let Applicative = ./../Applicative/Type

@@ -1,6 +1,7 @@
 {-
 
-bindEither binds to a `f` of Optional over the `f a` and `separate`s `Left`s and `Right`s.
+When `f` is a Monad we can bind a function that separates results, via `Either`, within the Monadic
+context while still preserving the semantics of `bind`.
 
 Examples:
 
