@@ -1,0 +1,36 @@
+{-
+
+Create a NonEmptyList from a List as long as there is at least one element
+in the List; otherwise, return None.
+
+Examples:
+
+```
+./NonEmptyList/fromList Natural [1, 2, 3, 4, 5]
+= Some { head = 1, tail = [ 2, 3, 4, 5 ] }
+
+./NonEmptyList/fromList Natural ([] : List Natural)
+= None { head : Natural, tail : List Natural }
+```
+
+-}
+    let NonEmptyList = ./Type
+
+in    λ(a : Type)
+    → λ(list : List a)
+    → List/fold
+      a
+      list
+      (Optional (NonEmptyList a))
+      (   λ(x : a)
+        → λ(acc : Optional (NonEmptyList a))
+        → Optional/fold
+          (NonEmptyList a)
+          acc
+          (Optional (NonEmptyList a))
+          (   λ(nel : NonEmptyList a)
+            → Some { head = x, tail = [ nel.head ] # nel.tail }
+          )
+          (Some { head = x, tail = [] : List a })
+      )
+      (None (NonEmptyList a))
