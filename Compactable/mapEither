@@ -29,7 +29,7 @@ in  let compose = (./../Function/category).compose
 
 in  let hush = ./../Either/hush
 
-in  let flipEither = ./../Either/flipEither
+in  let flip = ./../Either/flip
 
 in    λ(f : Type → Type)
     → λ(c : ./Type f)
@@ -47,7 +47,7 @@ in    λ(f : Type → Type)
             (Either r l)
             (Optional l)
             (hush r l)
-            (compose a (Either l r) (Either r l) (flipEither l r) k)
+            (compose a (Either l r) (Either r l) (flip l r) k)
           )
           fa
       , _2 =

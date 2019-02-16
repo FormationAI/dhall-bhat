@@ -1,6 +1,3 @@
-{-
-mapOptional : (a -> Optional b) -> Either m a -> Either m b
--}
     let Either = ./Type
 
 in  let Monoid = ./../Monoid/Type
