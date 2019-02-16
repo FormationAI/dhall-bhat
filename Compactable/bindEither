@@ -1,0 +1,45 @@
+{-
+
+When `f` is a Monad we can bind a function that separates results, via `Either`, within the Monadic
+context while still preserving the semantics of `bind`.
+
+Examples:
+
+```
+    let replicate =
+          https://raw.githubusercontent.com/dhall-lang/dhall-lang/master/Prelude/List/replicate
+
+in  let Either = ./Either/Type
+
+in  let E = constructors (Either Natural Natural)
+
+in  ./Compactable/bindEither
+    List
+    ./List/compactable
+    ./List/monad
+    Natural
+    Natural
+    (   λ(n : Natural)
+      →       if Natural/even n
+        
+        then  replicate n (Either Natural Natural) (E.Left n)
+        
+        else  replicate n (Either Natural Natural) (E.Right n)
+    )
+    [ 0, 1, 2, 3, 4, 5 ]
+= { _1 = [ 2, 2, 4, 4, 4, 4 ], _2 = [ 1, 3, 3, 3, 5, 5, 5, 5, 5 ] }
+```
+
+-}
+    let Monad = ./../Monad/Type
+
+in  let Either = ./../Either/Type
+
+in    λ(f : Type → Type)
+    → λ(c : ./Type f)
+    → λ(monad : Monad f)
+    → λ(a : Type)
+    → λ(b : Type)
+    → λ(k : a → f (Either a b))
+    → λ(fa : f a)
+    → ./separate f c a b (monad.bind a (Either a b) fa k)

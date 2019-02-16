@@ -1,0 +1,16 @@
+    let Optional/toList =
+          https://raw.githubusercontent.com/dhall-lang/dhall-lang/0a7f596d03b3ea760a96a8e03935f4baa64274e1/Prelude/Optional/toList
+
+in    { mapOptional =
+            λ(a : Type)
+          → λ(b : Type)
+          → λ(k : a → Optional b)
+          → λ(list : List a)
+          → List/fold
+            a
+            list
+            (List b)
+            (λ(x : a) → λ(xs : List b) → Optional/toList b (k x) # xs)
+            ([] : List b)
+      }
+    : ./../Compactable/Type List

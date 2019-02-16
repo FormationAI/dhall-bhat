@@ -1,0 +1,21 @@
+{-
+
+`compact` removes any `None` values from `f` and preserves the `Some` values, compacting
+the result.
+
+Examples:
+
+```
+./Compactable/compact
+List
+./List/compactable
+Natural
+[ None Natural, Some 2, None Natural, Some 4, None Natural ]
+= [ 2, 4 ]
+```
+
+-}
+  λ(f : Type → Type)
+→ λ(c : ./Type f)
+→ λ(a : Type)
+→ c.mapOptional (Optional a) a ((./../Function/category).identity (Optional a))

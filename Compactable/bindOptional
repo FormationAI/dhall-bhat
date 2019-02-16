@@ -1,0 +1,39 @@
+{-
+
+When `f` is a Monad we can apply a function that compacts results, via `Optional`, within the Monadic
+context while still preserving the semantics of `bind`.
+
+Examples:
+
+```
+    let replicate =
+          https://raw.githubusercontent.com/dhall-lang/dhall-lang/master/Prelude/List/replicate
+
+in  ./Compactable/bindOptional
+    List
+    ./List/compactable
+    ./List/monad
+    Natural
+    Natural
+    (   λ(n : Natural)
+      →       if Natural/even n
+        
+        then  replicate n (Optional Natural) (Some n)
+        
+        else  [] : List (Optional Natural)
+    )
+    [ 0, 1, 2, 3, 4, 5 ]
+= [ 2, 2, 4, 4, 4, 4 ]
+```
+
+-}
+    let Monad = ./../Monad/Type
+
+in    λ(f : Type → Type)
+    → λ(c : ./Type f)
+    → λ(monad : Monad f)
+    → λ(a : Type)
+    → λ(b : Type)
+    → λ(k : a → f (Optional b))
+    → λ(fa : f a)
+    → ./compact f c b (monad.bind a (Optional b) fa k)

@@ -1,0 +1,16 @@
+{-
+
+Compactable serves as an abstraction over filtering using a mapping function to `Optional`s over
+a higher-kind `f : Type -> Type`.
+
+`mapOptional` should map over the `f` applying the function `a -> Optional b` and filtering
+out `None` values, leaving only the values contained in the `Some` values.
+
+We can see the relation between `mapOptional` and `filter` by observing that we keep values when
+we have `Some` i.e. `True` for `filter`, and discard vaues when have `None` i.e. `False` for `filter`.
+`mapOptional` is more powerful than `filter` because we can also transform our values to another type `b`,
+whereas `filter` will only work on values of type `a`.
+
+-}
+  λ(f : Type → Type)
+→ { mapOptional : ∀(a : Type) → ∀(b : Type) → (a → Optional b) → f a → f b }

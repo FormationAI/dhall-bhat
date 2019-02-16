@@ -1,0 +1,30 @@
+{-
+
+Flip the value of an Either where `Right` goes to `Left`, and `Left` goes to `Right`.
+
+Examples:
+```
+    let Either = ./Either/Type
+
+in  let E = constructors (Either Text Natural)
+
+in  ./Either/flipEither Text Natural (E.Left "ohno")
+= < Right = "ohno" | Left : Natural >
+
+
+    let Either = ./Either/Type
+
+in  let E = constructors (Either Text Natural)
+
+in  ./Either/flipEither Text Natural (E.Right 42)
+= < Left = 42 | Right : Text >
+```
+
+-}
+    let Either = ./Type
+
+in    λ(a : Type)
+    → λ(b : Type)
+    →     let E = constructors (Either b a)
+      
+      in  ./fold a b (Either b a) E.Right E.Left

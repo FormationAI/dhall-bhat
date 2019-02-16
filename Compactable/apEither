@@ -1,0 +1,36 @@
+{-
+
+When `f` is an Applicative we can apply a function that separates results, via `Either`, within the Applicative
+context while still preserving the semantics of `ap`.
+
+Examples:
+
+```
+    let E = constructors (./Either/Type Natural Natural)
+
+in  ./Compactable/apEither
+    List
+    ./List/compactable
+    ./List/applicative
+    Natural
+    Natural
+    [ λ(n : Natural) → if Natural/even n then E.Left n else E.Right n
+    , λ(n : Natural) → if Natural/odd n then E.Left n else E.Right n
+    ]
+    [ 0, 1, 2, 3, 4, 5 ]
+= { _1 = [ 0, 2, 4, 1, 3, 5 ], _2 = [ 1, 3, 5, 0, 2, 4 ] }
+```
+
+-}
+    let Applicative = ./../Applicative/Type
+
+in  let Either = ./../Either/Type
+
+in    λ(f : Type → Type)
+    → λ(c : ./Type f)
+    → λ(applicative : Applicative f)
+    → λ(a : Type)
+    → λ(b : Type)
+    → λ(k : f (a → Either a b))
+    → λ(fa : f a)
+    → ./separate f c a b (applicative.ap a (Either a b) k fa)

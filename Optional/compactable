@@ -1,0 +1,10 @@
+    let bind = (./monad).bind
+
+in    { mapOptional =
+            λ(a : Type)
+          → λ(b : Type)
+          → λ(k : a → Optional b)
+          → λ(o : Optional a)
+          → bind a b o k
+      }
+    : ./../Compactable/Type Optional
