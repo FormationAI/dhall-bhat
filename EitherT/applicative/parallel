@@ -1,18 +1,18 @@
-    let Applicative = ./../../Applicative/Type
+let Applicative = ../../Applicative/Type
 
-in  let Either = ./../../Either/Type
+let Either = ../../Either/Type
 
-in  let EitherT = ./../Type
+let EitherT = ../Type
 
-in  let EitherA = ./../../Either/applicative/parallel
+let EitherA = ../../Either/applicative/parallel
 
-in  let ComposeA = ./../../Compose/applicative
+let ComposeA = ../../Compose/applicative
 
-in  let Semigroup = ./../../Semigroup/Type
+let Semigroup = ../../Semigroup/Type
 
-in    λ(a : Type)
-    → λ(semi : Semigroup a)
-    → λ(m : Type → Type)
-    → λ(applicative : Applicative m)
-    →   ComposeA m (Either a) applicative (EitherA a semi)
+in  λ(a : Type) →
+    λ(semi : Semigroup a) →
+    λ(m : Type → Type) →
+    λ(applicative : Applicative m) →
+        ComposeA m (Either a) applicative (EitherA a semi)
       : Applicative (EitherT a m)

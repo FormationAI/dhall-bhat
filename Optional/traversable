@@ -1,23 +1,27 @@
-    let Traversable = ./../Traversable/Type
+let Optional/fold =
+      https://prelude.dhall-lang.org/Optional/fold.dhall
+        sha256:c5b9d72f6f62bdaa0e196ac1c742cc175cd67a717b880fb8aec1333a5a4132cf
 
-in  let Applicative = ./../Applicative/Type
+let Traversable = ../Traversable/Type
+
+let Applicative = ../Applicative/Type
 
 in      ./foldable
       ∧ ./functor
       ∧ { traverse =
-              λ(f : Type → Type)
-            → λ(applicative : Applicative f)
-            → λ(a : Type)
-            → λ(b : Type)
-            → λ(g : a → f b)
-            → λ(ts : Optional a)
-            → Optional/fold
-              a
-              ts
-              (f (Optional b))
-              (   λ(x : a)
-                → applicative.map b (Optional b) (λ(y : b) → Some y) (g x)
-              )
-              (applicative.pure (Optional b) (None b))
+            λ(f : Type → Type) →
+            λ(applicative : Applicative f) →
+            λ(a : Type) →
+            λ(b : Type) →
+            λ(g : a → f b) →
+            λ(ts : Optional a) →
+              Optional/fold
+                a
+                ts
+                (f (Optional b))
+                ( λ(x : a) →
+                    applicative.map b (Optional b) (λ(y : b) → Some y) (g x)
+                )
+                (applicative.pure (Optional b) (None b))
         }
     : Traversable Optional

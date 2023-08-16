@@ -1,21 +1,20 @@
-  λ(f : Type → Type → Type)
-→   { arr :
-        ∀(a : Type) → ∀(b : Type) → (a → b) → f a b
+λ(f : Type → Type → Type) →
+    { arr : ∀(a : Type) → ∀(b : Type) → (a → b) → f a b
     , split :
-          ∀(a : Type)
-        → ∀(b : Type)
-        → ∀(c : Type)
-        → ∀(d : Type)
-        → f a b
-        → f c d
-        → f { _1 : a, _2 : c } { _1 : b, _2 : d }
+        ∀(a : Type) →
+        ∀(b : Type) →
+        ∀(c : Type) →
+        ∀(d : Type) →
+        f a b →
+        f c d →
+          f { _1 : a, _2 : c } { _1 : b, _2 : d }
     , fanout :
-          ∀(a : Type)
-        → ∀(b : Type)
-        → ∀(c : Type)
-        → f a b
-        → f a c
-        → f a { _1 : b, _2 : c }
+        ∀(a : Type) →
+        ∀(b : Type) →
+        ∀(c : Type) →
+        f a b →
+        f a c →
+          f a { _1 : b, _2 : c }
     }
-  ⩓ ./../Category/Type f
-  ⩓ ./../Strong/Type f
+  ⩓ ../Category/Type f
+  ⩓ ../Strong/Type f

@@ -1,5 +1,3 @@
-    let Traversable = ./Type
+let Traversable = ./Type
 
-in    λ(f : Type → Type)
-    → λ(t : Traversable f)
-    → t.{ fold } : ./../Foldable/Type f
+in  λ(f : Type → Type) → λ(t : Traversable f) → t.{ fold } : ../Foldable/Type f

@@ -1,1 +1,1 @@
-λ(f : Type → Type) → ./../Lan/Type f f
+λ(f : Type → Type) → ../Lan/Type f f

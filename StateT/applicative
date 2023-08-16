@@ -1,42 +1,44 @@
-    let Monad = ./../Monad/Type
+let Monad = ../Monad/Type
 
-in  let Applicative = ./../Applicative/Type
+let Applicative = ../Applicative/Type
 
-in  let extractFunctor = ./../Monad/extractFunctor
+let extractFunctor = ../Monad/extractFunctor
 
-in  let StateT = ./Type
+let StateT = ./Type
 
-in    λ(s : Type)
-    → λ(m : Type → Type)
-    → λ(monad : Monad m)
-    →     ./functor s m (extractFunctor m monad)
+in  λ(s : Type) →
+    λ(m : Type → Type) →
+    λ(monad : Monad m) →
+          ./functor s m (extractFunctor m monad)
         ∧ { ap =
-                λ(a : Type)
-              → λ(b : Type)
-              → λ(g : StateT s m (a → b))
-              → λ(fa : StateT s m a)
-              → λ(new : s)
-              →     let fk = g new
-                
+              λ(a : Type) →
+              λ(b : Type) →
+              λ(g : StateT s m (a → b)) →
+              λ(fa : StateT s m a) →
+              λ(new : s) →
+                let fk = g new
+
                 in  monad.bind
-                    { val : a → b, state : s }
-                    { val : b, state : s }
-                    fk
-                    (   λ(k : { val : a → b, state : s })
-                      →     let res = fa k.state
-                        
-                        in  monad.map
-                            { val : a, state : s }
-                            { val : b, state : s }
-                            (   λ(final : { val : a, state : s })
-                              → { val = k.val final.val, state = final.state }
-                            )
-                            res
-                    )
+                      { val : a → b, state : s }
+                      { val : b, state : s }
+                      fk
+                      ( λ(k : { val : a → b, state : s }) →
+                          let res = fa k.state
+
+                          in  monad.map
+                                { val : a, state : s }
+                                { val : b, state : s }
+                                ( λ(final : { val : a, state : s }) →
+                                    { val = k.val final.val
+                                    , state = final.state
+                                    }
+                                )
+                                res
+                      )
           , pure =
-                λ(a : Type)
-              → λ(x : a)
-              → λ(env : s)
-              → monad.pure { val : a, state : s } { val = x, state = env }
+              λ(a : Type) →
+              λ(x : a) →
+              λ(env : s) →
+                monad.pure { val : a, state : s } { val = x, state = env }
           }
       : Applicative (StateT s m)

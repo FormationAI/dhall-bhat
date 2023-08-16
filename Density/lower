@@ -1,3 +1,3 @@
-  λ(f : Type → Type)
-→ λ(comonad : ./../Comonad/Type f)
-→ ./../Lan/lower f (./../Comonad/extractFunctor f comonad) f f comonad.duplicate
+λ(f : Type → Type) →
+λ(comonad : ../Comonad/Type f) →
+  ../Lan/lower f (../Comonad/extractFunctor f comonad) f f comonad.duplicate

@@ -1,15 +1,15 @@
-    let Monad = ./../Monad/Type
+let Monad = ../Monad/Type
 
-in  let StateT = ./Type
+let StateT = ./Type
 
-in    λ(s : Type)
-    → λ(m : Type → Type)
-    → λ(monad : Monad m)
-    → λ(a : Type)
-    → λ(state : StateT s m a)
-    → λ(env : s)
-    → monad.bind
-      { val : a, state : s }
-      s
-      (state env)
-      (λ(res : { val : a, state : s }) → monad.pure s res.state)
+in  λ(s : Type) →
+    λ(m : Type → Type) →
+    λ(monad : Monad m) →
+    λ(a : Type) →
+    λ(state : StateT s m a) →
+    λ(env : s) →
+      monad.bind
+        { val : a, state : s }
+        s
+        (state env)
+        (λ(res : { val : a, state : s }) → monad.pure s res.state)

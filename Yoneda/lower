@@ -1,2 +1,1 @@
-  λ(f : Type → Type)
-→ ./../Ran/lower ./../Identity/Type f ./../Identity/applicative
+λ(f : Type → Type) → ../Ran/lower ../Identity/Type f ../Identity/applicative

@@ -1,13 +1,13 @@
-    let Functor = ./../Functor/Type
+let Functor = ../Functor/Type
 
-in  let Either = ./Type
+let Either = ./Type
 
-in    λ(a : Type)
-    →   { map =
-              λ(b : Type)
-            → λ(c : Type)
-            → λ(f : b → c)
-            → λ(either : Either a b)
-            → ./mapRight a b c f either
+in  λ(a : Type) →
+        { map =
+            λ(b : Type) →
+            λ(c : Type) →
+            λ(f : b → c) →
+            λ(either : Either a b) →
+              ./mapRight a b c f either
         }
       : Functor (Either a)

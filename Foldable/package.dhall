@@ -1,0 +1,1 @@
+{ Type = ./Type, foldMap = ./foldMap }

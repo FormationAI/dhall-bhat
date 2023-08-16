@@ -1,6 +1,6 @@
-  λ(f : Type → Type)
-→ λ(g : Type → Type)
-→ λ(applicative : ./../Applicative/Type f)
-→ λ(a : Type)
-→ λ(ran : ./Type f g a)
-→ ran a (applicative.pure a)
+λ(f : Type → Type) →
+λ(g : Type → Type) →
+λ(applicative : ../Applicative/Type f) →
+λ(a : Type) →
+λ(ran : ./Type f g a) →
+  ran a (applicative.pure a)

@@ -1,7 +1,7 @@
-    let Applicative = ./../Applicative/Type
+let Applicative = ../Applicative/Type
 
-in    λ(r : Type)
-    → λ(m : Type → Type)
-    → λ(applicative : Applicative m)
-    → λ(env : r)
-    → applicative.pure r env
+in  λ(r : Type) →
+    λ(m : Type → Type) →
+    λ(applicative : Applicative m) →
+    λ(env : r) →
+      applicative.pure r env

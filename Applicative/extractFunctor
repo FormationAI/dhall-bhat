@@ -1,5 +1,5 @@
-    let Functor = ./../Functor/Type
+let Functor = ../Functor/Type
 
-in  let Applicative = ./Type
+let Applicative = ./Type
 
 in  λ(f : Type → Type) → λ(t : Applicative f) → t.{ map } : Functor f

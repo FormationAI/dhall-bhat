@@ -1,19 +1,19 @@
-    let Monad = ./../Monad/Type
+let Monad = ../Monad/Type
 
-in  let extractApplicative = ./../Monad/extractApplicative
+let extractApplicative = ../Monad/extractApplicative
 
-in  let ReaderT = ./Type
+let ReaderT = ./Type
 
-in    λ(r : Type)
-    → λ(m : Type → Type)
-    → λ(monad : Monad m)
-    →     ./applicative r m (extractApplicative m monad)
+in  λ(r : Type) →
+    λ(m : Type → Type) →
+    λ(monad : Monad m) →
+          ./applicative r m (extractApplicative m monad)
         ∧ { bind =
-                λ(a : Type)
-              → λ(b : Type)
-              → λ(fa : ReaderT r m a)
-              → λ(k : a → ReaderT r m b)
-              → λ(env : r)
-              → monad.bind a b (fa env) (λ(x : a) → k x env)
+              λ(a : Type) →
+              λ(b : Type) →
+              λ(fa : ReaderT r m a) →
+              λ(k : a → ReaderT r m b) →
+              λ(env : r) →
+                monad.bind a b (fa env) (λ(x : a) → k x env)
           }
       : Monad (ReaderT r m)

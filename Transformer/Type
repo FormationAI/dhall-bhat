@@ -1,6 +1,6 @@
-    let Monad = ./../Monad/Type
+let Monad = ../Monad/Type
 
-in    λ(t : (Type → Type) → Type → Type)
-    → { lift :
+in  λ(t : (Type → Type) → Type → Type) →
+      { lift :
           ∀(m : Type → Type) → ∀(monad : Monad m) → ∀(a : Type) → m a → t m a
       }

@@ -1,1 +1,1 @@
-λ(a : Type) → (./../Function/category).identity (List a) : ./Type a
+λ(a : Type) → (../Function/category).identity (List a) : ./Type a

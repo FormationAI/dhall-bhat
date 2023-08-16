@@ -1,1 +1,1 @@
-λ(r : Type) → ./../ReaderT/asks r ./../Identity/Type ./../Identity/applicative
+λ(r : Type) → ../ReaderT/asks r ../Identity/Type ../Identity/applicative

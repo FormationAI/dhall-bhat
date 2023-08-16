@@ -1,14 +1,13 @@
-  λ(m : Type → Type)
-→ λ(monad : ./../Monad/Type m)
-→   { identity =
-        monad.pure
+λ(m : Type → Type) →
+λ(monad : ../Monad/Type m) →
+    { identity = monad.pure
     , compose =
-          λ(a : Type)
-        → λ(b : Type)
-        → λ(c : Type)
-        → λ(g : b → m c)
-        → λ(f : a → m b)
-        → λ(x : a)
-        → monad.bind b c (f x) g
+        λ(a : Type) →
+        λ(b : Type) →
+        λ(c : Type) →
+        λ(g : b → m c) →
+        λ(f : a → m b) →
+        λ(x : a) →
+          monad.bind b c (f x) g
     }
-  : ./../Category/Type (./Type m)
+  : ../Category/Type (./Type m)

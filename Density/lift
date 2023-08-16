@@ -1,3 +1,1 @@
-  λ(f : Type → Type)
-→ λ(comonad : ./../Comonad/Type f)
-→ ./../Lan/lift f comonad f
+λ(f : Type → Type) → λ(comonad : ../Comonad/Type f) → ../Lan/lift f comonad f

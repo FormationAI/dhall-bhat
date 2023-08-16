@@ -1,25 +1,25 @@
-    let Applicative = ./../Applicative/Type
+let Applicative = ../Applicative/Type
 
-in    λ(f : Type → Type)
-    → λ(applicative : Applicative f)
-    →     ./functor f
+in  λ(f : Type → Type) →
+    λ(applicative : Applicative f) →
+          ./functor f
         ∧ { pure =
-                λ(a : Type)
-              → λ(x : a)
-              → λ(b : Type)
-              → λ(f : a → b)
-              → applicative.pure b (f x)
+              λ(a : Type) →
+              λ(x : a) →
+              λ(b : Type) →
+              λ(f : a → b) →
+                applicative.pure b (f x)
           , ap =
-                λ(a : Type)
-              → λ(b : Type)
-              → λ(m : ./Type f (a → b))
-              → λ(n : ./Type f a)
-              → λ(c : Type)
-              → λ(k : b → c)
-              → applicative.ap
-                a
-                c
-                (m (a → c) (λ(l : a → b) → λ(y : a) → k (l y)))
-                (./lower f a n)
+              λ(a : Type) →
+              λ(b : Type) →
+              λ(m : ./Type f (a → b)) →
+              λ(n : ./Type f a) →
+              λ(c : Type) →
+              λ(k : b → c) →
+                applicative.ap
+                  a
+                  c
+                  (m (a → c) (λ(l : a → b) → λ(y : a) → k (l y)))
+                  (./lower f a n)
           }
       : Applicative (./Type f)

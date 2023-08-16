@@ -1,25 +1,23 @@
-    let Applicative = ./../Applicative/Type
+let Applicative = ../Applicative/Type
 
-in  let NonEmpty = ./Type
+let NonEmpty = ./Type
 
-in  let List/Applicative = ./../List/applicative
+let List/Applicative = ../List/applicative
 
 in      ./functor
-      ∧ { pure =
-            λ(a : Type) → λ(x : a) → { head = x, tail = [] : List a }
+      ∧ { pure = λ(a : Type) → λ(x : a) → { head = x, tail = [] : List a }
         , ap =
-              λ(a : Type)
-            → λ(b : Type)
-            → λ(nelF : NonEmpty (a → b))
-            → λ(nel : NonEmpty a)
-            → { head =
-                  nelF.head nel.head
+            λ(a : Type) →
+            λ(b : Type) →
+            λ(nelF : NonEmpty (a → b)) →
+            λ(nel : NonEmpty a) →
+              { head = nelF.head nel.head
               , tail =
                   List/Applicative.ap
-                  a
-                  b
-                  (./toList (a → b) nelF)
-                  (./toList a nel)
+                    a
+                    b
+                    (./toList (a → b) nelF)
+                    (./toList a nel)
               }
         }
     : Applicative NonEmpty

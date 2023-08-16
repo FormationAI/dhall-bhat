@@ -1,22 +1,29 @@
-    let Traversable = ./../Traversable/Type
+let Traversable = ../Traversable/Type
 
-in  let Applicative = ./../Applicative/Type
+let Applicative = ../Applicative/Type
 
-in    λ(f : Type → Type)
-    → λ(traversable : Traversable f)
-    →     ./foldable f traversable.{ fold }
+in  λ(f : Type → Type) →
+    λ(traversable : Traversable f) →
+          ./foldable f traversable.{ fold }
         ∧ ./functor f
         ∧ { traverse =
-                λ(g : Type → Type)
-              → λ(applicative : Applicative g)
-              → λ(a : Type)
-              → λ(b : Type)
-              → λ(k : a → g b)
-              → λ(yoneda : ./Type f a)
-              → applicative.map
-                (f b)
-                (./Type f b)
-                (./lift f traversable.{ map } b)
-                (traversable.traverse g applicative a b k (./lower f a yoneda))
+              λ(g : Type → Type) →
+              λ(applicative : Applicative g) →
+              λ(a : Type) →
+              λ(b : Type) →
+              λ(k : a → g b) →
+              λ(yoneda : ./Type f a) →
+                applicative.map
+                  (f b)
+                  (./Type f b)
+                  (./lift f traversable.{ map } b)
+                  ( traversable.traverse
+                      g
+                      applicative
+                      a
+                      b
+                      k
+                      (./lower f a yoneda)
+                  )
           }
       : Traversable (./Type f)

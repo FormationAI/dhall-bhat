@@ -1,14 +1,14 @@
-    let Applicative = ./../Applicative/Type
+let Applicative = ../Applicative/Type
 
-in  let ReaderT = ./Type
+let ReaderT = ./Type
 
-in  let Reader = ./../Reader/Type
+let Reader = ../Reader/Type
 
-in  let ReaderA = ./../Reader/applicative
+let ReaderA = ../Reader/applicative
 
-in  let ComposeA = ./../Compose/applicative
+let ComposeA = ../Compose/applicative
 
-in    λ(r : Type)
-    → λ(m : Type → Type)
-    → λ(applicative : Applicative m)
-    → ComposeA (Reader r) m (ReaderA r) applicative : Applicative (ReaderT r m)
+in  λ(r : Type) →
+    λ(m : Type → Type) →
+    λ(applicative : Applicative m) →
+      ComposeA (Reader r) m (ReaderA r) applicative : Applicative (ReaderT r m)

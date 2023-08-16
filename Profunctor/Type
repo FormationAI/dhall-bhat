@@ -1,15 +1,13 @@
-  λ(f : Type → Type → Type)
-→ { dimap :
-        ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(c : Type)
-      → ∀(d : Type)
-      → (a → b)
-      → (c → d)
-      → f b c
-      → f a d
-  , lmap :
-      ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → (a → b) → f b c → f a c
-  , rmap :
-      ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → (b → c) → f a b → f a c
+λ(f : Type → Type → Type) →
+  { dimap :
+      ∀(a : Type) →
+      ∀(b : Type) →
+      ∀(c : Type) →
+      ∀(d : Type) →
+      (a → b) →
+      (c → d) →
+      f b c →
+        f a d
+  , lmap : ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → (a → b) → f b c → f a c
+  , rmap : ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → (b → c) → f a b → f a c
   }

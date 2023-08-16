@@ -1,22 +1,13 @@
-    let ReaderT = ./Type
+let Monad = ../Monad/Type
 
-in  let Monad = ./../Monad/Type
+let extractApplicative = ../Monad/extractApplicative
 
-in  let extractApplicative = ./../Monad/extractApplicative
-
-in    λ(r : Type)
-    → λ(m : Type → Type)
-    → λ(monad : Monad m)
-    →   { lift =
-            λ(a : Type) → (./transformer r).lift m monad a
-        , ask =
-            ./ask r m (extractApplicative m monad)
-        , asks =
-            λ(a : Type) → ./asks r m (extractApplicative m monad) a
-        , local =
-              λ(a : Type)
-            → λ(f : r → r)
-            → λ(reader : ReaderT r m a)
-            → ./local r m a f reader
+in  λ(r : Type) →
+    λ(m : Type → Type) →
+    λ(monad : Monad m) →
+        { lift = (./transformer r).lift m monad
+        , ask = ./ask r m (extractApplicative m monad)
+        , asks = ./asks r m (extractApplicative m monad)
+        , local = ./local r m
         }
       ∧ ./monad r m monad

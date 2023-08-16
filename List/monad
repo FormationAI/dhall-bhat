@@ -1,23 +1,23 @@
-    let Monad = ./../Monad/Type
+let Monad = ../Monad/Type
 
-in  let concatMap =
-            λ(a : Type)
-          → λ(b : Type)
-          → λ(f : a → List b)
-          → λ(xs : List a)
-          → List/build
-            b
-            (   λ(list : Type)
-              → λ(cons : b → list → list)
-              → List/fold a xs list (λ(x : a) → List/fold b (f x) list cons)
-            )
+let concatMap =
+      λ(a : Type) →
+      λ(b : Type) →
+      λ(f : a → List b) →
+      λ(xs : List a) →
+        List/build
+          b
+          ( λ(list : Type) →
+            λ(cons : b → list → list) →
+              List/fold a xs list (λ(x : a) → List/fold b (f x) list cons)
+          )
 
 in      ./applicative
       ∧ { bind =
-              λ(a : Type)
-            → λ(b : Type)
-            → λ(fa : List a)
-            → λ(k : a → List b)
-            → concatMap a b k fa
+            λ(a : Type) →
+            λ(b : Type) →
+            λ(fa : List a) →
+            λ(k : a → List b) →
+              concatMap a b k fa
         }
     : Monad List

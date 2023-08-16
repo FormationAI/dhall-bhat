@@ -1,23 +1,19 @@
-    let Monad = ./../Monad/Type
+let Monad = ../Monad/Type
 
-in  let Either = ./Type
+let Either = ./Type
 
-in    λ(a : Type)
-    →   ./../Monad/fromPureBind
-        (Either a)
-        (λ(b : Type) → λ(x : b) → < Right = x | Left : a >)
-        (   λ(b : Type)
-          → λ(c : Type)
-          → λ(fa : Either a b)
-          → λ(k : b → Either a c)
-          →     let map = (./functor a).map
-            
-            in  merge
-                { Left =
-                    λ(l : a) → < Left = l | Right : c >
-                , Right =
-                    λ(e : Either a c) → e
-                }
-                (map b (Either a c) k fa)
-        )
+in  λ(a : Type) →
+        ../Monad/fromPureBind
+          (Either a)
+          (λ(b : Type) → (Either a b).Right)
+          ( λ(b : Type) →
+            λ(c : Type) →
+            λ(fa : Either a b) →
+            λ(k : b → Either a c) →
+              let map = (./functor a).map
+
+              in  merge
+                    { Left = (Either a c).Left, Right = λ(e : Either a c) → e }
+                    (map b (Either a c) k fa)
+          )
       : Monad (Either a)

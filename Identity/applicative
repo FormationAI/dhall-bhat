@@ -1,7 +1,5 @@
     ./functor
-  ∧ { pure =
-        λ(a : Type) → λ(x : a) → x
-    , ap =
-        λ(a : Type) → λ(b : Type) → λ(f : a → b) → f
+  ∧ { pure = λ(a : Type) → λ(x : a) → x
+    , ap = λ(a : Type) → λ(b : Type) → λ(f : a → b) → f
     }
-: ./../Applicative/Type ./Type
+: ../Applicative/Type ./Type

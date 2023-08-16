@@ -1,12 +1,12 @@
-./../Profunctor/fromDimap
-./Type
-(   λ(a : Type)
-  → λ(b : Type)
-  → λ(c : Type)
-  → λ(d : Type)
-  → λ(f : a → b)
-  → λ(g : c → d)
-  → λ(fn : b → c)
-  → λ(x : a)
-  → g (fn (f x))
-)
+../Profunctor/fromDimap
+  ./Type
+  ( λ(a : Type) →
+    λ(b : Type) →
+    λ(c : Type) →
+    λ(d : Type) →
+    λ(f : a → b) →
+    λ(g : c → d) →
+    λ(fn : b → c) →
+    λ(x : a) →
+      g (fn (f x))
+  )

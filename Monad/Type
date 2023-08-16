@@ -1,10 +1,9 @@
-    let Applicative = ./../Applicative/Type
+let Applicative = ../Applicative/Type
 
-in  let Monad
-        : (Type → Type) → Type
-        =   λ(f : Type → Type)
-          → { bind :
-                ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(k : a → f b) → f b
-            }
+let Monad
+    : (Type → Type) → Type
+    = λ(f : Type → Type) →
+        { bind : ∀(a : Type) → ∀(b : Type) → ∀(fa : f a) → ∀(k : a → f b) → f b
+        }
 
 in  λ(f : Type → Type) → Applicative f ⩓ Monad f

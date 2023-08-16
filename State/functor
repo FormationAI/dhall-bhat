@@ -1,1 +1,1 @@
-λ(s : Type) → ./../StateT/functor s ./../Identity/Type ./../Identity/functor
+λ(s : Type) → ../StateT/functor s ../Identity/Type ../Identity/functor

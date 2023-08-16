@@ -1,6 +1,6 @@
-    let Either = ./Type
+let Either = ./Type
 
-in    λ(a : Type)
-    → λ(b : Type)
-    → λ(eithers : List (Either a b))
-    → (./partition a b eithers).rights
+in  λ(a : Type) →
+    λ(b : Type) →
+    λ(eithers : List (Either a b)) →
+      (./partition a b eithers).rights

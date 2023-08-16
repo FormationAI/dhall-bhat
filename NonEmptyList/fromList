@@ -14,23 +14,27 @@ Examples:
 ```
 
 -}
-    let NonEmptyList = ./Type
+let NonEmptyList = ./Type
 
-in    λ(a : Type)
-    → λ(list : List a)
-    → List/fold
-      a
-      list
-      (Optional (NonEmptyList a))
-      (   λ(x : a)
-        → λ(acc : Optional (NonEmptyList a))
-        → Optional/fold
-          (NonEmptyList a)
-          acc
-          (Optional (NonEmptyList a))
-          (   λ(nel : NonEmptyList a)
-            → Some { head = x, tail = [ nel.head ] # nel.tail }
-          )
-          (Some { head = x, tail = [] : List a })
-      )
-      (None (NonEmptyList a))
+let Optional/fold =
+      https://prelude.dhall-lang.org/Optional/fold.dhall
+        sha256:c5b9d72f6f62bdaa0e196ac1c742cc175cd67a717b880fb8aec1333a5a4132cf
+
+in  λ(a : Type) →
+    λ(list : List a) →
+      List/fold
+        a
+        list
+        (Optional (NonEmptyList a))
+        ( λ(x : a) →
+          λ(acc : Optional (NonEmptyList a)) →
+            Optional/fold
+              (NonEmptyList a)
+              acc
+              (Optional (NonEmptyList a))
+              ( λ(nel : NonEmptyList a) →
+                  Some { head = x, tail = [ nel.head ] # nel.tail }
+              )
+              (Some { head = x, tail = [] : List a })
+        )
+        (None (NonEmptyList a))

@@ -1,16 +1,16 @@
-    let Transformer = ./../Transformer/Type
+let Transformer = ../Transformer/Type
 
-in  let Monad = ./../Monad/Type
+let Monad = ../Monad/Type
 
-in  let ReaderT = ./Type
+let ReaderT = ./Type
 
-in    λ(r : Type)
-    →   { lift =
-              λ(m : Type → Type)
-            → λ(monad : Monad m)
-            → λ(a : Type)
-            → λ(ma : m a)
-            → λ(env : r)
-            → ma
+in  λ(r : Type) →
+        { lift =
+            λ(m : Type → Type) →
+            λ(monad : Monad m) →
+            λ(a : Type) →
+            λ(ma : m a) →
+            λ(env : r) →
+              ma
         }
       : Transformer (ReaderT r)

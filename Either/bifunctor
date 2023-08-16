@@ -1,5 +1,5 @@
-    let Bifunctor = ./../Bifunctor/Type
+let Bifunctor = ../Bifunctor/Type
 
-in  let Either = ./Type
+let Either = ./Type
 
 in  { bimap = ./mapBoth } : Bifunctor Either

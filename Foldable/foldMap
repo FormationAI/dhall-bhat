@@ -1,12 +1,12 @@
-    let Foldable = ./Type
+let Foldable = ./Type
 
-in  let Monoid = ./../Monoid/Type
+let Monoid = ../Monoid/Type
 
-in    λ(m : Type)
-    → λ(monoid : Monoid m)
-    → λ(t : Type → Type)
-    → λ(foldable : Foldable t)
-    → λ(a : Type)
-    → λ(f : a → m)
-    → λ(ts : t a)
-    → foldable.fold a ts m (λ(x : a) → λ(y : m) → monoid.op (f x) y) monoid.unit
+in  λ(m : Type) →
+    λ(monoid : Monoid m) →
+    λ(t : Type → Type) →
+    λ(foldable : Foldable t) →
+    λ(a : Type) →
+    λ(f : a → m) →
+    λ(ts : t a) →
+      foldable.fold a ts m (λ(x : a) → λ(y : m) → monoid.op (f x) y) monoid.unit

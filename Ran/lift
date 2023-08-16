@@ -1,10 +1,10 @@
-  λ(h : Type → Type)
-→ λ(functor : ./../Functor/Type h)
-→ λ(f : Type → Type)
-→ λ(g : Type → Type)
-→ λ(join : ∀(b : Type) → h (f b) → g b)
-→ λ(a : Type)
-→ λ(x : h a)
-→ λ(b : Type)
-→ λ(k : a → f b)
-→ join b (functor.map a (f b) k x)
+λ(h : Type → Type) →
+λ(functor : ../Functor/Type h) →
+λ(f : Type → Type) →
+λ(g : Type → Type) →
+λ(join : ∀(b : Type) → h (f b) → g b) →
+λ(a : Type) →
+λ(x : h a) →
+λ(b : Type) →
+λ(k : a → f b) →
+  join b (functor.map a (f b) k x)

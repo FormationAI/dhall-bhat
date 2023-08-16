@@ -1,1 +1,1 @@
-λ(a : Type) → { unit = [] : List a } ∧ ./semigroup a : ./../Monoid/Type (List a)
+λ(a : Type) → { unit = [] : List a } ∧ ./semigroup a : ../Monoid/Type (List a)

@@ -1,10 +1,10 @@
-    let Monad = ./../Monad/Type
+let Monad = ../Monad/Type
 
-in  let StateMonad = ./monad
+let StateMonad = ./monad
 
-in    λ(s : Type)
-    → λ(m : Type → Type)
-    → λ(monad : Monad m)
-    → λ(a : Type)
-    → λ(f : s → a)
-    → let map = (StateMonad s m monad).map in map s a f (./get s m monad)
+in  λ(s : Type) →
+    λ(m : Type → Type) →
+    λ(monad : Monad m) →
+    λ(a : Type) →
+    λ(f : s → a) →
+      let map = (StateMonad s m monad).map in map s a f (./get s m monad)

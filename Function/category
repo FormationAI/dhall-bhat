@@ -1,12 +1,11 @@
-  { identity =
-      λ(a : Type) → λ(x : a) → x
+  { identity = λ(a : Type) → λ(x : a) → x
   , compose =
-        λ(a : Type)
-      → λ(b : Type)
-      → λ(c : Type)
-      → λ(f : b → c)
-      → λ(g : a → b)
-      → λ(x : a)
-      → f (g x)
+      λ(a : Type) →
+      λ(b : Type) →
+      λ(c : Type) →
+      λ(f : b → c) →
+      λ(g : a → b) →
+      λ(x : a) →
+        f (g x)
   }
-: ./../Category/Type ./Type
+: ../Category/Type ./Type

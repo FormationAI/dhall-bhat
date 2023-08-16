@@ -1,8 +1,8 @@
-  λ(f : Type → Type)
-→ λ(comonad : ./../Comonad/Type f)
-→ λ(g : Type → Type)
-→ λ(a : Type)
-→ λ(x : g a)
-→ λ(r : Type)
-→ λ(k : ∀(b : Type) → (f b → a) → g b → r)
-→ k a (comonad.extract a) x
+λ(f : Type → Type) →
+λ(comonad : ../Comonad/Type f) →
+λ(g : Type → Type) →
+λ(a : Type) →
+λ(x : g a) →
+λ(r : Type) →
+λ(k : ∀(b : Type) → (f b → a) → g b → r) →
+  k a (comonad.extract a) x

@@ -1,1 +1,1 @@
-λ(m : Type → Type) → ./../Ran/lower m m
+λ(m : Type → Type) → ../Ran/lower m m

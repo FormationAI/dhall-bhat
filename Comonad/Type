@@ -1,9 +1,6 @@
-  λ(w : Type → Type)
-→   { extract :
-        ∀(a : Type) → w a → a
-    , extend :
-        ∀(a : Type) → ∀(b : Type) → ∀(f : w a → b) → w a → w b
-    , duplicate :
-        ∀(a : Type) → w a → w (w a)
+λ(w : Type → Type) →
+    { extract : ∀(a : Type) → w a → a
+    , extend : ∀(a : Type) → ∀(b : Type) → ∀(f : w a → b) → w a → w b
+    , duplicate : ∀(a : Type) → w a → w (w a)
     }
-  ⩓ ./../Functor/Type w
+  ⩓ ../Functor/Type w

@@ -1,22 +1,22 @@
-    let Transformer = ./../Transformer/Type
+let Transformer = ../Transformer/Type
 
-in  let Monad = ./../Monad/Type
+let Monad = ../Monad/Type
 
-in  let StateT = ./Type
+let StateT = ./Type
 
-in    λ(s : Type)
-    →   { lift =
-              λ(m : Type → Type)
-            → λ(monad : Monad m)
-            → λ(a : Type)
-            → λ(ma : m a)
-            → λ(env : s)
-            → monad.bind
-              a
-              { val : a, state : s }
-              ma
-              (   λ(x : a)
-                → monad.pure { val : a, state : s } { val = x, state = env }
-              )
+in  λ(s : Type) →
+        { lift =
+            λ(m : Type → Type) →
+            λ(monad : Monad m) →
+            λ(a : Type) →
+            λ(ma : m a) →
+            λ(env : s) →
+              monad.bind
+                a
+                { val : a, state : s }
+                ma
+                ( λ(x : a) →
+                    monad.pure { val : a, state : s } { val = x, state = env }
+                )
         }
       : Transformer (StateT s)

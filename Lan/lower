@@ -1,14 +1,14 @@
-  λ(h : Type → Type)
-→ λ(functor : ./../Functor/Type h)
-→ λ(f : Type → Type)
-→ λ(g : Type → Type)
-→ λ(duplicate : ∀(b : Type) → g b → h (f b))
-→ λ(a : Type)
-→ λ(lan : ./Type f g a)
-→ lan
-  (h a)
-  (   λ(b : Type)
-    → λ(k : f b → a)
-    → λ(x : g b)
-    → functor.map (f b) a k (duplicate b x)
-  )
+λ(h : Type → Type) →
+λ(functor : ../Functor/Type h) →
+λ(f : Type → Type) →
+λ(g : Type → Type) →
+λ(duplicate : ∀(b : Type) → g b → h (f b)) →
+λ(a : Type) →
+λ(lan : ./Type f g a) →
+  lan
+    (h a)
+    ( λ(b : Type) →
+      λ(k : f b → a) →
+      λ(x : g b) →
+        functor.map (f b) a k (duplicate b x)
+    )

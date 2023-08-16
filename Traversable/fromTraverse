@@ -1,31 +1,29 @@
-  λ(t : Type → Type)
-→ λ ( traverse
-    :   ∀(f : Type → Type)
-      → ∀(applicative : ./../Applicative/Type f)
-      → ∀(a : Type)
-      → ∀(b : Type)
-      → ∀(g : a → f b)
-      → ∀(ts : t a)
-      → f (t b)
-    )
-→   { fold =
-          λ(a : Type)
-        → λ(ts : t a)
-        → λ(b : Type)
-        → λ(f : a → b → b)
-        → λ(z : b)
-        → ( traverse
-            (./../State/Type b)
-            (./../State/applicative b)
-            a
-            a
-            (λ(x : a) → λ(y : b) → { state = f x y, val = x })
-            ts
-            z
+λ(t : Type → Type) →
+λ ( traverse
+  : ∀(f : Type → Type) →
+    ∀(applicative : ../Applicative/Type f) →
+    ∀(a : Type) →
+    ∀(b : Type) →
+    ∀(g : a → f b) →
+    ∀(ts : t a) →
+      f (t b)
+  ) →
+    { fold =
+        λ(a : Type) →
+        λ(ts : t a) →
+        λ(b : Type) →
+        λ(f : a → b → b) →
+        λ(z : b) →
+          ( traverse
+              (../State/Type b)
+              (../State/applicative b)
+              a
+              a
+              (λ(x : a) → λ(y : b) → { state = f x y, val = x })
+              ts
+              z
           ).state
-    , map =
-        traverse ./../Identity/Type ./../Identity/applicative
-    , traverse =
-        traverse
+    , map = traverse ../Identity/Type ../Identity/applicative
+    , traverse
     }
   : ./Type t

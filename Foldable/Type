@@ -1,5 +1,4 @@
-
-  λ(t : Type → Type)
-→ { fold :
+λ(t : Type → Type) →
+  { fold :
       ∀(a : Type) → ∀(ts : t a) → ∀(b : Type) → ∀(f : a → b → b) → ∀(z : b) → b
   }

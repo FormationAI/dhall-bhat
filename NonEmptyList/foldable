@@ -1,5 +1,5 @@
-    let Foldable = ./../Foldable/Type
+let Foldable = ../Foldable/Type
 
-in  let NonEmpty = ./Type
+let NonEmpty = ./Type
 
-in  ./../Traversable/extractFoldable NonEmpty ./traversable : Foldable NonEmpty
+in  ../Traversable/extractFoldable NonEmpty ./traversable : Foldable NonEmpty

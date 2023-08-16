@@ -1,5 +1,7 @@
-;;; Directory Local Variables
-;;; For more information see (info "(emacs) Directory Variables")
-
-((fundamental-mode
+((nil
+  (fill-column . 80)
+  (indent-tabs-mode . nil)
+  (projectile-project-configure-cmd . "nix flake update")
+  (sentence-end-double-space . nil))
+ (fundamental-mode
   (mode . dhall)))

@@ -1,13 +1,13 @@
-    let Foldable = ./../Foldable/Type
+let Foldable = ../Foldable/Type
 
-in    λ(f : Type → Type)
-    → λ(foldable : Foldable f)
-    →   { fold =
-              λ(a : Type)
-            → λ(yoneda : ./Type f a)
-            → λ(b : Type)
-            → λ(k : a → b → b)
-            → λ(z : b)
-            → foldable.fold a (./lower f a yoneda) b k z
+in  λ(f : Type → Type) →
+    λ(foldable : Foldable f) →
+        { fold =
+            λ(a : Type) →
+            λ(yoneda : ./Type f a) →
+            λ(b : Type) →
+            λ(k : a → b → b) →
+            λ(z : b) →
+              foldable.fold a (./lower f a yoneda) b k z
         }
       : Foldable (./Type f)

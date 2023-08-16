@@ -1,1 +1,1 @@
-λ(a : Type) → ./../Comonad/extractFunctor (./Type a)
+λ(a : Type) → ../Comonad/extractFunctor (./Type a)

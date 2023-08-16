@@ -1,1 +1,1 @@
-λ(a : Type) → (./../Function/category).compose (List a) (List a) (List a)
+λ(a : Type) → (../Function/category).compose (List a) (List a) (List a)

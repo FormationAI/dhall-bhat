@@ -1,9 +1,9 @@
-  λ(a : Type)
-→ λ(y : a)
-→ λ(xs : ./Type a)
-→ (./../Function/category).compose
-  (List a)
-  (List a)
-  (List a)
-  (λ(ys : List a) → [ y ] # ys)
-  xs
+λ(a : Type) →
+λ(y : a) →
+λ(xs : ./Type a) →
+  (../Function/category).compose
+    (List a)
+    (List a)
+    (List a)
+    (λ(ys : List a) → [ y ] # ys)
+    xs

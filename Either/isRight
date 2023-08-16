@@ -1,3 +1,3 @@
-    let Either = ./Type
+let Either = ./Type
 
 in  λ(a : Type) → λ(b : Type) → λ(e : Either a b) → ./isLeft a b e == False

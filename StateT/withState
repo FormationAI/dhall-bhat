@@ -1,9 +1,9 @@
-    let StateT = ./Type
+let StateT = ./Type
 
-in    λ(s : Type)
-    → λ(m : Type → Type)
-    → λ(a : Type)
-    → λ(f : s → s)
-    → λ(state : StateT s m a)
-    → λ(new : s)
-    → state (f new)
+in  λ(s : Type) →
+    λ(m : Type → Type) →
+    λ(a : Type) →
+    λ(f : s → s) →
+    λ(state : StateT s m a) →
+    λ(new : s) →
+      state (f new)

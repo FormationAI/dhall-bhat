@@ -1,4 +1,4 @@
-  λ(f : Type → Type)
-→ λ(g : Type → Type)
-→ λ(a : Type)
-→ ∀(b : Type) → (a → f b) → g b
+λ(f : Type → Type) →
+λ(g : Type → Type) →
+λ(a : Type) →
+  ∀(b : Type) → (a → f b) → g b

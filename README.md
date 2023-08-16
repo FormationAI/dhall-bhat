@@ -1,4 +1,5 @@
 # dhall-bhat
+
 Tasty meal of Dhall
 
 We currently require Dhall 1.18.0, and try to support newer releases as much as possible.
@@ -32,6 +33,7 @@ It’s common to define a type and a number of related expressions for it. When 
 ### don’t repeat names
 
 In Dhall, the name of an expression is given by the file it’s in. Most of us aren’t used to this style, so we have an inclination to provide a name _within_ the file, e.g.
+
 ```dhall
 let  foo = <the real expression>
 in   foo
@@ -48,13 +50,15 @@ It’s often tempting to use imports directly inlined, like `(./Foo/functor).map
 In general, we don’t have explicit types on expressions. Since there is only a single top-level expression per file, it’s relatively easy for editors to display the result of `dhall type` to provide a type annotation on the fly.
 
 The exception to this is type class instances, which end up looking like
+
 ```dhall
     let Foo = ../Foo/Type
-in  let Bar = ./Type
+let Bar = ./Type
 in  { operation = ...
     , anotherOperation = ...
     } : Foo Bar
 ```
+
 This is because it isn’t enough that they have a valid type, but that type needs to align with the type class definition in order to be applicable where that type class is required.
 
 ### don’t define type class methods in their own files

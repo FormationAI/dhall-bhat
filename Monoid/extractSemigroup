@@ -1,5 +1,5 @@
-    let Semigroup = ./../Semigroup/Type
+let Semigroup = ../Semigroup/Type
 
-in  let Monoid = ./Type
+let Monoid = ./Type
 
 in  λ(m : Type) → λ(t : Monoid m) → t.{ op } : Semigroup m

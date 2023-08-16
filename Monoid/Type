@@ -1,1 +1,1 @@
-λ(m : Type) → ./../Semigroup/Type m ⩓ { unit : m }
+λ(m : Type) → ../Semigroup/Type m ⩓ { unit : m }

@@ -1,11 +1,11 @@
-  λ(m : Type → Type)
-→   ./applicative m
+λ(m : Type → Type) →
+    ./applicative m
   ∧ { bind =
-          λ(a : Type)
-        → λ(b : Type)
-        → λ(codensity : ./Type m a)
-        → λ(k : a → ./Type m b)
-        → λ(c : Type)
-        → λ(l : b → m c)
-        → codensity c (λ(x : a) → k x c l)
+        λ(a : Type) →
+        λ(b : Type) →
+        λ(codensity : ./Type m a) →
+        λ(k : a → ./Type m b) →
+        λ(c : Type) →
+        λ(l : b → m c) →
+          codensity c (λ(x : a) → k x c l)
     }

@@ -1,4 +1,4 @@
-  λ(f : Type → Type)
-→ λ(t : ./../Traversable/Type f)
-→   { map = t.traverse ./../Identity/Type ./../Identity/applicative }
-  : ./../Functor/Type f
+λ(f : Type → Type) →
+λ(t : ../Traversable/Type f) →
+    { map = t.traverse ../Identity/Type ../Identity/applicative }
+  : ../Functor/Type f

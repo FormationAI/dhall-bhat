@@ -1,7 +1,7 @@
-    let Either = ./Type
+let Either = ./Type
 
-in    λ(a : Type)
-    → λ(b : Type)
-    → λ(def : b)
-    → λ(e : Either a b)
-    → merge { Left = λ(x : a) → def, Right = λ(y : b) → y } e
+in  λ(a : Type) →
+    λ(b : Type) →
+    λ(def : b) →
+    λ(e : Either a b) →
+      merge { Left = λ(x : a) → def, Right = λ(y : b) → y } e

@@ -1,7 +1,7 @@
-    let DifferenceList = ./Type
+let DifferenceList = ./Type
 
-in  let extractApplicative = ./../Monad/extractApplicative
+let extractApplicative = ../Monad/extractApplicative
 
-in  let monad = ./monad
+let monad = ./monad
 
 in  extractApplicative DifferenceList monad

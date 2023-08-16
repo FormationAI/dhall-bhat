@@ -1,30 +1,25 @@
-    let Applicative = ./Type
+let Applicative = ./Type
 
-in  let liftA2
-        :   ∀(f : Type → Type)
-          → ∀(app : Applicative f)
-          → ∀(a : Type)
-          → ∀(b : Type)
-          → ∀(c : Type)
-          → (a → b → c)
-          → f a
-          → f b
-          → f c
-        =   λ(f : Type → Type)
-          → λ(app : Applicative f)
-          → λ(a : Type)
-          → λ(b : Type)
-          → λ(c : Type)
-          → λ(g : a → b → c)
-          → λ(fa : f a)
-          → λ(fb : f b)
-          →     let h =
-                      app.map
-                      a
-                      (b → c)
-                      (λ(aVal : a) → λ(bVal : b) → g aVal bVal)
-                      fa
-            
-            in  app.ap b c h fb
+let liftA2
+    : ∀(f : Type → Type) →
+      ∀(app : Applicative f) →
+      ∀(a : Type) →
+      ∀(b : Type) →
+      ∀(c : Type) →
+      (a → b → c) →
+      f a →
+      f b →
+        f c
+    = λ(f : Type → Type) →
+      λ(app : Applicative f) →
+      λ(a : Type) →
+      λ(b : Type) →
+      λ(c : Type) →
+      λ(g : a → b → c) →
+      λ(fa : f a) →
+      λ(fb : f b) →
+        let h = app.map a (b → c) (λ(aVal : a) → λ(bVal : b) → g aVal bVal) fa
+
+        in  app.ap b c h fb
 
 in  liftA2

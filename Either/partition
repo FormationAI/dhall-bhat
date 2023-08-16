@@ -1,37 +1,30 @@
-    let Either = ./Type
+let Either = ./Type
 
-in  let partition
-        :   ∀(a : Type)
-          → ∀(b : Type)
-          → List (Either a b)
-          → { lefts : List a, rights : List b }
-        =   λ(a : Type)
-          → λ(b : Type)
-          → λ(eithers : List (Either a b))
-          →     let left =
-                        λ(acc : { lefts : List a, rights : List b })
-                      → λ(x : a)
-                      → { lefts = [ x ] # acc.lefts, rights = acc.rights }
-            
-            in  let right =
-                        λ(acc : { lefts : List a, rights : List b })
-                      → λ(y : b)
-                      → { lefts = acc.lefts, rights = [ y ] # acc.rights }
-            
-            in  List/fold
-                (Either a b)
-                eithers
-                { lefts : List a, rights : List b }
-                (   λ(e : Either a b)
-                  → λ(acc : { lefts : List a, rights : List b })
-                  → ./fold
-                    a
-                    b
-                    { lefts : List a, rights : List b }
-                    (left acc)
-                    (right acc)
-                    e
-                )
-                { lefts = [] : List a, rights = [] : List b }
+in  λ(a : Type) →
+    λ(b : Type) →
+    λ(eithers : List (Either a b)) →
+      let left =
+            λ(acc : { lefts : List a, rights : List b }) →
+            λ(x : a) →
+              { lefts = [ x ] # acc.lefts, rights = acc.rights }
 
-in  partition
+      let right =
+            λ(acc : { lefts : List a, rights : List b }) →
+            λ(y : b) →
+              { lefts = acc.lefts, rights = [ y ] # acc.rights }
+
+      in  List/fold
+            (Either a b)
+            eithers
+            { lefts : List a, rights : List b }
+            ( λ(e : Either a b) →
+              λ(acc : { lefts : List a, rights : List b }) →
+                ./fold
+                  a
+                  b
+                  { lefts : List a, rights : List b }
+                  (left acc)
+                  (right acc)
+                  e
+            )
+            { lefts = [] : List a, rights = [] : List b }

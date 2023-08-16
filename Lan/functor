@@ -1,12 +1,12 @@
-  λ(f : Type → Type)
-→ λ(g : Type → Type)
-→   { map =
-          λ(a : Type)
-        → λ(b : Type)
-        → λ(h : a → b)
-        → λ(lan : ./Type f g a)
-        → λ(r : Type)
-        → λ(k : ∀(c : Type) → (f c → b) → g c → r)
-        → lan r (λ(c : Type) → λ(x : f c → a) → k c (λ(y : f c) → h (x y)))
+λ(f : Type → Type) →
+λ(g : Type → Type) →
+    { map =
+        λ(a : Type) →
+        λ(b : Type) →
+        λ(h : a → b) →
+        λ(lan : ./Type f g a) →
+        λ(r : Type) →
+        λ(k : ∀(c : Type) → (f c → b) → g c → r) →
+          lan r (λ(c : Type) → λ(x : f c → a) → k c (λ(y : f c) → h (x y)))
     }
-  : ./../Functor/Type (./Type f g)
+  : ../Functor/Type (./Type f g)

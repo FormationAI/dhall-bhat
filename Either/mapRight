@@ -1,8 +1,8 @@
-    let Either = ./Type
+let Either = ./Type
 
-in    λ(a : Type)
-    → λ(b : Type)
-    → λ(d : Type)
-    → λ(f : b → d)
-    → λ(e : Either a b)
-    → ./mapBoth a b a d (λ(x : a) → x) f e
+in  λ(a : Type) →
+    λ(b : Type) →
+    λ(d : Type) →
+    λ(f : b → d) →
+    λ(e : Either a b) →
+      ./mapBoth a b a d (λ(x : a) → x) f e

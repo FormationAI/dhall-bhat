@@ -1,23 +1,21 @@
+let Applicative = ../Applicative/Type
 
-    let Applicative = ./../Applicative/Type
+let fold = (./foldable).fold
 
-in  let fold = (./foldable).fold
-
-in  let map = (./functor).map
+let map = (./functor).map
 
 in      ./functor
-      ∧ { pure =
-            λ(a : Type) → λ(x : a) → Some x
+      ∧ { pure = λ(a : Type) → λ(x : a) → Some x
         , ap =
-              λ(a : Type)
-            → λ(b : Type)
-            → λ(g : Optional (a → b))
-            → λ(fa : Optional a)
-            → fold
-              (a → b)
-              g
-              (Optional b)
-              (λ(k : a → b) → λ(o : Optional b) → map a b k fa)
-              (None b)
+            λ(a : Type) →
+            λ(b : Type) →
+            λ(g : Optional (a → b)) →
+            λ(fa : Optional a) →
+              fold
+                (a → b)
+                g
+                (Optional b)
+                (λ(k : a → b) → λ(o : Optional b) → map a b k fa)
+                (None b)
         }
     : Applicative Optional

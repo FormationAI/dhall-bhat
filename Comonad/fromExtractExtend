@@ -1,16 +1,14 @@
-  λ(w : Type → Type)
-→ λ(extract : ∀(a : Type) → w a → a)
-→ λ(extend : ∀(a : Type) → ∀(b : Type) → ∀(f : w a → b) → w a → w b)
-→   { extract =
-        extract
-    , extend =
-        extend
+λ(w : Type → Type) →
+λ(extract : ∀(a : Type) → w a → a) →
+λ(extend : ∀(a : Type) → ∀(b : Type) → ∀(f : w a → b) → w a → w b) →
+    { extract
+    , extend
     , duplicate =
-        λ(a : Type) → extend a (w a) ((./../Function/category).identity (w a))
+        λ(a : Type) → extend a (w a) ((../Function/category).identity (w a))
     , map =
-          λ(a : Type)
-        → λ(b : Type)
-        → λ(f : a → b)
-        → extend a b (λ(x : w a) → f (extract a x))
+        λ(a : Type) →
+        λ(b : Type) →
+        λ(f : a → b) →
+          extend a b (λ(x : w a) → f (extract a x))
     }
   : ./Type w

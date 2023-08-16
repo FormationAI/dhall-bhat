@@ -1,5 +1,5 @@
-    let Applicative = ./../Applicative/Type
+let Applicative = ../Applicative/Type
 
-in  let Monad = ./Type
+let Monad = ./Type
 
 in  λ(f : Type → Type) → λ(t : Monad f) → t.{ ap, map, pure } : Applicative f

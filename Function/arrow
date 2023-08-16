@@ -1,23 +1,22 @@
-    { arr =
-        λ(a : Type) → λ(b : Type) → (./category).identity (a → b)
+    { arr = λ(a : Type) → λ(b : Type) → (./category).identity (a → b)
     , split =
-          λ(a : Type)
-        → λ(b : Type)
-        → λ(c : Type)
-        → λ(d : Type)
-        → λ(f : a → b)
-        → λ(g : c → d)
-        → λ(p : { _1 : a, _2 : c })
-        → { _1 = f p._1, _2 = g p._2 }
+        λ(a : Type) →
+        λ(b : Type) →
+        λ(c : Type) →
+        λ(d : Type) →
+        λ(f : a → b) →
+        λ(g : c → d) →
+        λ(p : { _1 : a, _2 : c }) →
+          { _1 = f p._1, _2 = g p._2 }
     , fanout =
-          λ(a : Type)
-        → λ(b : Type)
-        → λ(c : Type)
-        → λ(f : a → b)
-        → λ(g : a → c)
-        → λ(x : a)
-        → { _1 = f x, _2 = g x }
+        λ(a : Type) →
+        λ(b : Type) →
+        λ(c : Type) →
+        λ(f : a → b) →
+        λ(g : a → c) →
+        λ(x : a) →
+          { _1 = f x, _2 = g x }
     }
   ∧ ./category
   ∧ ./strong
-: ./../Arrow/Type ./Type
+: ../Arrow/Type ./Type

@@ -1,37 +1,37 @@
-    let Monad = ./../Monad/Type
+let Monad = ../Monad/Type
 
-in  let EitherT = ./Type
+let EitherT = ./Type
 
-in  let Either = ./../Either/Type
+let Either = ../Either/Type
 
-in  let fold = ./../Either/fold
+let fold = ../Either/fold
 
-in    λ(a : Type)
-    → λ(m : Type → Type)
-    → λ(monad : Monad m)
-    →     ./applicative/sequential
-          a
-          m
-          { map = monad.map, ap = monad.ap, pure = monad.pure }
+in  λ(a : Type) →
+    λ(m : Type → Type) →
+    λ(monad : Monad m) →
+          ./applicative/sequential
+            a
+            m
+            { map = monad.map, ap = monad.ap, pure = monad.pure }
         ∧ { bind =
-                λ(b : Type)
-              → λ(c : Type)
-              → λ(fa : EitherT a m b)
-              → λ(k : b → EitherT a m c)
-              → monad.bind
-                (Either a b)
-                (Either a c)
-                fa
-                (   λ(either : Either a b)
-                  → fold
-                    a
-                    b
-                    (EitherT a m c)
-                    (   λ(l : a)
-                      → monad.pure (Either a c) < Left = l | Right : c >
-                    )
-                    (λ(r : b) → k r)
-                    either
-                )
+              λ(b : Type) →
+              λ(c : Type) →
+              λ(fa : EitherT a m b) →
+              λ(k : b → EitherT a m c) →
+                monad.bind
+                  (Either a b)
+                  (Either a c)
+                  fa
+                  ( λ(either : Either a b) →
+                      fold
+                        a
+                        b
+                        (EitherT a m c)
+                        ( λ(l : a) →
+                            monad.pure (Either a c) ((Either a c).Left l)
+                        )
+                        (λ(r : b) → k r)
+                        either
+                  )
           }
       : Monad (EitherT a m)

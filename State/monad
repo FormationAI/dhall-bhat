@@ -1,1 +1,1 @@
-λ(s : Type) → ./../StateT/monad s ./../Identity/Type ./../Identity/monad
+λ(s : Type) → ../StateT/monad s ../Identity/Type ../Identity/monad

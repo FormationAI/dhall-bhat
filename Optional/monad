@@ -1,23 +1,27 @@
-    let Monad = ./../Monad/Type
+let Optional/fold =
+      https://prelude.dhall-lang.org/Optional/fold.dhall
+        sha256:c5b9d72f6f62bdaa0e196ac1c742cc175cd67a717b880fb8aec1333a5a4132cf
 
-in  let map = (./functor).map
+let Monad = ../Monad/Type
 
-in  let concat =
-            λ(a : Type)
-          → λ(x : Optional (Optional a))
-          → Optional/fold
-            (Optional a)
-            x
-            (Optional a)
-            (λ(y : Optional a) → y)
-            (None a)
+let map = (./functor).map
+
+let concat =
+      λ(a : Type) →
+      λ(x : Optional (Optional a)) →
+        Optional/fold
+          (Optional a)
+          x
+          (Optional a)
+          (λ(y : Optional a) → y)
+          (None a)
 
 in      ./applicative
       ∧ { bind =
-              λ(a : Type)
-            → λ(b : Type)
-            → λ(fa : Optional a)
-            → λ(k : a → Optional b)
-            → concat b (map a (Optional b) k fa)
+            λ(a : Type) →
+            λ(b : Type) →
+            λ(fa : Optional a) →
+            λ(k : a → Optional b) →
+              concat b (map a (Optional b) k fa)
         }
     : Monad Optional

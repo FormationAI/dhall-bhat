@@ -1,1 +1,1 @@
-{ fold = List/fold } : ./../Foldable/Type List
+{ fold = List/fold } : ../Foldable/Type List

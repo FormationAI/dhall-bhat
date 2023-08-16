@@ -1,9 +1,9 @@
-./../Comonad/fromExtractExtend
-./Type
-(λ(a : Type) → λ(nel : ./Type a) → nel.head)
-(   λ(a : Type)
-  → λ(b : Type)
-  → λ(f : ./Type a → b)
-  → λ(nel : ./Type a)
-  → { head = f nel, tail = [] : List b }
-)
+../Comonad/fromExtractExtend
+  ./Type
+  (λ(a : Type) → λ(nel : ./Type a) → nel.head)
+  ( λ(a : Type) →
+    λ(b : Type) →
+    λ(f : ./Type a → b) →
+    λ(nel : ./Type a) →
+      { head = f nel, tail = [] : List b }
+  )

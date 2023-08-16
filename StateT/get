@@ -1,7 +1,7 @@
-    let Monad = ./../Monad/Type
+let Monad = ../Monad/Type
 
-in    λ(s : Type)
-    → λ(m : Type → Type)
-    → λ(monad : Monad m)
-    → λ(env : s)
-    → monad.pure { val : s, state : s } { val = env, state = env }
+in  λ(s : Type) →
+    λ(m : Type → Type) →
+    λ(monad : Monad m) →
+    λ(env : s) →
+      monad.pure { val : s, state : s } { val = env, state = env }

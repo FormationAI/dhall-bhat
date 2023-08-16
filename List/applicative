@@ -1,22 +1,21 @@
-    let Applicative = ./../Applicative/Type
+let Applicative = ../Applicative/Type
 
-in  let fold = (./foldable).fold
+let fold = (./foldable).fold
 
-in  let map = (./functor).map
+let map = (./functor).map
 
 in      ./functor
-      ∧ { pure =
-            λ(a : Type) → λ(x : a) → [ x ]
+      ∧ { pure = λ(a : Type) → λ(x : a) → [ x ]
         , ap =
-              λ(a : Type)
-            → λ(b : Type)
-            → λ(g : List (a → b))
-            → λ(fa : List a)
-            → fold
-              (a → b)
-              g
-              (List b)
-              (λ(k : a → b) → λ(xs : List b) → map a b k fa # xs)
-              ([] : List b)
+            λ(a : Type) →
+            λ(b : Type) →
+            λ(g : List (a → b)) →
+            λ(fa : List a) →
+              fold
+                (a → b)
+                g
+                (List b)
+                (λ(k : a → b) → λ(xs : List b) → map a b k fa # xs)
+                ([] : List b)
         }
     : Applicative List

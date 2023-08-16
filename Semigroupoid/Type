@@ -1,2 +1,2 @@
-  λ(f : Type → Type → Type)
-→ { compose : ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → f b c → f a b → f a c }
+λ(f : Type → Type → Type) →
+  { compose : ∀(a : Type) → ∀(b : Type) → ∀(c : Type) → f b c → f a b → f a c }

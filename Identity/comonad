@@ -1,4 +1,4 @@
-./../Comonad/fromExtractExtend
-./Type
-(λ(a : Type) → λ(x : ./Type a) → x)
-(λ(a : Type) → λ(b : Type) → λ(f : ./Type a → b) → λ(x : ./Type a) → f x)
+../Comonad/fromExtractExtend
+  ./Type
+  (λ(a : Type) → λ(x : ./Type a) → x)
+  (λ(a : Type) → λ(b : Type) → λ(f : ./Type a → b) → λ(x : ./Type a) → f x)

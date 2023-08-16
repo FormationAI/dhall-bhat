@@ -1,15 +1,15 @@
-  λ(f : Type → Type → Type)
-→   { first :
-          ∀(a : Type)
-        → ∀(b : Type)
-        → ∀(c : Type)
-        → f a b
-        → f { _1 : a, _2 : c } { _1 : b, _2 : c }
+λ(f : Type → Type → Type) →
+    { first :
+        ∀(a : Type) →
+        ∀(b : Type) →
+        ∀(c : Type) →
+        f a b →
+          f { _1 : a, _2 : c } { _1 : b, _2 : c }
     , second :
-          ∀(a : Type)
-        → ∀(b : Type)
-        → ∀(c : Type)
-        → f b c
-        → f { _1 : a, _2 : b } { _1 : a, _2 : c }
+        ∀(a : Type) →
+        ∀(b : Type) →
+        ∀(c : Type) →
+        f b c →
+          f { _1 : a, _2 : b } { _1 : a, _2 : c }
     }
-  ⩓ ./../Profunctor/Type f
+  ⩓ ../Profunctor/Type f

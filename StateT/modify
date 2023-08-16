@@ -1,11 +1,11 @@
-    let Monad = ./../Monad/Type
+let Monad = ../Monad/Type
 
-in  let StateMonad = ./monad
+let StateMonad = ./monad
 
-in    λ(s : Type)
-    → λ(m : Type → Type)
-    → λ(monad : Monad m)
-    → λ(f : s → s)
-    →     let bind = (StateMonad s m monad).bind
-      
+in  λ(s : Type) →
+    λ(m : Type → Type) →
+    λ(monad : Monad m) →
+    λ(f : s → s) →
+      let bind = (StateMonad s m monad).bind
+
       in  bind s {} (./get s m monad) (λ(state : s) → ./put s m monad (f state))

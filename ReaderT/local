@@ -1,9 +1,9 @@
-    let ReaderT = ./Type
+let ReaderT = ./Type
 
-in    λ(r : Type)
-    → λ(m : Type → Type)
-    → λ(a : Type)
-    → λ(f : r → r)
-    → λ(reader : ReaderT r m a)
-    → λ(env : r)
-    → reader (f env)
+in  λ(r : Type) →
+    λ(m : Type → Type) →
+    λ(a : Type) →
+    λ(f : r → r) →
+    λ(reader : ReaderT r m a) →
+    λ(env : r) →
+      reader (f env)
